@@ -3672,6 +3672,7 @@ function GeneralReportsGenerator() {
     teacherName: "عبدالله حسن الفيفي",
     schoolName: "متوسطة تحفيظ القرآن الكريم",
     principalName: "أ. محمد أحمد الشهري",
+    academicYear: "1446",
     gradeSubject: "الأول متوسط - لغة إنجليزية",
     criteriaTitle: "",
     date: new Date().toISOString().split('T')[0],
@@ -3824,123 +3825,197 @@ function GeneralReportsGenerator() {
           </button>
         </div>
 
-        <div id="general-report-preview" className="bg-white rounded-2xl shadow-2xl p-8 space-y-6">
-          {/* رأس التقرير */}
-          <div className="text-center border-b-4 border-teal-500 pb-6">
-            <h1 className="text-4xl font-bold text-gray-800 mb-2">تقرير التوثيق المهني</h1>
-            <p className="text-2xl text-teal-600 font-semibold">{formData.criteriaTitle}</p>
-          </div>
-
-          {/* معلومات أساسية */}
-          <div className="bg-gradient-to-r from-teal-50 to-cyan-50 rounded-xl p-6 border-2 border-teal-200">
-            <div className="grid grid-cols-2 gap-4 text-sm">
-              <div className="flex gap-2"><span className="font-bold text-gray-700">المعلم:</span> <span className="text-gray-900">{formData.teacherName}</span></div>
-              <div className="flex gap-2"><span className="font-bold text-gray-700">المدرسة:</span> <span className="text-gray-900">{formData.schoolName}</span></div>
-              <div className="flex gap-2"><span className="font-bold text-gray-700">الصف/المادة:</span> <span className="text-gray-900">{formData.gradeSubject}</span></div>
-              <div className="flex gap-2"><span className="font-bold text-gray-700">التاريخ:</span> <span className="text-gray-900">{formData.date}</span></div>
-              {formData.activityTitle && (
-                <div className="col-span-2 flex gap-2"><span className="font-bold text-gray-700">عنوان النشاط:</span> <span className="text-gray-900">{formData.activityTitle}</span></div>
-              )}
-            </div>
-          </div>
-
-          {/* الأقسام الاختيارية */}
-          {enabledSections.description && formData.description && (
-            <div className="border-l-4 border-teal-500 pl-6 py-2">
-              <h2 className="text-xl font-bold text-gray-800 mb-3 flex items-center gap-2">
-                <span className="text-teal-600">📋</span> الوصف العام
-              </h2>
-              <p className="text-gray-700 leading-relaxed whitespace-pre-wrap">{formData.description}</p>
-            </div>
-          )}
-
-          {enabledSections.objectives && formData.objectives && (
-            <div className="border-l-4 border-blue-500 pl-6 py-2 bg-blue-50/50 rounded-r-lg">
-              <h2 className="text-xl font-bold text-gray-800 mb-3 flex items-center gap-2">
-                <span className="text-blue-600">🎯</span> الأهداف
-              </h2>
-              <p className="text-gray-700 leading-relaxed whitespace-pre-wrap">{formData.objectives}</p>
-            </div>
-          )}
-
-          {enabledSections.procedures && formData.procedures && (
-            <div className="border-l-4 border-purple-500 pl-6 py-2">
-              <h2 className="text-xl font-bold text-gray-800 mb-3 flex items-center gap-2">
-                <span className="text-purple-600">⚙️</span> الإجراءات والخطوات
-              </h2>
-              <p className="text-gray-700 leading-relaxed whitespace-pre-wrap">{formData.procedures}</p>
-            </div>
-          )}
-
-          {enabledSections.evidence && (formData.evidence || formData.img1 || formData.img2 || formData.img3 || formData.img4) && (
-            <div className="border-l-4 border-green-500 pl-6 py-2 bg-green-50/50 rounded-r-lg">
-              <h2 className="text-xl font-bold text-gray-800 mb-3 flex items-center gap-2">
-                <span className="text-green-600">📸</span> الشواهد والأدلة
-              </h2>
-              {formData.evidence && (
-                <p className="text-gray-700 leading-relaxed whitespace-pre-wrap mb-4">{formData.evidence}</p>
-              )}
-              <div className="grid grid-cols-2 gap-4 mt-4">
-                {formData.img1 && (
-                  <div className="border-2 border-green-200 rounded-lg overflow-hidden">
-                    <img src={formData.img1} alt="شاهد 1" className="w-full h-48 object-cover" />
-                    <p className="text-xs text-center bg-green-100 py-1">الشاهد 1</p>
-                  </div>
-                )}
-                {formData.img2 && (
-                  <div className="border-2 border-green-200 rounded-lg overflow-hidden">
-                    <img src={formData.img2} alt="شاهد 2" className="w-full h-48 object-cover" />
-                    <p className="text-xs text-center bg-green-100 py-1">الشاهد 2</p>
-                  </div>
-                )}
-                {formData.img3 && (
-                  <div className="border-2 border-green-200 rounded-lg overflow-hidden">
-                    <img src={formData.img3} alt="شاهد 3" className="w-full h-48 object-cover" />
-                    <p className="text-xs text-center bg-green-100 py-1">الشاهد 3</p>
-                  </div>
-                )}
-                {formData.img4 && (
-                  <div className="border-2 border-green-200 rounded-lg overflow-hidden">
-                    <img src={formData.img4} alt="شاهد 4" className="w-full h-48 object-cover" />
-                    <p className="text-xs text-center bg-green-100 py-1">الشاهد 4</p>
-                  </div>
-                )}
+        <div id="general-report-preview" className="bg-white" style={{ fontFamily: 'Cairo, sans-serif' }}>
+          {/* Header - مطابق لتقارير الأداء */}
+          <div className="bg-gradient-to-r from-green-600 via-emerald-500 to-teal-500 text-white px-8 py-6 flex items-center justify-between print-header">
+            <div className="flex items-center gap-6">
+              <div className="w-20 h-20 bg-white rounded-lg flex items-center justify-center p-2">
+                <svg viewBox="0 0 200 150" className="w-full h-full">
+                  <g fill="#00a99d">
+                    <circle cx="50" cy="25" r="5"/>
+                    <circle cx="60" cy="25" r="5"/>
+                    <circle cx="70" cy="25" r="5"/>
+                    <circle cx="80" cy="28" r="4.5"/>
+                    <circle cx="88" cy="32" r="4"/>
+                    <circle cx="50" cy="35" r="5"/>
+                    <circle cx="60" cy="35" r="5"/>
+                    <circle cx="70" cy="38" r="4.5"/>
+                    <circle cx="78" cy="42" r="4"/>
+                    <circle cx="85" cy="46" r="3.5"/>
+                    <circle cx="50" cy="45" r="5"/>
+                    <circle cx="60" cy="45" r="5"/>
+                    <circle cx="70" cy="48" r="4.5"/>
+                    <circle cx="78" cy="52" r="4"/>
+                    <circle cx="85" cy="56" r="3.5"/>
+                    <circle cx="92" cy="60" r="3"/>
+                    <circle cx="105" cy="60" r="3"/>
+                    <circle cx="112" cy="56" r="3.5"/>
+                    <circle cx="119" cy="52" r="4"/>
+                    <circle cx="126" cy="48" r="4.5"/>
+                    <circle cx="133" cy="45" r="5"/>
+                    <circle cx="143" cy="45" r="5"/>
+                    <circle cx="153" cy="45" r="5"/>
+                    <circle cx="112" cy="46" r="3.5"/>
+                    <circle cx="119" cy="42" r="4"/>
+                    <circle cx="126" cy="38" r="4.5"/>
+                    <circle cx="133" cy="35" r="5"/>
+                    <circle cx="143" cy="35" r="5"/>
+                    <circle cx="153" cy="35" r="5"/>
+                    <circle cx="119" cy="32" r="4"/>
+                    <circle cx="126" cy="28" r="4.5"/>
+                    <circle cx="133" cy="25" r="5"/>
+                    <circle cx="143" cy="25" r="5"/>
+                    <circle cx="153" cy="25" r="5"/>
+                  </g>
+                  <text x="100" y="90" textAnchor="middle" fill="#00a99d" fontSize="16" fontWeight="bold" fontFamily="Cairo">وزارة التعليم</text>
+                  <text x="100" y="110" textAnchor="middle" fill="#00a99d" fontSize="10" fontFamily="Arial">Ministry of Education</text>
+                </svg>
+              </div>
+              <div className="text-right">
+                <div className="text-2xl font-bold mb-1">وزارة التعليم</div>
+                <div className="text-lg opacity-90">الإدارة العامة للتعليم بجازان</div>
               </div>
             </div>
-          )}
+            <div className="text-left">
+              <div className="text-sm opacity-90">المملكة العربية السعودية</div>
+              <div className="text-xs opacity-75">Kingdom of Saudi Arabia</div>
+            </div>
+          </div>
 
-          {enabledSections.results && formData.results && (
-            <div className="border-l-4 border-orange-500 pl-6 py-2">
-              <h2 className="text-xl font-bold text-gray-800 mb-3 flex items-center gap-2">
-                <span className="text-orange-600">📊</span> النتائج والتحليل
-              </h2>
-              <p className="text-gray-700 leading-relaxed whitespace-pre-wrap">{formData.results}</p>
-            </div>
-          )}
+          {/* عنوان التقرير */}
+          <div className="bg-gradient-to-r from-teal-600 to-cyan-600 text-white p-6 text-center">
+            <h2 className="text-3xl font-bold">📋 تقرير التوثيق المهني - {formData.criteriaTitle}</h2>
+          </div>
 
-          {enabledSections.recommendations && formData.recommendations && (
-            <div className="border-l-4 border-yellow-500 pl-6 py-2 bg-yellow-50/50 rounded-r-lg">
-              <h2 className="text-xl font-bold text-gray-800 mb-3 flex items-center gap-2">
-                <span className="text-yellow-600">💡</span> التوصيات
-              </h2>
-              <p className="text-gray-700 leading-relaxed whitespace-pre-wrap">{formData.recommendations}</p>
+          {/* اسم المدرسة والعام الدراسي */}
+          <div className="p-8">
+            <div className="text-center bg-gray-700 text-white py-4 px-6 rounded-lg mb-8">
+              <h1 className="text-2xl font-bold">{formData.schoolName}</h1>
+              <p className="text-sm text-gray-200 mt-1">العام الدراسي {formData.academicYear} هـ</p>
             </div>
-          )}
 
-          {/* التوقيعات */}
-          <div className="grid grid-cols-2 gap-8 mt-12 pt-8 border-t-2 border-gray-300">
-            <div className="text-center">
-              <p className="text-gray-600 mb-6">إعداد المعلم</p>
-              <p className="font-bold text-lg mb-4">{formData.teacherName}</p>
-              <div className="border-t-2 border-gray-400 w-48 mx-auto"></div>
-              <p className="text-xs text-gray-500 mt-2">التوقيع</p>
+            {/* المحتوى */}
+            <div className="space-y-6">
+              {/* معلومات أساسية */}
+              <div className="bg-gradient-to-r from-teal-50 to-cyan-50 rounded-xl p-6 border-2 border-teal-200">
+                <div className="grid grid-cols-2 gap-4 text-sm">
+                  <div className="flex gap-2"><span className="font-bold text-gray-700">المعلم:</span> <span className="text-gray-900">{formData.teacherName}</span></div>
+                  <div className="flex gap-2"><span className="font-bold text-gray-700">الصف/المادة:</span> <span className="text-gray-900">{formData.gradeSubject}</span></div>
+                  <div className="flex gap-2"><span className="font-bold text-gray-700">التاريخ:</span> <span className="text-gray-900">{formData.date}</span></div>
+                  {formData.activityTitle && (
+                    <div className="flex gap-2"><span className="font-bold text-gray-700">عنوان النشاط:</span> <span className="text-gray-900">{formData.activityTitle}</span></div>
+                  )}
+                </div>
+              </div>
+
+              {/* الأقسام الاختيارية */}
+              {enabledSections.description && formData.description && (
+                <div className="border-l-4 border-teal-500 pl-6 py-4 bg-gray-50 rounded-r-lg">
+                  <h3 className="text-lg font-bold text-gray-800 mb-3 flex items-center gap-2">
+                    <span className="text-teal-600">📋</span> الوصف العام
+                  </h3>
+                  <p className="text-gray-700 leading-relaxed whitespace-pre-wrap">{formData.description}</p>
+                </div>
+              )}
+
+              {enabledSections.objectives && formData.objectives && (
+                <div className="border-l-4 border-blue-500 pl-6 py-4 bg-blue-50 rounded-r-lg">
+                  <h3 className="text-lg font-bold text-gray-800 mb-3 flex items-center gap-2">
+                    <span className="text-blue-600">🎯</span> الأهداف
+                  </h3>
+                  <p className="text-gray-700 leading-relaxed whitespace-pre-wrap">{formData.objectives}</p>
+                </div>
+              )}
+
+              {enabledSections.procedures && formData.procedures && (
+                <div className="border-l-4 border-purple-500 pl-6 py-4 bg-purple-50 rounded-r-lg">
+                  <h3 className="text-lg font-bold text-gray-800 mb-3 flex items-center gap-2">
+                    <span className="text-purple-600">⚙️</span> الإجراءات والخطوات
+                  </h3>
+                  <p className="text-gray-700 leading-relaxed whitespace-pre-wrap">{formData.procedures}</p>
+                </div>
+              )}
+
+              {enabledSections.evidence && (formData.evidence || formData.img1 || formData.img2 || formData.img3 || formData.img4) && (
+                <div className="border-l-4 border-green-500 pl-6 py-4 bg-green-50 rounded-r-lg">
+                  <h3 className="text-lg font-bold text-gray-800 mb-3 flex items-center gap-2">
+                    <span className="text-green-600">📸</span> الشواهد والأدلة
+                  </h3>
+                  {formData.evidence && (
+                    <p className="text-gray-700 leading-relaxed whitespace-pre-wrap mb-4">{formData.evidence}</p>
+                  )}
+                  <div className="grid grid-cols-2 gap-4 mt-4">
+                    {formData.img1 && (
+                      <div className="border-2 border-green-200 rounded-lg overflow-hidden bg-white p-2">
+                        <img src={formData.img1} alt="شاهد 1" className="w-full h-48 object-cover rounded" />
+                        <p className="text-xs text-center text-gray-600 mt-2 font-semibold">الشاهد 1</p>
+                      </div>
+                    )}
+                    {formData.img2 && (
+                      <div className="border-2 border-green-200 rounded-lg overflow-hidden bg-white p-2">
+                        <img src={formData.img2} alt="شاهد 2" className="w-full h-48 object-cover rounded" />
+                        <p className="text-xs text-center text-gray-600 mt-2 font-semibold">الشاهد 2</p>
+                      </div>
+                    )}
+                    {formData.img3 && (
+                      <div className="border-2 border-green-200 rounded-lg overflow-hidden bg-white p-2">
+                        <img src={formData.img3} alt="شاهد 3" className="w-full h-48 object-cover rounded" />
+                        <p className="text-xs text-center text-gray-600 mt-2 font-semibold">الشاهد 3</p>
+                      </div>
+                    )}
+                    {formData.img4 && (
+                      <div className="border-2 border-green-200 rounded-lg overflow-hidden bg-white p-2">
+                        <img src={formData.img4} alt="شاهد 4" className="w-full h-48 object-cover rounded" />
+                        <p className="text-xs text-center text-gray-600 mt-2 font-semibold">الشاهد 4</p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+
+              {enabledSections.results && formData.results && (
+                <div className="border-l-4 border-orange-500 pl-6 py-4 bg-orange-50 rounded-r-lg">
+                  <h3 className="text-lg font-bold text-gray-800 mb-3 flex items-center gap-2">
+                    <span className="text-orange-600">📊</span> النتائج والتحليل
+                  </h3>
+                  <p className="text-gray-700 leading-relaxed whitespace-pre-wrap">{formData.results}</p>
+                </div>
+              )}
+
+              {enabledSections.recommendations && formData.recommendations && (
+                <div className="border-l-4 border-yellow-500 pl-6 py-4 bg-yellow-50 rounded-r-lg">
+                  <h3 className="text-lg font-bold text-gray-800 mb-3 flex items-center gap-2">
+                    <span className="text-yellow-600">💡</span> التوصيات
+                  </h3>
+                  <p className="text-gray-700 leading-relaxed whitespace-pre-wrap">{formData.recommendations}</p>
+                </div>
+              )}
+
+              {/* التوقيعات - مطابق لتقارير الأداء */}
+              <div className="signatures-grid grid md:grid-cols-2 gap-8 pt-6 border-t-2 border-gray-200 mt-8">
+                <div className="text-center p-6 bg-blue-50 rounded-xl border-2 border-blue-200">
+                  <p className="text-gray-600 font-semibold mb-2">معلم المادة</p>
+                  <p className="text-2xl font-bold text-gray-800">{formData.teacherName}</p>
+                  <div className="mt-4 pt-2 w-48 mx-auto">
+                    <div className="border-t-2 border-gray-400 mb-2"></div>
+                    <p className="text-sm text-gray-500">التوقيع</p>
+                  </div>
+                </div>
+                <div className="text-center p-6 bg-green-50 rounded-xl border-2 border-green-200">
+                  <p className="text-gray-600 font-semibold mb-2">مدير المدرسة</p>
+                  <p className="text-2xl font-bold text-gray-800">{formData.principalName}</p>
+                  <div className="mt-4 pt-2 w-48 mx-auto">
+                    <div className="border-t-2 border-gray-400 mb-2"></div>
+                    <p className="text-sm text-gray-500">التوقيع</p>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div className="text-center">
-              <p className="text-gray-600 mb-6">اعتماد قائد المدرسة</p>
-              <p className="font-bold text-lg mb-4">{formData.principalName}</p>
-              <div className="border-t-2 border-gray-400 w-48 mx-auto"></div>
-              <p className="text-xs text-gray-500 mt-2">التوقيع</p>
-            </div>
+          </div>
+
+          {/* Footer - مطابق لتقارير الأداء */}
+          <div className="bg-gradient-to-r from-green-600 to-teal-600 text-white p-4 text-center">
+            <p className="text-lg font-bold">العام الدراسي {formData.academicYear} هـ</p>
           </div>
         </div>
       </div>
@@ -3979,6 +4054,15 @@ function GeneralReportsGenerator() {
               />
             </div>
             <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">اسم مدير المدرسة</label>
+              <input
+                type="text"
+                value={formData.principalName}
+                onChange={(e) => setFormData({...formData, principalName: e.target.value})}
+                className="w-full px-4 py-2 border-2 border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
+              />
+            </div>
+            <div className="md:col-span-2">
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">اسم المدرسة</label>
               <input
                 type="text"
@@ -3988,20 +4072,21 @@ function GeneralReportsGenerator() {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">اسم القائد</label>
-              <input
-                type="text"
-                value={formData.principalName}
-                onChange={(e) => setFormData({...formData, principalName: e.target.value})}
-                className="w-full px-4 py-2 border-2 border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
-              />
-            </div>
-            <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">الصف والمادة</label>
               <input
                 type="text"
                 value={formData.gradeSubject}
                 onChange={(e) => setFormData({...formData, gradeSubject: e.target.value})}
+                className="w-full px-4 py-2 border-2 border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">العام الدراسي</label>
+              <input
+                type="text"
+                value={formData.academicYear}
+                onChange={(e) => setFormData({...formData, academicYear: e.target.value})}
+                placeholder="1446"
                 className="w-full px-4 py-2 border-2 border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
               />
             </div>
