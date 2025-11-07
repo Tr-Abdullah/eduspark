@@ -791,7 +791,7 @@ function MOEReportGenerator() {
   const Report = () => (
     <div id="report-content" className="bg-white" style={{ fontFamily: 'Cairo, sans-serif' }}>
       {/* Header - الهوية البصرية لوزارة التعليم */}
-      <div className="bg-gradient-to-r from-green-600 via-emerald-500 to-teal-500 text-white px-8 py-6 flex items-center justify-between print-header">
+      <div className="text-white px-8 py-6 flex items-center justify-between print-header" style={{ backgroundColor: '#15445A' }}>
         <div className="flex items-center gap-6">
           <div className="w-20 h-20 bg-white rounded-lg flex items-center justify-center p-2">
             <svg viewBox="0 0 200 150" className="w-full h-full">
@@ -995,7 +995,7 @@ function MOEReportGenerator() {
       </div>
       
       {/* Footer */}
-      <div className="mt-8 pt-4 bg-gradient-to-r from-green-600 to-teal-600 text-white text-center py-3 rounded-lg">
+      <div className="mt-8 pt-4 text-white text-center py-3 rounded-lg" style={{ backgroundColor: '#07A869' }}>
         <div className="text-sm font-bold">العام الدراسي 1447 هـ</div>
       </div>
       </div>
@@ -1007,12 +1007,12 @@ function MOEReportGenerator() {
     { id: 2, title: "التفاعل مع المجتمع المهني", icon: "👥" },
     { id: 3, title: "التفاعل مع أولياء الأمور", icon: "👨‍👩‍👧‍👦" },
     { id: 4, title: "التنويع في استراتيجيات التدريس", icon: "🎓" },
-    { id: 5, title: "تحسين نتائج التعلم", icon: "📈" },
+    { id: 5, title: "تحسين نتائج المتعلمين", icon: "📈" },
     { id: 6, title: "إعداد وتنفيذ خطة التعلم", icon: "📅" },
-    { id: 7, title: "توظيف تقنيات ووسائل التعلم المناسبة", icon: "💻" },
-    { id: 8, title: "تهيئة بيئة تعليمية", icon: "🏫" },
+    { id: 7, title: "توظيف تقنيات ووسائل التعلم", icon: "💻" },
+    { id: 8, title: "تهيئة البيئة التعليمية", icon: "🏫" },
     { id: 9, title: "الإدارة الصفية", icon: "🎯" },
-    { id: 10, title: "تحليل نتائج المتعلمين وتشخيص مستوياتهم", icon: "📊" },
+    { id: 10, title: "تحليل نتائج المتعلمين", icon: "📊" },
     { id: 11, title: "تنوع أساليب التقويم", icon: "✍️" }
   ];
 
@@ -1336,10 +1336,11 @@ function MOEReportGenerator() {
               /* وضع التقرير في بداية الصفحة */
               #report-content {
                 position: absolute;
-                left: 0;
+                left: 50%;
                 top: 0;
+                transform: translateX(-50%);
                 width: 100%;
-                max-width: 100%;
+                max-width: 210mm;
                 height: auto;
                 margin: 0;
                 padding: 0;
@@ -1347,13 +1348,12 @@ function MOEReportGenerator() {
                 box-shadow: none !important;
                 border: none !important;
                 border-radius: 0 !important;
-                transform: none;
               }
               
-              /* ملائمة المحتوى للصفحة */
+              /* ملائمة المحتوى للصفحة A4 */
               @page {
                 size: A4 portrait;
-                margin: 10mm 8mm;
+                margin: 8mm 5mm;
               }
               
               /* إخفاء عناصر التحكم */
@@ -1366,27 +1366,41 @@ function MOEReportGenerator() {
               .print-header {
                 border-radius: 0 !important;
                 page-break-after: avoid;
-                padding: 20px 30px !important;
+                padding: 15px 20px !important;
+                background-color: #15445A !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
               }
               
               /* تنسيق محتوى التقرير */
               #report-content > div:last-child {
-                padding: 20px 30px !important;
+                padding: 15px 20px !important;
               }
               
               /* ضمان طباعة الألوان */
               body {
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-                color-adjust: exact;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                color-adjust: exact !important;
+              }
+              
+              /* ضمان طباعة الألوان في جميع العناصر */
+              * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                color-adjust: exact !important;
+              }
+              
+              /* ضمان طباعة الفوتر باللون الصحيح */
+              div[style*="backgroundColor"] {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
               }
               
               /* ضمان طباعة الصور */
               img {
                 max-width: 100%;
                 page-break-inside: avoid;
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
               }
               
               /* تجنب تقسيم الصفحات داخل العناصر */
@@ -2110,7 +2124,7 @@ function PerformanceReportGenerator() {
 
     return (
       <div id="report-content" className="bg-white" style={{ fontFamily: 'Cairo, sans-serif' }}>
-        <div className="bg-gradient-to-r from-green-600 via-emerald-500 to-teal-500 text-white px-8 py-6 flex items-center justify-between print-header">
+        <div className="text-white px-8 py-6 flex items-center justify-between print-header" style={{ backgroundColor: '#15445A' }}>
           <div className="flex items-center gap-6">
             <div className="w-20 h-20 bg-white rounded-lg flex items-center justify-center p-2">
               <svg viewBox="0 0 200 150" className="w-full h-full">
@@ -2261,7 +2275,7 @@ function PerformanceReportGenerator() {
           </div>
         </div>
 
-        <div className="bg-gradient-to-r from-green-600 to-teal-600 text-white p-4 text-center">
+        <div className="text-white p-4 text-center" style={{ backgroundColor: '#07A869' }}>
           <p className="text-lg font-bold">العام الدراسي {formData.academicYear} هـ</p>
         </div>
       </div>
@@ -2472,10 +2486,11 @@ function PerformanceReportGenerator() {
 
               #report-content {
                 position: absolute;
-                left: 0;
+                left: 50%;
                 top: 0;
+                transform: translateX(-50%);
                 width: 100%;
-                max-width: 100%;
+                max-width: 210mm;
                 height: auto;
                 margin: 0;
                 padding: 0;
@@ -2483,12 +2498,11 @@ function PerformanceReportGenerator() {
                 box-shadow: none !important;
                 border: none !important;
                 border-radius: 0 !important;
-                transform: none;
               }
 
               @page {
                 size: A4 portrait;
-                margin: 10mm 8mm;
+                margin: 8mm 5mm;
               }
 
               .no-print {
@@ -2499,24 +2513,31 @@ function PerformanceReportGenerator() {
               .print-header {
                 border-radius: 0 !important;
                 page-break-after: avoid;
-                padding: 20px 30px !important;
+                padding: 15px 20px !important;
+                background-color: #15445A !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
               }
 
               #report-content > div:last-child {
-                padding: 20px 30px !important;
+                padding: 15px 20px !important;
               }
 
               body {
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-                color-adjust: exact;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                color-adjust: exact !important;
+              }
+              
+              * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                color-adjust: exact !important;
               }
 
               img {
                 max-width: 100%;
                 page-break-inside: avoid;
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
               }
 
               .border-2, .border, .rounded-xl, .bg-white, div[class*="border"] {
@@ -3706,17 +3727,17 @@ function StudentFollowUpLog() {
 function GeneralReportsGenerator() {
   // بنود الأداء الوظيفي الـ 11
   const performanceItems = [
-    "التخطيط",
-    "التدريس",
-    "التقويم", 
-    "المسؤوليات المهنية",
-    "التطوير المهني",
-    "إدارة الصف",
-    "التواصل مع أولياء الأمور",
-    "المشاركة المجتمعية",
-    "البحث والابتكار",
-    "القيادة والمبادرة",
-    "الممارسات الأخلاقية والمهنية"
+    "أداء الواجبات الوظيفية",
+    "التفاعل مع المجتمع المهني",
+    "التفاعل مع أولياء الأمور",
+    "التنويع في استراتيجيات التدريس",
+    "تحسين نتائج المتعلمين",
+    "إعداد وتنفيذ خطة التعلم",
+    "توظيف تقنيات ووسائل التعلم",
+    "تهيئة البيئة التعليمية",
+    "الإدارة الصفية",
+    "تحليل نتائج المتعلمين",
+    "تنوع أساليب التقويم"
   ];
 
   const [formData, setFormData] = useState({
@@ -3773,7 +3794,7 @@ function GeneralReportsGenerator() {
           @media print {
             @page {
               size: A4 portrait;
-              margin: 10mm 8mm;
+              margin: 8mm 5mm;
             }
             
             * {
@@ -3786,14 +3807,37 @@ function GeneralReportsGenerator() {
             
             #general-report-preview {
               position: absolute;
-              left: 0;
+              left: 50%;
               top: 0;
+              transform: translateX(-50%);
               width: 100%;
+              max-width: 210mm;
               background: white;
             }
             
             .no-print {
               display: none !important;
+            }
+            
+            /* ضمان طباعة الألوان */
+            body {
+              -webkit-print-color-adjust: exact !important;
+              print-color-adjust: exact !important;
+              color-adjust: exact !important;
+            }
+            
+            * {
+              -webkit-print-color-adjust: exact !important;
+              print-color-adjust: exact !important;
+              color-adjust: exact !important;
+            }
+            
+            /* تنسيق الهيدر للطباعة */
+            .print-header {
+              border-radius: 0 !important;
+              page-break-after: avoid;
+              padding: 15px 20px !important;
+              background-color: #15445A !important;
             }
             
             /* تصغير الخطوط للطباعة */
@@ -3846,7 +3890,7 @@ function GeneralReportsGenerator() {
 
         <div id="general-report-preview" className="bg-white" style={{ fontFamily: 'Cairo, sans-serif' }}>
           {/* Header */}
-          <div className="bg-gradient-to-r from-green-600 via-emerald-500 to-teal-500 text-white px-8 py-6 flex items-center justify-between print-header">
+          <div className="text-white px-8 py-6 flex items-center justify-between print-header" style={{ backgroundColor: '#15445A' }}>
             <div className="flex items-center gap-6">
               <div className="w-20 h-20 bg-white rounded-lg flex items-center justify-center p-2">
                 <svg viewBox="0 0 200 150" className="w-full h-full">
@@ -4009,6 +4053,11 @@ function GeneralReportsGenerator() {
                 </div>
               </div>
             </div>
+          </div>
+
+          {/* Footer */}
+          <div className="text-white p-4 text-center" style={{ backgroundColor: '#07A869' }}>
+            <p className="text-lg font-bold">العام الدراسي {formData.academicYear} هـ</p>
           </div>
         </div>
       </div>
