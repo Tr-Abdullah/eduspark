@@ -1498,6 +1498,31 @@ function MOEReportGenerator() {
               .grid-cols-2 img {
                 height: 120px !important;
               }
+              
+              /* إصلاح عرض الشبكة في الطباعة - جنباً إلى جنب */
+              #report-content .grid {
+                display: grid !important;
+              }
+              
+              #report-content .grid-cols-2 {
+                grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+              }
+              
+              #report-content .md\\:grid-cols-2 {
+                grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+              }
+              
+              #report-content .gap-4 {
+                gap: 1rem !important;
+              }
+              
+              #report-content .grid-cols-3 {
+                grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+              }
+              
+              #report-content .md\\:grid-cols-3 {
+                grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+              }
             }
           `}</style>
           <div className="flex items-center justify-between mb-6 no-print">
@@ -3938,6 +3963,23 @@ function GeneralReportsGenerator() {
             
             #general-report-preview .p-6, #general-report-preview .p-8 {
               padding: 1rem !important;
+            }
+            
+            /* إصلاح عرض الشبكة في الطباعة - جنباً إلى جنب */
+            #general-report-preview .grid {
+              display: grid !important;
+            }
+            
+            #general-report-preview .grid-cols-2 {
+              grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+            }
+            
+            #general-report-preview .md\\:grid-cols-2 {
+              grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+            }
+            
+            #general-report-preview .gap-4 {
+              gap: 1rem !important;
             }
           }
         `}</style>
