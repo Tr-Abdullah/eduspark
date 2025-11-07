@@ -1316,7 +1316,6 @@ function MOEReportGenerator() {
                 top: 0;
                 width: 100%;
                 max-width: 210mm;
-                min-height: 297mm;
                 margin: 0;
                 padding: 0;
                 background: white;
@@ -1328,7 +1327,7 @@ function MOEReportGenerator() {
               /* ملائمة المحتوى للصفحة */
               @page {
                 size: A4;
-                margin: 0;
+                margin: 10mm 15mm;
               }
               
               /* إخفاء عناصر التحكم */
@@ -1409,6 +1408,19 @@ function MOEReportGenerator() {
               
               .p-3 {
                 padding: 0.5rem !important;
+              }
+              
+              /* منع تقسيم الصفحات */
+              #report-content, #report-content * {
+                page-break-inside: avoid !important;
+                page-break-before: avoid !important;
+                page-break-after: avoid !important;
+              }
+              
+              /* تصغير الصور لتوفير المساحة */
+              #report-content img {
+                max-height: 100px !important;
+                object-fit: cover !important;
               }
               
               /* تحسين عرض الصور في الطباعة */
@@ -2317,7 +2329,6 @@ function PerformanceReportGenerator() {
                 top: 0;
                 width: 100%;
                 max-width: 210mm;
-                min-height: 297mm;
                 margin: 0;
                 padding: 0;
                 background: white;
@@ -2328,7 +2339,7 @@ function PerformanceReportGenerator() {
 
               @page {
                 size: A4;
-                margin: 0;
+                margin: 10mm 15mm;
               }
 
               .no-print {
@@ -2408,6 +2419,19 @@ function PerformanceReportGenerator() {
 
               .signatures-grid .p-6 {
                 padding: 1.5rem !important;
+              }
+              
+              /* منع تقسيم الصفحات */
+              #report-content, #report-content * {
+                page-break-inside: avoid !important;
+                page-break-before: avoid !important;
+                page-break-after: avoid !important;
+              }
+              
+              /* تصغير الصور لتوفير المساحة */
+              #report-content img {
+                max-height: 130px !important;
+                object-fit: cover !important;
               }
             }
           `}</style>
