@@ -3940,123 +3940,107 @@ function GeneralReportsGenerator() {
               background-color: #15445A !important;
             }
             
-            /* تصغير جميع العناصر للطباعة - صفحة واحدة فقط */
+            /* تنسيق أفضل للطباعة - يطابق المعاينة */
             #general-report-preview {
-              font-size: 9px !important;
+              font-size: 10px !important;
             }
             
             #general-report-preview .text-3xl {
-              font-size: 1rem !important;
+              font-size: 1.5rem !important;
             }
             
             #general-report-preview .text-2xl {
-              font-size: 0.95rem !important;
+              font-size: 1.2rem !important;
             }
             
             #general-report-preview .text-xl {
-              font-size: 0.85rem !important;
+              font-size: 1rem !important;
             }
             
             #general-report-preview .text-lg {
-              font-size: 0.8rem !important;
+              font-size: 0.9rem !important;
+            }
+            
+            #general-report-preview .text-base {
+              font-size: 0.85rem !important;
             }
             
             #general-report-preview .text-sm {
-              font-size: 0.7rem !important;
+              font-size: 0.8rem !important;
             }
             
             #general-report-preview .text-xs {
-              font-size: 0.65rem !important;
+              font-size: 0.7rem !important;
             }
             
-            /* تكبير ارتفاع الصور */
-            #general-report-preview .grid-cols-2 img {
-              max-height: 140px !important;
+            /* تصغير الصور للحفاظ على صفحة واحدة */
+            #general-report-preview .max-w-md {
+              max-width: 18rem !important;
             }
             
-            /* تقليل المسافات */
-            #general-report-preview .p-8 {
-              padding: 0.4rem !important;
-            }
-            
-            #general-report-preview .p-6 {
-              padding: 0.3rem !important;
-            }
-            
-            #general-report-preview .p-4 {
-              padding: 0.25rem !important;
-            }
-            
+            /* الحفاظ على المسافات كما في المعاينة */
             #general-report-preview .p-3 {
-              padding: 0.15rem !important;
+              padding: 0.5rem !important;
             }
             
             #general-report-preview .p-2 {
-              padding: 0.1rem !important;
+              padding: 0.35rem !important;
             }
             
             #general-report-preview .p-1\\.5 {
-              padding: 0.08rem !important;
+              padding: 0.25rem !important;
             }
             
             #general-report-preview .p-1 {
-              padding: 0.05rem !important;
-            }
-            
-            #general-report-preview .space-y-3 > * + * {
-              margin-top: 0.15rem !important;
+              padding: 0.15rem !important;
             }
             
             #general-report-preview .space-y-2 > * + * {
-              margin-top: 0.1rem !important;
-            }
-            
-            #general-report-preview .gap-4 {
-              gap: 0.2rem !important;
+              margin-top: 0.35rem !important;
             }
             
             #general-report-preview .gap-3 {
-              gap: 0.15rem !important;
+              gap: 0.5rem !important;
             }
             
             #general-report-preview .gap-2 {
-              gap: 0.1rem !important;
+              gap: 0.35rem !important;
             }
             
             #general-report-preview .gap-1\\.5 {
-              gap: 0.08rem !important;
-            }
-            
-            #general-report-preview .mb-3 {
-              margin-bottom: 0.15rem !important;
+              gap: 0.25rem !important;
             }
             
             #general-report-preview .mb-2 {
-              margin-bottom: 0.1rem !important;
+              margin-bottom: 0.35rem !important;
+            }
+            
+            #general-report-preview .mb-1\\.5 {
+              margin-bottom: 0.25rem !important;
             }
             
             #general-report-preview .mb-1 {
-              margin-bottom: 0.08rem !important;
+              margin-bottom: 0.2rem !important;
             }
             
             #general-report-preview .mb-0\\.5 {
-              margin-bottom: 0.05rem !important;
+              margin-bottom: 0.15rem !important;
             }
             
             #general-report-preview .mt-1 {
-              margin-top: 0.08rem !important;
+              margin-top: 0.2rem !important;
             }
             
             #general-report-preview .mt-0\\.5 {
-              margin-top: 0.05rem !important;
-            }
-            
-            #general-report-preview .pt-3 {
-              padding-top: 0.15rem !important;
+              margin-top: 0.15rem !important;
             }
             
             #general-report-preview .pt-2 {
-              padding-top: 0.1rem !important;
+              padding-top: 0.35rem !important;
+            }
+            
+            #general-report-preview .pb-2 {
+              padding-bottom: 0.35rem !important;
             }
             
             #general-report-preview .py-2 {
@@ -4195,12 +4179,12 @@ function GeneralReportsGenerator() {
             <div className="bg-gradient-to-r from-teal-50 to-cyan-50 rounded-lg p-2 border border-teal-200">
               {/* اسم البرنامج وأهداف البرنامج جنباً إلى جنب */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mb-2 pb-2 border-b border-teal-300">
-                <div className="text-xs">
+                <div className="text-sm">
                   <span className="font-bold text-gray-700">اسم البرنامج:</span>
                   <div className="text-gray-900 mt-0.5">{formData.programName}</div>
                 </div>
                 {formData.programGoals.length > 0 && (
-                  <div className="text-xs">
+                  <div className="text-sm">
                     <span className="font-bold text-gray-700">أهداف البرنامج:</span>
                     <ul className="list-disc list-inside mr-4 mt-0.5">
                       {formData.programGoals.map((goal, index) => (
@@ -4212,19 +4196,19 @@ function GeneralReportsGenerator() {
               </div>
               
               {/* البند والعنصر في صف واحد */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs mb-1.5">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm mb-1.5">
                 <div className="flex gap-1">
                   <span className="font-bold text-gray-700">البند:</span>
-                  <span className="text-gray-900 text-xs">{formData.performanceItem}</span>
+                  <span className="text-gray-900">{formData.performanceItem}</span>
                 </div>
                 <div className="flex gap-1">
                   <span className="font-bold text-gray-700">العنصر:</span>
-                  <span className="text-gray-900 text-xs">{formData.performanceElement}</span>
+                  <span className="text-gray-900">{formData.performanceElement}</span>
                 </div>
               </div>
               
               {/* تاريخ التنفيذ والمستهدفون في صف واحد */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
                 <div className="flex gap-1">
                   <span className="font-bold text-gray-700">تاريخ التنفيذ:</span>
                   <span className="text-gray-900">{formData.executionDay}/{formData.executionMonth}/{formData.executionYear} هـ</span>
@@ -4236,8 +4220,8 @@ function GeneralReportsGenerator() {
               </div>
             </div>
 
-            {/* الشواهد (4 صور مربعة في شبكة 2x2) */}
-            <div className="grid gap-1.5 sm:grid-cols-2">
+            {/* الشواهد (4 صور مربعة صغيرة في شبكة 2x2) */}
+            <div className="grid gap-1.5 sm:grid-cols-2 max-w-md mx-auto">
               {(['img1', 'img2', 'img3', 'img4'] as const).map((imgKey, index) => {
                 const colors = [
                   { bg: 'from-blue-600 to-blue-700', border: 'border-blue-200', bgLight: 'bg-blue-50/50' },
@@ -4248,7 +4232,7 @@ function GeneralReportsGenerator() {
                 const color = colors[index];
 
                 return (
-                  <div key={imgKey} className={`border ${color.border} rounded p-1.5 ${color.bgLight}`}>
+                  <div key={imgKey} className={`border ${color.border} rounded p-1 ${color.bgLight}`}>
                     <div className={`bg-white rounded p-1 border border-dashed ${color.border} aspect-square flex items-center justify-center`}>
                       {images[imgKey] ? (
                         <img
@@ -4258,7 +4242,7 @@ function GeneralReportsGenerator() {
                         />
                       ) : (
                         <div className="text-center text-gray-400">
-                          <span className="text-2xl mb-1 block">📸</span>
+                          <span className="text-xl">📸</span>
                         </div>
                       )}
                     </div>
@@ -4270,15 +4254,15 @@ function GeneralReportsGenerator() {
             {/* التوقيعات */}
             <div className="grid grid-cols-2 gap-3 pt-2 border-t border-gray-200">
               <div className="text-right">
-                <p className="text-gray-600 font-semibold mb-0.5 text-xs">المعلم</p>
-                <p className="text-xs font-bold text-gray-800">{formData.teacherName}</p>
+                <p className="text-gray-600 font-semibold mb-0.5 text-sm">المعلم</p>
+                <p className="text-base font-bold text-gray-800">{formData.teacherName}</p>
                 <div className="mt-1 pt-0.5 inline-block">
                   <div className="border-t border-gray-400 w-20"></div>
                 </div>
               </div>
               <div className="text-left">
-                <p className="text-gray-600 font-semibold mb-0.5 text-xs">مدير المدرسة</p>
-                <p className="text-xs font-bold text-gray-800">{formData.principalName}</p>
+                <p className="text-gray-600 font-semibold mb-0.5 text-sm">مدير المدرسة</p>
+                <p className="text-base font-bold text-gray-800">{formData.principalName}</p>
                 <div className="mt-1 pt-0.5 inline-block">
                   <div className="border-t border-gray-400 w-20"></div>
                 </div>
@@ -4288,7 +4272,7 @@ function GeneralReportsGenerator() {
 
           {/* Footer */}
           <div className="text-white p-1.5 text-center" style={{ backgroundColor: '#07A869' }}>
-            <p className="text-xs font-bold">العام الدراسي {formData.academicYear} هـ</p>
+            <p className="text-sm font-bold">العام الدراسي {formData.academicYear} هـ</p>
           </div>
         </div>
       </div>
