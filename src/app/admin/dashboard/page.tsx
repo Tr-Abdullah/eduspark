@@ -801,21 +801,12 @@ function MOEReportGenerator() {
 
   const Report = () => (
     <div id="report-content" className="bg-white" style={{ fontFamily: "'Helvetica Neue W23', 'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
-      {/* Header - الهوية البصرية لوزارة التعليم */}
-      <div className="text-white px-8 py-6 print-header" style={{ backgroundColor: '#15445A' }}>
-        <div className="flex items-center justify-center gap-8">
-          {/* الجانب الأيمن */}
-          <div className="text-right leading-tight">
-            <div className="text-base font-bold">المملكة العربية السعودية</div>
-            <div className="text-xs opacity-90">Kingdom of Saudi Arabia</div>
-          </div>
-          
-          {/* الشعار في الوسط */}
-          <div className="w-20 h-20 bg-white rounded-lg flex items-center justify-center p-2">
+      {/* Header */}
+      <div className="bg-gradient-to-r from-green-700 to-green-600 text-white px-4 sm:px-6 py-3 sm:py-4">
+        <div className="flex items-center justify-between gap-1 sm:gap-2">
+          <div className="w-16 h-16 sm:w-20 sm:h-20 bg-white rounded-lg flex items-center justify-center p-2">
             <svg viewBox="0 0 200 150" className="w-full h-full">
-              {/* شعار وزارة التعليم */}
               <g fill="#00a99d">
-                {/* النقاط العلوية */}
                 <circle cx="50" cy="25" r="5"/>
                 <circle cx="60" cy="25" r="5"/>
                 <circle cx="70" cy="25" r="5"/>
@@ -856,23 +847,16 @@ function MOEReportGenerator() {
                 <circle cx="143" cy="25" r="5"/>
                 <circle cx="153" cy="25" r="5"/>
               </g>
-              {/* النص */}
-              <text x="100" y="90" textAnchor="middle" fill="#00a99d" fontSize="16" fontWeight="bold" fontFamily="Cairo">وزارة التعليم</text>
-              <text x="100" y="110" textAnchor="middle" fill="#00a99d" fontSize="10" fontFamily="Arial">Ministry of Education</text>
+              <text x="100" y="90" textAnchor="middle" fill="#00a99d" fontSize="16" fontWeight="bold">وزارة التعليم</text>
+              <text x="100" y="110" textAnchor="middle" fill="#00a99d" fontSize="10">Ministry of Education</text>
             </svg>
           </div>
-          
-          {/* الجانب الأيسر */}
-          <div className="text-left leading-tight">
-            <div className="text-base font-bold">وزارة التعليم</div>
-            <div className="text-xs opacity-90">إدارة تعليم جازان</div>
+          <div className="text-center leading-tight flex-1">
+            <div className="text-sm sm:text-base font-bold">وزارة التعليم</div>
+            <div className="text-sm sm:text-base font-bold">الإدارة العامة للتعليم بمنطقة جازان</div>
+            <div className="text-xs sm:text-sm font-semibold mt-0.5">{formData.schoolName}</div>
           </div>
         </div>
-      </div>
-
-      {/* اسم المدرسة - ملاصق للهيدر */}
-      <div className="text-center text-white py-2 px-6" style={{ backgroundColor: '#15445A' }}>
-        <h1 className="text-2xl font-bold">{formData.schoolName}</h1>
       </div>
 
       {/* محتوى التقرير */}
@@ -999,31 +983,32 @@ function MOEReportGenerator() {
           <p className="text-gray-500 text-center py-8">لا توجد صور مرفقة</p>
         )}
       </div>
-      <div className="grid grid-cols-2 gap-8 mt-8 pt-6 border-t-2 border-gray-300">
-        <div className="text-center">
-          <div className="text-gray-600 mb-2">اسم المعلم:</div>
-          <div className="border-b-2 border-gray-400 pb-2 mb-2">{formData.teacherName}</div>
-          {formData.teacherName === "عبدالله حسن الفيفي" && (
-            <div className="flex justify-center mb-2">
+      
+      {/* Footer - Signatures */}
+      <div className="px-4 sm:px-6 py-3 sm:py-4 mt-4 sm:mt-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 border-t border-gray-200">
+          <div className="text-right">
+            <p className="text-gray-600 font-semibold mb-0.5 text-sm">المعلم</p>
+            <p className="text-sm sm:text-base font-bold text-gray-800">{formData.teacherName}</p>
+            <div className="flex justify-end mt-1">
               <img 
                 src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNzAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cGF0aCBkPSJNIDI1IDYyMCBRIDgwIDQ4MCAxNzUgNTgwIFEgMjcwIDY4MCAzNjAgNTkwIFEgNDUwIDUwMCA0NTAgNzAwIE0gMzgwIDU4MCBMIDcxMCA1OTAgTSA2MjAgNTgwIFEgNjQwIDU3MCA2NjAgNTgwIFEgNjgwIDU5MCA3MDAgNTgwIE0gMzgwIDY1MCBRIDQyMCA2NDAgNDYwIDY1MCBRIDUwMCA2NjAgNTQwIDY1MCBRIDU4MCA2NDAgNjIwIDY1MCBRIDY2MCA2NjAgNzAwIDY1MCBNIDUwNSA3MDAiIHN0cm9rZT0iYmx1ZSIgc3Ryb2tlLXdpZHRoPSI0IiBmaWxsPSJub25lIi8+Cjwvc3ZnPg==" 
                 alt="توقيع"
-                className="h-12 object-contain"
+                className="h-10 object-contain"
               />
             </div>
-          )}
-          <div className="text-sm text-gray-500">التوقيع</div>
+            <div className="mt-1 pt-0.5 inline-block">
+              <div className="border-t border-gray-400 w-20"></div>
+            </div>
+          </div>
+          <div className="text-left">
+            <p className="text-gray-600 font-semibold mb-0.5 text-sm">مدير المدرسة</p>
+            <p className="text-sm sm:text-base font-bold text-gray-800">{formData.principalName}</p>
+            <div className="mt-1 pt-0.5 inline-block">
+              <div className="border-t border-gray-400 w-20"></div>
+            </div>
+          </div>
         </div>
-        <div className="text-center">
-          <div className="text-gray-600 mb-2">مدير المدرسة:</div>
-          <div className="border-b-2 border-gray-400 pb-2 mb-2">{formData.principalName}</div>
-          <div className="text-sm text-gray-500">التوقيع</div>
-        </div>
-      </div>
-      
-      {/* Footer */}
-      <div className="mt-8 pt-4 text-white text-center py-3 rounded-lg" style={{ backgroundColor: '#07A869' }}>
-        <div className="text-sm font-bold">العام الدراسي 1447 هـ</div>
       </div>
       </div>
     </div>
@@ -2327,15 +2312,13 @@ function PerformanceReportGenerator() {
             <div className="text-right">
               <p className="text-gray-600 font-semibold mb-2">معلم المادة</p>
               <p className="text-xl font-bold text-gray-800">{formData.teacherName}</p>
-              {formData.teacherName === "عبدالله حسن الفيفي" && (
-                <div className="flex justify-end mt-2">
-                  <img 
-                    src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNzAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cGF0aCBkPSJNIDI1IDYyMCBRIDgwIDQ4MCAxNzUgNTgwIFEgMjcwIDY4MCAzNjAgNTkwIFEgNDUwIDUwMCA0NTAgNzAwIE0gMzgwIDU4MCBMIDcxMCA1OTAgTSA2MjAgNTgwIFEgNjQwIDU3MCA2NjAgNTgwIFEgNjgwIDU5MCA3MDAgNTgwIE0gMzgwIDY1MCBRIDQyMCA2NDAgNDYwIDY1MCBRIDUwMCA2NjAgNTQwIDY1MCBRIDU4MCA2NDAgNjIwIDY1MCBRIDY2MCA2NjAgNzAwIDY1MCBNIDUwNSA3MDAiIHN0cm9rZT0iYmx1ZSIgc3Ryb2tlLXdpZHRoPSI0IiBmaWxsPSJub25lIi8+Cjwvc3ZnPg==" 
-                    alt="توقيع"
-                    className="h-14 object-contain"
-                  />
-                </div>
-              )}
+              <div className="flex justify-end mt-2">
+                <img 
+                  src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNzAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cGF0aCBkPSJNIDI1IDYyMCBRIDgwIDQ4MCAxNzUgNTgwIFEgMjcwIDY4MCAzNjAgNTkwIFEgNDUwIDUwMCA0NTAgNzAwIE0gMzgwIDU4MCBMIDcxMCA1OTAgTSA2MjAgNTgwIFEgNjQwIDU3MCA2NjAgNTgwIFEgNjgwIDU5MCA3MDAgNTgwIE0gMzgwIDY1MCBRIDQyMCA2NDAgNDYwIDY1MCBRIDUwMCA2NjAgNTQwIDY1MCBRIDU4MCA2NDAgNjIwIDY1MCBRIDY2MCA2NjAgNzAwIDY1MCBNIDUwNSA3MDAiIHN0cm9rZT0iYmx1ZSIgc3Ryb2tlLXdpZHRoPSI0IiBmaWxsPSJub25lIi8+Cjwvc3ZnPg==" 
+                  alt="توقيع"
+                  className="h-14 object-contain"
+                />
+              </div>
               <div className="mt-4 pt-2 inline-block">
                 <div className="border-t-2 border-gray-400 w-32"></div>
               </div>
@@ -2589,7 +2572,7 @@ function PerformanceReportGenerator() {
 
               @page {
                 size: A4 portrait;
-                margin: 10mm 8mm;
+                margin: 6mm 4mm;
               }
 
               .no-print {
@@ -2607,13 +2590,15 @@ function PerformanceReportGenerator() {
               }
 
               #report-content > div:last-child {
-                padding: 12px 15px !important;
+                padding: 10px 12px !important;
               }
 
               body {
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
                 color-adjust: exact !important;
+                width: 100% !important;
+                max-width: 210mm !important;
               }
               
               * {
@@ -4199,7 +4184,6 @@ function GeneralReportsGenerator() {
               {/* النصوص على اليسار فوق بعض */}
               <div className="text-center leading-tight flex-1">
                 <div className="text-sm sm:text-base font-bold">المملكة العربية السعودية</div>
-                <div className="text-xs font-bold hidden sm:block">Kingdom of Saudi Arabia</div>
                 <div className="text-sm sm:text-base font-bold mt-1">وزارة التعليم</div>
                 <div className="text-sm sm:text-base font-bold">الإدارة العامة للتعليم بمنطقة جازان</div>
               </div>
@@ -4294,15 +4278,13 @@ function GeneralReportsGenerator() {
               <div className="text-right">
                 <p className="text-gray-600 font-semibold mb-0.5 text-sm">المعلم</p>
                 <p className="text-sm sm:text-base font-bold text-gray-800">{formData.teacherName}</p>
-                {formData.teacherName === "عبدالله حسن الفيفي" && (
-                  <div className="flex justify-end mt-1">
-                    <img 
-                      src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNzAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cGF0aCBkPSJNIDI1IDYyMCBRIDgwIDQ4MCAxNzUgNTgwIFEgMjcwIDY4MCAzNjAgNTkwIFEgNDUwIDUwMCA0NTAgNzAwIE0gMzgwIDU4MCBMIDcxMCA1OTAgTSA2MjAgNTgwIFEgNjQwIDU3MCA2NjAgNTgwIFEgNjgwIDU5MCA3MDAgNTgwIE0gMzgwIDY1MCBRIDQyMCA2NDAgNDYwIDY1MCBRIDUwMCA2NjAgNTQwIDY1MCBRIDU4MCA2NDAgNjIwIDY1MCBRIDY2MCA2NjAgNzAwIDY1MCBNIDUwNSA3MDAiIHN0cm9rZT0iYmx1ZSIgc3Ryb2tlLXdpZHRoPSI0IiBmaWxsPSJub25lIi8+Cjwvc3ZnPg==" 
-                      alt="توقيع"
-                      className="h-10 object-contain"
-                    />
-                  </div>
-                )}
+                <div className="flex justify-end mt-1">
+                  <img 
+                    src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNzAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cGF0aCBkPSJNIDI1IDYyMCBRIDgwIDQ4MCAxNzUgNTgwIFEgMjcwIDY4MCAzNjAgNTkwIFEgNDUwIDUwMCA0NTAgNzAwIE0gMzgwIDU4MCBMIDcxMCA1OTAgTSA2MjAgNTgwIFEgNjQwIDU3MCA2NjAgNTgwIFEgNjgwIDU5MCA3MDAgNTgwIE0gMzgwIDY1MCBRIDQyMCA2NDAgNDYwIDY1MCBRIDUwMCA2NjAgNTQwIDY1MCBRIDU4MCA2NDAgNjIwIDY1MCBRIDY2MCA2NjAgNzAwIDY1MCBNIDUwNSA3MDAiIHN0cm9rZT0iYmx1ZSIgc3Ryb2tlLXdpZHRoPSI0IiBmaWxsPSJub25lIi8+Cjwvc3ZnPg==" 
+                    alt="توقيع"
+                    className="h-10 object-contain"
+                  />
+                </div>
                 <div className="mt-1 pt-0.5 inline-block">
                   <div className="border-t border-gray-400 w-20"></div>
                 </div>
