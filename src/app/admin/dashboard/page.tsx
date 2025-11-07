@@ -9,8 +9,8 @@ function DashboardContent() {
   const searchParams = useSearchParams();
   const criteriaId = searchParams.get('criteria');
   // قراءة التبويب من باراميتر الرابط
-  const initialTab = (searchParams.get('tab') as "reports" | "tools" | "log" | "performance") || "reports";
-  const [activeTab, setActiveTab] = useState<"reports" | "tools" | "log" | "performance">(initialTab);
+  const initialTab = (searchParams.get('tab') as "reports" | "tools" | "log" | "performance" | "general") || "reports";
+  const [activeTab, setActiveTab] = useState<"reports" | "tools" | "log" | "performance" | "general">(initialTab);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -154,6 +154,27 @@ function DashboardContent() {
 
             <button
               onClick={() => {
+                setActiveTab("general");
+                setMobileMenuOpen(false);
+                const params = new URLSearchParams(window.location.search);
+                params.set('tab', 'general');
+                router.replace(`?${params.toString()}`);
+              }}
+              className={`w-full flex items-center ${sidebarCollapsed ? "justify-center px-2" : "gap-3 px-4"} py-3 rounded-xl transition-all ${
+                activeTab === "general"
+                  ? "bg-gradient-to-r from-teal-500 to-cyan-600 text-white shadow-lg"
+                  : "hover:bg-gray-100 dark:hover:bg-slate-700 text-gray-700 dark:text-gray-300"
+              }`}
+              title={sidebarCollapsed ? "التقارير العامة" : ""}
+            >
+              <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+              </svg>
+              {!sidebarCollapsed && <span className="font-medium">التقارير العامة</span>}
+            </button>
+
+            <button
+              onClick={() => {
                 setActiveTab("tools");
                 setMobileMenuOpen(false);
                 const params = new URLSearchParams(window.location.search);
@@ -242,6 +263,7 @@ function DashboardContent() {
                   <p className="text-teal-100">
                     {activeTab === "reports" && "إدارة وتوليد التقارير الرسمية"}
                     {activeTab === "performance" && "تقارير الأداء الوظيفي وشواهدها"}
+                    {activeTab === "general" && "التقارير العامة والأنشطة التربوية"}
                     {activeTab === "tools" && "الأدوات والإعدادات الإضافية"}
                     {activeTab === "log" && "سجل المتابعة الإلكتروني"}
                   </p>
@@ -249,6 +271,7 @@ function DashboardContent() {
                 <div className="hidden md:block text-6xl opacity-20">
                   {activeTab === "reports" && "📊"}
                   {activeTab === "performance" && "📑"}
+                  {activeTab === "general" && "🏆"}
                   {activeTab === "tools" && "🛠️"}
                   {activeTab === "log" && "🗒️"}
                 </div>
@@ -259,6 +282,7 @@ function DashboardContent() {
             <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700">
               {activeTab === "reports" && <MOEReportGenerator />}
               {activeTab === "performance" && <PerformanceReportGenerator />}
+              {activeTab === "general" && <GeneralReportsGenerator />}
               {activeTab === "tools" && <OtherTools />}
               {activeTab === "log" && <StudentFollowUpLog />}
             </div>
@@ -3575,6 +3599,676 @@ function StudentFollowUpLog() {
         <div className="flex items-center gap-2">
           <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
           <span>يتم الحفظ تلقائياً</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// مولد التقارير العامة
+function GeneralReportsGenerator() {
+  const generalCriteria = [
+    { id: 1, title: "النشاط الطلابي", icon: "🎯" },
+    { id: 2, title: "الإذاعة المدرسية", icon: "📻" },
+    { id: 3, title: "المبادرات التربوية والتعليمية", icon: "💡" },
+    { id: 4, title: "المشاركة في المناسبات الوطنية والعالمية", icon: "🇸🇦" },
+    { id: 5, title: "التحفيز والتكريم", icon: "🏆" },
+    { id: 6, title: "إدارة المنصات الإلكترونية", icon: "💻" },
+    { id: 7, title: "التنمية المهنية الذاتية", icon: "📚" },
+    { id: 8, title: "البحث التربوي وكتابة المقالات", icon: "✍️" },
+    { id: 9, title: "الشراكة المجتمعية", icon: "🤝" },
+    { id: 10, title: "التصميم والإنتاج التعليمي", icon: "🎨" },
+    { id: 11, title: "تفعيل المنصات التعليمية الرسمية", icon: "🌐" },
+    { id: 12, title: "العمل التطوعي والمساهمات الإنسانية", icon: "❤️" },
+    { id: 13, title: "القيادة التربوية", icon: "👨‍🏫" }
+  ];
+
+  // مقترحات لكل قسم
+  const suggestions = {
+    description: [
+      "تنظيم وإدارة الأنشطة الطلابية المتنوعة التي تهدف إلى تنمية مهارات الطلاب وصقل مواهبهم",
+      "الإشراف على برامج الإذاعة المدرسية اليومية وتطويرها بما يخدم الأهداف التربوية",
+      "إطلاق مبادرات تربوية مبتكرة تساهم في تحسين البيئة التعليمية",
+      "تنظيم الفعاليات والأنشطة الخاصة بالمناسبات الوطنية والعالمية",
+      "تطوير أساليب التحفيز والتكريم للطلاب المتميزين",
+      "الإشراف على المنصات الإلكترونية التعليمية وإدارتها بفعالية"
+    ],
+    objectives: [
+      "تنمية مهارات الطلاب الإبداعية والفكرية من خلال الأنشطة المتنوعة",
+      "تعزيز الانتماء الوطني والقيم الإسلامية لدى الطلاب",
+      "رفع مستوى التحصيل الدراسي من خلال البرامج الإثرائية",
+      "تحفيز الطلاب وتشجيعهم على التميز والإبداع",
+      "توظيف التقنية بشكل فعال في العملية التعليمية",
+      "بناء شراكات مجتمعية فاعلة تخدم العملية التعليمية"
+    ],
+    procedures: [
+      "عقد اجتماع تحضيري مع الطلاب المشاركين وتوزيع المهام والأدوار",
+      "إعداد خطة زمنية محددة للتنفيذ مع تحديد المسؤوليات",
+      "تجهيز المواد والوسائل اللازمة للنشاط أو المبادرة",
+      "تنفيذ البرنامج وفق الخطة المعدة مع المتابعة المستمرة",
+      "توثيق جميع مراحل التنفيذ بالصور والفيديوهات",
+      "عقد اجتماع ختامي لتقييم النشاط واستخلاص الدروس المستفادة"
+    ],
+    results: [
+      "تفاعل إيجابي ملحوظ من قبل الطلاب وأولياء الأمور",
+      "تحسن واضح في مهارات الطلاب المستهدفة بنسبة ملموسة",
+      "زيادة الدافعية لدى الطلاب نحو التعلم والمشاركة الفاعلة",
+      "تعزيز القيم والسلوكيات الإيجابية لدى الطلاب",
+      "تحقيق مراكز متقدمة على مستوى المدرسة أو الإدارة",
+      "إشادة من قبل إدارة المدرسة والمشرف التربوي"
+    ],
+    recommendations: [
+      "الاستمرار في تطوير البرنامج وتعميمه على فصول أخرى",
+      "تبادل الخبرات مع زملاء التخصص في المدارس الأخرى",
+      "توفير المزيد من الدعم المادي والمعنوي للبرامج المشابهة",
+      "إشراك أولياء الأمور بشكل أكبر في الأنشطة المستقبلية",
+      "توثيق التجربة ونشرها كنموذج يُحتذى به",
+      "تطوير آليات التقييم والمتابعة لضمان الاستدامة"
+    ]
+  };
+
+  const [selectedCriteria, setSelectedCriteria] = useState<number | null>(null);
+  const [formData, setFormData] = useState({
+    teacherName: "عبدالله حسن الفيفي",
+    schoolName: "متوسطة تحفيظ القرآن الكريم",
+    principalName: "أ. محمد أحمد الشهري",
+    gradeSubject: "الأول متوسط - لغة إنجليزية",
+    criteriaTitle: "",
+    date: new Date().toISOString().split('T')[0],
+    activityTitle: "",
+    description: "",
+    objectives: "",
+    procedures: "",
+    evidence: "",
+    results: "",
+    recommendations: "",
+    img1: null as string | null,
+    img2: null as string | null,
+    img3: null as string | null,
+    img4: null as string | null
+  });
+
+  // حالة لتفعيل/تعطيل الأقسام الاختيارية
+  const [enabledSections, setEnabledSections] = useState({
+    description: true,
+    objectives: true,
+    procedures: true,
+    evidence: true,
+    results: true,
+    recommendations: true
+  });
+
+  const [showPreview, setShowPreview] = useState(false);
+
+  const handleCriteriaSelect = (id: number) => {
+    setSelectedCriteria(id);
+    const criteria = generalCriteria.find(c => c.id === id);
+    setFormData(prev => ({ ...prev, criteriaTitle: criteria?.title || "" }));
+    setShowPreview(false);
+  };
+
+  const handleImageUpload = (imageKey: 'img1' | 'img2' | 'img3' | 'img4', event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFormData(prev => ({
+          ...prev,
+          [imageKey]: reader.result as string
+        }));
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const toggleSection = (section: keyof typeof enabledSections) => {
+    setEnabledSections(prev => ({
+      ...prev,
+      [section]: !prev[section]
+    }));
+  };
+
+  const applySuggestion = (field: string, suggestion: string) => {
+    setFormData(prev => ({
+      ...prev,
+      [field]: suggestion
+    }));
+  };
+
+  const handlePrint = () => {
+    window.print();
+  };
+
+  if (!selectedCriteria) {
+    return (
+      <div className="p-8">
+        <div className="mb-8">
+          <h2 className="text-3xl font-bold text-gray-800 dark:text-white mb-2">التقارير العامة</h2>
+          <p className="text-gray-600 dark:text-gray-400">اختر المجال لإنشاء تقرير توثيق مهني</p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {generalCriteria.map((criteria) => (
+            <button
+              key={criteria.id}
+              onClick={() => handleCriteriaSelect(criteria.id)}
+              className="group relative p-6 bg-gradient-to-br from-white to-gray-50 dark:from-slate-800 dark:to-slate-700 rounded-2xl border-2 border-gray-200 dark:border-gray-600 hover:border-teal-500 dark:hover:border-teal-400 hover:shadow-xl transition-all duration-300 text-right"
+            >
+              <div className="flex items-start gap-4">
+                <div className="text-4xl group-hover:scale-110 transition-transform">{criteria.icon}</div>
+                <div className="flex-1">
+                  <h3 className="text-lg font-bold text-gray-800 dark:text-white mb-2 group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors">
+                    {criteria.title}
+                  </h3>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                    انقر لإنشاء تقرير توثيق مهني
+                  </p>
+                </div>
+              </div>
+              <div className="absolute top-4 left-4 w-8 h-8 bg-teal-500 text-white rounded-full flex items-center justify-center text-sm font-bold opacity-0 group-hover:opacity-100 transition-opacity">
+                {criteria.id}
+              </div>
+            </button>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  if (showPreview) {
+    const selectedCriteriaData = generalCriteria.find(c => c.id === selectedCriteria);
+    
+    return (
+      <div className="max-w-5xl mx-auto p-4">
+        <style jsx global>{`
+          @media print {
+            @page {
+              size: A4 portrait;
+              margin: 10mm 8mm;
+            }
+            
+            * {
+              visibility: hidden;
+            }
+            
+            #general-report-preview, #general-report-preview * {
+              visibility: visible;
+            }
+            
+            #general-report-preview {
+              position: absolute;
+              left: 0;
+              top: 0;
+              width: 100%;
+              background: white;
+            }
+            
+            .no-print {
+              display: none !important;
+            }
+          }
+        `}</style>
+
+        <div className="no-print mb-6 flex gap-4">
+          <button
+            onClick={() => setShowPreview(false)}
+            className="px-6 py-3 bg-gray-500 text-white rounded-xl hover:bg-gray-600 transition-colors"
+          >
+            ← تعديل
+          </button>
+          <button
+            onClick={handlePrint}
+            className="flex-1 px-6 py-3 bg-gradient-to-r from-teal-500 to-cyan-600 text-white rounded-xl hover:from-teal-600 hover:to-cyan-700 transition-all"
+          >
+            طباعة التقرير 🖨️
+          </button>
+        </div>
+
+        <div id="general-report-preview" className="bg-white rounded-2xl shadow-2xl p-8 space-y-6">
+          {/* رأس التقرير */}
+          <div className="text-center border-b-4 border-teal-500 pb-6">
+            <h1 className="text-4xl font-bold text-gray-800 mb-2">تقرير التوثيق المهني</h1>
+            <p className="text-2xl text-teal-600 font-semibold">{formData.criteriaTitle}</p>
+          </div>
+
+          {/* معلومات أساسية */}
+          <div className="bg-gradient-to-r from-teal-50 to-cyan-50 rounded-xl p-6 border-2 border-teal-200">
+            <div className="grid grid-cols-2 gap-4 text-sm">
+              <div className="flex gap-2"><span className="font-bold text-gray-700">المعلم:</span> <span className="text-gray-900">{formData.teacherName}</span></div>
+              <div className="flex gap-2"><span className="font-bold text-gray-700">المدرسة:</span> <span className="text-gray-900">{formData.schoolName}</span></div>
+              <div className="flex gap-2"><span className="font-bold text-gray-700">الصف/المادة:</span> <span className="text-gray-900">{formData.gradeSubject}</span></div>
+              <div className="flex gap-2"><span className="font-bold text-gray-700">التاريخ:</span> <span className="text-gray-900">{formData.date}</span></div>
+              {formData.activityTitle && (
+                <div className="col-span-2 flex gap-2"><span className="font-bold text-gray-700">عنوان النشاط:</span> <span className="text-gray-900">{formData.activityTitle}</span></div>
+              )}
+            </div>
+          </div>
+
+          {/* الأقسام الاختيارية */}
+          {enabledSections.description && formData.description && (
+            <div className="border-l-4 border-teal-500 pl-6 py-2">
+              <h2 className="text-xl font-bold text-gray-800 mb-3 flex items-center gap-2">
+                <span className="text-teal-600">📋</span> الوصف العام
+              </h2>
+              <p className="text-gray-700 leading-relaxed whitespace-pre-wrap">{formData.description}</p>
+            </div>
+          )}
+
+          {enabledSections.objectives && formData.objectives && (
+            <div className="border-l-4 border-blue-500 pl-6 py-2 bg-blue-50/50 rounded-r-lg">
+              <h2 className="text-xl font-bold text-gray-800 mb-3 flex items-center gap-2">
+                <span className="text-blue-600">🎯</span> الأهداف
+              </h2>
+              <p className="text-gray-700 leading-relaxed whitespace-pre-wrap">{formData.objectives}</p>
+            </div>
+          )}
+
+          {enabledSections.procedures && formData.procedures && (
+            <div className="border-l-4 border-purple-500 pl-6 py-2">
+              <h2 className="text-xl font-bold text-gray-800 mb-3 flex items-center gap-2">
+                <span className="text-purple-600">⚙️</span> الإجراءات والخطوات
+              </h2>
+              <p className="text-gray-700 leading-relaxed whitespace-pre-wrap">{formData.procedures}</p>
+            </div>
+          )}
+
+          {enabledSections.evidence && (formData.evidence || formData.img1 || formData.img2 || formData.img3 || formData.img4) && (
+            <div className="border-l-4 border-green-500 pl-6 py-2 bg-green-50/50 rounded-r-lg">
+              <h2 className="text-xl font-bold text-gray-800 mb-3 flex items-center gap-2">
+                <span className="text-green-600">📸</span> الشواهد والأدلة
+              </h2>
+              {formData.evidence && (
+                <p className="text-gray-700 leading-relaxed whitespace-pre-wrap mb-4">{formData.evidence}</p>
+              )}
+              <div className="grid grid-cols-2 gap-4 mt-4">
+                {formData.img1 && (
+                  <div className="border-2 border-green-200 rounded-lg overflow-hidden">
+                    <img src={formData.img1} alt="شاهد 1" className="w-full h-48 object-cover" />
+                    <p className="text-xs text-center bg-green-100 py-1">الشاهد 1</p>
+                  </div>
+                )}
+                {formData.img2 && (
+                  <div className="border-2 border-green-200 rounded-lg overflow-hidden">
+                    <img src={formData.img2} alt="شاهد 2" className="w-full h-48 object-cover" />
+                    <p className="text-xs text-center bg-green-100 py-1">الشاهد 2</p>
+                  </div>
+                )}
+                {formData.img3 && (
+                  <div className="border-2 border-green-200 rounded-lg overflow-hidden">
+                    <img src={formData.img3} alt="شاهد 3" className="w-full h-48 object-cover" />
+                    <p className="text-xs text-center bg-green-100 py-1">الشاهد 3</p>
+                  </div>
+                )}
+                {formData.img4 && (
+                  <div className="border-2 border-green-200 rounded-lg overflow-hidden">
+                    <img src={formData.img4} alt="شاهد 4" className="w-full h-48 object-cover" />
+                    <p className="text-xs text-center bg-green-100 py-1">الشاهد 4</p>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
+          {enabledSections.results && formData.results && (
+            <div className="border-l-4 border-orange-500 pl-6 py-2">
+              <h2 className="text-xl font-bold text-gray-800 mb-3 flex items-center gap-2">
+                <span className="text-orange-600">📊</span> النتائج والتحليل
+              </h2>
+              <p className="text-gray-700 leading-relaxed whitespace-pre-wrap">{formData.results}</p>
+            </div>
+          )}
+
+          {enabledSections.recommendations && formData.recommendations && (
+            <div className="border-l-4 border-yellow-500 pl-6 py-2 bg-yellow-50/50 rounded-r-lg">
+              <h2 className="text-xl font-bold text-gray-800 mb-3 flex items-center gap-2">
+                <span className="text-yellow-600">💡</span> التوصيات
+              </h2>
+              <p className="text-gray-700 leading-relaxed whitespace-pre-wrap">{formData.recommendations}</p>
+            </div>
+          )}
+
+          {/* التوقيعات */}
+          <div className="grid grid-cols-2 gap-8 mt-12 pt-8 border-t-2 border-gray-300">
+            <div className="text-center">
+              <p className="text-gray-600 mb-6">إعداد المعلم</p>
+              <p className="font-bold text-lg mb-4">{formData.teacherName}</p>
+              <div className="border-t-2 border-gray-400 w-48 mx-auto"></div>
+              <p className="text-xs text-gray-500 mt-2">التوقيع</p>
+            </div>
+            <div className="text-center">
+              <p className="text-gray-600 mb-6">اعتماد قائد المدرسة</p>
+              <p className="font-bold text-lg mb-4">{formData.principalName}</p>
+              <div className="border-t-2 border-gray-400 w-48 mx-auto"></div>
+              <p className="text-xs text-gray-500 mt-2">التوقيع</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="p-8 max-w-6xl mx-auto">
+      <div className="mb-6 flex items-center justify-between">
+        <div>
+          <h2 className="text-2xl font-bold text-gray-800 dark:text-white">
+            {generalCriteria.find(c => c.id === selectedCriteria)?.title}
+          </h2>
+          <p className="text-gray-600 dark:text-gray-400">املأ النموذج المنهجي للتوثيق المهني</p>
+        </div>
+        <button
+          onClick={() => setSelectedCriteria(null)}
+          className="px-4 py-2 bg-gray-500 text-white rounded-xl hover:bg-gray-600 transition-colors"
+        >
+          ← اختر مجال آخر
+        </button>
+      </div>
+
+      <div className="space-y-6">
+        {/* البيانات الأساسية */}
+        <div className="bg-white dark:bg-slate-800 rounded-xl border-2 border-gray-200 dark:border-gray-700 p-6">
+          <h3 className="text-lg font-bold text-gray-800 dark:text-white mb-4">البيانات الأساسية</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">اسم المعلم</label>
+              <input
+                type="text"
+                value={formData.teacherName}
+                onChange={(e) => setFormData({...formData, teacherName: e.target.value})}
+                className="w-full px-4 py-2 border-2 border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">اسم المدرسة</label>
+              <input
+                type="text"
+                value={formData.schoolName}
+                onChange={(e) => setFormData({...formData, schoolName: e.target.value})}
+                className="w-full px-4 py-2 border-2 border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">اسم القائد</label>
+              <input
+                type="text"
+                value={formData.principalName}
+                onChange={(e) => setFormData({...formData, principalName: e.target.value})}
+                className="w-full px-4 py-2 border-2 border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">الصف والمادة</label>
+              <input
+                type="text"
+                value={formData.gradeSubject}
+                onChange={(e) => setFormData({...formData, gradeSubject: e.target.value})}
+                className="w-full px-4 py-2 border-2 border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">التاريخ</label>
+              <input
+                type="date"
+                value={formData.date}
+                onChange={(e) => setFormData({...formData, date: e.target.value})}
+                className="w-full px-4 py-2 border-2 border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">عنوان النشاط (اختياري)</label>
+              <input
+                type="text"
+                value={formData.activityTitle}
+                onChange={(e) => setFormData({...formData, activityTitle: e.target.value})}
+                className="w-full px-4 py-2 border-2 border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* الوصف العام - اختياري */}
+        <div className={`bg-white dark:bg-slate-800 rounded-xl border-2 ${enabledSections.description ? 'border-teal-300 dark:border-teal-600' : 'border-gray-200 dark:border-gray-700'} p-6`}>
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-lg font-bold text-gray-800 dark:text-white">الوصف العام للمجال</h3>
+            <label className="flex items-center gap-2 cursor-pointer">
+              <span className="text-sm text-gray-600 dark:text-gray-400">تفعيل</span>
+              <input
+                type="checkbox"
+                checked={enabledSections.description}
+                onChange={() => toggleSection('description')}
+                className="w-5 h-5 text-teal-600 border-gray-300 rounded focus:ring-teal-500"
+              />
+            </label>
+          </div>
+          {enabledSections.description && (
+            <>
+              <textarea
+                value={formData.description}
+                onChange={(e) => setFormData({...formData, description: e.target.value})}
+                rows={4}
+                placeholder="توضيح موجز للمجال..."
+                className="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white mb-3"
+              />
+              <div className="flex flex-wrap gap-2">
+                {suggestions.description.map((sug, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => applySuggestion('description', sug)}
+                    className="px-3 py-1 text-xs bg-teal-100 dark:bg-teal-900 text-teal-700 dark:text-teal-300 rounded-lg hover:bg-teal-200 dark:hover:bg-teal-800 transition-colors"
+                  >
+                    {sug.substring(0, 40)}...
+                  </button>
+                ))}
+              </div>
+            </>
+          )}
+        </div>
+
+        {/* الأهداف - اختياري */}
+        <div className={`bg-white dark:bg-slate-800 rounded-xl border-2 ${enabledSections.objectives ? 'border-blue-300 dark:border-blue-600' : 'border-gray-200 dark:border-gray-700'} p-6`}>
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-lg font-bold text-gray-800 dark:text-white">الأهداف</h3>
+            <label className="flex items-center gap-2 cursor-pointer">
+              <span className="text-sm text-gray-600 dark:text-gray-400">تفعيل</span>
+              <input
+                type="checkbox"
+                checked={enabledSections.objectives}
+                onChange={() => toggleSection('objectives')}
+                className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+              />
+            </label>
+          </div>
+          {enabledSections.objectives && (
+            <>
+              <textarea
+                value={formData.objectives}
+                onChange={(e) => setFormData({...formData, objectives: e.target.value})}
+                rows={4}
+                placeholder="أهداف ذكية SMART..."
+                className="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white mb-3"
+              />
+              <div className="flex flex-wrap gap-2">
+                {suggestions.objectives.map((sug, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => applySuggestion('objectives', sug)}
+                    className="px-3 py-1 text-xs bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 rounded-lg hover:bg-blue-200 dark:hover:bg-blue-800 transition-colors"
+                  >
+                    {sug.substring(0, 40)}...
+                  </button>
+                ))}
+              </div>
+            </>
+          )}
+        </div>
+
+        {/* الإجراءات - اختياري */}
+        <div className={`bg-white dark:bg-slate-800 rounded-xl border-2 ${enabledSections.procedures ? 'border-purple-300 dark:border-purple-600' : 'border-gray-200 dark:border-gray-700'} p-6`}>
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-lg font-bold text-gray-800 dark:text-white">الإجراءات والخطوات التنفيذية</h3>
+            <label className="flex items-center gap-2 cursor-pointer">
+              <span className="text-sm text-gray-600 dark:text-gray-400">تفعيل</span>
+              <input
+                type="checkbox"
+                checked={enabledSections.procedures}
+                onChange={() => toggleSection('procedures')}
+                className="w-5 h-5 text-purple-600 border-gray-300 rounded focus:ring-purple-500"
+              />
+            </label>
+          </div>
+          {enabledSections.procedures && (
+            <>
+              <textarea
+                value={formData.procedures}
+                onChange={(e) => setFormData({...formData, procedures: e.target.value})}
+                rows={6}
+                placeholder="خطوات التنفيذ..."
+                className="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white mb-3"
+              />
+              <div className="flex flex-wrap gap-2">
+                {suggestions.procedures.map((sug, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => applySuggestion('procedures', sug)}
+                    className="px-3 py-1 text-xs bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300 rounded-lg hover:bg-purple-200 dark:hover:bg-purple-800 transition-colors"
+                  >
+                    {sug.substring(0, 40)}...
+                  </button>
+                ))}
+              </div>
+            </>
+          )}
+        </div>
+
+        {/* الشواهد - اختياري */}
+        <div className={`bg-white dark:bg-slate-800 rounded-xl border-2 ${enabledSections.evidence ? 'border-green-300 dark:border-green-600' : 'border-gray-200 dark:border-gray-700'} p-6`}>
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-lg font-bold text-gray-800 dark:text-white">الشواهد والأدلة</h3>
+            <label className="flex items-center gap-2 cursor-pointer">
+              <span className="text-sm text-gray-600 dark:text-gray-400">تفعيل</span>
+              <input
+                type="checkbox"
+                checked={enabledSections.evidence}
+                onChange={() => toggleSection('evidence')}
+                className="w-5 h-5 text-green-600 border-gray-300 rounded focus:ring-green-500"
+              />
+            </label>
+          </div>
+          {enabledSections.evidence && (
+            <>
+              <textarea
+                value={formData.evidence}
+                onChange={(e) => setFormData({...formData, evidence: e.target.value})}
+                rows={3}
+                placeholder="روابط، وصف الصور والملفات..."
+                className="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white mb-4"
+              />
+              <div className="grid grid-cols-2 gap-4">
+                {(['img1', 'img2', 'img3', 'img4'] as const).map((imgKey, idx) => (
+                  <div key={imgKey} className="border-2 border-gray-200 dark:border-gray-600 rounded-lg p-4">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                      شاهد {idx + 1}
+                    </label>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={(e) => handleImageUpload(imgKey, e)}
+                      className="w-full text-sm text-gray-600 dark:text-gray-400"
+                    />
+                    {formData[imgKey] && (
+                      <img src={formData[imgKey] as string} alt={`شاهد ${idx + 1}`} className="mt-2 w-full h-32 object-cover rounded" />
+                    )}
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
+        </div>
+
+        {/* النتائج - اختياري */}
+        <div className={`bg-white dark:bg-slate-800 rounded-xl border-2 ${enabledSections.results ? 'border-orange-300 dark:border-orange-600' : 'border-gray-200 dark:border-gray-700'} p-6`}>
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-lg font-bold text-gray-800 dark:text-white">النتائج والتحليل</h3>
+            <label className="flex items-center gap-2 cursor-pointer">
+              <span className="text-sm text-gray-600 dark:text-gray-400">تفعيل</span>
+              <input
+                type="checkbox"
+                checked={enabledSections.results}
+                onChange={() => toggleSection('results')}
+                className="w-5 h-5 text-orange-600 border-gray-300 rounded focus:ring-orange-500"
+              />
+            </label>
+          </div>
+          {enabledSections.results && (
+            <>
+              <textarea
+                value={formData.results}
+                onChange={(e) => setFormData({...formData, results: e.target.value})}
+                rows={5}
+                placeholder="نتائج وتحليلات..."
+                className="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white mb-3"
+              />
+              <div className="flex flex-wrap gap-2">
+                {suggestions.results.map((sug, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => applySuggestion('results', sug)}
+                    className="px-3 py-1 text-xs bg-orange-100 dark:bg-orange-900 text-orange-700 dark:text-orange-300 rounded-lg hover:bg-orange-200 dark:hover:bg-orange-800 transition-colors"
+                  >
+                    {sug.substring(0, 40)}...
+                  </button>
+                ))}
+              </div>
+            </>
+          )}
+        </div>
+
+        {/* التوصيات - اختياري */}
+        <div className={`bg-white dark:bg-slate-800 rounded-xl border-2 ${enabledSections.recommendations ? 'border-yellow-300 dark:border-yellow-600' : 'border-gray-200 dark:border-gray-700'} p-6`}>
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-lg font-bold text-gray-800 dark:text-white">التوصيات والتطوير المستقبلي</h3>
+            <label className="flex items-center gap-2 cursor-pointer">
+              <span className="text-sm text-gray-600 dark:text-gray-400">تفعيل</span>
+              <input
+                type="checkbox"
+                checked={enabledSections.recommendations}
+                onChange={() => toggleSection('recommendations')}
+                className="w-5 h-5 text-yellow-600 border-gray-300 rounded focus:ring-yellow-500"
+              />
+            </label>
+          </div>
+          {enabledSections.recommendations && (
+            <>
+              <textarea
+                value={formData.recommendations}
+                onChange={(e) => setFormData({...formData, recommendations: e.target.value})}
+                rows={4}
+                placeholder="توصيات وخطط التطوير..."
+                className="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white mb-3"
+              />
+              <div className="flex flex-wrap gap-2">
+                {suggestions.recommendations.map((sug, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => applySuggestion('recommendations', sug)}
+                    className="px-3 py-1 text-xs bg-yellow-100 dark:bg-yellow-900 text-yellow-700 dark:text-yellow-300 rounded-lg hover:bg-yellow-200 dark:hover:bg-yellow-800 transition-colors"
+                  >
+                    {sug.substring(0, 40)}...
+                  </button>
+                ))}
+              </div>
+            </>
+          )}
+        </div>
+
+        {/* زر المعاينة */}
+        <div className="flex gap-4">
+          <button
+            onClick={() => setShowPreview(true)}
+            className="flex-1 px-8 py-4 bg-gradient-to-r from-teal-500 to-cyan-600 text-white rounded-xl hover:from-teal-600 hover:to-cyan-700 transition-all font-bold text-lg"
+          >
+            معاينة التقرير 👁️
+          </button>
         </div>
       </div>
     </div>
