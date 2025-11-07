@@ -3847,11 +3847,10 @@ function GeneralReportsGenerator() {
     performanceItem: "", // البند من بنود الأداء الوظيفي
     performanceElement: "", // العنصر من عناصر البند
     programName: "", // اسم البرنامج
-    programText: "", // نص البرنامج
+    programGoals: [] as string[], // أهداف البرنامج (مصفوفة)
     executionDay: "", // يوم التنفيذ
     executionMonth: "", // شهر التنفيذ
     executionYear: "", // سنة التنفيذ
-    programGoals: "", // أهداف
     targetAudience: "" // المستهدفون
   });
 
@@ -3970,9 +3969,9 @@ function GeneralReportsGenerator() {
               font-size: 0.65rem !important;
             }
             
-            /* تقليل ارتفاع الصور */
+            /* تكبير ارتفاع الصور */
             #general-report-preview .grid-cols-2 img {
-              max-height: 100px !important;
+              max-height: 140px !important;
             }
             
             /* تقليل المسافات */
@@ -4055,12 +4054,13 @@ function GeneralReportsGenerator() {
               height: 0.8rem !important;
             }
             
-            #general-report-preview .min-h-\\[120px\\] {
-              min-height: 80px !important;
+            /* تكبير حاويات الصور */
+            #general-report-preview .min-h-\\[160px\\] {
+              min-height: 120px !important;
             }
             
-            #general-report-preview .max-h-\\[180px\\] {
-              max-height: 90px !important;
+            #general-report-preview .max-h-\\[240px\\] {
+              max-height: 140px !important;
             }
             
             /* إصلاح عرض الشبكة في الطباعة - جنباً إلى جنب */
@@ -4111,14 +4111,8 @@ function GeneralReportsGenerator() {
         <div id="general-report-preview" className="bg-white" style={{ fontFamily: "'Helvetica Neue W23', 'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
           {/* Header */}
           <div className="text-white px-8 py-6 print-header" style={{ backgroundColor: '#15445A' }}>
-            <div className="flex items-center justify-center gap-8">
-              {/* الجانب الأيمن */}
-              <div className="text-right leading-tight">
-                <div className="text-base font-bold">المملكة العربية السعودية</div>
-                <div className="text-xs opacity-90">Kingdom of Saudi Arabia</div>
-              </div>
-              
-              {/* الشعار في الوسط */}
+            <div className="flex items-center justify-between">
+              {/* الشعار على اليمين */}
               <div className="w-20 h-20 bg-white rounded-lg flex items-center justify-center p-2">
                 <svg viewBox="0 0 200 150" className="w-full h-full">
                   <g fill="#00a99d">
@@ -4162,9 +4156,11 @@ function GeneralReportsGenerator() {
                 </svg>
               </div>
               
-              {/* الجانب الأيسر */}
-              <div className="text-left leading-tight">
-                <div className="text-base font-bold">وزارة التعليم</div>
+              {/* النصوص على اليسار فوق بعض */}
+              <div className="text-center leading-tight flex-1">
+                <div className="text-base font-bold">المملكة العربية السعودية</div>
+                <div className="text-xs opacity-90">Kingdom of Saudi Arabia</div>
+                <div className="text-base font-bold mt-1">وزارة التعليم</div>
                 <div className="text-xs opacity-90">إدارة تعليم جازان</div>
               </div>
             </div>
@@ -4179,16 +4175,22 @@ function GeneralReportsGenerator() {
           <div className="p-4 space-y-3">
             {/* البيانات الأساسية */}
             <div className="bg-gradient-to-r from-teal-50 to-cyan-50 rounded-lg p-3 border border-teal-200">
-              {/* اسم البرنامج ونص البرنامج في صف واحد */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs mb-3 pb-3 border-b border-teal-300">
-                <div className="flex gap-1">
+              {/* اسم البرنامج وأهداف البرنامج */}
+              <div className="mb-3 pb-3 border-b border-teal-300">
+                <div className="flex gap-1 text-xs mb-2">
                   <span className="font-bold text-gray-700">اسم البرنامج:</span>
                   <span className="text-gray-900">{formData.programName}</span>
                 </div>
-                <div className="flex gap-1">
-                  <span className="font-bold text-gray-700">نص البرنامج:</span>
-                  <span className="text-gray-900">{formData.programText}</span>
-                </div>
+                {formData.programGoals.length > 0 && (
+                  <div className="text-xs">
+                    <span className="font-bold text-gray-700">أهداف البرنامج:</span>
+                    <ul className="list-disc list-inside mr-4 mt-1">
+                      {formData.programGoals.map((goal, index) => (
+                        <li key={index} className="text-gray-900">{goal}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
               </div>
               
               {/* البند والعنصر في صف واحد */}
@@ -4216,19 +4218,8 @@ function GeneralReportsGenerator() {
               </div>
             </div>
 
-            {/* الأهداف */}
-            {formData.programGoals && (
-              <div className="bg-blue-50 p-3 rounded-lg border border-blue-200">
-                <div className="flex items-center gap-2 mb-2">
-                  <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center text-white text-sm">🎯</div>
-                  <h3 className="text-sm font-bold text-gray-800">الأهداف</h3>
-                </div>
-                <p className="text-xs text-gray-700 leading-relaxed whitespace-pre-wrap">{formData.programGoals}</p>
-              </div>
-            )}
-
             {/* الشواهد (4 صور في شبكة 2x2) */}
-            <div className="grid gap-2 sm:grid-cols-2">
+            <div className="grid gap-3 sm:grid-cols-2">
               {(['img1', 'img2', 'img3', 'img4'] as const).map((imgKey, index) => {
                 const colors = [
                   { bg: 'from-blue-600 to-blue-700', border: 'border-blue-200', bgLight: 'bg-blue-50/50' },
@@ -4239,17 +4230,17 @@ function GeneralReportsGenerator() {
                 const color = colors[index];
 
                 return (
-                  <div key={imgKey} className={`border ${color.border} rounded-lg p-2 ${color.bgLight}`}>
-                    <div className={`bg-white rounded p-2 border border-dashed ${color.border} min-h-[120px] flex items-center justify-center`}>
+                  <div key={imgKey} className={`border ${color.border} rounded-lg p-3 ${color.bgLight}`}>
+                    <div className={`bg-white rounded p-3 border border-dashed ${color.border} min-h-[160px] flex items-center justify-center`}>
                       {images[imgKey] ? (
                         <img
                           src={images[imgKey]!}
                           alt={`الشاهد ${index + 1}`}
-                          className="max-w-full max-h-[180px] object-contain rounded"
+                          className="max-w-full max-h-[240px] object-contain rounded"
                         />
                       ) : (
                         <div className="text-center text-gray-400">
-                          <span className="text-3xl mb-1 block">📸</span>
+                          <span className="text-4xl mb-1 block">📸</span>
                         </div>
                       )}
                     </div>
@@ -4383,15 +4374,43 @@ function GeneralReportsGenerator() {
                 className="w-full px-4 py-2 border-2 border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
               />
             </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">نص البرنامج</label>
-              <input
-                type="text"
-                value={formData.programText}
-                onChange={(e) => setFormData({...formData, programText: e.target.value})}
-                placeholder="مثال: برنامج لتحفيز الطلاب المتميزين"
-                className="w-full px-4 py-2 border-2 border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
-              />
+            <div className="md:col-span-2">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">أهداف البرنامج</label>
+              <div className="space-y-2">
+                {formData.programGoals.map((goal, index) => (
+                  <div key={index} className="flex gap-2">
+                    <input
+                      type="text"
+                      value={goal}
+                      onChange={(e) => {
+                        const newGoals = [...formData.programGoals];
+                        newGoals[index] = e.target.value;
+                        setFormData({...formData, programGoals: newGoals});
+                      }}
+                      placeholder={`الهدف ${index + 1}`}
+                      className="flex-1 px-4 py-2 border-2 border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
+                    />
+                    <button
+                      onClick={() => {
+                        const newGoals = formData.programGoals.filter((_, i) => i !== index);
+                        setFormData({...formData, programGoals: newGoals});
+                      }}
+                      className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
+                    >
+                      حذف
+                    </button>
+                  </div>
+                ))}
+                <button
+                  onClick={() => setFormData({...formData, programGoals: [...formData.programGoals, ""]})}
+                  className="w-full px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 flex items-center justify-center gap-2"
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                  </svg>
+                  إضافة هدف
+                </button>
+              </div>
             </div>
             <div className="md:col-span-2">
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">تاريخ التنفيذ (هجري)</label>
@@ -4451,16 +4470,6 @@ function GeneralReportsGenerator() {
                 onChange={(e) => setFormData({...formData, targetAudience: e.target.value})}
                 placeholder="مثال: طلاب الصف الثالث المتوسط"
                 className="w-full px-4 py-2 border-2 border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
-              />
-            </div>
-            <div className="md:col-span-2">
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">الأهداف</label>
-              <textarea
-                value={formData.programGoals}
-                onChange={(e) => setFormData({...formData, programGoals: e.target.value})}
-                rows={4}
-                placeholder="اكتب الأهداف..."
-                className="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
               />
             </div>
           </div>
