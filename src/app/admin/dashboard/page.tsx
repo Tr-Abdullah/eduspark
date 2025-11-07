@@ -3847,10 +3847,11 @@ function GeneralReportsGenerator() {
     performanceItem: "", // البند من بنود الأداء الوظيفي
     performanceElement: "", // العنصر من عناصر البند
     programName: "", // اسم البرنامج
+    programText: "", // نص البرنامج
     executionDay: "", // يوم التنفيذ
     executionMonth: "", // شهر التنفيذ
     executionYear: "", // سنة التنفيذ
-    programGoals: "", // أهداف البرنامج
+    programGoals: "", // أهداف
     targetAudience: "" // المستهدفون
   });
 
@@ -3936,33 +3937,130 @@ function GeneralReportsGenerator() {
             .print-header {
               border-radius: 0 !important;
               page-break-after: avoid;
-              padding: 15px 20px !important;
+              padding: 8px 12px !important;
               background-color: #15445A !important;
             }
             
-            /* تصغير الخطوط للطباعة */
+            /* تصغير جميع العناصر للطباعة - صفحة واحدة فقط */
             #general-report-preview {
-              font-size: 11px !important;
+              font-size: 9px !important;
             }
             
             #general-report-preview .text-3xl {
-              font-size: 1.4rem !important;
+              font-size: 1rem !important;
             }
             
             #general-report-preview .text-2xl {
-              font-size: 1.2rem !important;
+              font-size: 0.95rem !important;
             }
             
             #general-report-preview .text-xl {
-              font-size: 1.05rem !important;
+              font-size: 0.85rem !important;
             }
             
+            #general-report-preview .text-lg {
+              font-size: 0.8rem !important;
+            }
+            
+            #general-report-preview .text-sm {
+              font-size: 0.7rem !important;
+            }
+            
+            #general-report-preview .text-xs {
+              font-size: 0.65rem !important;
+            }
+            
+            /* تقليل ارتفاع الصور */
             #general-report-preview .grid-cols-2 img {
-              height: 120px !important;
+              max-height: 100px !important;
             }
             
-            #general-report-preview .p-6, #general-report-preview .p-8 {
-              padding: 1rem !important;
+            /* تقليل المسافات */
+            #general-report-preview .p-8 {
+              padding: 0.4rem !important;
+            }
+            
+            #general-report-preview .p-6 {
+              padding: 0.3rem !important;
+            }
+            
+            #general-report-preview .p-4 {
+              padding: 0.25rem !important;
+            }
+            
+            #general-report-preview .p-3 {
+              padding: 0.2rem !important;
+            }
+            
+            #general-report-preview .p-2 {
+              padding: 0.15rem !important;
+            }
+            
+            #general-report-preview .space-y-6 > * + * {
+              margin-top: 0.3rem !important;
+            }
+            
+            #general-report-preview .space-y-3 > * + * {
+              margin-top: 0.2rem !important;
+            }
+            
+            #general-report-preview .gap-6 {
+              gap: 0.3rem !important;
+            }
+            
+            #general-report-preview .gap-4 {
+              gap: 0.25rem !important;
+            }
+            
+            #general-report-preview .gap-3 {
+              gap: 0.2rem !important;
+            }
+            
+            #general-report-preview .gap-2 {
+              gap: 0.15rem !important;
+            }
+            
+            #general-report-preview .mb-6 {
+              margin-bottom: 0.3rem !important;
+            }
+            
+            #general-report-preview .mb-3 {
+              margin-bottom: 0.2rem !important;
+            }
+            
+            #general-report-preview .mb-2 {
+              margin-bottom: 0.15rem !important;
+            }
+            
+            #general-report-preview .mb-1 {
+              margin-bottom: 0.1rem !important;
+            }
+            
+            #general-report-preview .pt-6 {
+              padding-top: 0.3rem !important;
+            }
+            
+            #general-report-preview .pt-3 {
+              padding-top: 0.2rem !important;
+            }
+            
+            #general-report-preview .py-2 {
+              padding-top: 0.15rem !important;
+              padding-bottom: 0.15rem !important;
+            }
+            
+            /* تقليل حجم الأيقونات */
+            #general-report-preview .w-6 {
+              width: 0.8rem !important;
+              height: 0.8rem !important;
+            }
+            
+            #general-report-preview .min-h-\\[120px\\] {
+              min-height: 80px !important;
+            }
+            
+            #general-report-preview .max-h-\\[180px\\] {
+              max-height: 90px !important;
             }
             
             /* إصلاح عرض الشبكة في الطباعة - جنباً إلى جنب */
@@ -3978,8 +4076,13 @@ function GeneralReportsGenerator() {
               grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
             }
             
-            #general-report-preview .gap-4 {
-              gap: 1rem !important;
+            #general-report-preview .sm\\:grid-cols-2 {
+              grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+            }
+            
+            /* منع تقسيم الصفحات */
+            #general-report-preview * {
+              page-break-inside: avoid !important;
             }
           }
         `}</style>
@@ -4073,53 +4176,59 @@ function GeneralReportsGenerator() {
           </div>
 
           {/* محتوى التقرير */}
-          <div className="p-8 space-y-6">
+          <div className="p-4 space-y-3">
             {/* البيانات الأساسية */}
-            <div className="bg-gradient-to-r from-teal-50 to-cyan-50 rounded-xl p-6 border-2 border-teal-200">
-              {/* اسم البرنامج في الأعلى في الوسط */}
-              <div className="text-center mb-4 pb-4 border-b-2 border-teal-300">
-                <div className="text-sm font-bold text-gray-700 mb-1">اسم البرنامج:</div>
-                <div className="text-lg font-bold text-gray-900">{formData.programName}</div>
+            <div className="bg-gradient-to-r from-teal-50 to-cyan-50 rounded-lg p-3 border border-teal-200">
+              {/* اسم البرنامج ونص البرنامج في صف واحد */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs mb-3 pb-3 border-b border-teal-300">
+                <div className="flex gap-1">
+                  <span className="font-bold text-gray-700">اسم البرنامج:</span>
+                  <span className="text-gray-900">{formData.programName}</span>
+                </div>
+                <div className="flex gap-1">
+                  <span className="font-bold text-gray-700">نص البرنامج:</span>
+                  <span className="text-gray-900">{formData.programText}</span>
+                </div>
               </div>
               
               {/* البند والعنصر في صف واحد */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm mb-4">
-                <div className="flex gap-2">
-                  <span className="font-bold text-gray-700">البند من بنود الأداء الوظيفي:</span>
-                  <span className="text-gray-900">{formData.performanceItem}</span>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs mb-2">
+                <div className="flex gap-1">
+                  <span className="font-bold text-gray-700">البند:</span>
+                  <span className="text-gray-900 text-xs">{formData.performanceItem}</span>
                 </div>
-                <div className="flex gap-2">
+                <div className="flex gap-1">
                   <span className="font-bold text-gray-700">العنصر:</span>
-                  <span className="text-gray-900">{formData.performanceElement}</span>
+                  <span className="text-gray-900 text-xs">{formData.performanceElement}</span>
                 </div>
               </div>
               
               {/* تاريخ التنفيذ والمستهدفون في صف واحد */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                <div className="flex gap-2">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+                <div className="flex gap-1">
                   <span className="font-bold text-gray-700">تاريخ التنفيذ:</span>
                   <span className="text-gray-900">{formData.executionDay}/{formData.executionMonth}/{formData.executionYear} هـ</span>
                 </div>
-                <div className="flex gap-2">
+                <div className="flex gap-1">
                   <span className="font-bold text-gray-700">المستهدفون:</span>
                   <span className="text-gray-900">{formData.targetAudience}</span>
                 </div>
               </div>
             </div>
 
-            {/* أهداف البرنامج */}
+            {/* الأهداف */}
             {formData.programGoals && (
-              <div className="bg-blue-50 p-6 rounded-xl border-2 border-blue-200">
-                <div className="flex items-center gap-2 mb-3">
-                  <div className="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white text-xl">🎯</div>
-                  <h3 className="text-lg font-bold text-gray-800">أهداف البرنامج</h3>
+              <div className="bg-blue-50 p-3 rounded-lg border border-blue-200">
+                <div className="flex items-center gap-2 mb-2">
+                  <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center text-white text-sm">🎯</div>
+                  <h3 className="text-sm font-bold text-gray-800">الأهداف</h3>
                 </div>
-                <p className="text-gray-700 leading-relaxed whitespace-pre-wrap">{formData.programGoals}</p>
+                <p className="text-xs text-gray-700 leading-relaxed whitespace-pre-wrap">{formData.programGoals}</p>
               </div>
             )}
 
             {/* الشواهد (4 صور في شبكة 2x2) */}
-            <div className="grid gap-6 sm:grid-cols-2">
+            <div className="grid gap-2 sm:grid-cols-2">
               {(['img1', 'img2', 'img3', 'img4'] as const).map((imgKey, index) => {
                 const colors = [
                   { bg: 'from-blue-600 to-blue-700', border: 'border-blue-200', bgLight: 'bg-blue-50/50' },
@@ -4130,17 +4239,17 @@ function GeneralReportsGenerator() {
                 const color = colors[index];
 
                 return (
-                  <div key={imgKey} className={`border-2 ${color.border} rounded-xl p-6 ${color.bgLight}`}>
-                    <div className={`bg-white rounded-lg p-4 border-2 border-dashed ${color.border} min-h-[200px] flex items-center justify-center`}>
+                  <div key={imgKey} className={`border ${color.border} rounded-lg p-2 ${color.bgLight}`}>
+                    <div className={`bg-white rounded p-2 border border-dashed ${color.border} min-h-[120px] flex items-center justify-center`}>
                       {images[imgKey] ? (
                         <img
                           src={images[imgKey]!}
                           alt={`الشاهد ${index + 1}`}
-                          className="max-w-full max-h-[360px] object-contain rounded-lg"
+                          className="max-w-full max-h-[180px] object-contain rounded"
                         />
                       ) : (
                         <div className="text-center text-gray-400">
-                          <span className="text-5xl mb-2 block">📸</span>
+                          <span className="text-3xl mb-1 block">📸</span>
                         </div>
                       )}
                     </div>
@@ -4150,27 +4259,27 @@ function GeneralReportsGenerator() {
             </div>
 
             {/* التوقيعات */}
-            <div className="grid grid-cols-2 gap-8 pt-6 border-t-2 border-gray-200">
+            <div className="grid grid-cols-2 gap-4 pt-3 border-t border-gray-200">
               <div className="text-right">
-                <p className="text-gray-600 font-semibold mb-2">المعلم</p>
-                <p className="text-xl font-bold text-gray-800">{formData.teacherName}</p>
-                <div className="mt-4 pt-2 inline-block">
-                  <div className="border-t-2 border-gray-400 w-32"></div>
+                <p className="text-gray-600 font-semibold mb-1 text-xs">المعلم</p>
+                <p className="text-sm font-bold text-gray-800">{formData.teacherName}</p>
+                <div className="mt-2 pt-1 inline-block">
+                  <div className="border-t border-gray-400 w-24"></div>
                 </div>
               </div>
               <div className="text-left">
-                <p className="text-gray-600 font-semibold mb-2">مدير المدرسة</p>
-                <p className="text-xl font-bold text-gray-800">{formData.principalName}</p>
-                <div className="mt-4 pt-2 inline-block">
-                  <div className="border-t-2 border-gray-400 w-32"></div>
+                <p className="text-gray-600 font-semibold mb-1 text-xs">مدير المدرسة</p>
+                <p className="text-sm font-bold text-gray-800">{formData.principalName}</p>
+                <div className="mt-2 pt-1 inline-block">
+                  <div className="border-t border-gray-400 w-24"></div>
                 </div>
               </div>
             </div>
           </div>
 
           {/* Footer */}
-          <div className="text-white p-4 text-center" style={{ backgroundColor: '#07A869' }}>
-            <p className="text-lg font-bold">العام الدراسي {formData.academicYear} هـ</p>
+          <div className="text-white p-2 text-center" style={{ backgroundColor: '#07A869' }}>
+            <p className="text-sm font-bold">العام الدراسي {formData.academicYear} هـ</p>
           </div>
         </div>
       </div>
@@ -4264,13 +4373,23 @@ function GeneralReportsGenerator() {
                 </select>
               </div>
             )}
-            <div className="md:col-span-2">
+            <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">اسم البرنامج</label>
               <input
                 type="text"
                 value={formData.programName}
                 onChange={(e) => setFormData({...formData, programName: e.target.value})}
                 placeholder="مثال: برنامج تحفيز التفوق الدراسي"
+                className="w-full px-4 py-2 border-2 border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">نص البرنامج</label>
+              <input
+                type="text"
+                value={formData.programText}
+                onChange={(e) => setFormData({...formData, programText: e.target.value})}
+                placeholder="مثال: برنامج لتحفيز الطلاب المتميزين"
                 className="w-full px-4 py-2 border-2 border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
               />
             </div>
@@ -4335,12 +4454,12 @@ function GeneralReportsGenerator() {
               />
             </div>
             <div className="md:col-span-2">
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">أهداف البرنامج</label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">الأهداف</label>
               <textarea
                 value={formData.programGoals}
                 onChange={(e) => setFormData({...formData, programGoals: e.target.value})}
                 rows={4}
-                placeholder="اكتب أهداف البرنامج..."
+                placeholder="اكتب الأهداف..."
                 className="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
               />
             </div>
