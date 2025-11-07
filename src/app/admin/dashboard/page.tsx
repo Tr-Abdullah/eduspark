@@ -3973,9 +3973,9 @@ function GeneralReportsGenerator() {
               font-size: 0.7rem !important;
             }
             
-            /* تصغير الصور للحفاظ على صفحة واحدة */
-            #general-report-preview .max-w-md {
-              max-width: 18rem !important;
+            /* توحيد حجم الصور بين المعاينة والطباعة */
+            #general-report-preview .max-w-2xl {
+              max-width: 42rem !important;
             }
             
             /* الحفاظ على المسافات كما في المعاينة */
@@ -4052,11 +4052,6 @@ function GeneralReportsGenerator() {
             #general-report-preview .w-6 {
               width: 0.8rem !important;
               height: 0.8rem !important;
-            }
-            
-            /* جعل الصور مربعة في الطباعة */
-            #general-report-preview .aspect-square {
-              aspect-ratio: 1 / 1 !important;
             }
             
             #general-report-preview .aspect-square img {
@@ -4220,8 +4215,8 @@ function GeneralReportsGenerator() {
               </div>
             </div>
 
-            {/* الشواهد (4 صور مربعة صغيرة في شبكة 2x2) */}
-            <div className="grid gap-1.5 sm:grid-cols-2 max-w-md mx-auto">
+            {/* الشواهد (4 صور بنسبة عرض مضاعف وارتفاع 1.5x) */}
+            <div className="grid gap-1.5 sm:grid-cols-2 max-w-2xl mx-auto">
               {(['img1', 'img2', 'img3', 'img4'] as const).map((imgKey, index) => {
                 const colors = [
                   { bg: 'from-blue-600 to-blue-700', border: 'border-blue-200', bgLight: 'bg-blue-50/50' },
@@ -4233,7 +4228,7 @@ function GeneralReportsGenerator() {
 
                 return (
                   <div key={imgKey} className={`border ${color.border} rounded p-1 ${color.bgLight}`}>
-                    <div className={`bg-white rounded p-1 border border-dashed ${color.border} aspect-square flex items-center justify-center`}>
+                    <div className={`bg-white rounded p-1 border border-dashed ${color.border} flex items-center justify-center`} style={{ aspectRatio: '4 / 3' }}>
                       {images[imgKey] ? (
                         <img
                           src={images[imgKey]!}
