@@ -1003,6 +1003,15 @@ function MOEReportGenerator() {
         <div className="text-center">
           <div className="text-gray-600 mb-2">اسم المعلم:</div>
           <div className="border-b-2 border-gray-400 pb-2 mb-2">{formData.teacherName}</div>
+          {formData.teacherName === "عبدالله حسن الفيفي" && (
+            <div className="flex justify-center mb-2">
+              <img 
+                src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNzAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cGF0aCBkPSJNIDI1IDYyMCBRIDgwIDQ4MCAxNzUgNTgwIFEgMjcwIDY4MCAzNjAgNTkwIFEgNDUwIDUwMCA0NTAgNzAwIE0gMzgwIDU4MCBMIDcxMCA1OTAgTSA2MjAgNTgwIFEgNjQwIDU3MCA2NjAgNTgwIFEgNjgwIDU5MCA3MDAgNTgwIE0gMzgwIDY1MCBRIDQyMCA2NDAgNDYwIDY1MCBRIDUwMCA2NjAgNTQwIDY1MCBRIDU4MCA2NDAgNjIwIDY1MCBRIDY2MCA2NjAgNzAwIDY1MCBNIDUwNSA3MDAiIHN0cm9rZT0iYmx1ZSIgc3Ryb2tlLXdpZHRoPSI0IiBmaWxsPSJub25lIi8+Cjwvc3ZnPg==" 
+                alt="توقيع"
+                className="h-12 object-contain"
+              />
+            </div>
+          )}
           <div className="text-sm text-gray-500">التوقيع</div>
         </div>
         <div className="text-center">
@@ -2318,6 +2327,15 @@ function PerformanceReportGenerator() {
             <div className="text-right">
               <p className="text-gray-600 font-semibold mb-2">معلم المادة</p>
               <p className="text-xl font-bold text-gray-800">{formData.teacherName}</p>
+              {formData.teacherName === "عبدالله حسن الفيفي" && (
+                <div className="flex justify-end mt-2">
+                  <img 
+                    src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNzAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cGF0aCBkPSJNIDI1IDYyMCBRIDgwIDQ4MCAxNzUgNTgwIFEgMjcwIDY4MCAzNjAgNTkwIFEgNDUwIDUwMCA0NTAgNzAwIE0gMzgwIDU4MCBMIDcxMCA1OTAgTSA2MjAgNTgwIFEgNjQwIDU3MCA2NjAgNTgwIFEgNjgwIDU5MCA3MDAgNTgwIE0gMzgwIDY1MCBRIDQyMCA2NDAgNDYwIDY1MCBRIDUwMCA2NjAgNTQwIDY1MCBRIDU4MCA2NDAgNjIwIDY1MCBRIDY2MCA2NjAgNzAwIDY1MCBNIDUwNSA3MDAiIHN0cm9rZT0iYmx1ZSIgc3Ryb2tlLXdpZHRoPSI0IiBmaWxsPSJub25lIi8+Cjwvc3ZnPg==" 
+                    alt="توقيع"
+                    className="h-14 object-contain"
+                  />
+                </div>
+              )}
               <div className="mt-4 pt-2 inline-block">
                 <div className="border-t-2 border-gray-400 w-32"></div>
               </div>
@@ -4276,6 +4294,15 @@ function GeneralReportsGenerator() {
               <div className="text-right">
                 <p className="text-gray-600 font-semibold mb-0.5 text-sm">المعلم</p>
                 <p className="text-sm sm:text-base font-bold text-gray-800">{formData.teacherName}</p>
+                {formData.teacherName === "عبدالله حسن الفيفي" && (
+                  <div className="flex justify-end mt-1">
+                    <img 
+                      src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNzAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cGF0aCBkPSJNIDI1IDYyMCBRIDgwIDQ4MCAxNzUgNTgwIFEgMjcwIDY4MCAzNjAgNTkwIFEgNDUwIDUwMCA0NTAgNzAwIE0gMzgwIDU4MCBMIDcxMCA1OTAgTSA2MjAgNTgwIFEgNjQwIDU3MCA2NjAgNTgwIFEgNjgwIDU5MCA3MDAgNTgwIE0gMzgwIDY1MCBRIDQyMCA2NDAgNDYwIDY1MCBRIDUwMCA2NjAgNTQwIDY1MCBRIDU4MCA2NDAgNjIwIDY1MCBRIDY2MCA2NjAgNzAwIDY1MCBNIDUwNSA3MDAiIHN0cm9rZT0iYmx1ZSIgc3Ryb2tlLXdpZHRoPSI0IiBmaWxsPSJub25lIi8+Cjwvc3ZnPg==" 
+                      alt="توقيع"
+                      className="h-10 object-contain"
+                    />
+                  </div>
+                )}
                 <div className="mt-1 pt-0.5 inline-block">
                   <div className="border-t border-gray-400 w-20"></div>
                 </div>
