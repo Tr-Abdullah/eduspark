@@ -794,9 +794,9 @@ function MOEReportGenerator() {
       <div className="text-white px-8 py-6 print-header" style={{ backgroundColor: '#15445A' }}>
         <div className="flex items-center justify-center gap-8">
           {/* الجانب الأيمن */}
-          <div className="text-right">
-            <div className="text-lg font-bold">المملكة العربية السعودية</div>
-            <div className="text-sm opacity-90">Kingdom of Saudi Arabia</div>
+          <div className="text-right leading-tight">
+            <div className="text-base font-bold">المملكة العربية السعودية</div>
+            <div className="text-xs opacity-90">Kingdom of Saudi Arabia</div>
           </div>
           
           {/* الشعار في الوسط */}
@@ -852,15 +852,15 @@ function MOEReportGenerator() {
           </div>
           
           {/* الجانب الأيسر */}
-          <div className="text-left">
-            <div className="text-lg font-bold">وزارة التعليم</div>
-            <div className="text-sm opacity-90">إدارة تعليم جازان</div>
+          <div className="text-left leading-tight">
+            <div className="text-base font-bold">وزارة التعليم</div>
+            <div className="text-xs opacity-90">إدارة تعليم جازان</div>
           </div>
         </div>
       </div>
 
       {/* اسم المدرسة - ملاصق للهيدر */}
-      <div className="text-center text-white py-4 px-6" style={{ backgroundColor: '#15445A', marginTop: '-1px' }}>
+      <div className="text-center text-white py-2 px-6" style={{ backgroundColor: '#15445A' }}>
         <h1 className="text-2xl font-bold">{formData.schoolName}</h1>
       </div>
 
@@ -2135,9 +2135,9 @@ function PerformanceReportGenerator() {
         <div className="text-white px-8 py-6 print-header" style={{ backgroundColor: '#15445A' }}>
           <div className="flex items-center justify-center gap-8">
             {/* الجانب الأيمن */}
-            <div className="text-right">
-              <div className="text-lg font-bold">المملكة العربية السعودية</div>
-              <div className="text-sm opacity-90">Kingdom of Saudi Arabia</div>
+            <div className="text-right leading-tight">
+              <div className="text-base font-bold">المملكة العربية السعودية</div>
+              <div className="text-xs opacity-90">Kingdom of Saudi Arabia</div>
             </div>
             
             {/* الشعار في الوسط */}
@@ -2185,15 +2185,15 @@ function PerformanceReportGenerator() {
             </div>
             
             {/* الجانب الأيسر */}
-            <div className="text-left">
-              <div className="text-lg font-bold">وزارة التعليم</div>
-              <div className="text-sm opacity-90">إدارة تعليم جازان</div>
+            <div className="text-left leading-tight">
+              <div className="text-base font-bold">وزارة التعليم</div>
+              <div className="text-xs opacity-90">إدارة تعليم جازان</div>
             </div>
           </div>
         </div>
 
         {/* اسم المدرسة - ملاصق للهيدر */}
-        <div className="text-center text-white py-4 px-6" style={{ backgroundColor: '#15445A', marginTop: '-1px' }}>
+        <div className="text-center text-white py-2 px-6" style={{ backgroundColor: '#15445A' }}>
           <h1 className="text-2xl font-bold">{formData.schoolName}</h1>
         </div>
 
@@ -3968,9 +3968,9 @@ function GeneralReportsGenerator() {
           <div className="text-white px-8 py-6 print-header" style={{ backgroundColor: '#15445A' }}>
             <div className="flex items-center justify-center gap-8">
               {/* الجانب الأيمن */}
-              <div className="text-right">
-                <div className="text-lg font-bold">المملكة العربية السعودية</div>
-                <div className="text-sm opacity-90">Kingdom of Saudi Arabia</div>
+              <div className="text-right leading-tight">
+                <div className="text-base font-bold">المملكة العربية السعودية</div>
+                <div className="text-xs opacity-90">Kingdom of Saudi Arabia</div>
               </div>
               
               {/* الشعار في الوسط */}
@@ -4018,15 +4018,15 @@ function GeneralReportsGenerator() {
               </div>
               
               {/* الجانب الأيسر */}
-              <div className="text-left">
-                <div className="text-lg font-bold">وزارة التعليم</div>
-                <div className="text-sm opacity-90">إدارة تعليم جازان</div>
+              <div className="text-left leading-tight">
+                <div className="text-base font-bold">وزارة التعليم</div>
+                <div className="text-xs opacity-90">إدارة تعليم جازان</div>
               </div>
             </div>
           </div>
 
           {/* اسم المدرسة - ملاصق للهيدر */}
-          <div className="text-center text-white py-4 px-6" style={{ backgroundColor: '#15445A', marginTop: '-1px' }}>
+          <div className="text-center text-white py-2 px-6" style={{ backgroundColor: '#15445A' }}>
             <h1 className="text-2xl font-bold">{formData.schoolName}</h1>
           </div>
 
@@ -4034,7 +4034,14 @@ function GeneralReportsGenerator() {
           <div className="p-8 space-y-6">
             {/* البيانات الأساسية */}
             <div className="bg-gradient-to-r from-teal-50 to-cyan-50 rounded-xl p-6 border-2 border-teal-200">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+              {/* اسم البرنامج في الأعلى في الوسط */}
+              <div className="text-center mb-4 pb-4 border-b-2 border-teal-300">
+                <div className="text-sm font-bold text-gray-700 mb-1">اسم البرنامج:</div>
+                <div className="text-lg font-bold text-gray-900">{formData.programName}</div>
+              </div>
+              
+              {/* البند والعنصر في صف واحد */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm mb-4">
                 <div className="flex gap-2">
                   <span className="font-bold text-gray-700">البند من بنود الأداء الوظيفي:</span>
                   <span className="text-gray-900">{formData.performanceItem}</span>
@@ -4043,23 +4050,17 @@ function GeneralReportsGenerator() {
                   <span className="font-bold text-gray-700">العنصر:</span>
                   <span className="text-gray-900">{formData.performanceElement}</span>
                 </div>
-                <div className="flex gap-2">
-                  <span className="font-bold text-gray-700">اسم البرنامج:</span>
-                  <span className="text-gray-900">{formData.programName}</span>
-                </div>
+              </div>
+              
+              {/* تاريخ التنفيذ والمستهدفون في صف واحد */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                 <div className="flex gap-2">
                   <span className="font-bold text-gray-700">تاريخ التنفيذ:</span>
                   <span className="text-gray-900">{formData.executionDay}/{formData.executionMonth}/{formData.executionYear} هـ</span>
                 </div>
                 <div className="flex gap-2">
-                  <span className="font-bold text-gray-700">المعلم:</span>
-                  <span className="text-gray-900">{formData.teacherName}</span>
-                </div>
-                <div className="md:col-span-2">
-                  <div className="flex gap-2">
-                    <span className="font-bold text-gray-700">المستهدفون:</span>
-                    <span className="text-gray-900">{formData.targetAudience}</span>
-                  </div>
+                  <span className="font-bold text-gray-700">المستهدفون:</span>
+                  <span className="text-gray-900">{formData.targetAudience}</span>
                 </div>
               </div>
             </div>
