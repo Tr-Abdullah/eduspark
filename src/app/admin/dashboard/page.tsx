@@ -3919,7 +3919,7 @@ function GeneralReportsGenerator() {
           @media print {
             @page {
               size: A4 portrait;
-              margin: 8mm 5mm;
+              margin: 5mm 4mm;
             }
             
             * {
