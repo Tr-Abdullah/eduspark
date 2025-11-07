@@ -3858,8 +3858,8 @@ function GeneralReportsGenerator() {
     schoolName: "مدرسة ابن سيناء المتوسطة وبرنامجي العوق الفكري والتوحد",
     principalName: "احمد علي كريري",
     academicYear: "1447",
-    performanceItem: "", // البند من بنود الأداء الوظيفي
-    performanceElement: "", // العنصر من عناصر البند
+    performanceItem: "", // المعيار من معايير الأداء الوظيفي
+    performanceElement: "", // المؤشر من مؤشرات المعيار
     programName: "", // اسم البرنامج
     programGoals: [] as string[], // أهداف البرنامج (مصفوفة)
     executionDay: "", // يوم التنفيذ
@@ -4133,7 +4133,7 @@ function GeneralReportsGenerator() {
         <div id="general-report-preview" className="bg-white max-w-4xl mx-auto" style={{ fontFamily: "'Helvetica Neue W23', 'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
           {/* Header */}
           <div className="text-white px-4 sm:px-8 py-4 sm:py-6 print-header" style={{ backgroundColor: '#15445A' }}>
-            <div className="flex items-center justify-between gap-2 sm:gap-4">
+            <div className="flex items-center justify-between gap-1 sm:gap-2">
               {/* الشعار على اليمين */}
               <div className="w-16 h-16 sm:w-20 sm:h-20 bg-white rounded-lg flex items-center justify-center p-2">
                 <svg viewBox="0 0 200 150" className="w-full h-full">
@@ -4215,14 +4215,14 @@ function GeneralReportsGenerator() {
                 )}
               </div>
               
-              {/* البند والعنصر في صف واحد */}
+              {/* المعيار والمؤشر في صف واحد */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm mb-1.5">
                 <div className="flex gap-1">
-                  <span className="font-bold text-gray-700">البند:</span>
+                  <span className="font-bold text-gray-700">المعيار:</span>
                   <span className="text-gray-900">{formData.performanceItem}</span>
                 </div>
                 <div className="flex gap-1">
-                  <span className="font-bold text-gray-700">العنصر:</span>
+                  <span className="font-bold text-gray-700">المؤشر:</span>
                   <span className="text-gray-900">{formData.performanceElement}</span>
                 </div>
               </div>
@@ -4357,7 +4357,7 @@ function GeneralReportsGenerator() {
           <h3 className="text-lg font-bold text-gray-800 dark:text-white mb-4">بيانات البرنامج</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="md:col-span-2">
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">البند من بنود الأداء الوظيفي</label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">المعيار من معايير الأداء الوظيفي</label>
               <select
                 value={formData.performanceItem}
                 onChange={(e) => {
@@ -4365,7 +4365,7 @@ function GeneralReportsGenerator() {
                 }}
                 className="w-full px-4 py-2 border-2 border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
               >
-                <option value="">اختر البند</option>
+                <option value="">اختر المعيار</option>
                 {Object.keys(performanceItemsWithElements).map((item, index) => (
                   <option key={index} value={item}>{item}</option>
                 ))}
@@ -4373,13 +4373,13 @@ function GeneralReportsGenerator() {
             </div>
             {formData.performanceItem && (
               <div className="md:col-span-2">
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">العنصر</label>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">المؤشر</label>
                 <select
                   value={formData.performanceElement}
                   onChange={(e) => setFormData({...formData, performanceElement: e.target.value})}
                   className="w-full px-4 py-2 border-2 border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
                 >
-                  <option value="">اختر العنصر</option>
+                  <option value="">اختر المؤشر</option>
                   {performanceItemsWithElements[formData.performanceItem as keyof typeof performanceItemsWithElements]?.map((element, index) => (
                     <option key={index} value={element}>{element}</option>
                   ))}
