@@ -1307,7 +1307,7 @@ function MOEReportGenerator() {
                 visibility: visible !important;
               }
               
-              /* وضع التقرير في بداية الصفحة */
+              /* وضع التقرير في بداية الصفحة مع تصغير تلقائي */
               #report-content {
                 position: absolute !important;
                 left: 0 !important;
@@ -1315,18 +1315,25 @@ function MOEReportGenerator() {
                 width: 100% !important;
                 max-width: 100% !important;
                 margin: 0 !important;
-                padding: 15mm 10mm !important;
+                padding: 8mm 8mm !important;
                 background: white !important;
                 box-shadow: none !important;
                 border: none !important;
                 border-radius: 0 !important;
-                font-size: 11px !important;
+                font-size: 9px !important;
+                transform: scale(0.95) !important;
+                transform-origin: top center !important;
               }
               
-              /* ملائمة المحتوى للصفحة */
+              /* ملائمة المحتوى للصفحة - فرض صفحة واحدة */
               @page {
                 size: A4 portrait;
                 margin: 0;
+              }
+              
+              html, body {
+                height: 297mm !important;
+                overflow: hidden !important;
               }
               
               /* إخفاء عناصر التحكم */
@@ -1338,13 +1345,13 @@ function MOEReportGenerator() {
               /* تنسيق الهيدر للطباعة */
               .print-header {
                 border-radius: 0 !important;
-                padding: 10px 15px !important;
-                margin-bottom: 10px !important;
+                padding: 6px 10px !important;
+                margin-bottom: 6px !important;
               }
               
               /* تنسيق محتوى التقرير */
               #report-content > div:last-child {
-                padding: 10px 15px !important;
+                padding: 6px 10px !important;
               }
               
               /* ضمان طباعة الألوان */
@@ -1356,69 +1363,77 @@ function MOEReportGenerator() {
               
               /* تصغير الخطوط */
               .text-3xl {
-                font-size: 1.2rem !important;
-              }
-              
-              .text-2xl {
                 font-size: 1.1rem !important;
               }
               
-              .text-xl {
+              .text-2xl {
                 font-size: 1rem !important;
               }
               
+              .text-xl {
+                font-size: 0.95rem !important;
+              }
+              
               .text-lg {
-                font-size: 0.9rem !important;
+                font-size: 0.85rem !important;
               }
               
               .text-sm {
-                font-size: 0.75rem !important;
+                font-size: 0.7rem !important;
               }
               
               .text-xs {
-                font-size: 0.65rem !important;
+                font-size: 0.6rem !important;
               }
               
               /* تقليل المسافات */
-              .gap-6 {
-                gap: 0.5rem !important;
+              .gap-6, .gap-8 {
+                gap: 0.35rem !important;
               }
               
               .gap-4 {
-                gap: 0.4rem !important;
+                gap: 0.3rem !important;
               }
               
               .mb-6, .mb-8 {
-                margin-bottom: 0.5rem !important;
-              }
-              
-              .mb-4 {
                 margin-bottom: 0.4rem !important;
               }
               
-              .p-6 {
-                padding: 0.6rem !important;
+              .mb-4 {
+                margin-bottom: 0.3rem !important;
               }
               
-              .p-4 {
+              .p-6 {
                 padding: 0.5rem !important;
               }
               
-              .p-3 {
+              .p-4 {
                 padding: 0.4rem !important;
               }
               
-              /* إصلاح عرض الصور - grid 2x2 */
+              .p-3 {
+                padding: 0.3rem !important;
+              }
+              
+              /* إصلاح عرض الصور - grid 2x2 مع حجم ثابت */
               .grid-cols-2 {
                 display: grid !important;
                 grid-template-columns: repeat(2, 1fr) !important;
-                gap: 0.5rem !important;
+                gap: 0.4rem !important;
               }
               
+              /* مربعات الصور بحجم ثابت */
+              .grid-cols-2 > div {
+                height: 70px !important;
+                overflow: hidden !important;
+              }
+              
+              /* الصور تتلاءم مع المربع بدون تغيير حجمه */
               .grid-cols-2 img, #report-content img {
-                max-height: 90px !important;
+                height: 100% !important;
                 width: 100% !important;
                 object-fit: cover !important;
+                object-position: center !important;
                 display: block !important;
               }
               
@@ -1426,7 +1441,7 @@ function MOEReportGenerator() {
               .signatures-grid {
                 display: grid !important;
                 grid-template-columns: repeat(2, 1fr) !important;
-                gap: 1.5rem !important;
+                gap: 1rem !important;
               }
               
               .signatures-grid > div {
@@ -2333,17 +2348,24 @@ function PerformanceReportGenerator() {
                 width: 100% !important;
                 max-width: 100% !important;
                 margin: 0 !important;
-                padding: 15mm 10mm !important;
+                padding: 8mm 8mm !important;
                 background: white !important;
                 box-shadow: none !important;
                 border: none !important;
                 border-radius: 0 !important;
-                font-size: 11px !important;
+                font-size: 9px !important;
+                transform: scale(0.95) !important;
+                transform-origin: top center !important;
               }
 
               @page {
                 size: A4 portrait;
                 margin: 0;
+              }
+
+              html, body {
+                height: 297mm !important;
+                overflow: hidden !important;
               }
 
               .no-print {
@@ -2353,12 +2375,12 @@ function PerformanceReportGenerator() {
 
               .print-header {
                 border-radius: 0 !important;
-                padding: 10px 15px !important;
-                margin-bottom: 10px !important;
+                padding: 6px 10px !important;
+                margin-bottom: 6px !important;
               }
 
               #report-content > div:last-child {
-                padding: 10px 15px !important;
+                padding: 6px 10px !important;
               }
 
               body {
@@ -2369,61 +2391,69 @@ function PerformanceReportGenerator() {
 
               /* تصغير الخطوط */
               .text-3xl {
-                font-size: 1.3rem !important;
+                font-size: 1.1rem !important;
               }
 
               .text-2xl {
-                font-size: 1.15rem !important;
+                font-size: 0.95rem !important;
               }
 
               .text-xl {
-                font-size: 1rem !important;
+                font-size: 0.85rem !important;
               }
 
               .text-lg {
-                font-size: 0.9rem !important;
+                font-size: 0.8rem !important;
               }
 
               .text-sm {
-                font-size: 0.75rem !important;
+                font-size: 0.7rem !important;
               }
 
               /* تقليل المسافات */
               .gap-6, .gap-8 {
-                gap: 0.5rem !important;
+                gap: 0.35rem !important;
               }
 
               .gap-4 {
-                gap: 0.4rem !important;
+                gap: 0.3rem !important;
               }
 
               .mb-6, .mb-8 {
-                margin-bottom: 0.5rem !important;
-              }
-
-              .mb-4 {
                 margin-bottom: 0.4rem !important;
               }
 
-              .p-6 {
-                padding: 0.6rem !important;
+              .mb-4 {
+                margin-bottom: 0.3rem !important;
               }
 
-              .p-4 {
+              .p-6 {
                 padding: 0.5rem !important;
               }
 
-              /* إصلاح grid الصور - 2x2 */
+              .p-4 {
+                padding: 0.4rem !important;
+              }
+
+              /* إصلاح grid الصور - 2x2 مع حجم ثابت */
               .performance-witness-grid {
                 display: grid !important;
                 grid-template-columns: repeat(2, 1fr) !important;
-                gap: 0.5rem !important;
+                gap: 0.4rem !important;
               }
 
+              /* مربعات الصور بحجم ثابت */
+              .performance-witness-grid > div {
+                height: 75px !important;
+                overflow: hidden !important;
+              }
+
+              /* الصور تتلاءم مع المربع بدون تغيير حجمه */
               .performance-witness-grid img, #report-content img {
-                max-height: 100px !important;
+                height: 100% !important;
                 width: 100% !important;
                 object-fit: cover !important;
+                object-position: center !important;
                 display: block !important;
               }
 
@@ -2431,7 +2461,7 @@ function PerformanceReportGenerator() {
               .signatures-grid {
                 display: grid !important;
                 grid-template-columns: repeat(2, 1fr) !important;
-                gap: 1.5rem !important;
+                gap: 1rem !important;
               }
 
               .signatures-grid > div {
@@ -2439,11 +2469,11 @@ function PerformanceReportGenerator() {
               }
 
               .signatures-grid .mt-4 {
-                margin-top: 0.8rem !important;
+                margin-top: 0.6rem !important;
               }
 
               .signatures-grid .p-6 {
-                padding: 0.8rem !important;
+                padding: 0.6rem !important;
               }
             }
           `}</style>
