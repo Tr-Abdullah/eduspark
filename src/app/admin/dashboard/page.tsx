@@ -3988,59 +3988,75 @@ function GeneralReportsGenerator() {
             }
             
             #general-report-preview .p-3 {
-              padding: 0.2rem !important;
-            }
-            
-            #general-report-preview .p-2 {
               padding: 0.15rem !important;
             }
             
-            #general-report-preview .space-y-6 > * + * {
-              margin-top: 0.3rem !important;
+            #general-report-preview .p-2 {
+              padding: 0.1rem !important;
+            }
+            
+            #general-report-preview .p-1\\.5 {
+              padding: 0.08rem !important;
+            }
+            
+            #general-report-preview .p-1 {
+              padding: 0.05rem !important;
             }
             
             #general-report-preview .space-y-3 > * + * {
-              margin-top: 0.2rem !important;
+              margin-top: 0.15rem !important;
             }
             
-            #general-report-preview .gap-6 {
-              gap: 0.3rem !important;
+            #general-report-preview .space-y-2 > * + * {
+              margin-top: 0.1rem !important;
             }
             
             #general-report-preview .gap-4 {
-              gap: 0.25rem !important;
-            }
-            
-            #general-report-preview .gap-3 {
               gap: 0.2rem !important;
             }
             
-            #general-report-preview .gap-2 {
+            #general-report-preview .gap-3 {
               gap: 0.15rem !important;
             }
             
-            #general-report-preview .mb-6 {
-              margin-bottom: 0.3rem !important;
+            #general-report-preview .gap-2 {
+              gap: 0.1rem !important;
+            }
+            
+            #general-report-preview .gap-1\\.5 {
+              gap: 0.08rem !important;
             }
             
             #general-report-preview .mb-3 {
-              margin-bottom: 0.2rem !important;
-            }
-            
-            #general-report-preview .mb-2 {
               margin-bottom: 0.15rem !important;
             }
             
-            #general-report-preview .mb-1 {
+            #general-report-preview .mb-2 {
               margin-bottom: 0.1rem !important;
             }
             
-            #general-report-preview .pt-6 {
-              padding-top: 0.3rem !important;
+            #general-report-preview .mb-1 {
+              margin-bottom: 0.08rem !important;
+            }
+            
+            #general-report-preview .mb-0\\.5 {
+              margin-bottom: 0.05rem !important;
+            }
+            
+            #general-report-preview .mt-1 {
+              margin-top: 0.08rem !important;
+            }
+            
+            #general-report-preview .mt-0\\.5 {
+              margin-top: 0.05rem !important;
             }
             
             #general-report-preview .pt-3 {
-              padding-top: 0.2rem !important;
+              padding-top: 0.15rem !important;
+            }
+            
+            #general-report-preview .pt-2 {
+              padding-top: 0.1rem !important;
             }
             
             #general-report-preview .py-2 {
@@ -4174,19 +4190,19 @@ function GeneralReportsGenerator() {
           </div>
 
           {/* محتوى التقرير */}
-          <div className="p-4 space-y-3">
+          <div className="p-3 space-y-2">
             {/* البيانات الأساسية */}
-            <div className="bg-gradient-to-r from-teal-50 to-cyan-50 rounded-lg p-3 border border-teal-200">
+            <div className="bg-gradient-to-r from-teal-50 to-cyan-50 rounded-lg p-2 border border-teal-200">
               {/* اسم البرنامج وأهداف البرنامج جنباً إلى جنب */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3 pb-3 border-b border-teal-300">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mb-2 pb-2 border-b border-teal-300">
                 <div className="text-xs">
                   <span className="font-bold text-gray-700">اسم البرنامج:</span>
-                  <div className="text-gray-900 mt-1">{formData.programName}</div>
+                  <div className="text-gray-900 mt-0.5">{formData.programName}</div>
                 </div>
                 {formData.programGoals.length > 0 && (
                   <div className="text-xs">
                     <span className="font-bold text-gray-700">أهداف البرنامج:</span>
-                    <ul className="list-disc list-inside mr-4 mt-1">
+                    <ul className="list-disc list-inside mr-4 mt-0.5">
                       {formData.programGoals.map((goal, index) => (
                         <li key={index} className="text-gray-900">{goal}</li>
                       ))}
@@ -4196,7 +4212,7 @@ function GeneralReportsGenerator() {
               </div>
               
               {/* البند والعنصر في صف واحد */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs mb-2">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs mb-1.5">
                 <div className="flex gap-1">
                   <span className="font-bold text-gray-700">البند:</span>
                   <span className="text-gray-900 text-xs">{formData.performanceItem}</span>
@@ -4208,7 +4224,7 @@ function GeneralReportsGenerator() {
               </div>
               
               {/* تاريخ التنفيذ والمستهدفون في صف واحد */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs">
                 <div className="flex gap-1">
                   <span className="font-bold text-gray-700">تاريخ التنفيذ:</span>
                   <span className="text-gray-900">{formData.executionDay}/{formData.executionMonth}/{formData.executionYear} هـ</span>
@@ -4221,7 +4237,7 @@ function GeneralReportsGenerator() {
             </div>
 
             {/* الشواهد (4 صور مربعة في شبكة 2x2) */}
-            <div className="grid gap-2 sm:grid-cols-2">
+            <div className="grid gap-1.5 sm:grid-cols-2">
               {(['img1', 'img2', 'img3', 'img4'] as const).map((imgKey, index) => {
                 const colors = [
                   { bg: 'from-blue-600 to-blue-700', border: 'border-blue-200', bgLight: 'bg-blue-50/50' },
@@ -4232,8 +4248,8 @@ function GeneralReportsGenerator() {
                 const color = colors[index];
 
                 return (
-                  <div key={imgKey} className={`border ${color.border} rounded-lg p-2 ${color.bgLight}`}>
-                    <div className={`bg-white rounded p-2 border border-dashed ${color.border} aspect-square flex items-center justify-center`}>
+                  <div key={imgKey} className={`border ${color.border} rounded p-1.5 ${color.bgLight}`}>
+                    <div className={`bg-white rounded p-1 border border-dashed ${color.border} aspect-square flex items-center justify-center`}>
                       {images[imgKey] ? (
                         <img
                           src={images[imgKey]!}
@@ -4242,7 +4258,7 @@ function GeneralReportsGenerator() {
                         />
                       ) : (
                         <div className="text-center text-gray-400">
-                          <span className="text-3xl mb-1 block">📸</span>
+                          <span className="text-2xl mb-1 block">📸</span>
                         </div>
                       )}
                     </div>
@@ -4252,27 +4268,27 @@ function GeneralReportsGenerator() {
             </div>
 
             {/* التوقيعات */}
-            <div className="grid grid-cols-2 gap-4 pt-3 border-t border-gray-200">
+            <div className="grid grid-cols-2 gap-3 pt-2 border-t border-gray-200">
               <div className="text-right">
-                <p className="text-gray-600 font-semibold mb-1 text-xs">المعلم</p>
-                <p className="text-sm font-bold text-gray-800">{formData.teacherName}</p>
-                <div className="mt-2 pt-1 inline-block">
-                  <div className="border-t border-gray-400 w-24"></div>
+                <p className="text-gray-600 font-semibold mb-0.5 text-xs">المعلم</p>
+                <p className="text-xs font-bold text-gray-800">{formData.teacherName}</p>
+                <div className="mt-1 pt-0.5 inline-block">
+                  <div className="border-t border-gray-400 w-20"></div>
                 </div>
               </div>
               <div className="text-left">
-                <p className="text-gray-600 font-semibold mb-1 text-xs">مدير المدرسة</p>
-                <p className="text-sm font-bold text-gray-800">{formData.principalName}</p>
-                <div className="mt-2 pt-1 inline-block">
-                  <div className="border-t border-gray-400 w-24"></div>
+                <p className="text-gray-600 font-semibold mb-0.5 text-xs">مدير المدرسة</p>
+                <p className="text-xs font-bold text-gray-800">{formData.principalName}</p>
+                <div className="mt-1 pt-0.5 inline-block">
+                  <div className="border-t border-gray-400 w-20"></div>
                 </div>
               </div>
             </div>
           </div>
 
           {/* Footer */}
-          <div className="text-white p-2 text-center" style={{ backgroundColor: '#07A869' }}>
-            <p className="text-sm font-bold">العام الدراسي {formData.academicYear} هـ</p>
+          <div className="text-white p-1.5 text-center" style={{ backgroundColor: '#07A869' }}>
+            <p className="text-xs font-bold">العام الدراسي {formData.academicYear} هـ</p>
           </div>
         </div>
       </div>
