@@ -4219,7 +4219,7 @@ function GeneralReportsGenerator() {
 
                 return (
                   <div key={imgKey} className={`border ${color.border} rounded p-1 ${color.bgLight}`}>
-                    <div className={`bg-white rounded p-1 border border-dashed ${color.border} flex items-center justify-center`} style={{ aspectRatio: '4 / 3' }}>
+                    <div className={`bg-white rounded p-1 border border-dashed ${color.border} flex items-center justify-center`} style={{ aspectRatio: '16 / 9' }}>
                       {images[imgKey] ? (
                         <img
                           src={images[imgKey]!}
