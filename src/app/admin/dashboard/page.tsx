@@ -1343,11 +1343,12 @@ function MOEReportGenerator() {
               /* وضع التقرير في بداية الصفحة */
               #report-content {
                 position: absolute;
-                left: 50%;
+                left: 0;
+                right: 0;
                 top: 0;
-                transform: translateX(-50%);
+                transform: none;
                 width: 100%;
-                max-width: 210mm;
+                max-width: 100%;
                 height: auto;
                 margin: 0;
                 padding: 0;
@@ -1355,12 +1356,13 @@ function MOEReportGenerator() {
                 box-shadow: none !important;
                 border: none !important;
                 border-radius: 0 !important;
+                overflow: visible !important;
               }
               
               /* ملائمة المحتوى للصفحة A4 */
               @page {
                 size: A4 portrait;
-                margin: 8mm 5mm;
+                margin: 10mm 8mm;
               }
               
               /* إخفاء عناصر التحكم */
@@ -1373,7 +1375,7 @@ function MOEReportGenerator() {
               .print-header {
                 border-radius: 0 !important;
                 page-break-after: avoid;
-                padding: 15px 20px !important;
+                padding: 12px 15px !important;
                 background-color: #15445A !important;
                 -webkit-print-color-adjust: exact;
                 print-color-adjust: exact;
@@ -1381,7 +1383,7 @@ function MOEReportGenerator() {
               
               /* تنسيق محتوى التقرير */
               #report-content > div:last-child {
-                padding: 15px 20px !important;
+                padding: 12px 15px !important;
               }
               
               /* ضمان طباعة الألوان */
@@ -1410,22 +1412,15 @@ function MOEReportGenerator() {
                 page-break-inside: avoid;
               }
               
-              /* تجنب تقسيم الصفحات داخل العناصر */
+              /* السماح بتقسيم الصفحات عند الضرورة */
               .border-2, .border, .rounded-xl, .bg-white, div[class*="border"] {
-                page-break-inside: avoid !important;
-                break-inside: avoid !important;
-              }
-              
-              /* منع تقسيم الصفحات */
-              #report-content > * {
-                page-break-before: avoid !important;
-                page-break-after: avoid !important;
-                page-break-inside: avoid !important;
+                page-break-inside: auto !important;
+                break-inside: auto !important;
               }
               
               /* تصغير الخطوط لملائمة الصفحة */
               #report-content {
-                font-size: 12px !important;
+                font-size: 11px !important;
               }
               
               .text-2xl {
@@ -2535,11 +2530,12 @@ function PerformanceReportGenerator() {
 
               #report-content {
                 position: absolute;
-                left: 50%;
+                left: 0;
+                right: 0;
                 top: 0;
-                transform: translateX(-50%);
+                transform: none;
                 width: 100%;
-                max-width: 210mm;
+                max-width: 100%;
                 height: auto;
                 margin: 0;
                 padding: 0;
@@ -2547,11 +2543,12 @@ function PerformanceReportGenerator() {
                 box-shadow: none !important;
                 border: none !important;
                 border-radius: 0 !important;
+                overflow: visible !important;
               }
 
               @page {
                 size: A4 portrait;
-                margin: 8mm 5mm;
+                margin: 10mm 8mm;
               }
 
               .no-print {
@@ -2562,14 +2559,14 @@ function PerformanceReportGenerator() {
               .print-header {
                 border-radius: 0 !important;
                 page-break-after: avoid;
-                padding: 15px 20px !important;
+                padding: 12px 15px !important;
                 background-color: #15445A !important;
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
               }
 
               #report-content > div:last-child {
-                padding: 15px 20px !important;
+                padding: 12px 15px !important;
               }
 
               body {
@@ -2590,14 +2587,8 @@ function PerformanceReportGenerator() {
               }
 
               .border-2, .border, .rounded-xl, .bg-white, div[class*="border"] {
-                page-break-inside: avoid !important;
-                break-inside: avoid !important;
-              }
-              
-              #report-content > * {
-                page-break-before: avoid !important;
-                page-break-after: avoid !important;
-                page-break-inside: avoid !important;
+                page-break-inside: auto !important;
+                break-inside: auto !important;
               }
 
               #report-content {
@@ -2605,27 +2596,27 @@ function PerformanceReportGenerator() {
               }
 
               .text-3xl {
-                font-size: 1.4rem !important;
+                font-size: 1.3rem !important;
               }
 
               .text-2xl {
-                font-size: 1.2rem !important;
+                font-size: 1.1rem !important;
               }
 
               .text-xl {
-                font-size: 1.05rem !important;
+                font-size: 1rem !important;
               }
 
               .text-lg {
-                font-size: 0.95rem !important;
+                font-size: 0.9rem !important;
               }
 
               .gap-6 {
-                gap: 0.7rem !important;
+                gap: 0.6rem !important;
               }
 
               .p-6, .p-8 {
-                padding: 0.8rem !important;
+                padding: 0.7rem !important;
               }
               
               .py-4 {
@@ -4105,12 +4096,12 @@ function GeneralReportsGenerator() {
           </button>
         </div>
 
-        <div id="general-report-preview" className="bg-white" style={{ fontFamily: "'Helvetica Neue W23', 'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
+        <div id="general-report-preview" className="bg-white max-w-4xl mx-auto" style={{ fontFamily: "'Helvetica Neue W23', 'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
           {/* Header */}
-          <div className="text-white px-8 py-6 print-header" style={{ backgroundColor: '#15445A' }}>
-            <div className="flex items-center justify-between">
+          <div className="text-white px-4 sm:px-8 py-4 sm:py-6 print-header" style={{ backgroundColor: '#15445A' }}>
+            <div className="flex items-center justify-between gap-2 sm:gap-4">
               {/* الشعار على اليمين */}
-              <div className="w-20 h-20 bg-white rounded-lg flex items-center justify-center p-2">
+              <div className="w-16 h-16 sm:w-20 sm:h-20 bg-white rounded-lg flex items-center justify-center p-2">
                 <svg viewBox="0 0 200 150" className="w-full h-full">
                   <g fill="#00a99d">
                     <circle cx="50" cy="25" r="5"/>
@@ -4155,21 +4146,21 @@ function GeneralReportsGenerator() {
               
               {/* النصوص على اليسار فوق بعض */}
               <div className="text-center leading-tight flex-1">
-                <div className="text-base font-bold">المملكة العربية السعودية</div>
-                <div className="text-xs opacity-90">Kingdom of Saudi Arabia</div>
-                <div className="text-base font-bold mt-1">وزارة التعليم</div>
+                <div className="text-sm sm:text-base font-bold">المملكة العربية السعودية</div>
+                <div className="text-xs opacity-90 hidden sm:block">Kingdom of Saudi Arabia</div>
+                <div className="text-sm sm:text-base font-bold mt-1">وزارة التعليم</div>
                 <div className="text-xs opacity-90">إدارة تعليم جازان</div>
               </div>
             </div>
           </div>
 
           {/* اسم المدرسة - ملاصق للهيدر */}
-          <div className="text-center text-white py-2 px-6" style={{ backgroundColor: '#15445A' }}>
-            <h1 className="text-2xl font-bold">{formData.schoolName}</h1>
+          <div className="text-center text-white py-2 px-4 sm:px-6" style={{ backgroundColor: '#15445A' }}>
+            <h1 className="text-xl sm:text-2xl font-bold">{formData.schoolName}</h1>
           </div>
 
           {/* محتوى التقرير */}
-          <div className="p-3 space-y-2">
+          <div className="p-2 sm:p-3 space-y-2">
             {/* البيانات الأساسية */}
             <div className="bg-gradient-to-r from-teal-50 to-cyan-50 rounded-lg p-2 border border-teal-200">
               {/* اسم البرنامج وأهداف البرنامج جنباً إلى جنب */}
@@ -4216,7 +4207,7 @@ function GeneralReportsGenerator() {
             </div>
 
             {/* الشواهد (4 صور بنسبة عرض مضاعف وارتفاع 1.5x) */}
-            <div className="grid gap-1.5 sm:grid-cols-2 max-w-2xl mx-auto">
+            <div className="grid gap-1.5 grid-cols-1 sm:grid-cols-2 max-w-2xl mx-auto">
               {(['img1', 'img2', 'img3', 'img4'] as const).map((imgKey, index) => {
                 const colors = [
                   { bg: 'from-blue-600 to-blue-700', border: 'border-blue-200', bgLight: 'bg-blue-50/50' },
@@ -4247,17 +4238,17 @@ function GeneralReportsGenerator() {
             </div>
 
             {/* التوقيعات */}
-            <div className="grid grid-cols-2 gap-3 pt-2 border-t border-gray-200">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 border-t border-gray-200">
               <div className="text-right">
                 <p className="text-gray-600 font-semibold mb-0.5 text-sm">المعلم</p>
-                <p className="text-base font-bold text-gray-800">{formData.teacherName}</p>
+                <p className="text-sm sm:text-base font-bold text-gray-800">{formData.teacherName}</p>
                 <div className="mt-1 pt-0.5 inline-block">
                   <div className="border-t border-gray-400 w-20"></div>
                 </div>
               </div>
               <div className="text-left">
                 <p className="text-gray-600 font-semibold mb-0.5 text-sm">مدير المدرسة</p>
-                <p className="text-base font-bold text-gray-800">{formData.principalName}</p>
+                <p className="text-sm sm:text-base font-bold text-gray-800">{formData.principalName}</p>
                 <div className="mt-1 pt-0.5 inline-block">
                   <div className="border-t border-gray-400 w-20"></div>
                 </div>
