@@ -1315,7 +1315,7 @@ function MOEReportGenerator() {
                 left: 0;
                 top: 0;
                 width: 100%;
-                max-width: 210mm;
+                max-width: 100%;
                 height: auto;
                 margin: 0;
                 padding: 0;
@@ -1323,14 +1323,13 @@ function MOEReportGenerator() {
                 box-shadow: none !important;
                 border: none !important;
                 border-radius: 0 !important;
-                transform: scale(0.90);
-                transform-origin: top right;
+                transform: none;
               }
               
               /* ملائمة المحتوى للصفحة */
               @page {
-                size: A4;
-                margin: 5mm;
+                size: A4 portrait;
+                margin: 10mm 8mm;
               }
               
               /* إخفاء عناصر التحكم */
@@ -1381,45 +1380,65 @@ function MOEReportGenerator() {
               
               /* تصغير الخطوط لملائمة الصفحة */
               #report-content {
-                font-size: 11px !important;
+                font-size: 12px !important;
               }
               
               .text-2xl {
-                font-size: 1.15rem !important;
+                font-size: 1.25rem !important;
               }
               
               .text-lg {
-                font-size: 0.95rem !important;
+                font-size: 1rem !important;
               }
               
               .text-sm {
-                font-size: 0.75rem !important;
+                font-size: 0.85rem !important;
               }
               
               .text-xs {
-                font-size: 0.65rem !important;
+                font-size: 0.75rem !important;
               }
               
               /* تقليل المسافات للحصول على محتوى أكثر */
               .gap-4 {
-                gap: 0.5rem !important;
+                gap: 0.6rem !important;
               }
               
               .gap-6 {
-                gap: 0.75rem !important;
+                gap: 0.8rem !important;
               }
               
               .mb-6 {
-                margin-bottom: 0.75rem !important;
+                margin-bottom: 0.8rem !important;
               }
               
               .p-6, .p-8 {
-                padding: 0.75rem !important;
+                padding: 1rem !important;
               }
               
               .py-4 {
-                padding-top: 0.5rem !important;
-                padding-bottom: 0.5rem !important;
+                padding-top: 0.6rem !important;
+                padding-bottom: 0.6rem !important;
+              }
+              
+              /* إصلاح الطباعة على الهاتف */
+              html, body {
+                width: 210mm !important;
+                height: 297mm !important;
+              }
+              
+              /* إزالة أي تحويلات على الهاتف */
+              @media (max-width: 768px) {
+                #report-content {
+                  transform: none !important;
+                  width: 100% !important;
+                  max-width: 100% !important;
+                }
+                
+                * {
+                  -webkit-transform: none !important;
+                  transform: none !important;
+                }
               }
               
               .p-4 {
@@ -2335,7 +2354,7 @@ function PerformanceReportGenerator() {
                 left: 0;
                 top: 0;
                 width: 100%;
-                max-width: 210mm;
+                max-width: 100%;
                 height: auto;
                 margin: 0;
                 padding: 0;
@@ -2343,13 +2362,12 @@ function PerformanceReportGenerator() {
                 box-shadow: none !important;
                 border: none !important;
                 border-radius: 0 !important;
-                transform: scale(0.88);
-                transform-origin: top right;
+                transform: none;
               }
 
               @page {
-                size: A4;
-                margin: 5mm;
+                size: A4 portrait;
+                margin: 10mm 8mm;
               }
 
               .no-print {
@@ -2392,36 +2410,55 @@ function PerformanceReportGenerator() {
               }
 
               #report-content {
-                font-size: 10px !important;
+                font-size: 11px !important;
               }
 
               .text-3xl {
-                font-size: 1.3rem !important;
+                font-size: 1.4rem !important;
               }
 
               .text-2xl {
-                font-size: 1.1rem !important;
+                font-size: 1.2rem !important;
               }
 
               .text-xl {
-                font-size: 1rem !important;
+                font-size: 1.05rem !important;
               }
 
               .text-lg {
-                font-size: 0.9rem !important;
+                font-size: 0.95rem !important;
               }
 
               .gap-6 {
-                gap: 0.6rem !important;
+                gap: 0.7rem !important;
               }
 
               .p-6, .p-8 {
-                padding: 0.6rem !important;
+                padding: 0.8rem !important;
               }
               
               .py-4 {
-                padding-top: 0.4rem !important;
-                padding-bottom: 0.4rem !important;
+                padding-top: 0.5rem !important;
+                padding-bottom: 0.5rem !important;
+              }
+              
+              /* إصلاح الطباعة على الهاتف */
+              html, body {
+                width: 210mm !important;
+                height: 297mm !important;
+              }
+              
+              @media (max-width: 768px) {
+                #report-content {
+                  transform: none !important;
+                  width: 100% !important;
+                  max-width: 100% !important;
+                }
+                
+                * {
+                  -webkit-transform: none !important;
+                  transform: none !important;
+                }
               }
 
               .performance-witness-grid {
