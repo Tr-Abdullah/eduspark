@@ -3746,90 +3746,30 @@ function GeneralReportsGenerator() {
     ]}
   ];
 
-  // مقترحات لكل قسم
-  const suggestions = {
-    description: [
-      "تنظيم وإدارة الأنشطة الطلابية المتنوعة التي تهدف إلى تنمية مهارات الطلاب وصقل مواهبهم",
-      "الإشراف على برامج الإذاعة المدرسية اليومية وتطويرها بما يخدم الأهداف التربوية",
-      "إطلاق مبادرات تربوية مبتكرة تساهم في تحسين البيئة التعليمية",
-      "تنظيم الفعاليات والأنشطة الخاصة بالمناسبات الوطنية والعالمية",
-      "تطوير أساليب التحفيز والتكريم للطلاب المتميزين",
-      "الإشراف على المنصات الإلكترونية التعليمية وإدارتها بفعالية"
-    ],
-    objectives: [
-      "تنمية مهارات الطلاب الإبداعية والفكرية من خلال الأنشطة المتنوعة",
-      "تعزيز الانتماء الوطني والقيم الإسلامية لدى الطلاب",
-      "رفع مستوى التحصيل الدراسي من خلال البرامج الإثرائية",
-      "تحفيز الطلاب وتشجيعهم على التميز والإبداع",
-      "توظيف التقنية بشكل فعال في العملية التعليمية",
-      "بناء شراكات مجتمعية فاعلة تخدم العملية التعليمية"
-    ],
-    procedures: [
-      "عقد اجتماع تحضيري مع الطلاب المشاركين وتوزيع المهام والأدوار",
-      "إعداد خطة زمنية محددة للتنفيذ مع تحديد المسؤوليات",
-      "تجهيز المواد والوسائل اللازمة للنشاط أو المبادرة",
-      "تنفيذ البرنامج وفق الخطة المعدة مع المتابعة المستمرة",
-      "توثيق جميع مراحل التنفيذ بالصور والفيديوهات",
-      "عقد اجتماع ختامي لتقييم النشاط واستخلاص الدروس المستفادة"
-    ],
-    results: [
-      "تفاعل إيجابي ملحوظ من قبل الطلاب وأولياء الأمور",
-      "تحسن واضح في مهارات الطلاب المستهدفة بنسبة ملموسة",
-      "زيادة الدافعية لدى الطلاب نحو التعلم والمشاركة الفاعلة",
-      "تعزيز القيم والسلوكيات الإيجابية لدى الطلاب",
-      "تحقيق مراكز متقدمة على مستوى المدرسة أو الإدارة",
-      "إشادة من قبل إدارة المدرسة والمشرف التربوي"
-    ],
-    recommendations: [
-      "الاستمرار في تطوير البرنامج وتعميمه على فصول أخرى",
-      "تبادل الخبرات مع زملاء التخصص في المدارس الأخرى",
-      "توفير المزيد من الدعم المادي والمعنوي للبرامج المشابهة",
-      "إشراك أولياء الأمور بشكل أكبر في الأنشطة المستقبلية",
-      "توثيق التجربة ونشرها كنموذج يُحتذى به",
-      "تطوير آليات التقييم والمتابعة لضمان الاستدامة"
-    ]
-  };
-
   const [selectedCriteria, setSelectedCriteria] = useState<number | null>(null);
   const [formData, setFormData] = useState({
     teacherName: "عبدالله حسن الفيفي",
     schoolName: "مدرسة ابن سيناء المتوسطة وبرنامجي العوق الفكري والتوحد",
     principalName: "احمد علي كريري",
-    academicYear: "1447",
-    gradeSubject: "الأول متوسط - لغة إنجليزية",
-    criteriaTitle: "",
-    day: new Date().getDate().toString(),
-    month: (new Date().getMonth() + 1).toString(),
-    year: new Date().getFullYear().toString(),
-    activityTitle: "",
-    description: "",
-    objectives: "",
-    procedures: "",
-    evidence: "",
-    results: "",
-    recommendations: "",
-    img1: null as string | null,
-    img2: null as string | null,
-    img3: null as string | null,
-    img4: null as string | null
+    academicYear: "1447"
   });
 
-  // حالة لتفعيل/تعطيل الأقسام الاختيارية
-  const [enabledSections, setEnabledSections] = useState({
-    description: true,
-    objectives: true,
-    procedures: true,
-    evidence: true,
-    results: true,
-    recommendations: true
+  const [images, setImages] = useState<{
+    img1: string | null;
+    img2: string | null;
+    img3: string | null;
+    img4: string | null;
+  }>({
+    img1: null,
+    img2: null,
+    img3: null,
+    img4: null
   });
 
   const [showPreview, setShowPreview] = useState(false);
 
   const handleCriteriaSelect = (id: number) => {
     setSelectedCriteria(id);
-    const criteria = generalCriteria.find(c => c.id === id);
-    setFormData(prev => ({ ...prev, criteriaTitle: criteria?.title || "" }));
     setShowPreview(false);
   };
 
@@ -3838,7 +3778,7 @@ function GeneralReportsGenerator() {
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setFormData(prev => ({
+        setImages(prev => ({
           ...prev,
           [imageKey]: reader.result as string
         }));
@@ -3847,25 +3787,19 @@ function GeneralReportsGenerator() {
     }
   };
 
-  const toggleSection = (section: keyof typeof enabledSections) => {
-    setEnabledSections(prev => ({
-      ...prev,
-      [section]: !prev[section]
-    }));
+  const handlePrint = () => {
+    window.print();
   };
 
-  const applySuggestion = (field: string, suggestion: string) => {
-    setFormData(prev => ({
-      ...prev,
-      [field]: prev[field as keyof typeof prev] 
-        ? `${prev[field as keyof typeof prev]}\n${suggestion}` 
-        : suggestion
-    }));
-  };
+  const currentCriteria = generalCriteria.find(c => c.id === selectedCriteria);
+  const witnesses = currentCriteria?.witnesses || [];
 
   const handlePrint = () => {
     window.print();
   };
+
+  const currentCriteria = generalCriteria.find(c => c.id === selectedCriteria);
+  const witnesses = currentCriteria?.witnesses || [];
 
   if (!selectedCriteria) {
     return (
@@ -3904,7 +3838,21 @@ function GeneralReportsGenerator() {
   }
 
   if (showPreview) {
-    const selectedCriteriaData = generalCriteria.find(c => c.id === selectedCriteria);
+    const witnessCards = witnesses.map((title, idx) => {
+      const colors = [
+        { wrapper: "border-2 border-teal-200 rounded-xl p-6 bg-teal-50/50", badge: "w-12 h-12 bg-gradient-to-br from-teal-600 to-teal-700 rounded-full flex items-center justify-center text-white font-bold text-xl shrink-0", border: "border-teal-300" },
+        { wrapper: "border-2 border-green-200 rounded-xl p-6 bg-green-50/50", badge: "w-12 h-12 bg-gradient-to-br from-green-600 to-green-700 rounded-full flex items-center justify-center text-white font-bold text-xl shrink-0", border: "border-green-300" },
+        { wrapper: "border-2 border-orange-200 rounded-xl p-6 bg-orange-50/50", badge: "w-12 h-12 bg-gradient-to-br from-orange-600 to-orange-700 rounded-full flex items-center justify-center text-white font-bold text-xl shrink-0", border: "border-orange-300" },
+        { wrapper: "border-2 border-purple-200 rounded-xl p-6 bg-purple-50/50", badge: "w-12 h-12 bg-gradient-to-br from-purple-600 to-purple-700 rounded-full flex items-center justify-center text-white font-bold text-xl shrink-0", border: "border-purple-300" }
+      ];
+      const imageKey = `img${idx + 1}` as 'img1' | 'img2' | 'img3' | 'img4';
+      return {
+        title,
+        ...colors[idx],
+        id: idx + 1,
+        image: images[imageKey]
+      };
+    });
     
     return (
       <div className="max-w-5xl mx-auto p-4">
@@ -3919,11 +3867,10 @@ function GeneralReportsGenerator() {
               visibility: hidden;
             }
             
-            #general-report-preview, #general-report-preview * {
+            #report-content, #report-content * {
               visibility: visible;
             }
             
-            #general-report-preview {
               position: absolute;
               left: 0;
               top: 0;
@@ -3934,26 +3881,37 @@ function GeneralReportsGenerator() {
             .no-print {
               display: none !important;
             }
+            
+            .print-header, .print-footer {
+              page-break-inside: avoid;
+            }
+            
+            .performance-witness-grid {
+              page-break-inside: avoid;
+            }
+            
+            .signatures-grid {
+              page-break-inside: avoid;
+            }
           }
         `}</style>
 
         <div className="no-print mb-6 flex gap-4">
           <button
             onClick={() => setShowPreview(false)}
-            className="px-6 py-3 bg-gray-500 text-white rounded-xl hover:bg-gray-600 transition-colors"
+            className="px-6 py-3 bg-gray-500 text-white rounded-xl hover:bg-gray-600 transition-colors font-bold"
           >
             ← تعديل
           </button>
           <button
             onClick={handlePrint}
-            className="flex-1 px-6 py-3 bg-gradient-to-r from-teal-500 to-cyan-600 text-white rounded-xl hover:from-teal-600 hover:to-cyan-700 transition-all"
+            className="flex-1 px-6 py-3 bg-gradient-to-r from-teal-500 to-cyan-600 text-white rounded-xl hover:from-teal-600 hover:to-cyan-700 transition-all font-bold"
           >
             طباعة التقرير 🖨️
           </button>
         </div>
 
-        <div id="general-report-preview" className="bg-white" style={{ fontFamily: 'Cairo, sans-serif' }}>
-          {/* Header - مطابق لتقارير الأداء */}
+        <div id="report-content" className="bg-white" style={{ fontFamily: 'Cairo, sans-serif' }}>
           <div className="bg-gradient-to-r from-green-600 via-emerald-500 to-teal-500 text-white px-8 py-6 flex items-center justify-between print-header">
             <div className="flex items-center gap-6">
               <div className="w-20 h-20 bg-white rounded-lg flex items-center justify-center p-2">
@@ -4009,42 +3967,184 @@ function GeneralReportsGenerator() {
             </div>
           </div>
 
-          {/* عنوان التقرير */}
-          <div className="bg-gradient-to-r from-teal-600 to-cyan-600 text-white p-4 text-center">
-            <h2 className="text-xl font-bold">تقرير التوثيق المهني - {formData.criteriaTitle}</h2>
+          <div className="bg-gradient-to-r from-teal-600 to-cyan-600 text-white p-6 text-center">
+            <h2 className="text-3xl font-bold">📋 {currentCriteria?.title}</h2>
           </div>
 
-          {/* اسم المدرسة فقط */}
-          <div className="p-8">
-            <div className="text-center bg-gray-700 text-white py-4 px-6 rounded-lg mb-8">
+          <div className="p-8 space-y-10">
+            <div className="text-center bg-gray-700 text-white py-4 px-6 rounded-lg">
               <h1 className="text-2xl font-bold">{formData.schoolName}</h1>
+              <p className="text-sm text-gray-200 mt-1">العام الدراسي {formData.academicYear} هـ</p>
             </div>
 
-            {/* المحتوى */}
-            <div className="space-y-6">
-              {/* معلومات أساسية */}
-              <div className="bg-gradient-to-r from-teal-50 to-cyan-50 rounded-xl p-6 border-2 border-teal-200">
-                <div className="grid grid-cols-2 gap-4 text-sm">
-                  <div className="flex gap-2"><span className="font-bold text-gray-700">المعلم:</span> <span className="text-gray-900">{formData.teacherName}</span></div>
-                  <div className="flex gap-2"><span className="font-bold text-gray-700">الصف/المادة:</span> <span className="text-gray-900">{formData.gradeSubject}</span></div>
-                  <div className="flex gap-2"><span className="font-bold text-gray-700">التاريخ:</span> <span className="text-gray-900">{formData.day}/{formData.month}/{formData.year} هـ</span></div>
-                  {formData.activityTitle && (
-                    <div className="flex gap-2"><span className="font-bold text-gray-700">عنوان النشاط:</span> <span className="text-gray-900">{formData.activityTitle}</span></div>
-                  )}
+            <div className="grid gap-6 sm:grid-cols-2 performance-witness-grid">
+              {witnessCards.map(card => (
+                <div key={card.id} className={card.wrapper}>
+                  <div className="flex items-start gap-4 mb-4">
+                    <div className={card.badge}>{card.id}</div>
+                    <div className="flex-1">
+                      <h3 className="text-xl font-bold text-gray-800 mb-1">{card.title}</h3>
+                    </div>
+                  </div>
+                  <div className={`bg-white rounded-lg p-4 border-2 border-dashed ${card.border} min-h-[200px] flex items-center justify-center`}>
+                    {card.image ? (
+                      <img src={card.image} alt={card.title} className="max-w-full max-h-[360px] object-contain rounded-lg" />
+                    ) : (
+                      <div className="text-center text-gray-400">
+                        <span className="text-5xl mb-2 block">📸</span>
+                        <p className="font-semibold">ضع صورة الشاهد هنا</p>
+                        <p className="text-sm">{card.title}</p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="signatures-grid grid md:grid-cols-2 gap-8 pt-6 border-t-2 border-gray-200">
+              <div className="text-center p-6 bg-blue-50 rounded-xl border-2 border-blue-200">
+                <p className="text-gray-600 font-semibold mb-2">معلم المادة</p>
+                <p className="text-2xl font-bold text-gray-800">{formData.teacherName}</p>
+                <div className="mt-4 pt-2 w-48 mx-auto">
+                  <div className="border-t-2 border-gray-400 mb-2"></div>
+                  <p className="text-sm text-gray-500">التوقيع</p>
                 </div>
               </div>
-
-              {/* الأقسام الاختيارية */}
-              {enabledSections.description && formData.description && (
-                <div className="border-l-4 border-teal-500 pl-6 py-4 bg-gray-50 rounded-r-lg">
-                  <h3 className="text-lg font-bold text-gray-800 mb-3 flex items-center gap-2">
-                    <span className="text-teal-600">📋</span> الوصف العام
-                  </h3>
-                  <p className="text-gray-700 leading-relaxed whitespace-pre-wrap">{formData.description}</p>
+              <div className="text-center p-6 bg-green-50 rounded-xl border-2 border-green-200">
+                <p className="text-gray-600 font-semibold mb-2">مدير المدرسة</p>
+                <p className="text-2xl font-bold text-gray-800">{formData.principalName}</p>
+                <div className="mt-4 pt-2 w-48 mx-auto">
+                  <div className="border-t-2 border-gray-400 mb-2"></div>
+                  <p className="text-sm text-gray-500">التوقيع</p>
                 </div>
-              )}
+              </div>
+            </div>
+          </div>
 
-              {enabledSections.objectives && formData.objectives && (
+          <div className="bg-gradient-to-r from-green-600 to-teal-600 text-white p-4 text-center">
+            <p className="text-lg font-bold">العام الدراسي {formData.academicYear} هـ</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="p-6 sm:p-8">
+      <div className="max-w-6xl mx-auto space-y-8">
+        <div className="text-center">
+          <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">مولد التقارير العامة</h2>
+          <p className="text-gray-600 dark:text-gray-400">إعداد شواهد التوثيق المهني بتصميم مطابق لهوية وزارة التعليم</p>
+        </div>
+
+        <div className="bg-white dark:bg-slate-800 rounded-2xl border-2 border-gray-200 dark:border-gray-700 shadow-lg p-6">
+          <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-2">
+            <span>{currentCriteria?.icon}</span>
+            <span>{currentCriteria?.title}</span>
+          </h3>
+
+          <div className="grid gap-6 md:grid-cols-2">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">اسم المعلم</label>
+              <input
+                type="text"
+                value={formData.teacherName}
+                onChange={(e) => setFormData({...formData, teacherName: e.target.value})}
+                placeholder="مثال: عبدالله حسن الفيفي"
+                className="w-full px-4 py-2.5 border-2 border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">اسم مدير المدرسة</label>
+              <input
+                type="text"
+                value={formData.principalName}
+                onChange={(e) => setFormData({...formData, principalName: e.target.value})}
+                placeholder="مثال: احمد علي كريري"
+                className="w-full px-4 py-2.5 border-2 border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all"
+              />
+            </div>
+
+            <div className="md:col-span-2">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">اسم المدرسة</label>
+              <input
+                type="text"
+                value={formData.schoolName}
+                onChange={(e) => setFormData({...formData, schoolName: e.target.value})}
+                placeholder="مثال: مدرسة ابن سيناء المتوسطة وبرنامجي العوق الفكري والتوحد"
+                className="w-full px-4 py-2.5 border-2 border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">العام الدراسي</label>
+              <input
+                type="text"
+                value={formData.academicYear}
+                onChange={(e) => setFormData({...formData, academicYear: e.target.value})}
+                placeholder="مثال: 1447"
+                className="w-full px-4 py-2.5 border-2 border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-white dark:bg-slate-800 rounded-2xl border-2 border-gray-200 dark:border-gray-700 shadow-lg p-6">
+          <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-6">رفع الشواهد</h3>
+          <div className="grid gap-6 md:grid-cols-2">
+            {witnesses.map((title, idx) => {
+              const imageKey = `img${idx + 1}` as 'img1' | 'img2' | 'img3' | 'img4';
+              const colors = [
+                { bg: 'bg-teal-50 dark:bg-teal-900/20', border: 'border-teal-200 dark:border-teal-700', text: 'text-teal-700 dark:text-teal-300' },
+                { bg: 'bg-green-50 dark:bg-green-900/20', border: 'border-green-200 dark:border-green-700', text: 'text-green-700 dark:text-green-300' },
+                { bg: 'bg-orange-50 dark:bg-orange-900/20', border: 'border-orange-200 dark:border-orange-700', text: 'text-orange-700 dark:text-orange-300' },
+                { bg: 'bg-purple-50 dark:bg-purple-900/20', border: 'border-purple-200 dark:border-purple-700', text: 'text-purple-700 dark:text-purple-300' }
+              ];
+              const color = colors[idx];
+
+              return (
+                <div key={idx} className={`${color.bg} border-2 ${color.border} rounded-xl p-4`}>
+                  <label className={`block text-sm font-bold ${color.text} mb-3`}>
+                    {idx + 1}. {title}
+                  </label>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => handleImageUpload(imageKey, e)}
+                    className="w-full text-sm text-gray-600 dark:text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-teal-500 file:text-white hover:file:bg-teal-600 transition-all cursor-pointer"
+                  />
+                  {images[imageKey] && (
+                    <div className="mt-3 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-2">
+                      <img src={images[imageKey]!} alt={title} className="w-full h-32 object-cover rounded" />
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        <div className="flex gap-4">
+          <button
+            onClick={() => setSelectedCriteria(null)}
+            className="px-6 py-3 bg-gray-500 text-white rounded-xl hover:bg-gray-600 transition-colors font-bold"
+          >
+            ← اختر مجال آخر
+          </button>
+          <button
+            onClick={() => setShowPreview(true)}
+            className="flex-1 px-6 py-3 bg-gradient-to-r from-teal-500 to-cyan-600 text-white rounded-xl hover:from-teal-600 hover:to-cyan-700 transition-all font-bold"
+          >
+            معاينة التقرير 👁️
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default function AdminDashboard() {
                 <div className="border-l-4 border-blue-500 pl-6 py-4 bg-blue-50 rounded-r-lg">
                   <h3 className="text-lg font-bold text-gray-800 mb-3 flex items-center gap-2">
                     <span className="text-blue-600">🎯</span> الأهداف
