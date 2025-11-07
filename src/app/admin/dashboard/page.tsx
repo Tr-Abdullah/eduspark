@@ -12,6 +12,7 @@ function DashboardContent() {
   const initialTab = (searchParams.get('tab') as "reports" | "tools" | "log" | "performance") || "reports";
   const [activeTab, setActiveTab] = useState<"reports" | "tools" | "log" | "performance">(initialTab);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const handleLogout = async () => {
     await fetch("/api/auth/logout", { method: "POST" });
@@ -37,6 +38,16 @@ function DashboardContent() {
             </Link>
             
             <div className="flex items-center gap-3">
+              {/* Mobile Menu Button */}
+              <button
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="lg:hidden p-2 text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+              </button>
+              
               <div className="hidden md:flex items-center gap-2 px-4 py-2 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
                 <span className="relative flex h-2 w-2">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
@@ -58,16 +69,39 @@ function DashboardContent() {
         </div>
       </header>
 
-      <div className="flex">
-        {/* Sidebar */}
-        <aside className={`sticky top-[73px] h-[calc(100vh-73px)] bg-white dark:bg-slate-800 border-l border-gray-200 dark:border-gray-700 overflow-y-auto hidden lg:block transition-all duration-300 ${
-          sidebarCollapsed ? "w-16" : "w-64"
-        }`}>
+      <div className="flex relative">
+        {/* Mobile Sidebar Overlay */}
+        {mobileMenuOpen && (
+          <div 
+            className="lg:hidden fixed inset-0 bg-black/50 z-40"
+            onClick={() => setMobileMenuOpen(false)}
+          />
+        )}
+
+        {/* Sidebar - Desktop & Mobile */}
+        <aside className={`
+          sticky top-[73px] h-[calc(100vh-73px)] bg-white dark:bg-slate-800 border-l border-gray-200 dark:border-gray-700 overflow-y-auto transition-all duration-300
+          ${sidebarCollapsed ? "w-16" : "w-64"}
+          lg:block
+          ${mobileMenuOpen ? "fixed right-0 z-50 shadow-2xl" : "hidden"}
+        `}>
           <nav className="p-4 space-y-2">
-            {/* زر الطي/الفتح */}
+            {/* زر الإغلاق للهاتف */}
+            <button
+              onClick={() => setMobileMenuOpen(false)}
+              className="lg:hidden w-full flex items-center justify-center px-4 py-3 rounded-xl hover:bg-gray-100 dark:hover:bg-slate-700 text-gray-700 dark:text-gray-300 transition-all mb-4"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+              <span className="mr-3 font-medium">إغلاق</span>
+            </button>
+            
+            {/* زر الطي/الفتح - Desktop فقط */}
+            {/* زر الطي/الفتح - Desktop فقط */}
             <button
               onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
-              className={`w-full flex items-center ${sidebarCollapsed ? "justify-center px-2" : "justify-center px-4"} py-3 rounded-xl hover:bg-gray-100 dark:hover:bg-slate-700 text-gray-700 dark:text-gray-300 transition-all mb-4`}
+              className={`hidden lg:flex w-full items-center ${sidebarCollapsed ? "justify-center px-2" : "justify-center px-4"} py-3 rounded-xl hover:bg-gray-100 dark:hover:bg-slate-700 text-gray-700 dark:text-gray-300 transition-all mb-4`}
               title={sidebarCollapsed ? "فتح القائمة" : "طي القائمة"}
             >
               <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -79,6 +113,7 @@ function DashboardContent() {
             <button
               onClick={() => {
                 setActiveTab("reports");
+                setMobileMenuOpen(false);
                 const params = new URLSearchParams(window.location.search);
                 params.set('tab', 'reports');
                 router.replace(`?${params.toString()}`);
@@ -99,6 +134,7 @@ function DashboardContent() {
             <button
               onClick={() => {
                 setActiveTab("performance");
+                setMobileMenuOpen(false);
                 const params = new URLSearchParams(window.location.search);
                 params.set('tab', 'performance');
                 router.replace(`?${params.toString()}`);
@@ -119,6 +155,7 @@ function DashboardContent() {
             <button
               onClick={() => {
                 setActiveTab("tools");
+                setMobileMenuOpen(false);
                 const params = new URLSearchParams(window.location.search);
                 params.set('tab', 'tools');
                 router.replace(`?${params.toString()}`);
@@ -140,6 +177,7 @@ function DashboardContent() {
             <button
               onClick={() => {
                 setActiveTab("log");
+                setMobileMenuOpen(false);
                 setSidebarCollapsed(true); // طي القائمة تلقائياً عند فتح سجل المتابعة
                 const params = new URLSearchParams(window.location.search);
                 params.set('tab', 'log');
@@ -194,7 +232,7 @@ function DashboardContent() {
         </aside>
 
         {/* Main Content */}
-        <main className="flex-1 p-4 sm:p-6 lg:p-8">
+        <main className="flex-1 p-4 sm:p-6 lg:p-8 overflow-x-hidden">
           <div className="max-w-7xl mx-auto">
             {/* Welcome Banner */}
             <div className="mb-8 bg-gradient-to-r from-teal-500 to-cyan-600 rounded-2xl p-8 text-white shadow-xl">
