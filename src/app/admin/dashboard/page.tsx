@@ -342,6 +342,17 @@ function MOEReportGenerator() {
     }
   }, [criteriaId]);
 
+  // تغيير عنوان الصفحة عند المعاينة
+  useEffect(() => {
+    if (showPreview && formData.strategy) {
+      const originalTitle = document.title;
+      document.title = `تقرير ${formData.strategy} - ${formData.schoolName}`;
+      return () => {
+        document.title = originalTitle;
+      };
+    }
+  }, [showPreview, formData.strategy, formData.schoolName]);
+
   // حفظ التقرير
   const saveReport = () => {
     const report = {
@@ -1567,6 +1578,18 @@ function PerformanceReportGenerator() {
       reportContainerRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   }, [showPreview]);
+
+  // تغيير عنوان الصفحة عند المعاينة
+  useEffect(() => {
+    if (showPreview && selectedReport) {
+      const originalTitle = document.title;
+      const reportName = reports.find(r => r.id === selectedReport)?.name || "تقرير الأداء الوظيفي";
+      document.title = `${reportName} - ${formData.schoolName}`;
+      return () => {
+        document.title = originalTitle;
+      };
+    }
+  }, [showPreview, selectedReport]);
 
   const handleInputChange = (field: keyof typeof formData, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
@@ -3876,6 +3899,17 @@ function GeneralReportsGenerator() {
   const handlePrint = () => {
     window.print();
   };
+
+  // تغيير عنوان الصفحة عند المعاينة
+  useEffect(() => {
+    if (showPreview && formData.programName) {
+      const originalTitle = document.title;
+      document.title = `تقرير ${formData.programName} - ${formData.schoolName}`;
+      return () => {
+        document.title = originalTitle;
+      };
+    }
+  }, [showPreview, formData.programName, formData.schoolName]);
 
   // نموذج المعاينة
   if (showPreview) {
