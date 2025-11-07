@@ -791,8 +791,15 @@ function MOEReportGenerator() {
   const Report = () => (
     <div id="report-content" className="bg-white" style={{ fontFamily: "'Helvetica Neue W23', 'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
       {/* Header - الهوية البصرية لوزارة التعليم */}
-      <div className="text-white px-8 py-6 flex items-center justify-between print-header" style={{ backgroundColor: '#15445A' }}>
-        <div className="flex items-center gap-6">
+      <div className="text-white px-8 py-6 print-header" style={{ backgroundColor: '#15445A' }}>
+        <div className="flex items-center justify-center gap-8">
+          {/* الجانب الأيمن */}
+          <div className="text-right">
+            <div className="text-lg font-bold">المملكة العربية السعودية</div>
+            <div className="text-sm opacity-90">Kingdom of Saudi Arabia</div>
+          </div>
+          
+          {/* الشعار في الوسط */}
           <div className="w-20 h-20 bg-white rounded-lg flex items-center justify-center p-2">
             <svg viewBox="0 0 200 150" className="w-full h-full">
               {/* شعار وزارة التعليم */}
@@ -843,22 +850,22 @@ function MOEReportGenerator() {
               <text x="100" y="110" textAnchor="middle" fill="#00a99d" fontSize="10" fontFamily="Arial">Ministry of Education</text>
             </svg>
           </div>
-          <div className="text-right">
-            <div className="text-2xl font-bold mb-1">وزارة التعليم</div>
-            <div className="text-lg opacity-90">{formData.region}</div>
+          
+          {/* الجانب الأيسر */}
+          <div className="text-left">
+            <div className="text-lg font-bold">وزارة التعليم</div>
+            <div className="text-sm opacity-90">إدارة تعليم جازان</div>
           </div>
         </div>
-        <div className="text-left">
-          <div className="text-sm opacity-90">المملكة العربية السعودية</div>
-          <div className="text-xs opacity-75">Kingdom of Saudi Arabia</div>
-        </div>
+      </div>
+
+      {/* اسم المدرسة - ملاصق للهيدر */}
+      <div className="text-center text-white py-4 px-6" style={{ backgroundColor: '#15445A', marginTop: '-1px' }}>
+        <h1 className="text-2xl font-bold">{formData.schoolName}</h1>
       </div>
 
       {/* محتوى التقرير */}
       <div className="p-8">
-      <div className="text-center bg-gray-700 text-white py-4 px-6 rounded-lg mb-6">
-        <h1 className="text-2xl font-bold">{formData.schoolName}</h1>
-      </div>
       <div className="grid grid-cols-3 gap-4 mb-6">
         <div className="border-2 border-teal-500 rounded-lg p-3">
           <div className="text-sm text-teal-700 font-semibold mb-1">الاستراتيجية:</div>
@@ -2125,8 +2132,15 @@ function PerformanceReportGenerator() {
 
     return (
       <div id="report-content" className="bg-white" style={{ fontFamily: "'Helvetica Neue W23', 'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
-        <div className="text-white px-8 py-6 flex items-center justify-between print-header" style={{ backgroundColor: '#15445A' }}>
-          <div className="flex items-center gap-6">
+        <div className="text-white px-8 py-6 print-header" style={{ backgroundColor: '#15445A' }}>
+          <div className="flex items-center justify-center gap-8">
+            {/* الجانب الأيمن */}
+            <div className="text-right">
+              <div className="text-lg font-bold">المملكة العربية السعودية</div>
+              <div className="text-sm opacity-90">Kingdom of Saudi Arabia</div>
+            </div>
+            
+            {/* الشعار في الوسط */}
             <div className="w-20 h-20 bg-white rounded-lg flex items-center justify-center p-2">
               <svg viewBox="0 0 200 150" className="w-full h-full">
                 <g fill="#00a99d">
@@ -2169,26 +2183,21 @@ function PerformanceReportGenerator() {
                 <text x="100" y="110" textAnchor="middle" fill="#00a99d" fontSize="10" fontFamily="Arial">Ministry of Education</text>
               </svg>
             </div>
-            <div className="text-right">
-              <div className="text-2xl font-bold mb-1">وزارة التعليم</div>
-              <div className="text-lg opacity-90">الإدارة العامة للتعليم بجازان</div>
+            
+            {/* الجانب الأيسر */}
+            <div className="text-left">
+              <div className="text-lg font-bold">وزارة التعليم</div>
+              <div className="text-sm opacity-90">إدارة تعليم جازان</div>
             </div>
-          </div>
-          <div className="text-left">
-            <div className="text-sm opacity-90">المملكة العربية السعودية</div>
-            <div className="text-xs opacity-75">Kingdom of Saudi Arabia</div>
           </div>
         </div>
 
-        <div className="bg-gradient-to-r from-teal-600 to-cyan-600 text-white p-6 text-center">
-          <h2 className="text-3xl font-bold">📋 {config.title}</h2>
+        {/* اسم المدرسة - ملاصق للهيدر */}
+        <div className="text-center text-white py-4 px-6" style={{ backgroundColor: '#15445A', marginTop: '-1px' }}>
+          <h1 className="text-2xl font-bold">{formData.schoolName}</h1>
         </div>
 
         <div className="p-8 space-y-10">
-          <div className="text-center bg-gray-700 text-white py-4 px-6 rounded-lg">
-            <h1 className="text-2xl font-bold">{formData.schoolName}</h1>
-            <p className="text-sm text-gray-200 mt-1">العام الدراسي {formData.academicYear} هـ</p>
-          </div>
 
           {/* Program Information Section */}
           {(formData.reportItem || formData.programName || formData.implementationDate || formData.targetAudience || formData.programObjectives) && (
@@ -2262,21 +2271,19 @@ function PerformanceReportGenerator() {
             ))}
           </div>
 
-          <div className="signatures-grid grid md:grid-cols-2 gap-8 pt-6 border-t-2 border-gray-200">
-            <div className="text-center p-6 bg-blue-50 rounded-xl border-2 border-blue-200">
+          <div className="signatures-grid grid grid-cols-2 gap-8 pt-6 border-t-2 border-gray-200">
+            <div className="text-right">
               <p className="text-gray-600 font-semibold mb-2">معلم المادة</p>
-              <p className="text-2xl font-bold text-gray-800">{formData.teacherName}</p>
-              <div className="mt-4 pt-2 w-48 mx-auto">
-                <div className="border-t-2 border-gray-400 mb-2"></div>
-                <p className="text-sm text-gray-500">التوقيع</p>
+              <p className="text-xl font-bold text-gray-800">{formData.teacherName}</p>
+              <div className="mt-4 pt-2 inline-block">
+                <div className="border-t-2 border-gray-400 w-32"></div>
               </div>
             </div>
-            <div className="text-center p-6 bg-green-50 rounded-xl border-2 border-green-200">
+            <div className="text-left">
               <p className="text-gray-600 font-semibold mb-2">مدير المدرسة</p>
-              <p className="text-2xl font-bold text-gray-800">{formData.principalName}</p>
-              <div className="mt-4 pt-2 w-48 mx-auto">
-                <div className="border-t-2 border-gray-400 mb-2"></div>
-                <p className="text-sm text-gray-500">التوقيع</p>
+              <p className="text-xl font-bold text-gray-800">{formData.principalName}</p>
+              <div className="mt-4 pt-2 inline-block">
+                <div className="border-t-2 border-gray-400 w-32"></div>
               </div>
             </div>
           </div>
@@ -3958,8 +3965,15 @@ function GeneralReportsGenerator() {
 
         <div id="general-report-preview" className="bg-white" style={{ fontFamily: "'Helvetica Neue W23', 'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
           {/* Header */}
-          <div className="text-white px-8 py-6 flex items-center justify-between print-header" style={{ backgroundColor: '#15445A' }}>
-            <div className="flex items-center gap-6">
+          <div className="text-white px-8 py-6 print-header" style={{ backgroundColor: '#15445A' }}>
+            <div className="flex items-center justify-center gap-8">
+              {/* الجانب الأيمن */}
+              <div className="text-right">
+                <div className="text-lg font-bold">المملكة العربية السعودية</div>
+                <div className="text-sm opacity-90">Kingdom of Saudi Arabia</div>
+              </div>
+              
+              {/* الشعار في الوسط */}
               <div className="w-20 h-20 bg-white rounded-lg flex items-center justify-center p-2">
                 <svg viewBox="0 0 200 150" className="w-full h-full">
                   <g fill="#00a99d">
@@ -4002,25 +4016,22 @@ function GeneralReportsGenerator() {
                   <text x="100" y="110" textAnchor="middle" fill="#00a99d" fontSize="10" fontFamily="Arial">Ministry of Education</text>
                 </svg>
               </div>
-              <div className="text-right">
-                <div className="text-2xl font-bold mb-1">وزارة التعليم</div>
-                <div className="text-lg opacity-90">الإدارة العامة للتعليم بجازان</div>
+              
+              {/* الجانب الأيسر */}
+              <div className="text-left">
+                <div className="text-lg font-bold">وزارة التعليم</div>
+                <div className="text-sm opacity-90">إدارة تعليم جازان</div>
               </div>
             </div>
-            <div className="text-left">
-              <div className="text-sm opacity-90">المملكة العربية السعودية</div>
-              <div className="text-xs opacity-75">Kingdom of Saudi Arabia</div>
-            </div>
+          </div>
+
+          {/* اسم المدرسة - ملاصق للهيدر */}
+          <div className="text-center text-white py-4 px-6" style={{ backgroundColor: '#15445A', marginTop: '-1px' }}>
+            <h1 className="text-2xl font-bold">{formData.schoolName}</h1>
           </div>
 
           {/* محتوى التقرير */}
           <div className="p-8 space-y-6">
-            {/* معلومات المدرسة */}
-            <div className="text-center text-white py-4 px-6 rounded-lg" style={{ backgroundColor: '#15445A' }}>
-              <h1 className="text-2xl font-bold">{formData.schoolName}</h1>
-              <p className="text-sm text-gray-200 mt-1">العام الدراسي {formData.academicYear} هـ</p>
-            </div>
-
             {/* البيانات الأساسية */}
             <div className="bg-gradient-to-r from-teal-50 to-cyan-50 rounded-xl p-6 border-2 border-teal-200">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
@@ -4077,11 +4088,6 @@ function GeneralReportsGenerator() {
 
                 return (
                   <div key={imgKey} className={`border-2 ${color.border} rounded-xl p-6 ${color.bgLight}`}>
-                    <div className="flex items-start gap-4 mb-4">
-                      <div className={`w-12 h-12 bg-gradient-to-br ${color.bg} rounded-full flex items-center justify-center text-white font-bold text-xl shrink-0`}>
-                        {index + 1}
-                      </div>
-                    </div>
                     <div className={`bg-white rounded-lg p-4 border-2 border-dashed ${color.border} min-h-[200px] flex items-center justify-center`}>
                       {images[imgKey] ? (
                         <img
@@ -4101,21 +4107,19 @@ function GeneralReportsGenerator() {
             </div>
 
             {/* التوقيعات */}
-            <div className="grid md:grid-cols-2 gap-8 pt-6 border-t-2 border-gray-200">
-              <div className="text-center p-6 bg-blue-50 rounded-xl border-2 border-blue-200">
+            <div className="grid grid-cols-2 gap-8 pt-6 border-t-2 border-gray-200">
+              <div className="text-right">
                 <p className="text-gray-600 font-semibold mb-2">المعلم</p>
-                <p className="text-2xl font-bold text-gray-800">{formData.teacherName}</p>
-                <div className="mt-4 pt-2 w-48 mx-auto">
-                  <div className="border-t-2 border-gray-400 mb-2"></div>
-                  <p className="text-sm text-gray-500">التوقيع</p>
+                <p className="text-xl font-bold text-gray-800">{formData.teacherName}</p>
+                <div className="mt-4 pt-2 inline-block">
+                  <div className="border-t-2 border-gray-400 w-32"></div>
                 </div>
               </div>
-              <div className="text-center p-6 bg-green-50 rounded-xl border-2 border-green-200">
+              <div className="text-left">
                 <p className="text-gray-600 font-semibold mb-2">مدير المدرسة</p>
-                <p className="text-2xl font-bold text-gray-800">{formData.principalName}</p>
-                <div className="mt-4 pt-2 w-48 mx-auto">
-                  <div className="border-t-2 border-gray-400 mb-2"></div>
-                  <p className="text-sm text-gray-500">التوقيع</p>
+                <p className="text-xl font-bold text-gray-800">{formData.principalName}</p>
+                <div className="mt-4 pt-2 inline-block">
+                  <div className="border-t-2 border-gray-400 w-32"></div>
                 </div>
               </div>
             </div>
