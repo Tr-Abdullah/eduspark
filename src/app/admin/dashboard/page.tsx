@@ -1506,7 +1506,12 @@ function PerformanceReportGenerator() {
     teacherName: "عبدالله حسن الفيفي",
     principalName: "احمد علي كريري",
     schoolName: "مدرسة ابن سيناء المتوسطة وبرنامجي العوق الفكري والتوحد",
-    academicYear: "1447"
+    academicYear: "1447",
+    reportItem: "",
+    programName: "",
+    implementationDate: "",
+    programObjectives: "",
+    targetAudience: ""
   });
   const [images, setImages] = useState<Record<PerformanceImageKey, string>>({
     img1: "",
@@ -2170,6 +2175,48 @@ function PerformanceReportGenerator() {
             <p className="text-sm text-gray-200 mt-1">العام الدراسي {formData.academicYear} هـ</p>
           </div>
 
+          {/* Program Information Section */}
+          {(formData.reportItem || formData.programName || formData.implementationDate || formData.targetAudience || formData.programObjectives) && (
+            <div className="bg-gradient-to-br from-blue-50 to-cyan-50 border-2 border-blue-200 rounded-xl p-6 space-y-4">
+              <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+                <span className="text-2xl">📊</span>
+                <span>بيانات البرنامج</span>
+              </h3>
+              <div className="grid gap-4 sm:grid-cols-2">
+                {formData.reportItem && (
+                  <div className="bg-white rounded-lg p-4 border border-blue-200">
+                    <p className="text-sm text-gray-600 font-semibold mb-1">البند</p>
+                    <p className="text-gray-800 font-bold">{formData.reportItem}</p>
+                  </div>
+                )}
+                {formData.programName && (
+                  <div className="bg-white rounded-lg p-4 border border-blue-200">
+                    <p className="text-sm text-gray-600 font-semibold mb-1">اسم البرنامج</p>
+                    <p className="text-gray-800 font-bold">{formData.programName}</p>
+                  </div>
+                )}
+                {formData.implementationDate && (
+                  <div className="bg-white rounded-lg p-4 border border-blue-200">
+                    <p className="text-sm text-gray-600 font-semibold mb-1">تاريخ التنفيذ</p>
+                    <p className="text-gray-800 font-bold">{formData.implementationDate}</p>
+                  </div>
+                )}
+                {formData.targetAudience && (
+                  <div className="bg-white rounded-lg p-4 border border-blue-200">
+                    <p className="text-sm text-gray-600 font-semibold mb-1">المستهدفون</p>
+                    <p className="text-gray-800 font-bold">{formData.targetAudience}</p>
+                  </div>
+                )}
+              </div>
+              {formData.programObjectives && (
+                <div className="bg-white rounded-lg p-4 border border-blue-200">
+                  <p className="text-sm text-gray-600 font-semibold mb-2">أهداف البرنامج</p>
+                  <p className="text-gray-800 whitespace-pre-wrap leading-relaxed">{formData.programObjectives}</p>
+                </div>
+              )}
+            </div>
+          )}
+
           <div className="grid gap-6 sm:grid-cols-2 performance-witness-grid">
             {witnessCards.map(card => (
               <div key={card.id} className={card.wrapperClass}>
@@ -2291,6 +2338,56 @@ function PerformanceReportGenerator() {
                         type="text"
                         value={formData.academicYear}
                         onChange={(e) => handleInputChange("academicYear", e.target.value)}
+                        className="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">البند</label>
+                      <input
+                        type="text"
+                        value={formData.reportItem}
+                        onChange={(e) => handleInputChange("reportItem", e.target.value)}
+                        placeholder="مثال: البند الأول - التخطيط"
+                        className="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+                      />
+                    </div>
+                    <div className="md:col-span-2">
+                      <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">اسم البرنامج</label>
+                      <input
+                        type="text"
+                        value={formData.programName}
+                        onChange={(e) => handleInputChange("programName", e.target.value)}
+                        placeholder="مثال: برنامج تحسين مهارات القراءة"
+                        className="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">تاريخ التنفيذ</label>
+                      <input
+                        type="text"
+                        value={formData.implementationDate}
+                        onChange={(e) => handleInputChange("implementationDate", e.target.value)}
+                        placeholder="مثال: 15/3/1447 هـ"
+                        className="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">المستهدفون</label>
+                      <input
+                        type="text"
+                        value={formData.targetAudience}
+                        onChange={(e) => handleInputChange("targetAudience", e.target.value)}
+                        placeholder="مثال: طلاب الصف الأول المتوسط"
+                        className="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+                      />
+                    </div>
+                    <div className="md:col-span-2">
+                      <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">أهداف البرنامج</label>
+                      <textarea
+                        value={formData.programObjectives}
+                        onChange={(e) => handleInputChange("programObjectives", e.target.value)}
+                        rows={3}
+                        placeholder="أدخل أهداف البرنامج هنا..."
                         className="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
                       />
                     </div>
