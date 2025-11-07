@@ -3670,12 +3670,14 @@ function GeneralReportsGenerator() {
   const [selectedCriteria, setSelectedCriteria] = useState<number | null>(null);
   const [formData, setFormData] = useState({
     teacherName: "عبدالله حسن الفيفي",
-    schoolName: "متوسطة تحفيظ القرآن الكريم",
-    principalName: "أ. محمد أحمد الشهري",
-    academicYear: "1446",
+    schoolName: "مدرسة ابن سيناء المتوسطة وبرنامجي العوق الفكري والتوحد",
+    principalName: "احمد علي كريري",
+    academicYear: "1447",
     gradeSubject: "الأول متوسط - لغة إنجليزية",
     criteriaTitle: "",
-    date: new Date().toISOString().split('T')[0],
+    day: new Date().getDate().toString(),
+    month: (new Date().getMonth() + 1).toString(),
+    year: new Date().getFullYear().toString(),
     activityTitle: "",
     description: "",
     objectives: "",
@@ -3732,7 +3734,9 @@ function GeneralReportsGenerator() {
   const applySuggestion = (field: string, suggestion: string) => {
     setFormData(prev => ({
       ...prev,
-      [field]: suggestion
+      [field]: prev[field as keyof typeof prev] 
+        ? `${prev[field as keyof typeof prev]}\n${suggestion}` 
+        : suggestion
     }));
   };
 
@@ -3883,15 +3887,14 @@ function GeneralReportsGenerator() {
           </div>
 
           {/* عنوان التقرير */}
-          <div className="bg-gradient-to-r from-teal-600 to-cyan-600 text-white p-6 text-center">
-            <h2 className="text-3xl font-bold">📋 تقرير التوثيق المهني - {formData.criteriaTitle}</h2>
+          <div className="bg-gradient-to-r from-teal-600 to-cyan-600 text-white p-4 text-center">
+            <h2 className="text-xl font-bold">تقرير التوثيق المهني - {formData.criteriaTitle}</h2>
           </div>
 
-          {/* اسم المدرسة والعام الدراسي */}
+          {/* اسم المدرسة فقط */}
           <div className="p-8">
             <div className="text-center bg-gray-700 text-white py-4 px-6 rounded-lg mb-8">
               <h1 className="text-2xl font-bold">{formData.schoolName}</h1>
-              <p className="text-sm text-gray-200 mt-1">العام الدراسي {formData.academicYear} هـ</p>
             </div>
 
             {/* المحتوى */}
@@ -3901,7 +3904,7 @@ function GeneralReportsGenerator() {
                 <div className="grid grid-cols-2 gap-4 text-sm">
                   <div className="flex gap-2"><span className="font-bold text-gray-700">المعلم:</span> <span className="text-gray-900">{formData.teacherName}</span></div>
                   <div className="flex gap-2"><span className="font-bold text-gray-700">الصف/المادة:</span> <span className="text-gray-900">{formData.gradeSubject}</span></div>
-                  <div className="flex gap-2"><span className="font-bold text-gray-700">التاريخ:</span> <span className="text-gray-900">{formData.date}</span></div>
+                  <div className="flex gap-2"><span className="font-bold text-gray-700">التاريخ:</span> <span className="text-gray-900">{formData.day}/{formData.month}/{formData.year} هـ</span></div>
                   {formData.activityTitle && (
                     <div className="flex gap-2"><span className="font-bold text-gray-700">عنوان النشاط:</span> <span className="text-gray-900">{formData.activityTitle}</span></div>
                   )}
@@ -3937,36 +3940,64 @@ function GeneralReportsGenerator() {
               )}
 
               {enabledSections.evidence && (formData.evidence || formData.img1 || formData.img2 || formData.img3 || formData.img4) && (
-                <div className="border-l-4 border-green-500 pl-6 py-4 bg-green-50 rounded-r-lg">
-                  <h3 className="text-lg font-bold text-gray-800 mb-3 flex items-center gap-2">
+                <div>
+                  <h3 className="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
                     <span className="text-green-600">📸</span> الشواهد والأدلة
                   </h3>
                   {formData.evidence && (
-                    <p className="text-gray-700 leading-relaxed whitespace-pre-wrap mb-4">{formData.evidence}</p>
+                    <p className="text-gray-700 leading-relaxed whitespace-pre-wrap mb-6">{formData.evidence}</p>
                   )}
-                  <div className="grid grid-cols-2 gap-4 mt-4">
+                  <div className="grid gap-6 sm:grid-cols-2">
                     {formData.img1 && (
-                      <div className="border-2 border-green-200 rounded-lg overflow-hidden bg-white p-2">
-                        <img src={formData.img1} alt="شاهد 1" className="w-full h-48 object-cover rounded" />
-                        <p className="text-xs text-center text-gray-600 mt-2 font-semibold">الشاهد 1</p>
+                      <div className="border-2 border-green-200 rounded-xl p-6 bg-green-50/50">
+                        <div className="flex items-start gap-4 mb-4">
+                          <div className="w-12 h-12 bg-gradient-to-br from-green-600 to-green-700 rounded-full flex items-center justify-center text-white font-bold text-xl shrink-0">1</div>
+                          <div className="flex-1">
+                            <h3 className="text-xl font-bold text-gray-800 mb-1">الشاهد الأول</h3>
+                          </div>
+                        </div>
+                        <div className="bg-white rounded-lg p-4 border-2 border-dashed border-green-300 min-h-[200px] flex items-center justify-center">
+                          <img src={formData.img1} alt="الشاهد 1" className="max-w-full max-h-[360px] object-contain rounded-lg" />
+                        </div>
                       </div>
                     )}
                     {formData.img2 && (
-                      <div className="border-2 border-green-200 rounded-lg overflow-hidden bg-white p-2">
-                        <img src={formData.img2} alt="شاهد 2" className="w-full h-48 object-cover rounded" />
-                        <p className="text-xs text-center text-gray-600 mt-2 font-semibold">الشاهد 2</p>
+                      <div className="border-2 border-blue-200 rounded-xl p-6 bg-blue-50/50">
+                        <div className="flex items-start gap-4 mb-4">
+                          <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-blue-700 rounded-full flex items-center justify-center text-white font-bold text-xl shrink-0">2</div>
+                          <div className="flex-1">
+                            <h3 className="text-xl font-bold text-gray-800 mb-1">الشاهد الثاني</h3>
+                          </div>
+                        </div>
+                        <div className="bg-white rounded-lg p-4 border-2 border-dashed border-blue-300 min-h-[200px] flex items-center justify-center">
+                          <img src={formData.img2} alt="الشاهد 2" className="max-w-full max-h-[360px] object-contain rounded-lg" />
+                        </div>
                       </div>
                     )}
                     {formData.img3 && (
-                      <div className="border-2 border-green-200 rounded-lg overflow-hidden bg-white p-2">
-                        <img src={formData.img3} alt="شاهد 3" className="w-full h-48 object-cover rounded" />
-                        <p className="text-xs text-center text-gray-600 mt-2 font-semibold">الشاهد 3</p>
+                      <div className="border-2 border-orange-200 rounded-xl p-6 bg-orange-50/50">
+                        <div className="flex items-start gap-4 mb-4">
+                          <div className="w-12 h-12 bg-gradient-to-br from-orange-600 to-orange-700 rounded-full flex items-center justify-center text-white font-bold text-xl shrink-0">3</div>
+                          <div className="flex-1">
+                            <h3 className="text-xl font-bold text-gray-800 mb-1">الشاهد الثالث</h3>
+                          </div>
+                        </div>
+                        <div className="bg-white rounded-lg p-4 border-2 border-dashed border-orange-300 min-h-[200px] flex items-center justify-center">
+                          <img src={formData.img3} alt="الشاهد 3" className="max-w-full max-h-[360px] object-contain rounded-lg" />
+                        </div>
                       </div>
                     )}
                     {formData.img4 && (
-                      <div className="border-2 border-green-200 rounded-lg overflow-hidden bg-white p-2">
-                        <img src={formData.img4} alt="شاهد 4" className="w-full h-48 object-cover rounded" />
-                        <p className="text-xs text-center text-gray-600 mt-2 font-semibold">الشاهد 4</p>
+                      <div className="border-2 border-purple-200 rounded-xl p-6 bg-purple-50/50">
+                        <div className="flex items-start gap-4 mb-4">
+                          <div className="w-12 h-12 bg-gradient-to-br from-purple-600 to-purple-700 rounded-full flex items-center justify-center text-white font-bold text-xl shrink-0">4</div>
+                          <div className="flex-1">
+                            <h3 className="text-xl font-bold text-gray-800 mb-1">الشاهد الرابع</h3>
+                          </div>
+                        </div>
+                        <div className="bg-white rounded-lg p-4 border-2 border-dashed border-purple-300 min-h-[200px] flex items-center justify-center">
+                          <img src={formData.img4} alt="الشاهد 4" className="max-w-full max-h-[360px] object-contain rounded-lg" />
+                        </div>
                       </div>
                     )}
                   </div>
@@ -4086,18 +4117,59 @@ function GeneralReportsGenerator() {
                 type="text"
                 value={formData.academicYear}
                 onChange={(e) => setFormData({...formData, academicYear: e.target.value})}
-                placeholder="1446"
+                placeholder="1447"
                 className="w-full px-4 py-2 border-2 border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
               />
             </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">التاريخ</label>
-              <input
-                type="date"
-                value={formData.date}
-                onChange={(e) => setFormData({...formData, date: e.target.value})}
-                className="w-full px-4 py-2 border-2 border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
-              />
+            <div className="md:col-span-2">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">التاريخ الهجري</label>
+              <div className="grid grid-cols-3 gap-3">
+                <div>
+                  <select
+                    value={formData.day}
+                    onChange={(e) => setFormData({...formData, day: e.target.value})}
+                    className="w-full px-4 py-2 border-2 border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
+                  >
+                    <option value="">اليوم</option>
+                    {Array.from({length: 30}, (_, i) => i + 1).map(d => (
+                      <option key={d} value={d}>{d}</option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <select
+                    value={formData.month}
+                    onChange={(e) => setFormData({...formData, month: e.target.value})}
+                    className="w-full px-4 py-2 border-2 border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
+                  >
+                    <option value="">الشهر</option>
+                    <option value="1">محرم</option>
+                    <option value="2">صفر</option>
+                    <option value="3">ربيع الأول</option>
+                    <option value="4">ربيع الثاني</option>
+                    <option value="5">جمادى الأولى</option>
+                    <option value="6">جمادى الآخرة</option>
+                    <option value="7">رجب</option>
+                    <option value="8">شعبان</option>
+                    <option value="9">رمضان</option>
+                    <option value="10">شوال</option>
+                    <option value="11">ذو القعدة</option>
+                    <option value="12">ذو الحجة</option>
+                  </select>
+                </div>
+                <div>
+                  <select
+                    value={formData.year}
+                    onChange={(e) => setFormData({...formData, year: e.target.value})}
+                    className="w-full px-4 py-2 border-2 border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
+                  >
+                    <option value="">السنة</option>
+                    {Array.from({length: 10}, (_, i) => 1445 + i).map(y => (
+                      <option key={y} value={y}>{y}</option>
+                    ))}
+                  </select>
+                </div>
+              </div>
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">عنوان النشاط (اختياري)</label>
@@ -4134,14 +4206,14 @@ function GeneralReportsGenerator() {
                 placeholder="توضيح موجز للمجال..."
                 className="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white mb-3"
               />
-              <div className="flex flex-wrap gap-2">
+              <div className="grid grid-cols-1 gap-2">
                 {suggestions.description.map((sug, idx) => (
                   <button
                     key={idx}
                     onClick={() => applySuggestion('description', sug)}
-                    className="px-3 py-1 text-xs bg-teal-100 dark:bg-teal-900 text-teal-700 dark:text-teal-300 rounded-lg hover:bg-teal-200 dark:hover:bg-teal-800 transition-colors"
+                    className="px-4 py-3 text-sm bg-teal-100 dark:bg-teal-900 text-teal-800 dark:text-teal-200 rounded-lg hover:bg-teal-200 dark:hover:bg-teal-800 transition-colors text-right"
                   >
-                    {sug.substring(0, 40)}...
+                    {sug}
                   </button>
                 ))}
               </div>
@@ -4172,14 +4244,14 @@ function GeneralReportsGenerator() {
                 placeholder="أهداف ذكية SMART..."
                 className="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white mb-3"
               />
-              <div className="flex flex-wrap gap-2">
+              <div className="grid grid-cols-1 gap-2">
                 {suggestions.objectives.map((sug, idx) => (
                   <button
                     key={idx}
                     onClick={() => applySuggestion('objectives', sug)}
-                    className="px-3 py-1 text-xs bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 rounded-lg hover:bg-blue-200 dark:hover:bg-blue-800 transition-colors"
+                    className="px-4 py-3 text-sm bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-lg hover:bg-blue-200 dark:hover:bg-blue-800 transition-colors text-right"
                   >
-                    {sug.substring(0, 40)}...
+                    {sug}
                   </button>
                 ))}
               </div>
@@ -4210,14 +4282,14 @@ function GeneralReportsGenerator() {
                 placeholder="خطوات التنفيذ..."
                 className="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white mb-3"
               />
-              <div className="flex flex-wrap gap-2">
+              <div className="grid grid-cols-1 gap-2">
                 {suggestions.procedures.map((sug, idx) => (
                   <button
                     key={idx}
                     onClick={() => applySuggestion('procedures', sug)}
-                    className="px-3 py-1 text-xs bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300 rounded-lg hover:bg-purple-200 dark:hover:bg-purple-800 transition-colors"
+                    className="px-4 py-3 text-sm bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 rounded-lg hover:bg-purple-200 dark:hover:bg-purple-800 transition-colors text-right"
                   >
-                    {sug.substring(0, 40)}...
+                    {sug}
                   </button>
                 ))}
               </div>
@@ -4293,14 +4365,14 @@ function GeneralReportsGenerator() {
                 placeholder="نتائج وتحليلات..."
                 className="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white mb-3"
               />
-              <div className="flex flex-wrap gap-2">
+              <div className="grid grid-cols-1 gap-2">
                 {suggestions.results.map((sug, idx) => (
                   <button
                     key={idx}
                     onClick={() => applySuggestion('results', sug)}
-                    className="px-3 py-1 text-xs bg-orange-100 dark:bg-orange-900 text-orange-700 dark:text-orange-300 rounded-lg hover:bg-orange-200 dark:hover:bg-orange-800 transition-colors"
+                    className="px-4 py-3 text-sm bg-orange-100 dark:bg-orange-900 text-orange-800 dark:text-orange-200 rounded-lg hover:bg-orange-200 dark:hover:bg-orange-800 transition-colors text-right"
                   >
-                    {sug.substring(0, 40)}...
+                    {sug}
                   </button>
                 ))}
               </div>
@@ -4331,14 +4403,14 @@ function GeneralReportsGenerator() {
                 placeholder="توصيات وخطط التطوير..."
                 className="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white mb-3"
               />
-              <div className="flex flex-wrap gap-2">
+              <div className="grid grid-cols-1 gap-2">
                 {suggestions.recommendations.map((sug, idx) => (
                   <button
                     key={idx}
                     onClick={() => applySuggestion('recommendations', sug)}
-                    className="px-3 py-1 text-xs bg-yellow-100 dark:bg-yellow-900 text-yellow-700 dark:text-yellow-300 rounded-lg hover:bg-yellow-200 dark:hover:bg-yellow-800 transition-colors"
+                    className="px-4 py-3 text-sm bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200 rounded-lg hover:bg-yellow-200 dark:hover:bg-yellow-800 transition-colors text-right"
                   >
-                    {sug.substring(0, 40)}...
+                    {sug}
                   </button>
                 ))}
               </div>
