@@ -789,7 +789,7 @@ function MOEReportGenerator() {
   };
 
   const Report = () => (
-    <div id="report-content" className="bg-white" style={{ fontFamily: 'Cairo, sans-serif' }}>
+    <div id="report-content" className="bg-white" style={{ fontFamily: "'Helvetica Neue W23', 'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
       {/* Header - الهوية البصرية لوزارة التعليم */}
       <div className="text-white px-8 py-6 flex items-center justify-between print-header" style={{ backgroundColor: '#15445A' }}>
         <div className="flex items-center gap-6">
@@ -1522,6 +1522,7 @@ function PerformanceReportGenerator() {
     schoolName: "مدرسة ابن سيناء المتوسطة وبرنامجي العوق الفكري والتوحد",
     academicYear: "1447",
     reportItem: "",
+    performanceElement: "",
     programName: "",
     implementationDate: "",
     programObjectives: "",
@@ -2123,7 +2124,7 @@ function PerformanceReportGenerator() {
     }));
 
     return (
-      <div id="report-content" className="bg-white" style={{ fontFamily: 'Cairo, sans-serif' }}>
+      <div id="report-content" className="bg-white" style={{ fontFamily: "'Helvetica Neue W23', 'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
         <div className="text-white px-8 py-6 flex items-center justify-between print-header" style={{ backgroundColor: '#15445A' }}>
           <div className="flex items-center gap-6">
             <div className="w-20 h-20 bg-white rounded-lg flex items-center justify-center p-2">
@@ -2201,6 +2202,12 @@ function PerformanceReportGenerator() {
                   <div className="bg-white rounded-lg p-4 border border-blue-200">
                     <p className="text-sm text-gray-600 font-semibold mb-1">البند</p>
                     <p className="text-gray-800 font-bold">{formData.reportItem}</p>
+                  </div>
+                )}
+                {formData.performanceElement && (
+                  <div className="bg-white rounded-lg p-4 border border-blue-200">
+                    <p className="text-sm text-gray-600 font-semibold mb-1">العنصر</p>
+                    <p className="text-gray-800 font-bold">{formData.performanceElement}</p>
                   </div>
                 )}
                 {formData.programName && (
@@ -2361,7 +2368,17 @@ function PerformanceReportGenerator() {
                         type="text"
                         value={formData.reportItem}
                         onChange={(e) => handleInputChange("reportItem", e.target.value)}
-                        placeholder="مثال: البند الأول - التخطيط"
+                        placeholder="مثال: أداء الواجبات الوظيفية"
+                        className="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">العنصر</label>
+                      <input
+                        type="text"
+                        value={formData.performanceElement}
+                        onChange={(e) => handleInputChange("performanceElement", e.target.value)}
+                        placeholder="مثال: الالتزام بالنظام الرسمي"
                         className="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
                       />
                     </div>
@@ -3725,20 +3742,70 @@ function StudentFollowUpLog() {
 
 // مولد التقارير العامة - نسخة مطابقة لمولد تقارير الأداء الوظيفي
 function GeneralReportsGenerator() {
-  // بنود الأداء الوظيفي الـ 11
-  const performanceItems = [
-    "أداء الواجبات الوظيفية",
-    "التفاعل مع المجتمع المهني",
-    "التفاعل مع أولياء الأمور",
-    "التنويع في استراتيجيات التدريس",
-    "تحسين نتائج المتعلمين",
-    "إعداد وتنفيذ خطة التعلم",
-    "توظيف تقنيات ووسائل التعلم",
-    "تهيئة البيئة التعليمية",
-    "الإدارة الصفية",
-    "تحليل نتائج المتعلمين",
-    "تنوع أساليب التقويم"
-  ];
+  // بنود الأداء الوظيفي الـ 11 مع العناصر
+  const performanceItemsWithElements = {
+    "أداء الواجبات الوظيفية": [
+      "الالتزام بالنظام الرسمي",
+      "كتابة التحضير وفق الجدول الدراسي",
+      "المشاركة في الإشراف والمناوبة وحصص الانتظار",
+      "متابعة الواجبات والدروس والاختبارات",
+      "المشاركة في الأنشطة اللاصفية في بيئة العمل",
+      "المشاركة في برامج النشاط المدرسي"
+    ],
+    "التفاعل مع المجتمع المهني": [
+      "المشاركة الفاعلة في مجتمعات التعلم المهنية",
+      "الدروس التطبيقية وتبادل الزيارات",
+      "التفاعل في الدورات والورش",
+      "برامج الإنتاج المعرفي في التخصص"
+    ],
+    "التفاعل مع أولياء الأمور": [
+      "التواصل الإيجابي مع أولياء الأمور",
+      "توظيف وسائل وتطبيقات التقنية الحديثة",
+      "إرسال الخطة الأسبوعية في وقت مبكر",
+      "استخدام أنماط اتصالية متنوعة"
+    ],
+    "التنويع في استراتيجيات التدريس": [
+      "استخدام استراتيجيات وطرائق التدريس",
+      "استخدام أساليب تدريسية إبداعية وجاذبة"
+    ],
+    "تحسين نتائج المتعلمين": [
+      "تشخيص مستوى إتقان الطلبة في المادة",
+      "معالجة الفاقد التعليمي",
+      "وضع الخطط العلاجية للطلاب الضعاف",
+      "وضع الخطط الإثرائية للطلاب المتميزين",
+      "تكريم الطلاب المتميزين"
+    ],
+    "إعداد وتنفيذ خطة التعلم": [
+      "اكتمال الواجبات والاختبارات",
+      "تنفيذ الدروس وفق الجداول"
+    ],
+    "توظيف تقنيات ووسائل التعلم": [
+      "التنويع في الوسائل التعليمية",
+      "توظيف وسائل وتطبيقات تقنية ومعلوماتية",
+      "تفعيل التعلم بمصادر التعلم المختلفة"
+    ],
+    "تهيئة البيئة التعليمية": [
+      "مراعاة الفروق الفردية وحاجات الطلاب",
+      "تحفيز الطلاب مادياً ومعنوياً",
+      "تفعيل أدوات متنوعة في الدرس"
+    ],
+    "الإدارة الصفية": [
+      "ضبط سلوك الطلاب في الحصة",
+      "أداء الطلاب في الأنشطة بشكل متعاون أو فردي",
+      "إشراك الطلاب في ضبط القواعد الصفية"
+    ],
+    "تحليل نتائج المتعلمين": [
+      "استخدام نتائج التقويم في التخطيط",
+      "تحليل نتائج الطلاب وتشخيص مستوياتهم",
+      "تقديم التغذية الراجعة"
+    ],
+    "تنوع أساليب التقويم": [
+      "التنويع في أساليب التقويم",
+      "استخدام التقويم التكويني والختامي",
+      "توظيف التقويم الإلكتروني",
+      "الالتزام بتعليمات ولوائح الاختبارات"
+    ]
+  };
 
   const [formData, setFormData] = useState({
     teacherName: "عبدالله حسن الفيفي",
@@ -3746,6 +3813,7 @@ function GeneralReportsGenerator() {
     principalName: "احمد علي كريري",
     academicYear: "1447",
     performanceItem: "", // البند من بنود الأداء الوظيفي
+    performanceElement: "", // العنصر من عناصر البند
     programName: "", // اسم البرنامج
     executionDay: "", // يوم التنفيذ
     executionMonth: "", // شهر التنفيذ
@@ -3888,7 +3956,7 @@ function GeneralReportsGenerator() {
           </button>
         </div>
 
-        <div id="general-report-preview" className="bg-white" style={{ fontFamily: 'Cairo, sans-serif' }}>
+        <div id="general-report-preview" className="bg-white" style={{ fontFamily: "'Helvetica Neue W23', 'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
           {/* Header */}
           <div className="text-white px-8 py-6 flex items-center justify-between print-header" style={{ backgroundColor: '#15445A' }}>
             <div className="flex items-center gap-6">
@@ -3945,16 +4013,10 @@ function GeneralReportsGenerator() {
             </div>
           </div>
 
-          {/* عنوان التقرير */}
-          <div className="bg-gradient-to-r from-teal-600 to-cyan-600 text-white p-6 text-center">
-            <h2 className="text-3xl font-bold">📋 تقرير توثيق مهني</h2>
-            <p className="text-lg mt-2">{formData.programName}</p>
-          </div>
-
           {/* محتوى التقرير */}
           <div className="p-8 space-y-6">
             {/* معلومات المدرسة */}
-            <div className="text-center bg-gray-700 text-white py-4 px-6 rounded-lg">
+            <div className="text-center text-white py-4 px-6 rounded-lg" style={{ backgroundColor: '#15445A' }}>
               <h1 className="text-2xl font-bold">{formData.schoolName}</h1>
               <p className="text-sm text-gray-200 mt-1">العام الدراسي {formData.academicYear} هـ</p>
             </div>
@@ -3965,6 +4027,10 @@ function GeneralReportsGenerator() {
                 <div className="flex gap-2">
                   <span className="font-bold text-gray-700">البند من بنود الأداء الوظيفي:</span>
                   <span className="text-gray-900">{formData.performanceItem}</span>
+                </div>
+                <div className="flex gap-2">
+                  <span className="font-bold text-gray-700">العنصر:</span>
+                  <span className="text-gray-900">{formData.performanceElement}</span>
                 </div>
                 <div className="flex gap-2">
                   <span className="font-bold text-gray-700">اسم البرنامج:</span>
@@ -4125,15 +4191,32 @@ function GeneralReportsGenerator() {
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">البند من بنود الأداء الوظيفي</label>
               <select
                 value={formData.performanceItem}
-                onChange={(e) => setFormData({...formData, performanceItem: e.target.value})}
+                onChange={(e) => {
+                  setFormData({...formData, performanceItem: e.target.value, performanceElement: ""});
+                }}
                 className="w-full px-4 py-2 border-2 border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
               >
                 <option value="">اختر البند</option>
-                {performanceItems.map((item, index) => (
+                {Object.keys(performanceItemsWithElements).map((item, index) => (
                   <option key={index} value={item}>{item}</option>
                 ))}
               </select>
             </div>
+            {formData.performanceItem && (
+              <div className="md:col-span-2">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">العنصر</label>
+                <select
+                  value={formData.performanceElement}
+                  onChange={(e) => setFormData({...formData, performanceElement: e.target.value})}
+                  className="w-full px-4 py-2 border-2 border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
+                >
+                  <option value="">اختر العنصر</option>
+                  {performanceItemsWithElements[formData.performanceItem as keyof typeof performanceItemsWithElements]?.map((element, index) => (
+                    <option key={index} value={element}>{element}</option>
+                  ))}
+                </select>
+              </div>
+            )}
             <div className="md:col-span-2">
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">اسم البرنامج</label>
               <input
