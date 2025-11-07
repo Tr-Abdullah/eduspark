@@ -4181,9 +4181,9 @@ function GeneralReportsGenerator() {
               {/* النصوص على اليسار فوق بعض */}
               <div className="text-center leading-tight flex-1">
                 <div className="text-sm sm:text-base font-bold">المملكة العربية السعودية</div>
-                <div className="text-xs opacity-90 hidden sm:block">Kingdom of Saudi Arabia</div>
+                <div className="text-xs font-bold hidden sm:block">Kingdom of Saudi Arabia</div>
                 <div className="text-sm sm:text-base font-bold mt-1">وزارة التعليم</div>
-                <div className="text-sm sm:text-base font-bold">إدارة تعليم جازان</div>
+                <div className="text-sm sm:text-base font-bold">الإدارة العامة للتعليم بمنطقة جازان</div>
               </div>
             </div>
           </div>
