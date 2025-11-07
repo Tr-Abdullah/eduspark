@@ -4054,13 +4054,15 @@ function GeneralReportsGenerator() {
               height: 0.8rem !important;
             }
             
-            /* تكبير حاويات الصور */
-            #general-report-preview .min-h-\\[160px\\] {
-              min-height: 120px !important;
+            /* جعل الصور مربعة في الطباعة */
+            #general-report-preview .aspect-square {
+              aspect-ratio: 1 / 1 !important;
             }
             
-            #general-report-preview .max-h-\\[240px\\] {
-              max-height: 140px !important;
+            #general-report-preview .aspect-square img {
+              width: 100% !important;
+              height: 100% !important;
+              object-fit: cover !important;
             }
             
             /* إصلاح عرض الشبكة في الطباعة - جنباً إلى جنب */
@@ -4175,11 +4177,11 @@ function GeneralReportsGenerator() {
           <div className="p-4 space-y-3">
             {/* البيانات الأساسية */}
             <div className="bg-gradient-to-r from-teal-50 to-cyan-50 rounded-lg p-3 border border-teal-200">
-              {/* اسم البرنامج وأهداف البرنامج */}
-              <div className="mb-3 pb-3 border-b border-teal-300">
-                <div className="flex gap-1 text-xs mb-2">
+              {/* اسم البرنامج وأهداف البرنامج جنباً إلى جنب */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3 pb-3 border-b border-teal-300">
+                <div className="text-xs">
                   <span className="font-bold text-gray-700">اسم البرنامج:</span>
-                  <span className="text-gray-900">{formData.programName}</span>
+                  <div className="text-gray-900 mt-1">{formData.programName}</div>
                 </div>
                 {formData.programGoals.length > 0 && (
                   <div className="text-xs">
@@ -4218,8 +4220,8 @@ function GeneralReportsGenerator() {
               </div>
             </div>
 
-            {/* الشواهد (4 صور في شبكة 2x2) */}
-            <div className="grid gap-3 sm:grid-cols-2">
+            {/* الشواهد (4 صور مربعة في شبكة 2x2) */}
+            <div className="grid gap-2 sm:grid-cols-2">
               {(['img1', 'img2', 'img3', 'img4'] as const).map((imgKey, index) => {
                 const colors = [
                   { bg: 'from-blue-600 to-blue-700', border: 'border-blue-200', bgLight: 'bg-blue-50/50' },
@@ -4230,17 +4232,17 @@ function GeneralReportsGenerator() {
                 const color = colors[index];
 
                 return (
-                  <div key={imgKey} className={`border ${color.border} rounded-lg p-3 ${color.bgLight}`}>
-                    <div className={`bg-white rounded p-3 border border-dashed ${color.border} min-h-[160px] flex items-center justify-center`}>
+                  <div key={imgKey} className={`border ${color.border} rounded-lg p-2 ${color.bgLight}`}>
+                    <div className={`bg-white rounded p-2 border border-dashed ${color.border} aspect-square flex items-center justify-center`}>
                       {images[imgKey] ? (
                         <img
                           src={images[imgKey]!}
                           alt={`الشاهد ${index + 1}`}
-                          className="max-w-full max-h-[240px] object-contain rounded"
+                          className="max-w-full max-h-full object-cover rounded"
                         />
                       ) : (
                         <div className="text-center text-gray-400">
-                          <span className="text-4xl mb-1 block">📸</span>
+                          <span className="text-3xl mb-1 block">📸</span>
                         </div>
                       )}
                     </div>
