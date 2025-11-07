@@ -1298,36 +1298,35 @@ function MOEReportGenerator() {
             @media print {
               /* إخفاء كل شيء */
               * {
-                visibility: hidden;
-                margin: 0;
-                padding: 0;
+                visibility: hidden !important;
               }
               
               /* إظهار التقرير فقط */
               #report-content,
               #report-content * {
-                visibility: visible;
+                visibility: visible !important;
               }
               
               /* وضع التقرير في بداية الصفحة */
               #report-content {
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%;
-                max-width: 210mm;
-                margin: 0;
-                padding: 0;
-                background: white;
+                position: absolute !important;
+                left: 0 !important;
+                top: 0 !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                margin: 0 !important;
+                padding: 15mm 10mm !important;
+                background: white !important;
                 box-shadow: none !important;
                 border: none !important;
                 border-radius: 0 !important;
+                font-size: 11px !important;
               }
               
               /* ملائمة المحتوى للصفحة */
               @page {
-                size: A4;
-                margin: 10mm 15mm;
+                size: A4 portrait;
+                margin: 0;
               }
               
               /* إخفاء عناصر التحكم */
@@ -1339,93 +1338,99 @@ function MOEReportGenerator() {
               /* تنسيق الهيدر للطباعة */
               .print-header {
                 border-radius: 0 !important;
-                page-break-after: avoid;
-                padding: 20px 30px !important;
+                padding: 10px 15px !important;
+                margin-bottom: 10px !important;
               }
               
               /* تنسيق محتوى التقرير */
               #report-content > div:last-child {
-                padding: 20px 30px !important;
+                padding: 10px 15px !important;
               }
               
               /* ضمان طباعة الألوان */
               body {
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-                color-adjust: exact;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                color-adjust: exact !important;
               }
               
-              /* ضمان طباعة الصور */
-              img {
-                max-width: 100%;
-                page-break-inside: avoid;
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-              }
-              
-              /* تجنب تقسيم الصفحات داخل العناصر */
-              .border-2 {
-                page-break-inside: avoid;
-              }
-              
-              /* تصغير الخطوط قليلاً لملائمة الصفحة */
-              #report-content {
-                font-size: 13px;
+              /* تصغير الخطوط */
+              .text-3xl {
+                font-size: 1.2rem !important;
               }
               
               .text-2xl {
-                font-size: 1.3rem !important;
+                font-size: 1.1rem !important;
               }
               
-              .text-lg {
+              .text-xl {
                 font-size: 1rem !important;
               }
               
+              .text-lg {
+                font-size: 0.9rem !important;
+              }
+              
               .text-sm {
-                font-size: 0.8rem !important;
+                font-size: 0.75rem !important;
               }
               
               .text-xs {
-                font-size: 0.7rem !important;
+                font-size: 0.65rem !important;
               }
               
-              /* تقليل المسافات للحصول على محتوى أكثر */
-              .gap-4 {
-                gap: 0.75rem !important;
-              }
-              
+              /* تقليل المسافات */
               .gap-6 {
-                gap: 1rem !important;
+                gap: 0.5rem !important;
               }
               
-              .mb-6 {
-                margin-bottom: 1rem !important;
+              .gap-4 {
+                gap: 0.4rem !important;
+              }
+              
+              .mb-6, .mb-8 {
+                margin-bottom: 0.5rem !important;
+              }
+              
+              .mb-4 {
+                margin-bottom: 0.4rem !important;
+              }
+              
+              .p-6 {
+                padding: 0.6rem !important;
               }
               
               .p-4 {
-                padding: 0.75rem !important;
-              }
-              
-              .p-3 {
                 padding: 0.5rem !important;
               }
               
-              /* منع تقسيم الصفحات */
-              #report-content, #report-content * {
-                page-break-inside: avoid !important;
-                page-break-before: avoid !important;
-                page-break-after: avoid !important;
+              .p-3 {
+                padding: 0.4rem !important;
               }
               
-              /* تصغير الصور لتوفير المساحة */
-              #report-content img {
-                max-height: 100px !important;
+              /* إصلاح عرض الصور - grid 2x2 */
+              .grid-cols-2 {
+                display: grid !important;
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 0.5rem !important;
+              }
+              
+              .grid-cols-2 img, #report-content img {
+                max-height: 90px !important;
+                width: 100% !important;
                 object-fit: cover !important;
+                display: block !important;
               }
               
-              /* تحسين عرض الصور في الطباعة */
-              .grid-cols-2 img {
-                height: 120px !important;
+              /* إصلاح عرض التوقيعات - جنباً إلى جنب */
+              .signatures-grid {
+                display: grid !important;
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 1.5rem !important;
+              }
+              
+              .signatures-grid > div {
+                display: block !important;
               }
             }
           `}</style>
@@ -2313,33 +2318,32 @@ function PerformanceReportGenerator() {
           <style jsx global>{`
             @media print {
               * {
-                visibility: hidden;
-                margin: 0;
-                padding: 0;
+                visibility: hidden !important;
               }
 
               #report-content,
               #report-content * {
-                visibility: visible;
+                visibility: visible !important;
               }
 
               #report-content {
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%;
-                max-width: 210mm;
-                margin: 0;
-                padding: 0;
-                background: white;
+                position: absolute !important;
+                left: 0 !important;
+                top: 0 !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                margin: 0 !important;
+                padding: 15mm 10mm !important;
+                background: white !important;
                 box-shadow: none !important;
                 border: none !important;
                 border-radius: 0 !important;
+                font-size: 11px !important;
               }
 
               @page {
-                size: A4;
-                margin: 10mm 15mm;
+                size: A4 portrait;
+                margin: 0;
               }
 
               .no-print {
@@ -2349,89 +2353,97 @@ function PerformanceReportGenerator() {
 
               .print-header {
                 border-radius: 0 !important;
-                page-break-after: avoid;
-                padding: 20px 30px !important;
+                padding: 10px 15px !important;
+                margin-bottom: 10px !important;
               }
 
               #report-content > div:last-child {
-                padding: 20px 30px !important;
+                padding: 10px 15px !important;
               }
 
               body {
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-                color-adjust: exact;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                color-adjust: exact !important;
               }
 
-              img {
-                max-width: 100%;
-                page-break-inside: avoid;
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-              }
-
-              .border-2 {
-                page-break-inside: avoid;
-              }
-
-              #report-content {
-                font-size: 13px;
-              }
-
+              /* تصغير الخطوط */
               .text-3xl {
-                font-size: 1.5rem !important;
+                font-size: 1.3rem !important;
               }
 
               .text-2xl {
-                font-size: 1.25rem !important;
+                font-size: 1.15rem !important;
               }
 
               .text-xl {
-                font-size: 1.1rem !important;
-              }
-
-              .text-lg {
                 font-size: 1rem !important;
               }
 
-              .gap-6 {
-                gap: 1rem !important;
+              .text-lg {
+                font-size: 0.9rem !important;
+              }
+
+              .text-sm {
+                font-size: 0.75rem !important;
+              }
+
+              /* تقليل المسافات */
+              .gap-6, .gap-8 {
+                gap: 0.5rem !important;
+              }
+
+              .gap-4 {
+                gap: 0.4rem !important;
+              }
+
+              .mb-6, .mb-8 {
+                margin-bottom: 0.5rem !important;
+              }
+
+              .mb-4 {
+                margin-bottom: 0.4rem !important;
               }
 
               .p-6 {
-                padding: 1rem !important;
+                padding: 0.6rem !important;
               }
 
+              .p-4 {
+                padding: 0.5rem !important;
+              }
+
+              /* إصلاح grid الصور - 2x2 */
               .performance-witness-grid {
-                grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-                gap: 1.25rem !important;
+                display: grid !important;
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 0.5rem !important;
               }
 
+              .performance-witness-grid img, #report-content img {
+                max-height: 100px !important;
+                width: 100% !important;
+                object-fit: cover !important;
+                display: block !important;
+              }
+
+              /* إصلاح التوقيعات - جنباً إلى جنب */
               .signatures-grid {
                 display: grid !important;
-                grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-                gap: 2rem !important;
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 1.5rem !important;
+              }
+
+              .signatures-grid > div {
+                display: block !important;
               }
 
               .signatures-grid .mt-4 {
-                margin-top: 1.5rem !important;
+                margin-top: 0.8rem !important;
               }
 
               .signatures-grid .p-6 {
-                padding: 1.5rem !important;
-              }
-              
-              /* منع تقسيم الصفحات */
-              #report-content, #report-content * {
-                page-break-inside: avoid !important;
-                page-break-before: avoid !important;
-                page-break-after: avoid !important;
-              }
-              
-              /* تصغير الصور لتوفير المساحة */
-              #report-content img {
-                max-height: 130px !important;
-                object-fit: cover !important;
+                padding: 0.8rem !important;
               }
             }
           `}</style>
