@@ -3704,54 +3704,33 @@ function StudentFollowUpLog() {
 
 // مولد التقارير العامة - نسخة مطابقة لمولد تقارير الأداء الوظيفي
 function GeneralReportsGenerator() {
-  const generalCriteria = [
-    { id: 1, title: "النشاط الطلابي", icon: "🎯", witnesses: [
-      "صور من النشاط", "مشاركات الطلاب", "نتائج النشاط", "شهادات وتكريم"
-    ]},
-    { id: 2, title: "الإذاعة المدرسية", icon: "📻", witnesses: [
-      "فقرات الإذاعة", "مشاركات الطلاب", "البرامج المميزة", "التقييم والتكريم"
-    ]},
-    { id: 3, title: "المبادرات التربوية والتعليمية", icon: "💡", witnesses: [
-      "وصف المبادرة", "خطة التنفيذ", "النتائج والأثر", "التوثيق والتكريم"
-    ]},
-    { id: 4, title: "المشاركة في المناسبات الوطنية والعالمية", icon: "🇸🇦", witnesses: [
-      "فعاليات المناسبة", "الأنشطة المصاحبة", "مشاركات الطلاب", "التوثيق الرسمي"
-    ]},
-    { id: 5, title: "التحفيز والتكريم", icon: "🏆", witnesses: [
-      "برامج التحفيز", "الطلاب المتميزون", "شهادات التقدير", "الجوائز والهدايا"
-    ]},
-    { id: 6, title: "إدارة المنصات الإلكترونية", icon: "💻", witnesses: [
-      "واجهة المنصة", "المحتوى التعليمي", "تفاعل المستخدمين", "التقييم والتطوير"
-    ]},
-    { id: 7, title: "التنمية المهنية الذاتية", icon: "📚", witnesses: [
-      "الدورات التدريبية", "القراءات المهنية", "التطبيق العملي", "الشهادات والإنجازات"
-    ]},
-    { id: 8, title: "البحث التربوي وكتابة المقالات", icon: "✍️", witnesses: [
-      "عنوان البحث", "المنهجية والأدوات", "النتائج والتوصيات", "النشر والتقدير"
-    ]},
-    { id: 9, title: "الشراكة المجتمعية", icon: "🤝", witnesses: [
-      "الجهات الشريكة", "البرامج المشتركة", "الأثر والنتائج", "اتفاقيات التعاون"
-    ]},
-    { id: 10, title: "التصميم والإنتاج التعليمي", icon: "🎨", witnesses: [
-      "المنتج الأول", "المنتج الثاني", "المنتج الثالث", "التقييم والاستخدام"
-    ]},
-    { id: 11, title: "تفعيل المنصات التعليمية الرسمية", icon: "🌐", witnesses: [
-      "منصة مدرستي", "الواجبات والاختبارات", "التفاعل الطلابي", "الإنجازات والتقدير"
-    ]},
-    { id: 12, title: "العمل التطوعي والمساهمات الإنسانية", icon: "❤️", witnesses: [
-      "الأعمال التطوعية", "المستفيدون", "الأثر المجتمعي", "شهادات التقدير"
-    ]},
-    { id: 13, title: "القيادة التربوية", icon: "👨‍🏫", witnesses: [
-      "المبادرات القيادية", "التدريب والإرشاد", "الإنجازات الجماعية", "التكريم والتقدير"
-    ]}
+  // بنود الأداء الوظيفي الـ 11
+  const performanceItems = [
+    "التخطيط",
+    "التدريس",
+    "التقويم", 
+    "المسؤوليات المهنية",
+    "التطوير المهني",
+    "إدارة الصف",
+    "التواصل مع أولياء الأمور",
+    "المشاركة المجتمعية",
+    "البحث والابتكار",
+    "القيادة والمبادرة",
+    "الممارسات الأخلاقية والمهنية"
   ];
 
-  const [selectedCriteria, setSelectedCriteria] = useState<number | null>(null);
   const [formData, setFormData] = useState({
     teacherName: "عبدالله حسن الفيفي",
     schoolName: "مدرسة ابن سيناء المتوسطة وبرنامجي العوق الفكري والتوحد",
     principalName: "احمد علي كريري",
-    academicYear: "1447"
+    academicYear: "1447",
+    performanceItem: "", // البند من بنود الأداء الوظيفي
+    programName: "", // اسم البرنامج
+    executionDay: "", // يوم التنفيذ
+    executionMonth: "", // شهر التنفيذ
+    executionYear: "", // سنة التنفيذ
+    programGoals: "", // أهداف البرنامج
+    targetAudience: "" // المستهدفون
   });
 
   const [images, setImages] = useState<{
@@ -3767,11 +3746,6 @@ function GeneralReportsGenerator() {
   });
 
   const [showPreview, setShowPreview] = useState(false);
-
-  const handleCriteriaSelect = (id: number) => {
-    setSelectedCriteria(id);
-    setShowPreview(false);
-  };
 
   const handleImageUpload = (imageKey: 'img1' | 'img2' | 'img3' | 'img4', event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -3791,45 +3765,7 @@ function GeneralReportsGenerator() {
     window.print();
   };
 
-  const currentCriteria = generalCriteria.find(c => c.id === selectedCriteria);
-  const witnesses = currentCriteria?.witnesses || [];
-
-  if (!selectedCriteria) {
-    return (
-      <div className="p-8">
-        <div className="mb-8">
-          <h2 className="text-3xl font-bold text-gray-800 dark:text-white mb-2">التقارير العامة</h2>
-          <p className="text-gray-600 dark:text-gray-400">اختر المجال لإنشاء تقرير توثيق مهني</p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {generalCriteria.map((criteria) => (
-            <button
-              key={criteria.id}
-              onClick={() => handleCriteriaSelect(criteria.id)}
-              className="group relative p-6 bg-gradient-to-br from-white to-gray-50 dark:from-slate-800 dark:to-slate-700 rounded-2xl border-2 border-gray-200 dark:border-gray-600 hover:border-teal-500 dark:hover:border-teal-400 hover:shadow-xl transition-all duration-300 text-right"
-            >
-              <div className="flex items-start gap-4">
-                <div className="text-4xl group-hover:scale-110 transition-transform">{criteria.icon}</div>
-                <div className="flex-1">
-                  <h3 className="text-lg font-bold text-gray-800 dark:text-white mb-2 group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors">
-                    {criteria.title}
-                  </h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">
-                    انقر لإنشاء تقرير توثيق مهني
-                  </p>
-                </div>
-              </div>
-              <div className="absolute top-4 left-4 w-8 h-8 bg-teal-500 text-white rounded-full flex items-center justify-center text-sm font-bold opacity-0 group-hover:opacity-100 transition-opacity">
-                {criteria.id}
-              </div>
-            </button>
-          ))}
-        </div>
-      </div>
-    );
-  }
-
+  // نموذج المعاينة
   if (showPreview) {
     return (
       <div className="max-w-5xl mx-auto p-4">
@@ -3967,16 +3903,56 @@ function GeneralReportsGenerator() {
 
           {/* عنوان التقرير */}
           <div className="bg-gradient-to-r from-teal-600 to-cyan-600 text-white p-6 text-center">
-            <h2 className="text-3xl font-bold">📋 {currentCriteria?.title}</h2>
+            <h2 className="text-3xl font-bold">📋 تقرير توثيق مهني</h2>
+            <p className="text-lg mt-2">{formData.programName}</p>
           </div>
 
           {/* محتوى التقرير */}
-          <div className="p-8 space-y-10">
+          <div className="p-8 space-y-6">
             {/* معلومات المدرسة */}
             <div className="text-center bg-gray-700 text-white py-4 px-6 rounded-lg">
               <h1 className="text-2xl font-bold">{formData.schoolName}</h1>
               <p className="text-sm text-gray-200 mt-1">العام الدراسي {formData.academicYear} هـ</p>
             </div>
+
+            {/* البيانات الأساسية */}
+            <div className="bg-gradient-to-r from-teal-50 to-cyan-50 rounded-xl p-6 border-2 border-teal-200">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                <div className="flex gap-2">
+                  <span className="font-bold text-gray-700">البند من بنود الأداء الوظيفي:</span>
+                  <span className="text-gray-900">{formData.performanceItem}</span>
+                </div>
+                <div className="flex gap-2">
+                  <span className="font-bold text-gray-700">اسم البرنامج:</span>
+                  <span className="text-gray-900">{formData.programName}</span>
+                </div>
+                <div className="flex gap-2">
+                  <span className="font-bold text-gray-700">تاريخ التنفيذ:</span>
+                  <span className="text-gray-900">{formData.executionDay}/{formData.executionMonth}/{formData.executionYear} هـ</span>
+                </div>
+                <div className="flex gap-2">
+                  <span className="font-bold text-gray-700">المعلم:</span>
+                  <span className="text-gray-900">{formData.teacherName}</span>
+                </div>
+                <div className="md:col-span-2">
+                  <div className="flex gap-2">
+                    <span className="font-bold text-gray-700">المستهدفون:</span>
+                    <span className="text-gray-900">{formData.targetAudience}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* أهداف البرنامج */}
+            {formData.programGoals && (
+              <div className="bg-blue-50 p-6 rounded-xl border-2 border-blue-200">
+                <div className="flex items-center gap-2 mb-3">
+                  <div className="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white text-xl">🎯</div>
+                  <h3 className="text-lg font-bold text-gray-800">أهداف البرنامج</h3>
+                </div>
+                <p className="text-gray-700 leading-relaxed whitespace-pre-wrap">{formData.programGoals}</p>
+              </div>
+            )}
 
             {/* الشواهد (4 صور في شبكة 2x2) */}
             <div className="grid gap-6 sm:grid-cols-2">
@@ -3995,24 +3971,17 @@ function GeneralReportsGenerator() {
                       <div className={`w-12 h-12 bg-gradient-to-br ${color.bg} rounded-full flex items-center justify-center text-white font-bold text-xl shrink-0`}>
                         {index + 1}
                       </div>
-                      <div className="flex-1">
-                        <h3 className="text-xl font-bold text-gray-800">
-                          {witnesses[index] || `الشاهد ${index + 1}`}
-                        </h3>
-                      </div>
                     </div>
                     <div className={`bg-white rounded-lg p-4 border-2 border-dashed ${color.border} min-h-[200px] flex items-center justify-center`}>
                       {images[imgKey] ? (
                         <img
                           src={images[imgKey]!}
-                          alt={witnesses[index] || `الشاهد ${index + 1}`}
+                          alt={`الشاهد ${index + 1}`}
                           className="max-w-full max-h-[360px] object-contain rounded-lg"
                         />
                       ) : (
                         <div className="text-center text-gray-400">
                           <span className="text-5xl mb-2 block">📸</span>
-                          <p className="font-semibold">ضع صورة الشاهد هنا</p>
-                          <p className="text-sm">{witnesses[index] || `الشاهد ${index + 1}`}</p>
                         </div>
                       )}
                     </div>
@@ -4049,19 +4018,9 @@ function GeneralReportsGenerator() {
   // نموذج إدخال البيانات
   return (
     <div className="p-8 max-w-6xl mx-auto">
-      <div className="mb-6 flex items-center justify-between">
-        <div>
-          <h2 className="text-2xl font-bold text-gray-800 dark:text-white">
-            {currentCriteria?.title}
-          </h2>
-          <p className="text-gray-600 dark:text-gray-400">املأ النموذج المنهجي للتوثيق المهني</p>
-        </div>
-        <button
-          onClick={() => setSelectedCriteria(null)}
-          className="px-4 py-2 bg-gray-500 text-white rounded-xl hover:bg-gray-600 transition-colors"
-        >
-          ← اختر مجال آخر
-        </button>
+      <div className="mb-6">
+        <h2 className="text-3xl font-bold text-gray-800 dark:text-white mb-2">التقارير العامة</h2>
+        <p className="text-gray-600 dark:text-gray-400">املأ النموذج لإنشاء تقرير توثيق مهني</p>
       </div>
 
       <div className="space-y-6">
@@ -4109,14 +4068,114 @@ function GeneralReportsGenerator() {
           </div>
         </div>
 
+        {/* بيانات البرنامج */}
+        <div className="bg-white dark:bg-slate-800 rounded-xl border-2 border-gray-200 dark:border-gray-700 p-6">
+          <h3 className="text-lg font-bold text-gray-800 dark:text-white mb-4">بيانات البرنامج</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="md:col-span-2">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">البند من بنود الأداء الوظيفي</label>
+              <select
+                value={formData.performanceItem}
+                onChange={(e) => setFormData({...formData, performanceItem: e.target.value})}
+                className="w-full px-4 py-2 border-2 border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
+              >
+                <option value="">اختر البند</option>
+                {performanceItems.map((item, index) => (
+                  <option key={index} value={item}>{item}</option>
+                ))}
+              </select>
+            </div>
+            <div className="md:col-span-2">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">اسم البرنامج</label>
+              <input
+                type="text"
+                value={formData.programName}
+                onChange={(e) => setFormData({...formData, programName: e.target.value})}
+                placeholder="مثال: برنامج تحفيز التفوق الدراسي"
+                className="w-full px-4 py-2 border-2 border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
+              />
+            </div>
+            <div className="md:col-span-2">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">تاريخ التنفيذ (هجري)</label>
+              <div className="grid grid-cols-3 gap-3">
+                <div>
+                  <select
+                    value={formData.executionDay}
+                    onChange={(e) => setFormData({...formData, executionDay: e.target.value})}
+                    className="w-full px-4 py-2 border-2 border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
+                  >
+                    <option value="">اليوم</option>
+                    {Array.from({length: 30}, (_, i) => i + 1).map(d => (
+                      <option key={d} value={d}>{d}</option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <select
+                    value={formData.executionMonth}
+                    onChange={(e) => setFormData({...formData, executionMonth: e.target.value})}
+                    className="w-full px-4 py-2 border-2 border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
+                  >
+                    <option value="">الشهر</option>
+                    <option value="1">محرم</option>
+                    <option value="2">صفر</option>
+                    <option value="3">ربيع الأول</option>
+                    <option value="4">ربيع الثاني</option>
+                    <option value="5">جمادى الأولى</option>
+                    <option value="6">جمادى الآخرة</option>
+                    <option value="7">رجب</option>
+                    <option value="8">شعبان</option>
+                    <option value="9">رمضان</option>
+                    <option value="10">شوال</option>
+                    <option value="11">ذو القعدة</option>
+                    <option value="12">ذو الحجة</option>
+                  </select>
+                </div>
+                <div>
+                  <select
+                    value={formData.executionYear}
+                    onChange={(e) => setFormData({...formData, executionYear: e.target.value})}
+                    className="w-full px-4 py-2 border-2 border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
+                  >
+                    <option value="">السنة</option>
+                    {Array.from({length: 10}, (_, i) => 1445 + i).map(y => (
+                      <option key={y} value={y}>{y}</option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div className="md:col-span-2">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">المستهدفون</label>
+              <input
+                type="text"
+                value={formData.targetAudience}
+                onChange={(e) => setFormData({...formData, targetAudience: e.target.value})}
+                placeholder="مثال: طلاب الصف الثالث المتوسط"
+                className="w-full px-4 py-2 border-2 border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
+              />
+            </div>
+            <div className="md:col-span-2">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">أهداف البرنامج</label>
+              <textarea
+                value={formData.programGoals}
+                onChange={(e) => setFormData({...formData, programGoals: e.target.value})}
+                rows={4}
+                placeholder="اكتب أهداف البرنامج..."
+                className="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
+              />
+            </div>
+          </div>
+        </div>
+
         {/* رفع الشواهد (4 صور) */}
         <div className="bg-white dark:bg-slate-800 rounded-xl border-2 border-gray-200 dark:border-gray-700 p-6">
-          <h3 className="text-lg font-bold text-gray-800 dark:text-white mb-4">الشواهد والصور</h3>
+          <h3 className="text-lg font-bold text-gray-800 dark:text-white mb-4">الشواهد (4 صور)</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {(['img1', 'img2', 'img3', 'img4'] as const).map((imgKey, index) => (
               <div key={imgKey} className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-4">
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  {witnesses[index] || `الشاهد ${index + 1}`}
+                  الشاهد {index + 1}
                 </label>
                 {images[imgKey] ? (
                   <div className="relative">
@@ -4133,7 +4192,6 @@ function GeneralReportsGenerator() {
                     <svg className="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                     </svg>
-                    <span className="mt-2 text-sm text-gray-500">انقر لرفع صورة</span>
                     <input
                       type="file"
                       accept="image/*"
