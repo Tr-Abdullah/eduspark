@@ -132,18 +132,6 @@ export default function AdminLogin() {
             </div>
           </div>
         </div>
-
-        {/* Info Card */}
-        <div className="mt-6 glass-dark rounded-2xl p-4 border border-white/10">
-          <div className="flex items-start gap-3 text-sm text-gray-300">
-            <svg className="w-5 h-5 text-teal-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            <p>
-              كلمة المرور الافتراضية: <code className="px-2 py-1 bg-white/10 rounded text-teal-300">eduspark123</code>
-            </p>
-          </div>
-        </div>
       </div>
     </div>
   );
