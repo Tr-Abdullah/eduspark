@@ -841,9 +841,9 @@ function MOEReportGenerator() {
       {/* Header */}
       <div className="bg-gradient-to-r from-green-700 to-green-600 text-white px-4 sm:px-6 py-3 sm:py-4">
         <div className="flex items-center justify-center gap-3 sm:gap-4">
-          <div className="w-16 h-16 sm:w-20 sm:h-20 bg-[#1a4d5e] rounded-lg flex items-center justify-center p-2">
+          <div className="bg-[#1a4d5e] rounded-lg flex items-center justify-center p-2" style={{ minWidth: '64px', minHeight: '64px' }}>
             {logoImage ? (
-              <img src={logoImage} alt="وزارة التعليم" className="w-full h-full object-contain" />
+              <img src={logoImage} alt="وزارة التعليم" className="object-contain" style={{ maxWidth: '120px', maxHeight: '100px' }} />
             ) : (
               <div className="text-white text-xs text-center">ضع الشعار</div>
             )}
@@ -950,7 +950,7 @@ function MOEReportGenerator() {
         {formData.uploadedFiles.length > 0 ? (
           <div className="grid grid-cols-2 gap-3">
             {formData.uploadedFiles.map((file, index) => (
-              <div key={index} className="border-2 border-gray-200 rounded-lg overflow-hidden">
+              <div key={index} className="border-2 border-black rounded-lg overflow-hidden">
                 {file.name.match(/\.(jpg|jpeg|png|gif|webp)$/i) ? (
                   <div className="relative">
                     <img 
@@ -963,8 +963,8 @@ function MOEReportGenerator() {
                     </div>
                   </div>
                 ) : (
-                  <div className="flex items-center gap-2 p-3 bg-green-50">
-                    <svg className="w-8 h-8 text-green-600 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <div className="flex items-center gap-2 p-3 bg-gray-50">
+                    <svg className="w-8 h-8 text-gray-600 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M8 4a3 3 0 00-3 3v4a5 5 0 0010 0V7a1 1 0 112 0v4a7 7 0 11-14 0V7a5 5 0 0110 0v4a3 3 0 11-6 0V7a1 1 0 012 0v4a1 1 0 102 0V7a3 3 0 00-3-3z" clipRule="evenodd" />
                     </svg>
                     <div className="flex-1 min-w-0">
@@ -1004,7 +1004,7 @@ function MOEReportGenerator() {
                 className="cursor-pointer hover:opacity-80 transition-opacity"
                 title="اضغط لتكبير الباركود"
               >
-                <img src={barcodeImage} alt="باركود" className="w-24 h-24 object-contain" />
+                <img src={barcodeImage} alt="باركود" className="w-32 h-32 object-contain" />
               </button>
             )}
           </div>
@@ -1815,7 +1815,7 @@ function PerformanceReportGenerator() {
           title: "التقيد بالدوام الرسمي",
           wrapperClass: "border-2 border-blue-200 rounded-xl p-6 bg-blue-50/50",
           badgeClass: "w-12 h-12 bg-gradient-to-br from-blue-600 to-blue-700 rounded-full flex items-center justify-center text-white font-bold text-xl shrink-0",
-          borderAccent: "border-blue-300",
+          borderAccent: "border-black",
           placeholder: "صورة من سجل الدوام",
           imageKey: "img1"
         },
@@ -1824,7 +1824,7 @@ function PerformanceReportGenerator() {
           title: "تأدية الحصص الدراسية وفق الجدول",
           wrapperClass: "border-2 border-green-200 rounded-xl p-6 bg-green-50/50",
           badgeClass: "w-12 h-12 bg-gradient-to-br from-green-600 to-green-700 rounded-full flex items-center justify-center text-white font-bold text-xl shrink-0",
-          borderAccent: "border-green-300",
+          borderAccent: "border-black",
           placeholder: "صورة من المناوبة والإشراف",
           imageKey: "img2"
         },
@@ -1833,7 +1833,7 @@ function PerformanceReportGenerator() {
           title: "المشاركة في الإشراف والمناوبة",
           wrapperClass: "border-2 border-orange-200 rounded-xl p-6 bg-orange-50/50",
           badgeClass: "w-12 h-12 bg-gradient-to-br from-orange-600 to-orange-700 rounded-full flex items-center justify-center text-white font-bold text-xl shrink-0",
-          borderAccent: "border-orange-300",
+          borderAccent: "border-black",
           placeholder: "صورة من سجل الانتظار",
           imageKey: "img3"
         },
@@ -1842,7 +1842,7 @@ function PerformanceReportGenerator() {
           title: "إعداد ومتابعة الدروس والواجبات",
           wrapperClass: "border-2 border-purple-200 rounded-xl p-6 bg-purple-50/50",
           badgeClass: "w-12 h-12 bg-gradient-to-br from-purple-600 to-purple-700 rounded-full flex items-center justify-center text-white font-bold text-xl shrink-0",
-          borderAccent: "border-purple-300",
+          borderAccent: "border-black",
           placeholder: "صورة من خطة توزيع المنهج",
           imageKey: "img4"
         }
@@ -1862,7 +1862,7 @@ function PerformanceReportGenerator() {
           title: "المشاركة الفاعلة في مجتمعات التعلم المهنية",
           wrapperClass: "border-2 border-blue-200 rounded-xl p-6 bg-blue-50/50",
           badgeClass: "w-12 h-12 bg-gradient-to-br from-blue-600 to-blue-700 rounded-full flex items-center justify-center text-white font-bold text-xl shrink-0",
-          borderAccent: "border-blue-300",
+          borderAccent: "border-black",
           placeholder: "صورة من سجل مجتمعات التعلم المهنية",
           imageKey: "img1"
         },
@@ -1871,7 +1871,7 @@ function PerformanceReportGenerator() {
           title: "تبادل الزيارات والدروس التطبيقية",
           wrapperClass: "border-2 border-green-200 rounded-xl p-6 bg-green-50/50",
           badgeClass: "w-12 h-12 bg-gradient-to-br from-green-600 to-green-700 rounded-full flex items-center justify-center text-white font-bold text-xl shrink-0",
-          borderAccent: "border-green-300",
+          borderAccent: "border-black",
           placeholder: "سجل تبادل الزيارات",
           imageKey: "img2"
         },
@@ -1880,7 +1880,7 @@ function PerformanceReportGenerator() {
           title: "بحث الدرس",
           wrapperClass: "border-2 border-orange-200 rounded-xl p-6 bg-orange-50/50",
           badgeClass: "w-12 h-12 bg-gradient-to-br from-orange-600 to-orange-700 rounded-full flex items-center justify-center text-white font-bold text-xl shrink-0",
-          borderAccent: "border-orange-300",
+          borderAccent: "border-black",
           placeholder: "تقرير تنفيذ درس تطبيقي",
           imageKey: "img3"
         },
@@ -1889,7 +1889,7 @@ function PerformanceReportGenerator() {
           title: "حضور الدورات والورش التدريبية",
           wrapperClass: "border-2 border-purple-200 rounded-xl p-6 bg-purple-50/50",
           badgeClass: "w-12 h-12 bg-gradient-to-br from-purple-600 to-purple-700 rounded-full flex items-center justify-center text-white font-bold text-xl shrink-0",
-          borderAccent: "border-purple-300",
+          borderAccent: "border-black",
           placeholder: "شهادات حضور الدورات والورش",
           imageKey: "img4"
         }
@@ -1909,7 +1909,7 @@ function PerformanceReportGenerator() {
           title: "التواصل الفعال والجمعية العمومية",
           wrapperClass: "border-2 border-blue-200 rounded-xl p-6 bg-blue-50/50",
           badgeClass: "w-12 h-12 bg-gradient-to-br from-blue-600 to-blue-700 rounded-full flex items-center justify-center text-white font-bold text-xl shrink-0",
-          borderAccent: "border-blue-300",
+          borderAccent: "border-black",
           placeholder: "صور من الجمعية العمومية",
           imageKey: "img1"
         },
@@ -1918,7 +1918,7 @@ function PerformanceReportGenerator() {
           title: "اجتماعات أولياء الأمور",
           wrapperClass: "border-2 border-green-200 rounded-xl p-6 bg-green-50/50",
           badgeClass: "w-12 h-12 bg-gradient-to-br from-green-600 to-green-700 rounded-full flex items-center justify-center text-white font-bold text-xl shrink-0",
-          borderAccent: "border-green-300",
+          borderAccent: "border-black",
           placeholder: "تقرير اجتماع ولي الأمر مع المعلم",
           imageKey: "img2"
         },
@@ -1927,7 +1927,7 @@ function PerformanceReportGenerator() {
           title: "الخطة الأسبوعية للمدرسة",
           wrapperClass: "border-2 border-orange-200 rounded-xl p-6 bg-orange-50/50",
           badgeClass: "w-12 h-12 bg-gradient-to-br from-orange-600 to-orange-700 rounded-full flex items-center justify-center text-white font-bold text-xl shrink-0",
-          borderAccent: "border-orange-300",
+          borderAccent: "border-black",
           placeholder: "نسخة من الخطة الأسبوعية",
           imageKey: "img3"
         },
@@ -1936,7 +1936,7 @@ function PerformanceReportGenerator() {
           title: "تزويد أولياء الأمور بمستويات الطلاب",
           wrapperClass: "border-2 border-purple-200 rounded-xl p-6 bg-purple-50/50",
           badgeClass: "w-12 h-12 bg-gradient-to-br from-purple-600 to-purple-700 rounded-full flex items-center justify-center text-white font-bold text-xl shrink-0",
-          borderAccent: "border-purple-300",
+          borderAccent: "border-black",
           placeholder: "نسخة من الخطة الأسبوعية",
           imageKey: "img4"
         }
@@ -1956,7 +1956,7 @@ function PerformanceReportGenerator() {
           title: "استخدام استراتيجيات متنوعة",
           wrapperClass: "border-2 border-blue-200 rounded-xl p-6 bg-blue-50/50",
           badgeClass: "w-12 h-12 bg-gradient-to-br from-blue-600 to-blue-700 rounded-full flex items-center justify-center text-white font-bold text-xl shrink-0",
-          borderAccent: "border-blue-300",
+          borderAccent: "border-black",
           placeholder: "تقرير عن تطبيق استراتيجية",
           imageKey: "img1"
         },
@@ -1965,7 +1965,7 @@ function PerformanceReportGenerator() {
           title: "مراعاة الفروق الفردية",
           wrapperClass: "border-2 border-green-200 rounded-xl p-6 bg-green-50/50",
           badgeClass: "w-12 h-12 bg-gradient-to-br from-green-600 to-green-700 rounded-full flex items-center justify-center text-white font-bold text-xl shrink-0",
-          borderAccent: "border-green-300",
+          borderAccent: "border-black",
           placeholder: "صورة من ملف إنجاز المعلم",
           imageKey: "img2"
         },
@@ -1974,7 +1974,7 @@ function PerformanceReportGenerator() {
           title: "ملف إنجاز المعلم",
           wrapperClass: "border-2 border-orange-200 rounded-xl p-6 bg-orange-50/50",
           badgeClass: "w-12 h-12 bg-gradient-to-br from-orange-600 to-orange-700 rounded-full flex items-center justify-center text-white font-bold text-xl shrink-0",
-          borderAccent: "border-orange-300",
+          borderAccent: "border-black",
           placeholder: "صورة من ملف إنجاز المعلم",
           imageKey: "img3"
         },
@@ -1983,7 +1983,7 @@ function PerformanceReportGenerator() {
           title: "توثيق الممارسات التدريسية",
           wrapperClass: "border-2 border-purple-200 rounded-xl p-6 bg-purple-50/50",
           badgeClass: "w-12 h-12 bg-gradient-to-br from-purple-600 to-purple-700 rounded-full flex items-center justify-center text-white font-bold text-xl shrink-0",
-          borderAccent: "border-purple-300",
+          borderAccent: "border-black",
           placeholder: "صورة من ملف إنجاز المعلم",
           imageKey: "img4"
         }
@@ -2003,7 +2003,7 @@ function PerformanceReportGenerator() {
           title: "معالجة الفاقد التعليمي",
           wrapperClass: "border-2 border-blue-200 rounded-xl p-6 bg-blue-50/50",
           badgeClass: "w-12 h-12 bg-gradient-to-br from-blue-600 to-blue-700 rounded-full flex items-center justify-center text-white font-bold text-xl shrink-0",
-          borderAccent: "border-blue-300",
+          borderAccent: "border-black",
           placeholder: "صورة من نتائج الاختبار القبلي",
           imageKey: "img1"
         },
@@ -2012,7 +2012,7 @@ function PerformanceReportGenerator() {
           title: "وضع الخطط العلاجية والإثرائية",
           wrapperClass: "border-2 border-green-200 rounded-xl p-6 bg-green-50/50",
           badgeClass: "w-12 h-12 bg-gradient-to-br from-green-600 to-green-700 rounded-full flex items-center justify-center text-white font-bold text-xl shrink-0",
-          borderAccent: "border-green-300",
+          borderAccent: "border-black",
           placeholder: "صورة من نتائج الاختبار البعدي",
           imageKey: "img2"
         },
@@ -2021,7 +2021,7 @@ function PerformanceReportGenerator() {
           title: "تكريم الطلاب المتميزين",
           wrapperClass: "border-2 border-orange-200 rounded-xl p-6 bg-orange-50/50",
           badgeClass: "w-12 h-12 bg-gradient-to-br from-orange-600 to-orange-700 rounded-full flex items-center justify-center text-white font-bold text-xl shrink-0",
-          borderAccent: "border-orange-300",
+          borderAccent: "border-black",
           placeholder: "صورة من كشف متابعة الطلاب",
           imageKey: "img3"
         },
@@ -2030,7 +2030,7 @@ function PerformanceReportGenerator() {
           title: "متابعة تحسن مستوى الطلاب",
           wrapperClass: "border-2 border-purple-200 rounded-xl p-6 bg-purple-50/50",
           badgeClass: "w-12 h-12 bg-gradient-to-br from-purple-600 to-purple-700 rounded-full flex items-center justify-center text-white font-bold text-xl shrink-0",
-          borderAccent: "border-purple-300",
+          borderAccent: "border-black",
           placeholder: "صورة من كشف متابعة الطلاب",
           imageKey: "img4"
         }
@@ -2050,7 +2050,7 @@ function PerformanceReportGenerator() {
           title: "توزيع المنهج وإعداد الدروس",
           wrapperClass: "border-2 border-blue-200 rounded-xl p-6 bg-blue-50/50",
           badgeClass: "w-12 h-12 bg-gradient-to-br from-blue-600 to-blue-700 rounded-full flex items-center justify-center text-white font-bold text-xl shrink-0",
-          borderAccent: "border-blue-300",
+          borderAccent: "border-black",
           placeholder: "صورة من خطة توزيع المنهج",
           imageKey: "img1"
         },
@@ -2059,7 +2059,7 @@ function PerformanceReportGenerator() {
           title: "إعداد الدروس",
           wrapperClass: "border-2 border-green-200 rounded-xl p-6 bg-green-50/50",
           badgeClass: "w-12 h-12 bg-gradient-to-br from-green-600 to-green-700 rounded-full flex items-center justify-center text-white font-bold text-xl shrink-0",
-          borderAccent: "border-green-300",
+          borderAccent: "border-black",
           placeholder: "نموذج من إعداد الدروس",
           imageKey: "img2"
         },
@@ -2068,7 +2068,7 @@ function PerformanceReportGenerator() {
           title: "إعداد الواجبات",
           wrapperClass: "border-2 border-orange-200 rounded-xl p-6 bg-orange-50/50",
           badgeClass: "w-12 h-12 bg-gradient-to-br from-orange-600 to-orange-700 rounded-full flex items-center justify-center text-white font-bold text-xl shrink-0",
-          borderAccent: "border-orange-300",
+          borderAccent: "border-black",
           placeholder: "نماذج من الواجبات",
           imageKey: "img3"
         },
@@ -2077,7 +2077,7 @@ function PerformanceReportGenerator() {
           title: "إعداد الاختبارات",
           wrapperClass: "border-2 border-purple-200 rounded-xl p-6 bg-purple-50/50",
           badgeClass: "w-12 h-12 bg-gradient-to-br from-purple-600 to-purple-700 rounded-full flex items-center justify-center text-white font-bold text-xl shrink-0",
-          borderAccent: "border-purple-300",
+          borderAccent: "border-black",
           placeholder: "نماذج من الاختبارات",
           imageKey: "img4"
         }
@@ -2097,7 +2097,7 @@ function PerformanceReportGenerator() {
           title: "دمج التقنية في التعليم",
           wrapperClass: "border-2 border-blue-200 rounded-xl p-6 bg-blue-50/50",
           badgeClass: "w-12 h-12 bg-gradient-to-br from-blue-600 to-blue-700 rounded-full flex items-center justify-center text-white font-bold text-xl shrink-0",
-          borderAccent: "border-blue-300",
+          borderAccent: "border-black",
           placeholder: "صور من الوسائل التعليمية",
           imageKey: "img1"
         },
@@ -2106,7 +2106,7 @@ function PerformanceReportGenerator() {
           title: "التنويع في الوسائل التعليمية",
           wrapperClass: "border-2 border-green-200 rounded-xl p-6 bg-green-50/50",
           badgeClass: "w-12 h-12 bg-gradient-to-br from-green-600 to-green-700 rounded-full flex items-center justify-center text-white font-bold text-xl shrink-0",
-          borderAccent: "border-green-300",
+          borderAccent: "border-black",
           placeholder: "صور من الوسائل التعليمية",
           imageKey: "img2"
         },
@@ -2115,7 +2115,7 @@ function PerformanceReportGenerator() {
           title: "استخدام البرامج التقنية",
           wrapperClass: "border-2 border-orange-200 rounded-xl p-6 bg-orange-50/50",
           badgeClass: "w-12 h-12 bg-gradient-to-br from-orange-600 to-orange-700 rounded-full flex items-center justify-center text-white font-bold text-xl shrink-0",
-          borderAccent: "border-orange-300",
+          borderAccent: "border-black",
           placeholder: "صورة عن برنامج تقني",
           imageKey: "img3"
         },
@@ -2124,7 +2124,7 @@ function PerformanceReportGenerator() {
           title: "توظيف التطبيقات التعليمية",
           wrapperClass: "border-2 border-purple-200 rounded-xl p-6 bg-purple-50/50",
           badgeClass: "w-12 h-12 bg-gradient-to-br from-purple-600 to-purple-700 rounded-full flex items-center justify-center text-white font-bold text-xl shrink-0",
-          borderAccent: "border-purple-300",
+          borderAccent: "border-black",
           placeholder: "صورة عن برنامج تقني",
           imageKey: "img4"
         }
@@ -2144,7 +2144,7 @@ function PerformanceReportGenerator() {
           title: "مراعاة حاجات الطلاب",
           wrapperClass: "border-2 border-blue-200 rounded-xl p-6 bg-blue-50/50",
           badgeClass: "w-12 h-12 bg-gradient-to-br from-blue-600 to-blue-700 rounded-full flex items-center justify-center text-white font-bold text-xl shrink-0",
-          borderAccent: "border-blue-300",
+          borderAccent: "border-black",
           placeholder: "تقرير تصنيف الطلاب وفق أنماط التعلم",
           imageKey: "img1"
         },
@@ -2153,7 +2153,7 @@ function PerformanceReportGenerator() {
           title: "التهيئة النفسية للطلاب",
           wrapperClass: "border-2 border-green-200 rounded-xl p-6 bg-green-50/50",
           badgeClass: "w-12 h-12 bg-gradient-to-br from-green-600 to-green-700 rounded-full flex items-center justify-center text-white font-bold text-xl shrink-0",
-          borderAccent: "border-green-300",
+          borderAccent: "border-black",
           placeholder: "تقرير تصنيف الطلاب وفق أنماط التعلم",
           imageKey: "img2"
         },
@@ -2162,7 +2162,7 @@ function PerformanceReportGenerator() {
           title: "التحفيز المادي",
           wrapperClass: "border-2 border-orange-200 rounded-xl p-6 bg-orange-50/50",
           badgeClass: "w-12 h-12 bg-gradient-to-br from-orange-600 to-orange-700 rounded-full flex items-center justify-center text-white font-bold text-xl shrink-0",
-          borderAccent: "border-orange-300",
+          borderAccent: "border-black",
           placeholder: "نماذج من التحفيز المادي",
           imageKey: "img3"
         },
@@ -2171,7 +2171,7 @@ function PerformanceReportGenerator() {
           title: "التحفيز المعنوي",
           wrapperClass: "border-2 border-purple-200 rounded-xl p-6 bg-purple-50/50",
           badgeClass: "w-12 h-12 bg-gradient-to-br from-purple-600 to-purple-700 rounded-full flex items-center justify-center text-white font-bold text-xl shrink-0",
-          borderAccent: "border-purple-300",
+          borderAccent: "border-black",
           placeholder: "نماذج من التحفيز المعنوي",
           imageKey: "img4"
         }
@@ -2191,7 +2191,7 @@ function PerformanceReportGenerator() {
           title: "ضبط سلوك الطلاب",
           wrapperClass: "border-2 border-blue-200 rounded-xl p-6 bg-blue-50/50",
           badgeClass: "w-12 h-12 bg-gradient-to-br from-blue-600 to-blue-700 rounded-full flex items-center justify-center text-white font-bold text-xl shrink-0",
-          borderAccent: "border-blue-300",
+          borderAccent: "border-black",
           placeholder: "صورة من كشف المتابعة",
           imageKey: "img1"
         },
@@ -2200,7 +2200,7 @@ function PerformanceReportGenerator() {
           title: "متابعة الحضور والغياب",
           wrapperClass: "border-2 border-green-200 rounded-xl p-6 bg-green-50/50",
           badgeClass: "w-12 h-12 bg-gradient-to-br from-green-600 to-green-700 rounded-full flex items-center justify-center text-white font-bold text-xl shrink-0",
-          borderAccent: "border-green-300",
+          borderAccent: "border-black",
           placeholder: "صورة من كشف المتابعة",
           imageKey: "img2"
         },
@@ -2209,7 +2209,7 @@ function PerformanceReportGenerator() {
           title: "تطبيق إدارة الصف",
           wrapperClass: "border-2 border-orange-200 rounded-xl p-6 bg-orange-50/50",
           badgeClass: "w-12 h-12 bg-gradient-to-br from-orange-600 to-orange-700 rounded-full flex items-center justify-center text-white font-bold text-xl shrink-0",
-          borderAccent: "border-orange-300",
+          borderAccent: "border-black",
           placeholder: "صورة من تطبيق إدارة الصف",
           imageKey: "img3"
         },
@@ -2218,7 +2218,7 @@ function PerformanceReportGenerator() {
           title: "مراعاة الفروق الفردية",
           wrapperClass: "border-2 border-purple-200 rounded-xl p-6 bg-purple-50/50",
           badgeClass: "w-12 h-12 bg-gradient-to-br from-purple-600 to-purple-700 rounded-full flex items-center justify-center text-white font-bold text-xl shrink-0",
-          borderAccent: "border-purple-300",
+          borderAccent: "border-black",
           placeholder: "صورة من تطبيق إدارة الصف",
           imageKey: "img4"
         }
@@ -2238,7 +2238,7 @@ function PerformanceReportGenerator() {
           title: "تحليل نتائج الاختبارات",
           wrapperClass: "border-2 border-blue-200 rounded-xl p-6 bg-blue-50/50",
           badgeClass: "w-12 h-12 bg-gradient-to-br from-blue-600 to-blue-700 rounded-full flex items-center justify-center text-white font-bold text-xl shrink-0",
-          borderAccent: "border-blue-300",
+          borderAccent: "border-black",
           placeholder: "صورة من تقرير تحليل النتائج",
           imageKey: "img1"
         },
@@ -2247,7 +2247,7 @@ function PerformanceReportGenerator() {
           title: "تصنيف الطلاب وفق نتائجهم",
           wrapperClass: "border-2 border-green-200 rounded-xl p-6 bg-green-50/50",
           badgeClass: "w-12 h-12 bg-gradient-to-br from-green-600 to-green-700 rounded-full flex items-center justify-center text-white font-bold text-xl shrink-0",
-          borderAccent: "border-green-300",
+          borderAccent: "border-black",
           placeholder: "صورة من تقرير تحليل النتائج",
           imageKey: "img2"
         },
@@ -2256,7 +2256,7 @@ function PerformanceReportGenerator() {
           title: "معالجة الفاقد التعليمي",
           wrapperClass: "border-2 border-orange-200 rounded-xl p-6 bg-orange-50/50",
           badgeClass: "w-12 h-12 bg-gradient-to-br from-orange-600 to-orange-700 rounded-full flex items-center justify-center text-white font-bold text-xl shrink-0",
-          borderAccent: "border-orange-300",
+          borderAccent: "border-black",
           placeholder: "صورة من سجل معالجة الفاقد",
           imageKey: "img3"
         },
@@ -2265,7 +2265,7 @@ function PerformanceReportGenerator() {
           title: "تحديد نقاط القوة والضعف",
           wrapperClass: "border-2 border-purple-200 rounded-xl p-6 bg-purple-50/50",
           badgeClass: "w-12 h-12 bg-gradient-to-br from-purple-600 to-purple-700 rounded-full flex items-center justify-center text-white font-bold text-xl shrink-0",
-          borderAccent: "border-purple-300",
+          borderAccent: "border-black",
           placeholder: "صورة من سجل معالجة الفاقد",
           imageKey: "img4"
         }
@@ -2285,7 +2285,7 @@ function PerformanceReportGenerator() {
           title: "الاختبارات الورقية والإلكترونية",
           wrapperClass: "border-2 border-blue-200 rounded-xl p-6 bg-blue-50/50",
           badgeClass: "w-12 h-12 bg-gradient-to-br from-blue-600 to-blue-700 rounded-full flex items-center justify-center text-white font-bold text-xl shrink-0",
-          borderAccent: "border-blue-300",
+          borderAccent: "border-black",
           placeholder: "نماذج من الاختبارات",
           imageKey: "img1"
         },
@@ -2294,7 +2294,7 @@ function PerformanceReportGenerator() {
           title: "ملفات إنجاز الطلاب",
           wrapperClass: "border-2 border-green-200 rounded-xl p-6 bg-green-50/50",
           badgeClass: "w-12 h-12 bg-gradient-to-br from-green-600 to-green-700 rounded-full flex items-center justify-center text-white font-bold text-xl shrink-0",
-          borderAccent: "border-green-300",
+          borderAccent: "border-black",
           placeholder: "نماذج من ملفات إنجاز الطلاب",
           imageKey: "img2"
         },
@@ -2303,7 +2303,7 @@ function PerformanceReportGenerator() {
           title: "المهام الأدائية",
           wrapperClass: "border-2 border-orange-200 rounded-xl p-6 bg-orange-50/50",
           badgeClass: "w-12 h-12 bg-gradient-to-br from-orange-600 to-orange-700 rounded-full flex items-center justify-center text-white font-bold text-xl shrink-0",
-          borderAccent: "border-orange-300",
+          borderAccent: "border-black",
           placeholder: "نماذج من المهام الأدائية",
           imageKey: "img3"
         },
@@ -2312,7 +2312,7 @@ function PerformanceReportGenerator() {
           title: "المشاريع الطلابية",
           wrapperClass: "border-2 border-purple-200 rounded-xl p-6 bg-purple-50/50",
           badgeClass: "w-12 h-12 bg-gradient-to-br from-purple-600 to-purple-700 rounded-full flex items-center justify-center text-white font-bold text-xl shrink-0",
-          borderAccent: "border-purple-300",
+          borderAccent: "border-black",
           placeholder: "نماذج من مشاريع الطلاب",
           imageKey: "img4"
         }
@@ -2343,9 +2343,9 @@ function PerformanceReportGenerator() {
         <div className="text-white px-8 py-6 print-header" style={{ backgroundColor: '#15445A' }}>
           <div className="flex items-center justify-center gap-4">
             {/* الشعار في المنتصف يمين */}
-            <div className="w-20 h-20 bg-[#1a4d5e] rounded-lg flex items-center justify-center p-2">
+            <div className="bg-[#1a4d5e] rounded-lg flex items-center justify-center p-2" style={{ minWidth: '64px', minHeight: '64px' }}>
               {logoImage ? (
-                <img src={logoImage} alt="وزارة التعليم" className="w-full h-full object-contain" />
+                <img src={logoImage} alt="وزارة التعليم" className="object-contain" style={{ maxWidth: '120px', maxHeight: '100px' }} />
               ) : (
                 <div className="text-white text-xs text-center">ضع الشعار</div>
               )}
@@ -2460,7 +2460,7 @@ function PerformanceReportGenerator() {
                   className="cursor-pointer hover:opacity-80 transition-opacity"
                   title="اضغط لتكبير الباركود"
                 >
-                  <img src={barcodeImage} alt="باركود" className="w-24 h-24 object-contain" />
+                  <img src={barcodeImage} alt="باركود" className="w-32 h-32 object-contain" />
                 </button>
               )}
             </div>
@@ -4453,9 +4453,9 @@ function GeneralReportsGenerator() {
           <div className="text-white px-4 sm:px-8 py-4 sm:py-6 print-header" style={{ backgroundColor: '#15445A' }}>
             <div className="flex items-center justify-center gap-3 sm:gap-4">
               {/* الشعار في المنتصف */}
-              <div className="w-16 h-16 sm:w-20 sm:h-20 bg-[#1a4d5e] rounded-lg flex items-center justify-center p-2">
+              <div className="bg-[#1a4d5e] rounded-lg flex items-center justify-center p-2" style={{ minWidth: '64px', minHeight: '64px' }}>
                 {logoImage ? (
-                  <img src={logoImage} alt="وزارة التعليم" className="w-full h-full object-contain" />
+                  <img src={logoImage} alt="وزارة التعليم" className="object-contain" style={{ maxWidth: '120px', maxHeight: '100px' }} />
                 ) : (
                   <div className="text-white text-xs text-center">ضع الشعار</div>
                 )}
@@ -4575,7 +4575,7 @@ function GeneralReportsGenerator() {
                     className="cursor-pointer hover:opacity-80 transition-opacity"
                     title="اضغط لتكبير الباركود"
                   >
-                    <img src={barcodeImage} alt="باركود" className="w-24 h-24 object-contain" />
+                    <img src={barcodeImage} alt="باركود" className="w-32 h-32 object-contain" />
                   </button>
                 )}
               </div>
