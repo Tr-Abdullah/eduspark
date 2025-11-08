@@ -839,7 +839,7 @@ function MOEReportGenerator() {
   const Report = () => (
     <div id="report-content" className="bg-white border-4 border-gray-300" style={{ fontFamily: "'Helvetica Neue W23', 'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
       {/* Header */}
-      <div className="bg-gradient-to-r from-green-700 to-green-600 text-white px-4 sm:px-6 py-3 sm:py-4">
+      <div className="text-white px-4 sm:px-8 py-4 sm:py-6 print-header" style={{ backgroundColor: '#15445A' }}>
         <div className="flex items-center justify-center gap-3 sm:gap-4">
           <div className="bg-[#1a4d5e] rounded-lg flex items-center justify-center p-2" style={{ minWidth: '64px', minHeight: '64px' }}>
             {logoImage ? (
@@ -849,74 +849,79 @@ function MOEReportGenerator() {
             )}
           </div>
           <div className="text-center leading-tight">
-            <div className="text-sm sm:text-base font-bold">وزارة التعليم</div>
+            <div className="text-sm sm:text-base font-bold">المملكة العربية السعودية</div>
+            <div className="text-sm sm:text-base font-bold mt-1">وزارة التعليم</div>
             <div className="text-sm sm:text-base font-bold">الإدارة العامة للتعليم بمنطقة جازان</div>
-            <div className="text-xs sm:text-sm font-semibold mt-0.5">{formData.schoolName}</div>
           </div>
         </div>
+      </div>
+
+      {/* اسم المدرسة - ملاصق للهيدر */}
+      <div className="text-center text-white py-2 px-4 sm:px-6" style={{ backgroundColor: '#15445A' }}>
+        <h1 className="text-xl sm:text-2xl font-bold">{formData.schoolName}</h1>
       </div>
 
       {/* محتوى التقرير */}
       <div className="p-8">
       <div className="grid grid-cols-3 gap-4 mb-6">
-        <div className="border-2 border-teal-500 rounded-lg p-3">
-          <div className="text-sm text-teal-700 font-semibold mb-1">الاستراتيجية:</div>
+        <div className="border-2 border-gray-800 rounded-lg p-3">
+          <div className="text-sm text-gray-700 font-semibold mb-1">الاستراتيجية:</div>
           <div className="text-gray-900">{formData.strategy}</div>
         </div>
-        <div className="border-2 border-blue-500 rounded-lg p-3">
-          <div className="text-sm text-blue-700 font-semibold mb-1">المادة:</div>
+        <div className="border-2 border-gray-800 rounded-lg p-3">
+          <div className="text-sm text-gray-700 font-semibold mb-1">المادة:</div>
           <div className="text-gray-900">{formData.subject}</div>
         </div>
-        <div className="border-2 border-purple-500 rounded-lg p-3">
-          <div className="text-sm text-purple-700 font-semibold mb-1">تاريخ التنفيذ:</div>
+        <div className="border-2 border-gray-800 rounded-lg p-3">
+          <div className="text-sm text-gray-700 font-semibold mb-1">تاريخ التنفيذ:</div>
           <div className="text-gray-900">{formData.year}/{formData.month}/{formData.day}</div>
         </div>
       </div>
       <div className="grid grid-cols-3 gap-4 mb-6">
-        <div className="border-2 border-orange-500 rounded-lg p-3">
-          <div className="text-sm text-orange-700 font-semibold mb-1">عدد الطلاب:</div>
+        <div className="border-2 border-gray-800 rounded-lg p-3">
+          <div className="text-sm text-gray-700 font-semibold mb-1">عدد الطلاب:</div>
           <div className="text-gray-900">{formData.students} طالب</div>
         </div>
-        <div className="border-2 border-green-500 rounded-lg p-3">
-          <div className="text-sm text-green-700 font-semibold mb-1">المرحلة الدراسية:</div>
+        <div className="border-2 border-gray-800 rounded-lg p-3">
+          <div className="text-sm text-gray-700 font-semibold mb-1">المرحلة الدراسية:</div>
           <div className="text-gray-900">{formData.stage}</div>
         </div>
-        <div className="border-2 border-pink-500 rounded-lg p-3">
-          <div className="text-sm text-pink-700 font-semibold mb-1">الفصل:</div>
+        <div className="border-2 border-gray-800 rounded-lg p-3">
+          <div className="text-sm text-gray-700 font-semibold mb-1">الفصل:</div>
           <div className="text-gray-900">{formData.semester}</div>
         </div>
       </div>
       {formData.performanceItem && (
         <div className="grid grid-cols-2 gap-4 mb-6">
-          <div className="border-2 border-indigo-500 rounded-lg p-3">
-            <div className="text-sm text-indigo-700 font-semibold mb-1">البند:</div>
+          <div className="border-2 border-gray-800 rounded-lg p-3">
+            <div className="text-sm text-gray-700 font-semibold mb-1">البند:</div>
             <div className="text-gray-900 text-sm">{formData.performanceItem}</div>
           </div>
-          <div className="border-2 border-cyan-500 rounded-lg p-3">
-            <div className="text-sm text-cyan-700 font-semibold mb-1">العنصر:</div>
+          <div className="border-2 border-gray-800 rounded-lg p-3">
+            <div className="text-sm text-gray-700 font-semibold mb-1">العنصر:</div>
             <div className="text-gray-900 text-sm">{formData.performanceElement}</div>
           </div>
         </div>
       )}
       {formData.unit && (
-        <div className="border-2 border-violet-500 rounded-lg p-3 mb-6">
-          <div className="text-sm text-violet-700 font-semibold mb-1">الوحدة:</div>
+        <div className="border-2 border-gray-800 rounded-lg p-3 mb-6">
+          <div className="text-sm text-gray-700 font-semibold mb-1">الوحدة:</div>
           <div className="text-gray-900">{formData.unit}</div>
         </div>
       )}
-      <div className="border-2 border-indigo-500 rounded-lg p-3 mb-6">
-        <div className="text-sm text-indigo-700 font-semibold mb-1">الدرس:</div>
+      <div className="border-2 border-gray-800 rounded-lg p-3 mb-6">
+        <div className="text-sm text-gray-700 font-semibold mb-1">الدرس:</div>
         <div className="text-gray-900">{formData.lesson || "لم يتم تحديد درس"}</div>
       </div>
       <div className="grid grid-cols-2 gap-6 mb-6">
-        <div className="border-2 border-teal-500 rounded-lg p-4">
-          <h3 className="text-teal-700 font-bold mb-3 pb-2 border-b-2 border-teal-300">الأدوات والوسائل التعليمية:</h3>
+        <div className="border-2 border-gray-800 rounded-lg p-4">
+          <h3 className="text-gray-700 font-bold mb-3 pb-2 border-b-2 border-gray-300">الأدوات والوسائل التعليمية:</h3>
           <div className="space-y-2">
             {formData.tools.map((toolId, index) => {
               const tool = tools.find(t => t.id === toolId);
               return tool ? (
                 <div key={index} className="flex items-start gap-2 text-sm">
-                  <div className="w-4 h-4 mt-0.5 border-2 bg-teal-600 border-teal-600 rounded flex items-center justify-center flex-shrink-0">
+                  <div className="w-4 h-4 mt-0.5 border-2 bg-gray-800 border-gray-800 rounded flex items-center justify-center flex-shrink-0">
                     <span className="text-white text-xs">✓</span>
                   </div>
                   <span className="text-gray-700">{tool.label}</span>
@@ -928,12 +933,12 @@ function MOEReportGenerator() {
             )}
           </div>
         </div>
-        <div className="border-2 border-orange-500 rounded-lg p-4">
-          <h3 className="text-orange-700 font-bold mb-3 pb-2 border-b-2 border-orange-300">الأهداف:</h3>
+        <div className="border-2 border-gray-800 rounded-lg p-4">
+          <h3 className="text-gray-700 font-bold mb-3 pb-2 border-b-2 border-gray-300">الأهداف:</h3>
           <div className="space-y-2">
             {formData.objectives.map((obj, index) => (
               <div key={index} className="flex items-start gap-2 text-sm">
-                <div className="w-4 h-4 mt-0.5 border-2 bg-orange-600 border-orange-600 rounded flex items-center justify-center flex-shrink-0">
+                <div className="w-4 h-4 mt-0.5 border-2 bg-gray-800 border-gray-800 rounded flex items-center justify-center flex-shrink-0">
                   <span className="text-white text-xs">✓</span>
                 </div>
                 <span className="text-gray-700">{obj}</span>
@@ -945,8 +950,8 @@ function MOEReportGenerator() {
           </div>
         </div>
       </div>
-      <div className="border-2 border-green-500 rounded-lg p-4 mb-6">
-        <h3 className="text-green-700 font-bold mb-3 pb-2 border-b-2 border-green-300">الشواهد:</h3>
+      <div className="border-2 border-gray-800 rounded-lg p-4 mb-6">
+        <h3 className="text-gray-700 font-bold mb-3 pb-2 border-b-2 border-gray-300">الشواهد:</h3>
         {formData.uploadedFiles.length > 0 ? (
           <div className="grid grid-cols-2 gap-3">
             {formData.uploadedFiles.map((file, index) => (
