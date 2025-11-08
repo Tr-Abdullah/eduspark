@@ -1473,13 +1473,15 @@ function MOEReportGenerator() {
             @media print {
               /* إخفاء كل شيء ماعدا التقرير */
               body * {
-                visibility: hidden;
+                visibility: hidden !important;
+                display: none !important;
               }
               
               /* إظهار التقرير وجميع محتوياته */
               #report-content,
               #report-content * {
                 visibility: visible !important;
+                display: revert !important;
               }
               
               /* تنسيق الصفحة - هوامش أقل */
@@ -1535,6 +1537,7 @@ function MOEReportGenerator() {
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
                 color-adjust: exact !important;
+                box-sizing: border-box !important;
               }
               
               /* تنسيق الهيدر */
@@ -2867,7 +2870,8 @@ function PerformanceReportGenerator() {
           <style jsx global>{`
             @media print {
               * {
-                visibility: hidden;
+                visibility: hidden !important;
+                display: none !important;
                 margin: 0;
                 padding: 0;
               }
@@ -2875,6 +2879,7 @@ function PerformanceReportGenerator() {
               #report-content,
               #report-content * {
                 visibility: visible !important;
+                display: revert !important;
               }
 
               #report-content {
@@ -2946,6 +2951,7 @@ function PerformanceReportGenerator() {
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
                 color-adjust: exact !important;
+                box-sizing: border-box !important;
               }
 
               img {
@@ -4331,11 +4337,13 @@ function GeneralReportsGenerator() {
             }
             
             * {
-              visibility: hidden;
+              visibility: hidden !important;
+              display: none !important;
             }
             
             #general-report-preview, #general-report-preview * {
               visibility: visible !important;
+              display: revert !important;
             }
             
             html, body {
@@ -4378,6 +4386,7 @@ function GeneralReportsGenerator() {
               -webkit-print-color-adjust: exact !important;
               print-color-adjust: exact !important;
               color-adjust: exact !important;
+              box-sizing: border-box !important;
             }
             
             /* تنسيق الهيدر للطباعة */
