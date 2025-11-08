@@ -2869,11 +2869,9 @@ function PerformanceReportGenerator() {
         <div className="max-w-5xl mx-auto" ref={reportContainerRef}>
           <style jsx global>{`
             @media print {
-              * {
+              body * {
                 visibility: hidden !important;
                 display: none !important;
-                margin: 0;
-                padding: 0;
               }
 
               #report-content,
@@ -4336,12 +4334,13 @@ function GeneralReportsGenerator() {
               margin: 3mm 5mm 5mm 5mm !important;
             }
             
-            * {
+            body * {
               visibility: hidden !important;
               display: none !important;
             }
             
-            #general-report-preview, #general-report-preview * {
+            #general-report-preview,
+            #general-report-preview * {
               visibility: visible !important;
               display: revert !important;
             }
