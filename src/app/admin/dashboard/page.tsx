@@ -828,7 +828,7 @@ function MOEReportGenerator() {
       {/* Header */}
       <div className="bg-gradient-to-r from-green-700 to-green-600 text-white px-4 sm:px-6 py-3 sm:py-4">
         <div className="flex items-center justify-center gap-3 sm:gap-4">
-          <div className="w-16 h-16 sm:w-20 sm:h-20 bg-[#1a4d5e] rounded-lg flex items-center justify-center p-1">
+          <div className="w-16 h-16 sm:w-20 sm:h-20 bg-[#1a4d5e] rounded-lg flex items-center justify-center p-2">
             {logoImage ? (
               <img src={logoImage} alt="وزارة التعليم" className="w-full h-full object-contain" />
             ) : (
@@ -975,24 +975,16 @@ function MOEReportGenerator() {
             <p className="text-gray-600 font-semibold mb-0.5 text-sm">المعلم</p>
             <p className="text-sm sm:text-base font-bold text-gray-800">{formData.teacherName}</p>
             {signatureImage && (
-              <div className="flex justify-end mt-1">
-                <img 
-                  src={signatureImage} 
-                  alt="توقيع"
-                  className="h-10 object-contain"
-                />
-              </div>
+              <img 
+                src={signatureImage} 
+                alt="توقيع"
+                className="h-10 object-contain mr-auto mt-1"
+              />
             )}
-            <div className="mt-1 pt-0.5 inline-block">
-              <div className="border-t border-gray-400 w-20"></div>
-            </div>
           </div>
           <div className="text-left">
             <p className="text-gray-600 font-semibold mb-0.5 text-sm">مدير المدرسة</p>
             <p className="text-sm sm:text-base font-bold text-gray-800">{formData.principalName}</p>
-            <div className="mt-1 pt-0.5 inline-block">
-              <div className="border-t border-gray-400 w-20"></div>
-            </div>
           </div>
         </div>
       </div>
@@ -2253,7 +2245,7 @@ function PerformanceReportGenerator() {
         <div className="text-white px-8 py-6 print-header" style={{ backgroundColor: '#15445A' }}>
           <div className="flex items-center justify-center gap-4">
             {/* الشعار في المنتصف يمين */}
-            <div className="w-20 h-20 bg-[#1a4d5e] rounded-lg flex items-center justify-center p-1">
+            <div className="w-20 h-20 bg-[#1a4d5e] rounded-lg flex items-center justify-center p-2">
               {logoImage ? (
                 <img src={logoImage} alt="وزارة التعليم" className="w-full h-full object-contain" />
               ) : (
@@ -2353,25 +2345,17 @@ function PerformanceReportGenerator() {
             <div className="text-right">
               <p className="text-gray-600 font-semibold mb-2">معلم المادة</p>
               <p className="text-xl font-bold text-gray-800">{formData.teacherName}</p>
-              <div className="flex justify-end mt-2">
-                {signatureImage && (
-                  <img 
-                    src={signatureImage} 
-                    alt="توقيع"
-                    className="h-12 object-contain"
-                  />
-                )}
-              </div>
-              <div className="mt-2 pt-2 inline-block">
-                <div className="border-t-2 border-gray-400 w-32"></div>
-              </div>
+              {signatureImage && (
+                <img 
+                  src={signatureImage} 
+                  alt="توقيع"
+                  className="h-12 object-contain mr-auto mt-2"
+                />
+              )}
             </div>
             <div className="text-left">
               <p className="text-gray-600 font-semibold mb-2">مدير المدرسة</p>
               <p className="text-xl font-bold text-gray-800">{formData.principalName}</p>
-              <div className="mt-2 pt-2 inline-block">
-                <div className="border-t-2 border-gray-400 w-32"></div>
-              </div>
             </div>
           </div>
         </div>
@@ -4285,7 +4269,7 @@ function GeneralReportsGenerator() {
           <div className="text-white px-4 sm:px-8 py-4 sm:py-6 print-header" style={{ backgroundColor: '#15445A' }}>
             <div className="flex items-center justify-center gap-3 sm:gap-4">
               {/* الشعار في المنتصف */}
-              <div className="w-16 h-16 sm:w-20 sm:h-20 bg-[#1a4d5e] rounded-lg flex items-center justify-center p-1">
+              <div className="w-16 h-16 sm:w-20 sm:h-20 bg-[#1a4d5e] rounded-lg flex items-center justify-center p-2">
                 {logoImage ? (
                   <img src={logoImage} alt="وزارة التعليم" className="w-full h-full object-contain" />
                 ) : (
@@ -4390,25 +4374,17 @@ function GeneralReportsGenerator() {
               <div className="text-right">
                 <p className="text-gray-600 font-semibold mb-0.5 text-sm">المعلم</p>
                 <p className="text-sm sm:text-base font-bold text-gray-800">{formData.teacherName}</p>
-                <div className="flex justify-end mt-1">
-                  {signatureImage && (
-                    <img 
-                      src={signatureImage} 
-                      alt="توقيع"
-                      className="h-10 object-contain"
-                    />
-                  )}
-                </div>
-                <div className="mt-1 pt-0.5 inline-block">
-                  <div className="border-t border-gray-400 w-20"></div>
-                </div>
+                {signatureImage && (
+                  <img 
+                    src={signatureImage} 
+                    alt="توقيع"
+                    className="h-10 object-contain mr-auto mt-1"
+                  />
+                )}
               </div>
               <div className="text-left">
                 <p className="text-gray-600 font-semibold mb-0.5 text-sm">مدير المدرسة</p>
                 <p className="text-sm sm:text-base font-bold text-gray-800">{formData.principalName}</p>
-                <div className="mt-1 pt-0.5 inline-block">
-                  <div className="border-t border-gray-400 w-20"></div>
-                </div>
               </div>
             </div>
           </div>
