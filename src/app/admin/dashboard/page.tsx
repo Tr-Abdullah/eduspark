@@ -800,14 +800,14 @@ function MOEReportGenerator() {
   };
 
   const Report = () => (
-    <div id="report-content" className="bg-white" style={{ fontFamily: "'Helvetica Neue W23', 'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
+    <div id="report-content" className="bg-white border-4 border-gray-300" style={{ fontFamily: "'Helvetica Neue W23', 'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
       {/* Header */}
       <div className="bg-gradient-to-r from-green-700 to-green-600 text-white px-4 sm:px-6 py-3 sm:py-4">
-        <div className="flex items-center justify-between gap-1 sm:gap-2">
+        <div className="flex items-center justify-center gap-3 sm:gap-4">
           <div className="w-16 h-16 sm:w-20 sm:h-20 bg-[#1a4d5e] rounded-lg flex items-center justify-center p-1">
             <img src="/images/moe-logo.svg" alt="وزارة التعليم" className="w-full h-full object-contain" />
           </div>
-          <div className="text-center leading-tight flex-1">
+          <div className="text-center leading-tight">
             <div className="text-sm sm:text-base font-bold">وزارة التعليم</div>
             <div className="text-sm sm:text-base font-bold">الإدارة العامة للتعليم بمنطقة جازان</div>
             <div className="text-xs sm:text-sm font-semibold mt-0.5">{formData.schoolName}</div>
@@ -2124,21 +2124,17 @@ function PerformanceReportGenerator() {
     }));
 
     return (
-      <div id="report-content" className="bg-white" style={{ fontFamily: "'Helvetica Neue W23', 'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
+      <div id="report-content" className="bg-white border-4 border-gray-300" style={{ fontFamily: "'Helvetica Neue W23', 'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
         <div className="text-white px-8 py-6 print-header" style={{ backgroundColor: '#15445A' }}>
-          <div className="flex items-center justify-center gap-8">
-            {/* الجانب الأيمن */}
-            <div className="text-right leading-tight">
-              <div className="text-base font-bold">المملكة العربية السعودية</div>
-            </div>
-            
-            {/* الشعار في الوسط */}
+          <div className="flex items-center justify-center gap-4">
+            {/* الشعار في المنتصف يمين */}
             <div className="w-20 h-20 bg-[#1a4d5e] rounded-lg flex items-center justify-center p-1">
               <img src="/images/moe-logo.svg" alt="وزارة التعليم" className="w-full h-full object-contain" />
             </div>
             
-            {/* الجانب الأيسر */}
-            <div className="text-left leading-tight">
+            {/* النص في المنتصف يسار */}
+            <div className="text-center leading-tight">
+              <div className="text-base font-bold">المملكة العربية السعودية</div>
               <div className="text-base font-bold">وزارة التعليم</div>
               <div className="text-xs opacity-90">إدارة تعليم جازان</div>
             </div>
@@ -2209,9 +2205,9 @@ function PerformanceReportGenerator() {
                     <h3 className="text-xl font-bold text-gray-800 mb-1">{card.title}</h3>
                   </div>
                 </div>
-                <div className={`bg-white rounded-lg p-4 border-2 border-dashed ${card.borderAccent} min-h-[200px] flex items-center justify-center`}>
+                <div className={`bg-white rounded-lg p-4 border-2 border-dashed ${card.borderAccent} h-[240px] flex items-center justify-center overflow-hidden`}>
                   {card.image ? (
-                    <img src={card.image} alt={card.placeholder} className="max-w-full max-h-[360px] object-contain rounded-lg" />
+                    <img src={card.image} alt={card.placeholder} className="w-full h-full object-contain rounded-lg" />
                   ) : (
                     <div className="text-center text-gray-400">
                       <span className="text-5xl mb-2 block">📸</span>
@@ -2232,17 +2228,17 @@ function PerformanceReportGenerator() {
                 <img 
                   src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNzAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cGF0aCBkPSJNIDI1IDYyMCBRIDgwIDQ4MCAxNzUgNTgwIFEgMjcwIDY4MCAzNjAgNTkwIFEgNDUwIDUwMCA0NTAgNzAwIE0gMzgwIDU4MCBMIDcxMCA1OTAgTSA2MjAgNTgwIFEgNjQwIDU3MCA2NjAgNTgwIFEgNjgwIDU5MCA3MDAgNTgwIE0gMzgwIDY1MCBRIDQyMCA2NDAgNDYwIDY1MCBRIDUwMCA2NjAgNTQwIDY1MCBRIDU4MCA2NDAgNjIwIDY1MCBRIDY2MCA2NjAgNzAwIDY1MCBNIDUwNSA3MDAiIHN0cm9rZT0iYmx1ZSIgc3Ryb2tlLXdpZHRoPSI0IiBmaWxsPSJub25lIi8+Cjwvc3ZnPg==" 
                   alt="توقيع"
-                  className="h-14 object-contain"
+                  className="h-12 object-contain"
                 />
               </div>
-              <div className="mt-4 pt-2 inline-block">
+              <div className="mt-2 pt-2 inline-block">
                 <div className="border-t-2 border-gray-400 w-32"></div>
               </div>
             </div>
             <div className="text-left">
               <p className="text-gray-600 font-semibold mb-2">مدير المدرسة</p>
               <p className="text-xl font-bold text-gray-800">{formData.principalName}</p>
-              <div className="mt-4 pt-2 inline-block">
+              <div className="mt-2 pt-2 inline-block">
                 <div className="border-t-2 border-gray-400 w-32"></div>
               </div>
             </div>
@@ -4049,17 +4045,17 @@ function GeneralReportsGenerator() {
           </button>
         </div>
 
-        <div id="general-report-preview" className="bg-white max-w-4xl mx-auto" style={{ fontFamily: "'Helvetica Neue W23', 'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
+        <div id="general-report-preview" className="bg-white max-w-4xl mx-auto border-4 border-gray-300" style={{ fontFamily: "'Helvetica Neue W23', 'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
           {/* Header */}
           <div className="text-white px-4 sm:px-8 py-4 sm:py-6 print-header" style={{ backgroundColor: '#15445A' }}>
-            <div className="flex items-center justify-between gap-1 sm:gap-2">
-              {/* الشعار على اليمين */}
+            <div className="flex items-center justify-center gap-3 sm:gap-4">
+              {/* الشعار في المنتصف */}
               <div className="w-16 h-16 sm:w-20 sm:h-20 bg-[#1a4d5e] rounded-lg flex items-center justify-center p-1">
                 <img src="/images/moe-logo.svg" alt="وزارة التعليم" className="w-full h-full object-contain" />
               </div>
               
-              {/* النصوص على اليسار فوق بعض */}
-              <div className="text-center leading-tight flex-1">
+              {/* النصوص في المنتصف */}
+              <div className="text-center leading-tight">
                 <div className="text-sm sm:text-base font-bold">المملكة العربية السعودية</div>
                 <div className="text-sm sm:text-base font-bold mt-1">وزارة التعليم</div>
                 <div className="text-sm sm:text-base font-bold">الإدارة العامة للتعليم بمنطقة جازان</div>
