@@ -323,6 +323,7 @@ function MOEReportGenerator() {
   const [logoImage, setLogoImage] = useState<string>("");
   const [signatureImage, setSignatureImage] = useState<string>("");
   const [barcodeImage, setBarcodeImage] = useState<string>("");
+  const [showBarcodeModal, setShowBarcodeModal] = useState(false);
   const [showPreview, setShowPreview] = useState(false);
   const [savedReports, setSavedReports] = useState<Array<any>>([]);
 
@@ -998,7 +999,13 @@ function MOEReportGenerator() {
           {/* الباركود في المنتصف */}
           <div className="flex items-center justify-center">
             {barcodeImage && (
-              <img src={barcodeImage} alt="باركود" className="w-24 h-24 object-contain" />
+              <button
+                onClick={() => setShowBarcodeModal(true)}
+                className="cursor-pointer hover:opacity-80 transition-opacity"
+                title="اضغط لتكبير الباركود"
+              >
+                <img src={barcodeImage} alt="باركود" className="w-24 h-24 object-contain" />
+              </button>
             )}
           </div>
           
@@ -1433,6 +1440,30 @@ function MOEReportGenerator() {
         </div>
       ) : (
         <div className="max-w-4xl mx-auto">
+          {/* Modal للباركود */}
+          {showBarcodeModal && barcodeImage && (
+            <div 
+              className="fixed inset-0 bg-black bg-opacity-75 z-50 flex items-center justify-center p-4"
+              onClick={() => setShowBarcodeModal(false)}
+            >
+              <div className="bg-white rounded-2xl p-6 max-w-2xl w-full relative">
+                <button
+                  onClick={() => setShowBarcodeModal(false)}
+                  className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-full w-10 h-10 flex items-center justify-center transition-colors"
+                >
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+                <h3 className="text-xl font-bold text-gray-900 mb-4 text-center">الباركود</h3>
+                <div className="flex justify-center">
+                  <img src={barcodeImage} alt="باركود" className="max-w-full max-h-96 object-contain" />
+                </div>
+                <p className="text-center text-sm text-gray-500 mt-4">يمكنك مسح الباركود ضوئياً للوصول للمعلومات</p>
+              </div>
+            </div>
+          )}
+          
           <style jsx global>{`
             @media print {
               /* إخفاء كل شيء */
@@ -1672,6 +1703,7 @@ function PerformanceReportGenerator() {
   const [logoImage, setLogoImage] = useState<string>("");
   const [signatureImage, setSignatureImage] = useState<string>("");
   const [barcodeImage, setBarcodeImage] = useState<string>("");
+  const [showBarcodeModal, setShowBarcodeModal] = useState(false);
 
   useEffect(() => {
     if (showPreview) {
@@ -2423,7 +2455,13 @@ function PerformanceReportGenerator() {
             {/* الباركود في المنتصف */}
             <div className="flex items-center justify-center">
               {barcodeImage && (
-                <img src={barcodeImage} alt="باركود" className="w-24 h-24 object-contain" />
+                <button
+                  onClick={() => setShowBarcodeModal(true)}
+                  className="cursor-pointer hover:opacity-80 transition-opacity"
+                  title="اضغط لتكبير الباركود"
+                >
+                  <img src={barcodeImage} alt="باركود" className="w-24 h-24 object-contain" />
+                </button>
               )}
             </div>
             
@@ -2445,6 +2483,30 @@ function PerformanceReportGenerator() {
 
   return (
     <div className="p-6 sm:p-8">
+      {/* Modal للباركود */}
+      {showBarcodeModal && barcodeImage && (
+        <div 
+          className="fixed inset-0 bg-black bg-opacity-75 z-50 flex items-center justify-center p-4"
+          onClick={() => setShowBarcodeModal(false)}
+        >
+          <div className="bg-white rounded-2xl p-6 max-w-2xl w-full relative" onClick={(e) => e.stopPropagation()}>
+            <button
+              onClick={() => setShowBarcodeModal(false)}
+              className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-full w-10 h-10 flex items-center justify-center transition-colors"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+            <h3 className="text-xl font-bold text-gray-900 mb-4 text-center">الباركود</h3>
+            <div className="flex justify-center">
+              <img src={barcodeImage} alt="باركود" className="max-w-full max-h-96 object-contain" />
+            </div>
+            <p className="text-center text-sm text-gray-500 mt-4">يمكنك مسح الباركود ضوئياً للوصول للمعلومات</p>
+          </div>
+        </div>
+      )}
+      
       {!showPreview ? (
         <div className="max-w-6xl mx-auto space-y-8">
           <div className="text-center">
@@ -4103,6 +4165,7 @@ function GeneralReportsGenerator() {
   const [logoImage, setLogoImage] = useState<string>("");
   const [signatureImage, setSignatureImage] = useState<string>("");
   const [barcodeImage, setBarcodeImage] = useState<string>("");
+  const [showBarcodeModal, setShowBarcodeModal] = useState(false);
 
   const handleLogoUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -4507,7 +4570,13 @@ function GeneralReportsGenerator() {
               {/* الباركود في المنتصف */}
               <div className="flex items-center justify-center">
                 {barcodeImage && (
-                  <img src={barcodeImage} alt="باركود" className="w-24 h-24 object-contain" />
+                  <button
+                    onClick={() => setShowBarcodeModal(true)}
+                    className="cursor-pointer hover:opacity-80 transition-opacity"
+                    title="اضغط لتكبير الباركود"
+                  >
+                    <img src={barcodeImage} alt="باركود" className="w-24 h-24 object-contain" />
+                  </button>
                 )}
               </div>
               
@@ -4530,6 +4599,30 @@ function GeneralReportsGenerator() {
   // نموذج إدخال البيانات
   return (
     <div className="p-8 max-w-6xl mx-auto">
+      {/* Modal للباركود */}
+      {showBarcodeModal && barcodeImage && (
+        <div 
+          className="fixed inset-0 bg-black bg-opacity-75 z-50 flex items-center justify-center p-4"
+          onClick={() => setShowBarcodeModal(false)}
+        >
+          <div className="bg-white rounded-2xl p-6 max-w-2xl w-full relative" onClick={(e) => e.stopPropagation()}>
+            <button
+              onClick={() => setShowBarcodeModal(false)}
+              className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-full w-10 h-10 flex items-center justify-center transition-colors"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+            <h3 className="text-xl font-bold text-gray-900 mb-4 text-center">الباركود</h3>
+            <div className="flex justify-center">
+              <img src={barcodeImage} alt="باركود" className="max-w-full max-h-96 object-contain" />
+            </div>
+            <p className="text-center text-sm text-gray-500 mt-4">يمكنك مسح الباركود ضوئياً للوصول للمعلومات</p>
+          </div>
+        </div>
+      )}
+      
       <div className="mb-6">
         <h2 className="text-3xl font-bold text-gray-800 dark:text-white mb-2">التقارير العامة</h2>
         <p className="text-gray-600 dark:text-gray-400">املأ النموذج لإنشاء تقرير توثيق مهني</p>
