@@ -948,7 +948,7 @@ function MOEReportGenerator() {
             <p className="text-sm sm:text-base font-bold text-gray-800">{formData.teacherName}</p>
             <div className="flex justify-end mt-1">
               <img 
-                src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNzAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cGF0aCBkPSJNIDI1IDYyMCBRIDgwIDQ4MCAxNzUgNTgwIFEgMjcwIDY4MCAzNjAgNTkwIFEgNDUwIDUwMCA0NTAgNzAwIE0gMzgwIDU4MCBMIDcxMCA1OTAgTSA2MjAgNTgwIFEgNjQwIDU3MCA2NjAgNTgwIFEgNjgwIDU5MCA3MDAgNTgwIE0gMzgwIDY1MCBRIDQyMCA2NDAgNDYwIDY1MCBRIDUwMCA2NjAgNTQwIDY1MCBRIDU4MCA2NDAgNjIwIDY1MCBRIDY2MCA2NjAgNzAwIDY1MCBNIDUwNSA3MDAiIHN0cm9rZT0iYmx1ZSIgc3Ryb2tlLXdpZHRoPSI0IiBmaWxsPSJub25lIi8+Cjwvc3ZnPg==" 
+                src="/images/signature.svg" 
                 alt="توقيع"
                 className="h-10 object-contain"
               />
@@ -2226,7 +2226,7 @@ function PerformanceReportGenerator() {
               <p className="text-xl font-bold text-gray-800">{formData.teacherName}</p>
               <div className="flex justify-end mt-2">
                 <img 
-                  src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNzAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cGF0aCBkPSJNIDI1IDYyMCBRIDgwIDQ4MCAxNzUgNTgwIFEgMjcwIDY4MCAzNjAgNTkwIFEgNDUwIDUwMCA0NTAgNzAwIE0gMzgwIDU4MCBMIDcxMCA1OTAgTSA2MjAgNTgwIFEgNjQwIDU3MCA2NjAgNTgwIFEgNjgwIDU5MCA3MDAgNTgwIE0gMzgwIDY1MCBRIDQyMCA2NDAgNDYwIDY1MCBRIDUwMCA2NjAgNTQwIDY1MCBRIDU4MCA2NDAgNjIwIDY1MCBRIDY2MCA2NjAgNzAwIDY1MCBNIDUwNSA3MDAiIHN0cm9rZT0iYmx1ZSIgc3Ryb2tlLXdpZHRoPSI0IiBmaWxsPSJub25lIi8+Cjwvc3ZnPg==" 
+                  src="/images/signature.svg" 
                   alt="توقيع"
                   className="h-12 object-contain"
                 />
@@ -2245,7 +2245,7 @@ function PerformanceReportGenerator() {
           </div>
         </div>
 
-        <div className="text-white p-4 text-center" style={{ backgroundColor: '#07A869' }}>
+        <div className="text-white p-4 text-center bg-gradient-to-r from-[#3D7EB9] via-[#0DA9A6] to-[#07A869]">
           <p className="text-lg font-bold">العام الدراسي {formData.academicYear} هـ</p>
         </div>
       </div>
@@ -2484,7 +2484,7 @@ function PerformanceReportGenerator() {
 
               @page {
                 size: A4 portrait;
-                margin: 6mm 4mm;
+                margin: 3mm 4mm 6mm 4mm;
               }
 
               .no-print {
@@ -3834,7 +3834,7 @@ function GeneralReportsGenerator() {
           @media print {
             @page {
               size: A4 portrait;
-              margin: 5mm 4mm;
+              margin: 3mm 4mm 5mm 4mm;
             }
             
             * {
@@ -4153,7 +4153,7 @@ function GeneralReportsGenerator() {
                 <p className="text-sm sm:text-base font-bold text-gray-800">{formData.teacherName}</p>
                 <div className="flex justify-end mt-1">
                   <img 
-                    src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNzAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cGF0aCBkPSJNIDI1IDYyMCBRIDgwIDQ4MCAxNzUgNTgwIFEgMjcwIDY4MCAzNjAgNTkwIFEgNDUwIDUwMCA0NTAgNzAwIE0gMzgwIDU4MCBMIDcxMCA1OTAgTSA2MjAgNTgwIFEgNjQwIDU3MCA2NjAgNTgwIFEgNjgwIDU5MCA3MDAgNTgwIE0gMzgwIDY1MCBRIDQyMCA2NDAgNDYwIDY1MCBRIDUwMCA2NjAgNTQwIDY1MCBRIDU4MCA2NDAgNjIwIDY1MCBRIDY2MCA2NjAgNzAwIDY1MCBNIDUwNSA3MDAiIHN0cm9rZT0iYmx1ZSIgc3Ryb2tlLXdpZHRoPSI0IiBmaWxsPSJub25lIi8+Cjwvc3ZnPg==" 
+                    src="/images/signature.svg" 
                     alt="توقيع"
                     className="h-10 object-contain"
                   />
@@ -4173,7 +4173,7 @@ function GeneralReportsGenerator() {
           </div>
 
           {/* Footer */}
-          <div className="text-white p-1.5 text-center" style={{ backgroundColor: '#07A869' }}>
+          <div className="text-white p-1.5 text-center bg-gradient-to-r from-[#3D7EB9] via-[#0DA9A6] to-[#07A869]">
             <p className="text-sm font-bold">العام الدراسي {formData.academicYear} هـ</p>
           </div>
         </div>
