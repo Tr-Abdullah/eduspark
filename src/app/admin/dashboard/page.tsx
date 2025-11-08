@@ -1497,7 +1497,7 @@ function MOEReportGenerator() {
                 overflow: hidden !important;
               }
               
-              /* وضع التقرير */
+              /* وضع التقرير - بدون مسافات داخلية */
               #report-content {
                 position: relative !important;
                 left: 0 !important;
@@ -1517,6 +1517,11 @@ function MOEReportGenerator() {
                 border-radius: 0 !important;
                 overflow: visible !important;
                 page-break-after: avoid !important;
+              }
+              
+              /* إزالة border من التقرير في الطباعة */
+              #report-content.border-4 {
+                border: none !important;
               }
               
               /* إخفاء عناصر التحكم */
@@ -2890,6 +2895,11 @@ function PerformanceReportGenerator() {
                 border-radius: 0 !important;
                 overflow: visible !important;
                 page-break-after: avoid !important;
+              }
+              
+              /* إزالة border من التقرير في الطباعة */
+              #report-content.border-4 {
+                border: none !important;
               }
 
               @page {
@@ -4349,6 +4359,8 @@ function GeneralReportsGenerator() {
               margin: 0 !important;
               padding: 0 !important;
               page-break-after: avoid !important;
+              border: none !important;
+              box-shadow: none !important;
             }
             
             .no-print {
