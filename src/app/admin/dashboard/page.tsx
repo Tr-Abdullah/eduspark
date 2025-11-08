@@ -978,7 +978,7 @@ function MOEReportGenerator() {
               <img 
                 src={signatureImage} 
                 alt="توقيع"
-                className="h-10 object-contain ml-0 mt-1"
+                className="h-20 object-contain ml-0 mt-1"
               />
             )}
           </div>
@@ -2349,7 +2349,7 @@ function PerformanceReportGenerator() {
                 <img 
                   src={signatureImage} 
                   alt="توقيع"
-                  className="h-12 object-contain ml-0 mt-2"
+                  className="h-24 object-contain ml-0 mt-2"
                 />
               )}
             </div>
@@ -4378,7 +4378,7 @@ function GeneralReportsGenerator() {
                   <img 
                     src={signatureImage} 
                     alt="توقيع"
-                    className="h-10 object-contain ml-0 mt-1"
+                    className="h-20 object-contain ml-0 mt-1"
                   />
                 )}
               </div>
