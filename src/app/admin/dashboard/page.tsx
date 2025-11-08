@@ -1473,57 +1473,43 @@ function MOEReportGenerator() {
             @media print {
               /* إخفاء كل شيء ماعدا التقرير */
               body * {
-                visibility: hidden !important;
-                display: none !important;
+                visibility: hidden;
               }
               
               /* إظهار التقرير وجميع محتوياته */
               #report-content,
               #report-content * {
                 visibility: visible !important;
-                display: revert !important;
               }
               
-              /* تنسيق الصفحة - هوامش أقل */
+              /* تنسيق الصفحة */
               @page {
                 size: A4 portrait;
-                margin: 3mm 5mm 5mm 5mm !important;
+                margin: 8mm;
               }
               
               html, body {
-                width: 210mm !important;
-                height: auto !important;
-                min-height: 297mm !important;
-                margin: 0 !important;
-                padding: 0 !important;
-                overflow: hidden !important;
+                width: 210mm;
+                height: 297mm;
+                margin: 0;
+                padding: 0;
               }
               
-              /* وضع التقرير - بدون مسافات داخلية */
+              /* وضع التقرير وتوسيطه */
               #report-content {
-                position: relative !important;
+                position: absolute !important;
                 left: 0 !important;
                 right: 0 !important;
                 top: 0 !important;
                 transform: none !important;
-                width: 100% !important;
-                max-width: 100% !important;
-                height: auto !important;
-                min-height: auto !important;
-                max-height: none !important;
-                margin: 0 !important;
+                width: 210mm !important;
+                max-width: 210mm !important;
+                margin: 0 auto !important;
                 padding: 0 !important;
                 background: white !important;
                 box-shadow: none !important;
                 border: none !important;
                 border-radius: 0 !important;
-                overflow: visible !important;
-                page-break-after: avoid !important;
-              }
-              
-              /* إزالة border من التقرير في الطباعة */
-              #report-content.border-4 {
-                border: none !important;
               }
               
               /* إخفاء عناصر التحكم */
@@ -1537,7 +1523,6 @@ function MOEReportGenerator() {
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
                 color-adjust: exact !important;
-                box-sizing: border-box !important;
               }
               
               /* تنسيق الهيدر */
@@ -1685,27 +1670,40 @@ function MOEReportGenerator() {
             }
             
             /* طباعة من الهاتف */
-            /* إزالة تنسيقات الهاتف - نفس التخطيط للجميع */
             @media print and (max-width: 600px) {
-              @page {
-                size: A4 portrait;
-                margin: 3mm 5mm 5mm 5mm !important;
-              }
-              
-              html, body {
-                width: 210mm !important;
-                height: auto !important;
-                min-height: 297mm !important;
-                overflow: hidden !important;
-              }
-              
               #report-content {
-                position: relative !important;
+                left: 0 !important;
+                transform: none !important;
                 width: 100% !important;
                 max-width: 100% !important;
-                height: auto !important;
+              }
+              
+              .print-header {
+                padding: 12px 16px !important;
+              }
+              
+              #report-content > div:nth-child(2) {
+                padding: 6px 16px !important;
+              }
+              
+              #report-content > div:nth-child(3) {
+                padding: 16px !important;
+              }
+              
+              .text-sm {
                 font-size: 11px !important;
-                page-break-after: avoid !important;
+              }
+              
+              .gap-4 {
+                gap: 10px !important;
+              }
+              
+              .p-3 {
+                padding: 10px !important;
+              }
+              
+              .p-4 {
+                padding: 12px !important;
               }
             }
           `}</style>
@@ -2489,7 +2487,7 @@ function PerformanceReportGenerator() {
             ))}
           </div>
 
-          <div className="signatures-grid grid grid-cols-1 sm:grid-cols-3 gap-8 pt-6 border-t-2 border-gray-200">
+          <div className="signatures-grid grid grid-cols-3 gap-8 pt-6 border-t-2 border-gray-200">
             <div className="text-right">
               <p className="text-gray-600 font-semibold mb-2">معلم المادة</p>
               <p className="text-xl font-bold text-gray-800">{formData.teacherName}</p>
@@ -2869,54 +2867,38 @@ function PerformanceReportGenerator() {
         <div className="max-w-5xl mx-auto" ref={reportContainerRef}>
           <style jsx global>{`
             @media print {
-              body * {
-                visibility: hidden !important;
-                display: none !important;
+              * {
+                visibility: hidden;
+                margin: 0;
+                padding: 0;
               }
 
               #report-content,
               #report-content * {
-                visibility: visible !important;
-                display: revert !important;
+                visibility: visible;
               }
 
               #report-content {
-                position: relative !important;
-                left: 0 !important;
-                right: 0 !important;
-                top: 0 !important;
-                transform: none !important;
-                width: 100% !important;
-                max-width: 100% !important;
-                height: auto !important;
-                min-height: auto !important;
-                margin: 0 !important;
-                padding: 0 !important;
-                background: white !important;
+                position: absolute;
+                left: 0;
+                right: 0;
+                top: 0;
+                transform: none;
+                width: 100%;
+                max-width: 100%;
+                height: auto;
+                margin: 0;
+                padding: 0;
+                background: white;
                 box-shadow: none !important;
                 border: none !important;
                 border-radius: 0 !important;
                 overflow: visible !important;
-                page-break-after: avoid !important;
-              }
-              
-              /* إزالة border من التقرير في الطباعة */
-              #report-content.border-4 {
-                border: none !important;
               }
 
               @page {
                 size: A4 portrait;
-                margin: 3mm 5mm 5mm 5mm !important;
-              }
-              
-              html, body {
-                width: 210mm !important;
-                height: auto !important;
-                min-height: 297mm !important;
-                overflow: hidden !important;
-                margin: 0 !important;
-                padding: 0 !important;
+                margin: 3mm 4mm 6mm 4mm;
               }
 
               .no-print {
@@ -2927,14 +2909,14 @@ function PerformanceReportGenerator() {
               .print-header {
                 border-radius: 0 !important;
                 page-break-after: avoid;
-                padding: 10px 12px !important;
+                padding: 12px 15px !important;
                 background-color: #15445A !important;
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
               }
 
               #report-content > div:last-child {
-                padding: 8px 10px !important;
+                padding: 10px 12px !important;
               }
 
               body {
@@ -2949,7 +2931,6 @@ function PerformanceReportGenerator() {
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
                 color-adjust: exact !important;
-                box-sizing: border-box !important;
               }
 
               img {
@@ -2987,77 +2968,50 @@ function PerformanceReportGenerator() {
               }
 
               .p-6, .p-8 {
-                padding: 0.5rem !important;
+                padding: 0.7rem !important;
               }
               
               .py-4 {
-                padding-top: 0.4rem !important;
-                padding-bottom: 0.4rem !important;
+                padding-top: 0.5rem !important;
+                padding-bottom: 0.5rem !important;
               }
               
-              .gap-6, .gap-8 {
-                gap: 0.5rem !important;
+              /* إصلاح الطباعة على الهاتف */
+              html, body {
+                width: 210mm !important;
+                height: 297mm !important;
+              }
+              
+              @media (max-width: 768px) {
+                #report-content {
+                  transform: none !important;
+                  width: 100% !important;
+                  max-width: 100% !important;
+                }
+                
+                * {
+                  -webkit-transform: none !important;
+                  transform: none !important;
+                }
               }
 
               .performance-witness-grid {
                 grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-                gap: 0.8rem !important;
+                gap: 1.25rem !important;
               }
 
               .signatures-grid {
                 display: grid !important;
-                grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-                gap: 0.8rem !important;
-                width: 100% !important;
-                max-width: 100% !important;
+                grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+                gap: 2rem !important;
               }
 
               .signatures-grid .mt-4 {
-                margin-top: 0.8rem !important;
+                margin-top: 1.5rem !important;
               }
 
               .signatures-grid .p-6 {
-                padding: 0.6rem !important;
-              }
-            }
-
-            /* الطباعة من الهاتف - نفس تخطيط اللاب توب */
-            @media print and (max-width: 600px) {
-              @page {
-                size: A4 portrait;
-                margin: 3mm 5mm 5mm 5mm !important;
-              }
-              
-              html, body {
-                width: 210mm !important;
-                height: auto !important;
-                min-height: 297mm !important;
-                overflow: hidden !important;
-              }
-              
-              #report-content {
-                position: relative !important;
-                width: 100% !important;
-                max-width: 100% !important;
-                font-size: 9px !important;
-                page-break-after: avoid !important;
-              }
-              
-              .p-6, .p-8 {
-                padding: 0.4rem !important;
-              }
-              
-              .gap-6, .gap-8 {
-                gap: 0.4rem !important;
-              }
-              
-              .signatures-grid {
-                grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-                gap: 0.6rem !important;
-              }
-              
-              .signatures-grid .p-6 {
-                padding: 0.5rem !important;
+                padding: 1.5rem !important;
               }
             }
           `}</style>
@@ -4331,43 +4285,25 @@ function GeneralReportsGenerator() {
           @media print {
             @page {
               size: A4 portrait;
-              margin: 3mm 5mm 5mm 5mm !important;
+              margin: 3mm 4mm 5mm 4mm;
             }
             
-            body * {
-              visibility: hidden !important;
-              display: none !important;
+            * {
+              visibility: hidden;
             }
             
-            #general-report-preview,
-            #general-report-preview * {
-              visibility: visible !important;
-              display: revert !important;
-            }
-            
-            html, body {
-              width: 210mm !important;
-              height: auto !important;
-              min-height: 297mm !important;
-              overflow: hidden !important;
-              margin: 0 !important;
-              padding: 0 !important;
+            #general-report-preview, #general-report-preview * {
+              visibility: visible;
             }
             
             #general-report-preview {
-              position: relative !important;
-              left: 0 !important;
-              top: 0 !important;
-              transform: none !important;
-              width: 100% !important;
-              max-width: 100% !important;
-              height: auto !important;
-              background: white !important;
-              margin: 0 !important;
-              padding: 0 !important;
-              page-break-after: avoid !important;
-              border: none !important;
-              box-shadow: none !important;
+              position: absolute;
+              left: 50%;
+              top: 0;
+              transform: translateX(-50%);
+              width: 100%;
+              max-width: 210mm;
+              background: white;
             }
             
             .no-print {
@@ -4385,7 +4321,6 @@ function GeneralReportsGenerator() {
               -webkit-print-color-adjust: exact !important;
               print-color-adjust: exact !important;
               color-adjust: exact !important;
-              box-sizing: border-box !important;
             }
             
             /* تنسيق الهيدر للطباعة */
@@ -4542,22 +4477,14 @@ function GeneralReportsGenerator() {
             @media print and (max-width: 600px) {
               @page {
                 size: A4 portrait;
-                margin: 3mm 5mm 5mm 5mm !important;
-              }
-              
-              html, body {
-                width: 210mm !important;
-                height: auto !important;
-                min-height: 297mm !important;
-                overflow: hidden !important;
+                margin: 2mm !important;
               }
               
               #general-report-preview {
-                position: relative !important;
-                width: 100% !important;
+                transform: scale(0.95);
+                transform-origin: top center;
                 max-width: 100% !important;
-                font-size: 9px !important;
-                page-break-after: avoid !important;
+                font-size: 8px !important;
               }
               
               #general-report-preview .print-header {
@@ -4610,30 +4537,6 @@ function GeneralReportsGenerator() {
               #general-report-preview .h-32 {
                 width: 2.5rem !important;
                 height: 2.5rem !important;
-              }
-            }
-            
-            /* الطباعة من الهاتف - نفس تخطيط اللاب توب */
-            @media print and (max-width: 600px) {
-              @page {
-                size: A4 portrait;
-                margin: 4mm 6mm 6mm 6mm !important;
-              }
-              
-              html, body {
-                width: 210mm !important;
-                height: auto !important;
-                min-height: 297mm !important;
-                overflow: hidden !important;
-              }
-              
-              #general-report-preview {
-                position: relative !important;
-                width: 100% !important;
-                max-width: 100% !important;
-                transform: none !important;
-                font-size: 9px !important;
-                page-break-after: avoid !important;
               }
             }
           }
