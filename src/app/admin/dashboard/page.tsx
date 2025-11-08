@@ -320,6 +320,8 @@ function MOEReportGenerator() {
     uploadedFiles: [] as Array<{name: string, url: string}>
   });
 
+  const [logoImage, setLogoImage] = useState<string>("");
+  const [signatureImage, setSignatureImage] = useState<string>("");
   const [showPreview, setShowPreview] = useState(false);
   const [savedReports, setSavedReports] = useState<Array<any>>([]);
 
@@ -382,6 +384,28 @@ function MOEReportGenerator() {
     }
     
     alert("✅ تم حفظ التقرير بنجاح!");
+  };
+
+  const handleLogoUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setLogoImage(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleSignatureUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setSignatureImage(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   // الأيام الهجرية
@@ -805,7 +829,11 @@ function MOEReportGenerator() {
       <div className="bg-gradient-to-r from-green-700 to-green-600 text-white px-4 sm:px-6 py-3 sm:py-4">
         <div className="flex items-center justify-center gap-3 sm:gap-4">
           <div className="w-16 h-16 sm:w-20 sm:h-20 bg-[#1a4d5e] rounded-lg flex items-center justify-center p-1">
-            <img src="/images/moe-logo.svg" alt="وزارة التعليم" className="w-full h-full object-contain" />
+            {logoImage ? (
+              <img src={logoImage} alt="وزارة التعليم" className="w-full h-full object-contain" />
+            ) : (
+              <div className="text-white text-xs text-center">ضع الشعار</div>
+            )}
           </div>
           <div className="text-center leading-tight">
             <div className="text-sm sm:text-base font-bold">وزارة التعليم</div>
@@ -946,13 +974,15 @@ function MOEReportGenerator() {
           <div className="text-right">
             <p className="text-gray-600 font-semibold mb-0.5 text-sm">المعلم</p>
             <p className="text-sm sm:text-base font-bold text-gray-800">{formData.teacherName}</p>
-            <div className="flex justify-end mt-1">
-              <img 
-                src="/images/signature.svg" 
-                alt="توقيع"
-                className="h-10 object-contain"
-              />
-            </div>
+            {signatureImage && (
+              <div className="flex justify-end mt-1">
+                <img 
+                  src={signatureImage} 
+                  alt="توقيع"
+                  className="h-10 object-contain"
+                />
+              </div>
+            )}
             <div className="mt-1 pt-0.5 inline-block">
               <div className="border-t border-gray-400 w-20"></div>
             </div>
@@ -1271,6 +1301,77 @@ function MOEReportGenerator() {
                 </div>
               </div>
             </div>
+
+            {/* رفع الشعار والتوقيع */}
+            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 p-6 rounded-xl border-2 border-blue-200 dark:border-blue-700">
+              <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">الشعار والتوقيع</h3>
+              <div className="grid md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">شعار وزارة التعليم:</label>
+                  <div className="border-2 border-dashed border-blue-300 dark:border-blue-600 rounded-lg p-4 text-center">
+                    {logoImage ? (
+                      <div className="relative">
+                        <img src={logoImage} alt="الشعار" className="max-h-24 mx-auto object-contain" />
+                        <button
+                          onClick={() => setLogoImage("")}
+                          className="mt-2 text-sm text-red-600 hover:text-red-800"
+                        >
+                          حذف الصورة
+                        </button>
+                      </div>
+                    ) : (
+                      <label className="cursor-pointer">
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={handleLogoUpload}
+                          className="hidden"
+                        />
+                        <div className="text-blue-600 dark:text-blue-400">
+                          <svg className="w-12 h-12 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                          </svg>
+                          <p className="font-semibold">انقر لرفع صورة الشعار</p>
+                          <p className="text-xs text-gray-500 mt-1">PNG, JPG, SVG</p>
+                        </div>
+                      </label>
+                    )}
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">توقيع المعلم:</label>
+                  <div className="border-2 border-dashed border-blue-300 dark:border-blue-600 rounded-lg p-4 text-center">
+                    {signatureImage ? (
+                      <div className="relative">
+                        <img src={signatureImage} alt="التوقيع" className="max-h-24 mx-auto object-contain" />
+                        <button
+                          onClick={() => setSignatureImage("")}
+                          className="mt-2 text-sm text-red-600 hover:text-red-800"
+                        >
+                          حذف الصورة
+                        </button>
+                      </div>
+                    ) : (
+                      <label className="cursor-pointer">
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={handleSignatureUpload}
+                          className="hidden"
+                        />
+                        <div className="text-blue-600 dark:text-blue-400">
+                          <svg className="w-12 h-12 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                          </svg>
+                          <p className="font-semibold">انقر لرفع صورة التوقيع</p>
+                          <p className="text-xs text-gray-500 mt-1">PNG, JPG</p>
+                        </div>
+                      </label>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
 
           <div className="flex justify-center gap-4 pt-4">
@@ -1522,6 +1623,8 @@ function PerformanceReportGenerator() {
     img3: "",
     img4: ""
   });
+  const [logoImage, setLogoImage] = useState<string>("");
+  const [signatureImage, setSignatureImage] = useState<string>("");
 
   useEffect(() => {
     if (showPreview) {
