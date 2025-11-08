@@ -974,11 +974,13 @@ function MOEReportGenerator() {
           <div className="text-right">
             <p className="text-gray-600 font-semibold mb-0.5 text-sm">المعلم</p>
             <p className="text-sm sm:text-base font-bold text-gray-800">{formData.teacherName}</p>
-            <img 
-              src={signatureImage || "/images/default-signature.svg"} 
-              alt="توقيع"
-              className="h-10 object-contain mr-auto mt-1"
-            />
+            {signatureImage && (
+              <img 
+                src={signatureImage} 
+                alt="توقيع"
+                className="h-10 object-contain mr-auto mt-1"
+              />
+            )}
           </div>
           <div className="text-left">
             <p className="text-gray-600 font-semibold mb-0.5 text-sm">مدير المدرسة</p>
@@ -2343,11 +2345,13 @@ function PerformanceReportGenerator() {
             <div className="text-right">
               <p className="text-gray-600 font-semibold mb-2">معلم المادة</p>
               <p className="text-xl font-bold text-gray-800">{formData.teacherName}</p>
-              <img 
-                src={signatureImage || "/images/default-signature.svg"} 
-                alt="توقيع"
-                className="h-12 object-contain mr-auto mt-2"
-              />
+              {signatureImage && (
+                <img 
+                  src={signatureImage} 
+                  alt="توقيع"
+                  className="h-12 object-contain mr-auto mt-2"
+                />
+              )}
             </div>
             <div className="text-left">
               <p className="text-gray-600 font-semibold mb-2">مدير المدرسة</p>
@@ -4370,11 +4374,13 @@ function GeneralReportsGenerator() {
               <div className="text-right">
                 <p className="text-gray-600 font-semibold mb-0.5 text-sm">المعلم</p>
                 <p className="text-sm sm:text-base font-bold text-gray-800">{formData.teacherName}</p>
-                <img 
-                  src={signatureImage || "/images/default-signature.svg"} 
-                  alt="توقيع"
-                  className="h-10 object-contain mr-auto mt-1"
-                />
+                {signatureImage && (
+                  <img 
+                    src={signatureImage} 
+                    alt="توقيع"
+                    className="h-10 object-contain mr-auto mt-1"
+                  />
+                )}
               </div>
               <div className="text-left">
                 <p className="text-gray-600 font-semibold mb-0.5 text-sm">مدير المدرسة</p>
