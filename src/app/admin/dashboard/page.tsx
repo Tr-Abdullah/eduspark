@@ -322,6 +322,7 @@ function MOEReportGenerator() {
 
   const [logoImage, setLogoImage] = useState<string>("");
   const [signatureImage, setSignatureImage] = useState<string>("");
+  const [barcodeImage, setBarcodeImage] = useState<string>("");
   const [showPreview, setShowPreview] = useState(false);
   const [savedReports, setSavedReports] = useState<Array<any>>([]);
 
@@ -403,6 +404,17 @@ function MOEReportGenerator() {
       const reader = new FileReader();
       reader.onloadend = () => {
         setSignatureImage(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleBarcodeUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setBarcodeImage(reader.result as string);
       };
       reader.readAsDataURL(file);
     }
@@ -968,6 +980,13 @@ function MOEReportGenerator() {
         )}
       </div>
       
+      {/* الباركود */}
+      {barcodeImage && (
+        <div className="flex justify-center my-6">
+          <img src={barcodeImage} alt="باركود" className="w-32 h-32 object-contain" />
+        </div>
+      )}
+      
       {/* Footer - Signatures */}
       <div className="px-4 sm:px-6 py-3 sm:py-4 mt-4 sm:mt-6">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 border-t border-gray-200">
@@ -1303,7 +1322,7 @@ function MOEReportGenerator() {
                   <div className="border-2 border-dashed border-blue-300 dark:border-blue-600 rounded-lg p-4 text-center">
                     {logoImage ? (
                       <div className="relative">
-                        <img src={logoImage} alt="الشعار" className="max-h-24 mx-auto object-contain" />
+                        <img src={logoImage} alt="الشعار" className="max-w-full h-auto object-contain mx-auto" style={{maxHeight: '200px'}} />
                         <button
                           onClick={() => setLogoImage("")}
                           className="mt-2 text-sm text-red-600 hover:text-red-800"
@@ -1361,6 +1380,40 @@ function MOEReportGenerator() {
                       </label>
                     )}
                   </div>
+                </div>
+              </div>
+              
+              {/* مربع رفع الباركود */}
+              <div className="mt-6">
+                <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">باركود التقرير (اختياري):</label>
+                <div className="border-2 border-dashed border-blue-300 dark:border-blue-600 rounded-lg p-4 text-center max-w-xs mx-auto">
+                  {barcodeImage ? (
+                    <div className="relative">
+                      <img src={barcodeImage} alt="الباركود" className="w-32 h-32 mx-auto object-contain" />
+                      <button
+                        onClick={() => setBarcodeImage("")}
+                        className="mt-2 text-sm text-red-600 hover:text-red-800"
+                      >
+                        حذف الباركود
+                      </button>
+                    </div>
+                  ) : (
+                    <label className="cursor-pointer">
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={handleBarcodeUpload}
+                        className="hidden"
+                      />
+                      <div className="text-blue-600 dark:text-blue-400">
+                        <svg className="w-12 h-12 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />
+                        </svg>
+                        <p className="font-semibold">انقر لرفع صورة الباركود</p>
+                        <p className="text-xs text-gray-500 mt-1">PNG, JPG</p>
+                      </div>
+                    </label>
+                  )}
                 </div>
               </div>
             </div>
@@ -1617,6 +1670,7 @@ function PerformanceReportGenerator() {
   });
   const [logoImage, setLogoImage] = useState<string>("");
   const [signatureImage, setSignatureImage] = useState<string>("");
+  const [barcodeImage, setBarcodeImage] = useState<string>("");
 
   useEffect(() => {
     if (showPreview) {
@@ -1668,6 +1722,17 @@ function PerformanceReportGenerator() {
       const reader = new FileReader();
       reader.onloadend = () => {
         setSignatureImage(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleBarcodeUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setBarcodeImage(reader.result as string);
       };
       reader.readAsDataURL(file);
     }
@@ -2341,6 +2406,13 @@ function PerformanceReportGenerator() {
             ))}
           </div>
 
+          {/* الباركود */}
+          {barcodeImage && (
+            <div className="flex justify-center my-6">
+              <img src={barcodeImage} alt="باركود" className="w-32 h-32 object-contain" />
+            </div>
+          )}
+
           <div className="signatures-grid grid grid-cols-2 gap-8 pt-6 border-t-2 border-gray-200">
             <div className="text-right">
               <p className="text-gray-600 font-semibold mb-2">معلم المادة</p>
@@ -2520,7 +2592,8 @@ function PerformanceReportGenerator() {
                             <img 
                               src={logoImage} 
                               alt="شعار وزارة التعليم" 
-                              className="max-h-24 mx-auto object-contain mb-3"
+                              className="max-w-full h-auto object-contain mx-auto mb-3" 
+                              style={{maxHeight: '200px'}}
                             />
                             <button
                               onClick={() => setLogoImage("")}
@@ -2579,6 +2652,40 @@ function PerformanceReportGenerator() {
                           </label>
                         )}
                       </div>
+                    </div>
+                  </div>
+                  
+                  {/* مربع رفع الباركود */}
+                  <div className="mt-6">
+                    <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">باركود التقرير (اختياري):</label>
+                    <div className="border-2 border-dashed border-blue-300 dark:border-blue-600 rounded-lg p-4 text-center max-w-xs mx-auto bg-white dark:bg-slate-800">
+                      {barcodeImage ? (
+                        <div className="relative">
+                          <img src={barcodeImage} alt="الباركود" className="w-32 h-32 mx-auto object-contain" />
+                          <button
+                            onClick={() => setBarcodeImage("")}
+                            className="mt-2 px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg text-sm font-semibold transition-colors"
+                          >
+                            حذف الباركود
+                          </button>
+                        </div>
+                      ) : (
+                        <label className="cursor-pointer">
+                          <input
+                            type="file"
+                            accept="image/*"
+                            onChange={handleBarcodeUpload}
+                            className="hidden"
+                          />
+                          <div className="text-blue-600 dark:text-blue-400">
+                            <svg className="w-12 h-12 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />
+                            </svg>
+                            <p className="font-semibold">انقر لرفع صورة الباركود</p>
+                            <p className="text-xs text-gray-500 mt-1">PNG, JPG</p>
+                          </div>
+                        </label>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -3993,6 +4100,7 @@ function GeneralReportsGenerator() {
   const [showPreview, setShowPreview] = useState(false);
   const [logoImage, setLogoImage] = useState<string>("");
   const [signatureImage, setSignatureImage] = useState<string>("");
+  const [barcodeImage, setBarcodeImage] = useState<string>("");
 
   const handleLogoUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -4011,6 +4119,17 @@ function GeneralReportsGenerator() {
       const reader = new FileReader();
       reader.onloadend = () => {
         setSignatureImage(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleBarcodeUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setBarcodeImage(reader.result as string);
       };
       reader.readAsDataURL(file);
     }
@@ -4369,6 +4488,13 @@ function GeneralReportsGenerator() {
               })}
             </div>
 
+            {/* الباركود */}
+            {barcodeImage && (
+              <div className="flex justify-center my-6">
+                <img src={barcodeImage} alt="باركود" className="w-32 h-32 object-contain" />
+              </div>
+            )}
+
             {/* التوقيعات */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 border-t border-gray-200">
               <div className="text-right">
@@ -4613,7 +4739,8 @@ function GeneralReportsGenerator() {
                     <img 
                       src={logoImage} 
                       alt="شعار وزارة التعليم" 
-                      className="max-h-24 mx-auto object-contain mb-3"
+                      className="max-w-full h-auto object-contain mx-auto mb-3"
+                      style={{maxHeight: '200px'}}
                     />
                     <button
                       onClick={() => setLogoImage("")}
@@ -4672,6 +4799,40 @@ function GeneralReportsGenerator() {
                   </label>
                 )}
               </div>
+            </div>
+          </div>
+          
+          {/* مربع رفع الباركود */}
+          <div className="mt-6">
+            <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">باركود التقرير (اختياري):</label>
+            <div className="border-2 border-dashed border-blue-300 dark:border-blue-600 rounded-lg p-4 text-center max-w-xs mx-auto bg-white dark:bg-slate-800">
+              {barcodeImage ? (
+                <div className="relative">
+                  <img src={barcodeImage} alt="الباركود" className="w-32 h-32 mx-auto object-contain" />
+                  <button
+                    onClick={() => setBarcodeImage("")}
+                    className="mt-2 px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg text-sm font-semibold transition-colors"
+                  >
+                    حذف الباركود
+                  </button>
+                </div>
+              ) : (
+                <label className="cursor-pointer">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleBarcodeUpload}
+                    className="hidden"
+                  />
+                  <div className="text-blue-600 dark:text-blue-400">
+                    <svg className="w-12 h-12 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />
+                    </svg>
+                    <p className="font-semibold">انقر لرفع صورة الباركود</p>
+                    <p className="text-xs text-gray-500 mt-1">PNG, JPG</p>
+                  </div>
+                </label>
+              )}
             </div>
           </div>
         </div>
