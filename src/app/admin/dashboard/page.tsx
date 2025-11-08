@@ -980,16 +980,9 @@ function MOEReportGenerator() {
         )}
       </div>
       
-      {/* الباركود */}
-      {barcodeImage && (
-        <div className="flex justify-center my-6">
-          <img src={barcodeImage} alt="باركود" className="w-32 h-32 object-contain" />
-        </div>
-      )}
-      
       {/* Footer - Signatures */}
       <div className="px-4 sm:px-6 py-3 sm:py-4 mt-4 sm:mt-6">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 border-t border-gray-200">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2 border-t border-gray-200">
           <div className="text-right">
             <p className="text-gray-600 font-semibold mb-0.5 text-sm">المعلم</p>
             <p className="text-sm sm:text-base font-bold text-gray-800">{formData.teacherName}</p>
@@ -1001,6 +994,14 @@ function MOEReportGenerator() {
               />
             )}
           </div>
+          
+          {/* الباركود في المنتصف */}
+          <div className="flex items-center justify-center">
+            {barcodeImage && (
+              <img src={barcodeImage} alt="باركود" className="w-24 h-24 object-contain" />
+            )}
+          </div>
+          
           <div className="text-left">
             <p className="text-gray-600 font-semibold mb-0.5 text-sm">مدير المدرسة</p>
             <p className="text-sm sm:text-base font-bold text-gray-800">{formData.principalName}</p>
@@ -2406,14 +2407,7 @@ function PerformanceReportGenerator() {
             ))}
           </div>
 
-          {/* الباركود */}
-          {barcodeImage && (
-            <div className="flex justify-center my-6">
-              <img src={barcodeImage} alt="باركود" className="w-32 h-32 object-contain" />
-            </div>
-          )}
-
-          <div className="signatures-grid grid grid-cols-2 gap-8 pt-6 border-t-2 border-gray-200">
+          <div className="signatures-grid grid grid-cols-3 gap-8 pt-6 border-t-2 border-gray-200">
             <div className="text-right">
               <p className="text-gray-600 font-semibold mb-2">معلم المادة</p>
               <p className="text-xl font-bold text-gray-800">{formData.teacherName}</p>
@@ -2425,6 +2419,14 @@ function PerformanceReportGenerator() {
                 />
               )}
             </div>
+            
+            {/* الباركود في المنتصف */}
+            <div className="flex items-center justify-center">
+              {barcodeImage && (
+                <img src={barcodeImage} alt="باركود" className="w-24 h-24 object-contain" />
+              )}
+            </div>
+            
             <div className="text-left">
               <p className="text-gray-600 font-semibold mb-2">مدير المدرسة</p>
               <p className="text-xl font-bold text-gray-800">{formData.principalName}</p>
@@ -4488,15 +4490,8 @@ function GeneralReportsGenerator() {
               })}
             </div>
 
-            {/* الباركود */}
-            {barcodeImage && (
-              <div className="flex justify-center my-6">
-                <img src={barcodeImage} alt="باركود" className="w-32 h-32 object-contain" />
-              </div>
-            )}
-
             {/* التوقيعات */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 border-t border-gray-200">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2 border-t border-gray-200">
               <div className="text-right">
                 <p className="text-gray-600 font-semibold mb-0.5 text-sm">المعلم</p>
                 <p className="text-sm sm:text-base font-bold text-gray-800">{formData.teacherName}</p>
@@ -4508,6 +4503,14 @@ function GeneralReportsGenerator() {
                   />
                 )}
               </div>
+              
+              {/* الباركود في المنتصف */}
+              <div className="flex items-center justify-center">
+                {barcodeImage && (
+                  <img src={barcodeImage} alt="باركود" className="w-24 h-24 object-contain" />
+                )}
+              </div>
+              
               <div className="text-left">
                 <p className="text-gray-600 font-semibold mb-0.5 text-sm">مدير المدرسة</p>
                 <p className="text-sm sm:text-base font-bold text-gray-800">{formData.principalName}</p>
