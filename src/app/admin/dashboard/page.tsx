@@ -1300,10 +1300,10 @@ function MOEReportGenerator() {
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">شعار وزارة التعليم:</label>
-                  <div className="border-2 border-dashed border-blue-300 dark:border-blue-600 rounded-lg p-4 text-center">
+                  <div className="border-2 border-dashed border-blue-300 dark:border-blue-600 rounded-lg p-4 text-center" style={{width: '710px', height: '457px', maxWidth: '100%'}}>
                     {logoImage ? (
-                      <div className="relative">
-                        <img src={logoImage} alt="الشعار" className="max-h-24 mx-auto object-contain" />
+                      <div className="relative h-full flex flex-col items-center justify-center">
+                        <img src={logoImage} alt="الشعار" className="max-h-full max-w-full object-contain" />
                         <button
                           onClick={() => setLogoImage("")}
                           className="mt-2 text-sm text-red-600 hover:text-red-800"
@@ -1312,7 +1312,7 @@ function MOEReportGenerator() {
                         </button>
                       </div>
                     ) : (
-                      <label className="cursor-pointer">
+                      <label className="cursor-pointer h-full flex flex-col items-center justify-center">
                         <input
                           type="file"
                           accept="image/*"
@@ -1325,6 +1325,7 @@ function MOEReportGenerator() {
                           </svg>
                           <p className="font-semibold">انقر لرفع صورة الشعار</p>
                           <p className="text-xs text-gray-500 mt-1">PNG, JPG, SVG</p>
+                          <p className="text-xs text-gray-400 mt-1">الأبعاد المثالية: 710×457</p>
                         </div>
                       </label>
                     )}
@@ -2514,13 +2515,13 @@ function PerformanceReportGenerator() {
                   <div className="grid md:grid-cols-2 gap-6">
                     <div>
                       <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">شعار وزارة التعليم:</label>
-                      <div className="border-2 border-dashed border-blue-300 dark:border-blue-600 rounded-lg p-4 text-center bg-white dark:bg-slate-800">
+                      <div className="border-2 border-dashed border-blue-300 dark:border-blue-600 rounded-lg p-4 text-center bg-white dark:bg-slate-800" style={{width: '710px', height: '457px', maxWidth: '100%'}}>
                         {logoImage ? (
-                          <div className="relative">
+                          <div className="relative h-full flex flex-col items-center justify-center">
                             <img 
                               src={logoImage} 
                               alt="شعار وزارة التعليم" 
-                              className="max-h-24 mx-auto object-contain mb-3"
+                              className="max-h-full max-w-full object-contain"
                             />
                             <button
                               onClick={() => setLogoImage("")}
@@ -2530,7 +2531,7 @@ function PerformanceReportGenerator() {
                             </button>
                           </div>
                         ) : (
-                          <label className="cursor-pointer block">
+                          <label className="cursor-pointer h-full flex flex-col items-center justify-center">
                             <input
                               type="file"
                               accept="image/*"
@@ -2542,6 +2543,7 @@ function PerformanceReportGenerator() {
                             </svg>
                             <p className="text-sm font-semibold text-blue-600 dark:text-blue-400">انقر لرفع صورة الشعار</p>
                             <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">PNG, JPG أو SVG</p>
+                            <p className="text-xs text-gray-400 mt-1">الأبعاد المثالية: 710×457</p>
                           </label>
                         )}
                       </div>
@@ -4607,13 +4609,13 @@ function GeneralReportsGenerator() {
           <div className="grid md:grid-cols-2 gap-6">
             <div>
               <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">شعار وزارة التعليم:</label>
-              <div className="border-2 border-dashed border-blue-300 dark:border-blue-600 rounded-lg p-4 text-center bg-white dark:bg-slate-800">
+              <div className="border-2 border-dashed border-blue-300 dark:border-blue-600 rounded-lg p-4 text-center bg-white dark:bg-slate-800" style={{width: '710px', height: '457px', maxWidth: '100%'}}>
                 {logoImage ? (
-                  <div className="relative">
+                  <div className="relative h-full flex flex-col items-center justify-center">
                     <img 
                       src={logoImage} 
                       alt="شعار وزارة التعليم" 
-                      className="max-h-24 mx-auto object-contain mb-3"
+                      className="max-h-full max-w-full object-contain"
                     />
                     <button
                       onClick={() => setLogoImage("")}
@@ -4623,7 +4625,7 @@ function GeneralReportsGenerator() {
                     </button>
                   </div>
                 ) : (
-                  <label className="cursor-pointer block">
+                  <label className="cursor-pointer h-full flex flex-col items-center justify-center">
                     <input
                       type="file"
                       accept="image/*"
@@ -4635,6 +4637,7 @@ function GeneralReportsGenerator() {
                     </svg>
                     <p className="text-sm font-semibold text-blue-600 dark:text-blue-400">انقر لرفع صورة الشعار</p>
                     <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">PNG, JPG أو SVG</p>
+                    <p className="text-xs text-gray-400 mt-1">الأبعاد المثالية: 710×457</p>
                   </label>
                 )}
               </div>
