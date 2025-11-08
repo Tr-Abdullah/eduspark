@@ -1659,6 +1659,28 @@ function PerformanceReportGenerator() {
     }
   };
 
+  const handleLogoUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setLogoImage(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleSignatureUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setSignatureImage(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const reports = [
     { id: 1, name: "أداء الواجبات الوظيفية", icon: "📋" },
     { id: 2, name: "التفاعل مع المجتمع المهني", icon: "�" },
@@ -2232,7 +2254,11 @@ function PerformanceReportGenerator() {
           <div className="flex items-center justify-center gap-4">
             {/* الشعار في المنتصف يمين */}
             <div className="w-20 h-20 bg-[#1a4d5e] rounded-lg flex items-center justify-center p-1">
-              <img src="/images/moe-logo.svg" alt="وزارة التعليم" className="w-full h-full object-contain" />
+              {logoImage ? (
+                <img src={logoImage} alt="وزارة التعليم" className="w-full h-full object-contain" />
+              ) : (
+                <div className="text-white text-xs text-center">ضع الشعار</div>
+              )}
             </div>
             
             {/* النص في المنتصف يسار */}
@@ -2328,11 +2354,13 @@ function PerformanceReportGenerator() {
               <p className="text-gray-600 font-semibold mb-2">معلم المادة</p>
               <p className="text-xl font-bold text-gray-800">{formData.teacherName}</p>
               <div className="flex justify-end mt-2">
-                <img 
-                  src="/images/signature.svg" 
-                  alt="توقيع"
-                  className="h-12 object-contain"
-                />
+                {signatureImage && (
+                  <img 
+                    src={signatureImage} 
+                    alt="توقيع"
+                    className="h-12 object-contain"
+                  />
+                )}
               </div>
               <div className="mt-2 pt-2 inline-block">
                 <div className="border-t-2 border-gray-400 w-32"></div>
@@ -2487,6 +2515,86 @@ function PerformanceReportGenerator() {
                         placeholder="أدخل أهداف البرنامج هنا..."
                         className="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
                       />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Logo and Signature Upload Section */}
+                <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 p-6 rounded-xl border-2 border-blue-200 dark:border-blue-700">
+                  <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                    <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    الشعار والتوقيع
+                  </h3>
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">شعار وزارة التعليم:</label>
+                      <div className="border-2 border-dashed border-blue-300 dark:border-blue-600 rounded-lg p-4 text-center bg-white dark:bg-slate-800">
+                        {logoImage ? (
+                          <div className="relative">
+                            <img 
+                              src={logoImage} 
+                              alt="شعار وزارة التعليم" 
+                              className="max-h-24 mx-auto object-contain mb-3"
+                            />
+                            <button
+                              onClick={() => setLogoImage("")}
+                              className="mt-2 px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg text-sm font-semibold transition-colors"
+                            >
+                              حذف الصورة
+                            </button>
+                          </div>
+                        ) : (
+                          <label className="cursor-pointer block">
+                            <input
+                              type="file"
+                              accept="image/*"
+                              onChange={handleLogoUpload}
+                              className="hidden"
+                            />
+                            <svg className="w-12 h-12 mx-auto text-blue-400 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
+                            <p className="text-sm font-semibold text-blue-600 dark:text-blue-400">انقر لرفع صورة الشعار</p>
+                            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">PNG, JPG أو SVG</p>
+                          </label>
+                        )}
+                      </div>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">توقيع المعلم:</label>
+                      <div className="border-2 border-dashed border-blue-300 dark:border-blue-600 rounded-lg p-4 text-center bg-white dark:bg-slate-800">
+                        {signatureImage ? (
+                          <div className="relative">
+                            <img 
+                              src={signatureImage} 
+                              alt="توقيع المعلم" 
+                              className="max-h-24 mx-auto object-contain mb-3"
+                            />
+                            <button
+                              onClick={() => setSignatureImage("")}
+                              className="mt-2 px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg text-sm font-semibold transition-colors"
+                            >
+                              حذف الصورة
+                            </button>
+                          </div>
+                        ) : (
+                          <label className="cursor-pointer block">
+                            <input
+                              type="file"
+                              accept="image/*"
+                              onChange={handleSignatureUpload}
+                              className="hidden"
+                            />
+                            <svg className="w-12 h-12 mx-auto text-blue-400 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                            </svg>
+                            <p className="text-sm font-semibold text-blue-600 dark:text-blue-400">انقر لرفع صورة التوقيع</p>
+                            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">PNG, JPG أو SVG</p>
+                          </label>
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -3899,6 +4007,30 @@ function GeneralReportsGenerator() {
   });
 
   const [showPreview, setShowPreview] = useState(false);
+  const [logoImage, setLogoImage] = useState<string>("");
+  const [signatureImage, setSignatureImage] = useState<string>("");
+
+  const handleLogoUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setLogoImage(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleSignatureUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setSignatureImage(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   const handleImageUpload = (imageKey: 'img1' | 'img2' | 'img3' | 'img4', event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -4154,7 +4286,11 @@ function GeneralReportsGenerator() {
             <div className="flex items-center justify-center gap-3 sm:gap-4">
               {/* الشعار في المنتصف */}
               <div className="w-16 h-16 sm:w-20 sm:h-20 bg-[#1a4d5e] rounded-lg flex items-center justify-center p-1">
-                <img src="/images/moe-logo.svg" alt="وزارة التعليم" className="w-full h-full object-contain" />
+                {logoImage ? (
+                  <img src={logoImage} alt="وزارة التعليم" className="w-full h-full object-contain" />
+                ) : (
+                  <div className="text-white text-xs text-center">ضع الشعار</div>
+                )}
               </div>
               
               {/* النصوص في المنتصف */}
@@ -4255,11 +4391,13 @@ function GeneralReportsGenerator() {
                 <p className="text-gray-600 font-semibold mb-0.5 text-sm">المعلم</p>
                 <p className="text-sm sm:text-base font-bold text-gray-800">{formData.teacherName}</p>
                 <div className="flex justify-end mt-1">
-                  <img 
-                    src="/images/signature.svg" 
-                    alt="توقيع"
-                    className="h-10 object-contain"
-                  />
+                  {signatureImage && (
+                    <img 
+                      src={signatureImage} 
+                      alt="توقيع"
+                      className="h-10 object-contain"
+                    />
+                  )}
                 </div>
                 <div className="mt-1 pt-0.5 inline-block">
                   <div className="border-t border-gray-400 w-20"></div>
@@ -4478,6 +4616,86 @@ function GeneralReportsGenerator() {
                 placeholder="مثال: طلاب الصف الثالث المتوسط"
                 className="w-full px-4 py-2 border-2 border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
               />
+            </div>
+          </div>
+        </div>
+
+        {/* Logo and Signature Upload Section */}
+        <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 p-6 rounded-xl border-2 border-blue-200 dark:border-blue-700">
+          <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+            <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+            الشعار والتوقيع
+          </h3>
+          <div className="grid md:grid-cols-2 gap-6">
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">شعار وزارة التعليم:</label>
+              <div className="border-2 border-dashed border-blue-300 dark:border-blue-600 rounded-lg p-4 text-center bg-white dark:bg-slate-800">
+                {logoImage ? (
+                  <div className="relative">
+                    <img 
+                      src={logoImage} 
+                      alt="شعار وزارة التعليم" 
+                      className="max-h-24 mx-auto object-contain mb-3"
+                    />
+                    <button
+                      onClick={() => setLogoImage("")}
+                      className="mt-2 px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg text-sm font-semibold transition-colors"
+                    >
+                      حذف الصورة
+                    </button>
+                  </div>
+                ) : (
+                  <label className="cursor-pointer block">
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleLogoUpload}
+                      className="hidden"
+                    />
+                    <svg className="w-12 h-12 mx-auto text-blue-400 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    <p className="text-sm font-semibold text-blue-600 dark:text-blue-400">انقر لرفع صورة الشعار</p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">PNG, JPG أو SVG</p>
+                  </label>
+                )}
+              </div>
+            </div>
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">توقيع المعلم:</label>
+              <div className="border-2 border-dashed border-blue-300 dark:border-blue-600 rounded-lg p-4 text-center bg-white dark:bg-slate-800">
+                {signatureImage ? (
+                  <div className="relative">
+                    <img 
+                      src={signatureImage} 
+                      alt="توقيع المعلم" 
+                      className="max-h-24 mx-auto object-contain mb-3"
+                    />
+                    <button
+                      onClick={() => setSignatureImage("")}
+                      className="mt-2 px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg text-sm font-semibold transition-colors"
+                    >
+                      حذف الصورة
+                    </button>
+                  </div>
+                ) : (
+                  <label className="cursor-pointer block">
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleSignatureUpload}
+                      className="hidden"
+                    />
+                    <svg className="w-12 h-12 mx-auto text-blue-400 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                    </svg>
+                    <p className="text-sm font-semibold text-blue-600 dark:text-blue-400">انقر لرفع صورة التوقيع</p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">PNG, JPG أو SVG</p>
+                  </label>
+                )}
+              </div>
             </div>
           </div>
         </div>
