@@ -4424,6 +4424,73 @@ function GeneralReportsGenerator() {
             #general-report-preview * {
               page-break-inside: avoid !important;
             }
+            
+            /* تحسينات خاصة للطباعة من الهاتف */
+            @media print and (max-width: 600px) {
+              @page {
+                size: A4 portrait;
+                margin: 2mm !important;
+              }
+              
+              #general-report-preview {
+                transform: scale(0.95);
+                transform-origin: top center;
+                max-width: 100% !important;
+                font-size: 8px !important;
+              }
+              
+              #general-report-preview .print-header {
+                padding: 4px 6px !important;
+              }
+              
+              #general-report-preview .text-xl,
+              #general-report-preview .text-2xl {
+                font-size: 0.9rem !important;
+              }
+              
+              #general-report-preview .text-base,
+              #general-report-preview .text-sm {
+                font-size: 0.7rem !important;
+              }
+              
+              #general-report-preview .text-xs {
+                font-size: 0.6rem !important;
+              }
+              
+              #general-report-preview .p-3,
+              #general-report-preview .p-2 {
+                padding: 0.25rem !important;
+              }
+              
+              #general-report-preview .space-y-2 > * + * {
+                margin-top: 0.2rem !important;
+              }
+              
+              #general-report-preview .gap-3,
+              #general-report-preview .gap-2 {
+                gap: 0.25rem !important;
+              }
+              
+              #general-report-preview .mb-2,
+              #general-report-preview .mb-1\\.5,
+              #general-report-preview .mb-1 {
+                margin-bottom: 0.15rem !important;
+              }
+              
+              #general-report-preview img {
+                max-height: 80px !important;
+              }
+              
+              #general-report-preview .h-20 {
+                height: 3rem !important;
+              }
+              
+              #general-report-preview .w-32,
+              #general-report-preview .h-32 {
+                width: 2.5rem !important;
+                height: 2.5rem !important;
+              }
+            }
           }
         `}</style>
 
