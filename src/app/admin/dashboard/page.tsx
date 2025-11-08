@@ -1485,7 +1485,7 @@ function MOEReportGenerator() {
               /* تنسيق الصفحة - هوامش أقل */
               @page {
                 size: A4 portrait;
-                margin: 4mm 6mm 6mm 6mm !important;
+                margin: 3mm 5mm 5mm 5mm !important;
               }
               
               html, body {
@@ -1681,7 +1681,7 @@ function MOEReportGenerator() {
             @media print and (max-width: 600px) {
               @page {
                 size: A4 portrait;
-                margin: 4mm 6mm 6mm 6mm !important;
+                margin: 3mm 5mm 5mm 5mm !important;
               }
               
               html, body {
@@ -2894,7 +2894,7 @@ function PerformanceReportGenerator() {
 
               @page {
                 size: A4 portrait;
-                margin: 4mm 6mm 6mm 6mm !important;
+                margin: 3mm 5mm 5mm 5mm !important;
               }
               
               html, body {
@@ -2902,6 +2902,8 @@ function PerformanceReportGenerator() {
                 height: auto !important;
                 min-height: 297mm !important;
                 overflow: hidden !important;
+                margin: 0 !important;
+                padding: 0 !important;
               }
 
               .no-print {
@@ -2912,14 +2914,14 @@ function PerformanceReportGenerator() {
               .print-header {
                 border-radius: 0 !important;
                 page-break-after: avoid;
-                padding: 12px 15px !important;
+                padding: 10px 12px !important;
                 background-color: #15445A !important;
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
               }
 
               #report-content > div:last-child {
-                padding: 10px 12px !important;
+                padding: 8px 10px !important;
               }
 
               body {
@@ -2971,50 +2973,37 @@ function PerformanceReportGenerator() {
               }
 
               .p-6, .p-8 {
-                padding: 0.7rem !important;
+                padding: 0.5rem !important;
               }
               
               .py-4 {
-                padding-top: 0.5rem !important;
-                padding-bottom: 0.5rem !important;
+                padding-top: 0.4rem !important;
+                padding-bottom: 0.4rem !important;
               }
               
-              /* إصلاح الطباعة على الهاتف */
-              html, body {
-                width: 210mm !important;
-                height: 297mm !important;
-              }
-              
-              @media (max-width: 768px) {
-                #report-content {
-                  transform: none !important;
-                  width: 100% !important;
-                  max-width: 100% !important;
-                }
-                
-                * {
-                  -webkit-transform: none !important;
-                  transform: none !important;
-                }
+              .gap-6, .gap-8 {
+                gap: 0.5rem !important;
               }
 
               .performance-witness-grid {
                 grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-                gap: 1.25rem !important;
+                gap: 0.8rem !important;
               }
 
               .signatures-grid {
                 display: grid !important;
                 grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-                gap: 2rem !important;
+                gap: 0.8rem !important;
+                width: 100% !important;
+                max-width: 100% !important;
               }
 
               .signatures-grid .mt-4 {
-                margin-top: 1.5rem !important;
+                margin-top: 0.8rem !important;
               }
 
               .signatures-grid .p-6 {
-                padding: 1.5rem !important;
+                padding: 0.6rem !important;
               }
             }
 
@@ -3022,7 +3011,7 @@ function PerformanceReportGenerator() {
             @media print and (max-width: 600px) {
               @page {
                 size: A4 portrait;
-                margin: 4mm 6mm 6mm 6mm !important;
+                margin: 3mm 5mm 5mm 5mm !important;
               }
               
               html, body {
@@ -3036,12 +3025,25 @@ function PerformanceReportGenerator() {
                 position: relative !important;
                 width: 100% !important;
                 max-width: 100% !important;
-                font-size: 10px !important;
+                font-size: 9px !important;
                 page-break-after: avoid !important;
+              }
+              
+              .p-6, .p-8 {
+                padding: 0.4rem !important;
+              }
+              
+              .gap-6, .gap-8 {
+                gap: 0.4rem !important;
               }
               
               .signatures-grid {
                 grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+                gap: 0.6rem !important;
+              }
+              
+              .signatures-grid .p-6 {
+                padding: 0.5rem !important;
               }
             }
           `}</style>
@@ -4315,7 +4317,7 @@ function GeneralReportsGenerator() {
           @media print {
             @page {
               size: A4 portrait;
-              margin: 4mm 6mm 6mm 6mm !important;
+              margin: 3mm 5mm 5mm 5mm !important;
             }
             
             * {
@@ -4331,6 +4333,8 @@ function GeneralReportsGenerator() {
               height: auto !important;
               min-height: 297mm !important;
               overflow: hidden !important;
+              margin: 0 !important;
+              padding: 0 !important;
             }
             
             #general-report-preview {
@@ -4518,14 +4522,22 @@ function GeneralReportsGenerator() {
             @media print and (max-width: 600px) {
               @page {
                 size: A4 portrait;
-                margin: 2mm !important;
+                margin: 3mm 5mm 5mm 5mm !important;
+              }
+              
+              html, body {
+                width: 210mm !important;
+                height: auto !important;
+                min-height: 297mm !important;
+                overflow: hidden !important;
               }
               
               #general-report-preview {
-                transform: scale(0.95);
-                transform-origin: top center;
+                position: relative !important;
+                width: 100% !important;
                 max-width: 100% !important;
-                font-size: 8px !important;
+                font-size: 9px !important;
+                page-break-after: avoid !important;
               }
               
               #general-report-preview .print-header {
