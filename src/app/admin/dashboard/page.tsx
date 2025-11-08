@@ -1471,42 +1471,45 @@ function MOEReportGenerator() {
           
           <style jsx global>{`
             @media print {
-              /* إخفاء كل شيء */
-              * {
+              /* إخفاء كل شيء ماعدا التقرير */
+              body * {
                 visibility: hidden;
+              }
+              
+              /* إظهار التقرير وجميع محتوياته */
+              #report-content,
+              #report-content * {
+                visibility: visible !important;
+              }
+              
+              /* تنسيق الصفحة */
+              @page {
+                size: A4 portrait;
+                margin: 8mm;
+              }
+              
+              html, body {
+                width: 210mm;
+                height: 297mm;
                 margin: 0;
                 padding: 0;
               }
               
-              /* إظهار التقرير فقط */
-              #report-content,
-              #report-content * {
-                visibility: visible;
-              }
-              
-              /* وضع التقرير في بداية الصفحة وتوسيطه */
+              /* وضع التقرير وتوسيطه */
               #report-content {
-                position: absolute;
-                left: 50% !important;
-                right: auto !important;
-                top: 0;
-                transform: translateX(-50%) !important;
-                width: 100%;
-                max-width: 210mm;
-                height: auto;
-                margin: 0 auto;
-                padding: 0;
-                background: white;
+                position: absolute !important;
+                left: 0 !important;
+                right: 0 !important;
+                top: 0 !important;
+                transform: none !important;
+                width: 210mm !important;
+                max-width: 210mm !important;
+                margin: 0 auto !important;
+                padding: 0 !important;
+                background: white !important;
                 box-shadow: none !important;
                 border: none !important;
                 border-radius: 0 !important;
-                overflow: visible !important;
-              }
-              
-              /* ملائمة المحتوى للصفحة A4 */
-              @page {
-                size: A4 portrait;
-                margin: 10mm 8mm;
               }
               
               /* إخفاء عناصر التحكم */
@@ -1515,152 +1518,192 @@ function MOEReportGenerator() {
                 visibility: hidden !important;
               }
               
-              /* تنسيق الهيدر للطباعة */
-              .print-header {
-                border-radius: 0 !important;
-                page-break-after: avoid;
-                padding: 12px 15px !important;
-                background-color: #15445A !important;
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-              }
-              
-              /* تنسيق محتوى التقرير */
-              #report-content > div:last-child {
-                padding: 12px 15px !important;
-              }
-              
               /* ضمان طباعة الألوان */
-              body {
-                -webkit-print-color-adjust: exact !important;
-                print-color-adjust: exact !important;
-                color-adjust: exact !important;
-              }
-              
-              /* ضمان طباعة الألوان في جميع العناصر */
               * {
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
                 color-adjust: exact !important;
               }
               
-              /* ضمان طباعة الفوتر باللون الصحيح */
+              /* تنسيق الهيدر */
+              .print-header {
+                background-color: #15445A !important;
+                border-radius: 0 !important;
+                padding: 16px 20px !important;
+                page-break-after: avoid !important;
+              }
+              
+              /* تنسيق قسم اسم المدرسة */
+              #report-content > div:nth-child(2) {
+                background-color: #15445A !important;
+                padding: 8px 20px !important;
+              }
+              
+              /* تنسيق محتوى التقرير */
+              #report-content > div:nth-child(3) {
+                padding: 20px !important;
+              }
+              
+              /* تنسيق الشبكات (Grid) */
+              .grid {
+                display: grid !important;
+                gap: 12px !important;
+              }
+              
+              .grid-cols-2 {
+                grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+              }
+              
+              .grid-cols-3 {
+                grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+              }
+              
+              /* تنسيق الحدود والصناديق */
+              .border-2 {
+                border-width: 2px !important;
+              }
+              
+              .border-gray-800 {
+                border-color: #1f2937 !important;
+              }
+              
+              .border-black {
+                border-color: #000000 !important;
+              }
+              
+              .rounded-lg {
+                border-radius: 8px !important;
+              }
+              
+              /* تنسيق النصوص */
+              .text-sm {
+                font-size: 12px !important;
+                line-height: 1.4 !important;
+              }
+              
+              .text-gray-700 {
+                color: #374151 !important;
+              }
+              
+              .text-gray-900 {
+                color: #111827 !important;
+              }
+              
+              .text-white {
+                color: #ffffff !important;
+              }
+              
+              /* تنسيق الصور */
+              img {
+                max-width: 100% !important;
+                height: auto !important;
+                page-break-inside: avoid !important;
+              }
+              
+              /* تنسيق صور الشواهد */
+              .h-48 {
+                height: 180px !important;
+              }
+              
+              /* تنسيق الأيقونات */
+              .w-32 {
+                width: 128px !important;
+              }
+              
+              .h-32 {
+                height: 128px !important;
+              }
+              
+              /* المسافات */
+              .gap-3 {
+                gap: 12px !important;
+              }
+              
+              .gap-4 {
+                gap: 16px !important;
+              }
+              
+              .gap-6 {
+                gap: 24px !important;
+              }
+              
+              .mb-6 {
+                margin-bottom: 24px !important;
+              }
+              
+              .p-3 {
+                padding: 12px !important;
+              }
+              
+              .p-4 {
+                padding: 16px !important;
+              }
+              
+              .p-8 {
+                padding: 32px !important;
+              }
+              
+              /* منع تقطيع العناصر */
+              .border-2, 
+              .rounded-lg,
+              .grid > div {
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+              }
+              
+              /* تنسيق Footer */
+              .grid-cols-1.sm\\:grid-cols-3 {
+                grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+              }
+              
+              /* إزالة الظلال والتأثيرات */
+              * {
+                box-shadow: none !important;
+                text-shadow: none !important;
+              }
+              
+              /* طباعة الخلفيات */
               div[style*="backgroundColor"] {
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
               }
-              
-              /* ضمان طباعة الصور */
-              img {
-                max-width: 100%;
-                page-break-inside: avoid;
-              }
-              
-              /* السماح بتقسيم الصفحات عند الضرورة */
-              .border-2, .border, .rounded-xl, .bg-white, div[class*="border"] {
-                page-break-inside: auto !important;
-                break-inside: auto !important;
-              }
-              
-              /* تصغير الخطوط لملائمة الصفحة */
+            }
+            
+            /* طباعة من الهاتف */
+            @media print and (max-width: 600px) {
               #report-content {
-                font-size: 11px !important;
+                left: 0 !important;
+                transform: none !important;
+                width: 100% !important;
+                max-width: 100% !important;
               }
               
-              .text-2xl {
-                font-size: 1.25rem !important;
+              .print-header {
+                padding: 12px 16px !important;
               }
               
-              .text-lg {
-                font-size: 1rem !important;
+              #report-content > div:nth-child(2) {
+                padding: 6px 16px !important;
+              }
+              
+              #report-content > div:nth-child(3) {
+                padding: 16px !important;
               }
               
               .text-sm {
-                font-size: 0.85rem !important;
+                font-size: 11px !important;
               }
               
-              .text-xs {
-                font-size: 0.75rem !important;
-              }
-              
-              /* تقليل المسافات للحصول على محتوى أكثر */
               .gap-4 {
-                gap: 0.6rem !important;
-              }
-              
-              .gap-6 {
-                gap: 0.8rem !important;
-              }
-              
-              .mb-6 {
-                margin-bottom: 0.8rem !important;
-              }
-              
-              .p-6, .p-8 {
-                padding: 1rem !important;
-              }
-              
-              .py-4 {
-                padding-top: 0.6rem !important;
-                padding-bottom: 0.6rem !important;
-              }
-              
-              /* إصلاح الطباعة على الهاتف */
-              html, body {
-                width: 210mm !important;
-                height: 297mm !important;
-              }
-              
-              /* إزالة أي تحويلات على الهاتف */
-              @media (max-width: 768px) {
-                #report-content {
-                  transform: none !important;
-                  width: 100% !important;
-                  max-width: 100% !important;
-                }
-                
-                * {
-                  -webkit-transform: none !important;
-                  transform: none !important;
-                }
-              }
-              
-              .p-4 {
-                padding: 0.75rem !important;
+                gap: 10px !important;
               }
               
               .p-3 {
-                padding: 0.5rem !important;
+                padding: 10px !important;
               }
               
-              /* تحسين عرض الصور في الطباعة */
-              .grid-cols-2 img {
-                height: 120px !important;
-              }
-              
-              /* إصلاح عرض الشبكة في الطباعة - جنباً إلى جنب */
-              #report-content .grid {
-                display: grid !important;
-              }
-              
-              #report-content .grid-cols-2 {
-                grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-              }
-              
-              #report-content .md\\:grid-cols-2 {
-                grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-              }
-              
-              #report-content .gap-4 {
-                gap: 1rem !important;
-              }
-              
-              #report-content .grid-cols-3 {
-                grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-              }
-              
-              #report-content .md\\:grid-cols-3 {
-                grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+              .p-4 {
+                padding: 12px !important;
               }
             }
           `}</style>
