@@ -891,7 +891,7 @@ function MOEReportGenerator() {
           <div className="text-gray-900">{formData.semester}</div>
         </div>
       </div>
-      {formData.performanceItem && (
+      {formData.performanceItem && formData.performanceElement && (
         <div className="grid grid-cols-2 gap-4 mb-6">
           <div className="border-2 border-gray-800 rounded-lg p-3">
             <div className="text-sm text-gray-700 font-semibold mb-1">البند:</div>
@@ -909,50 +909,52 @@ function MOEReportGenerator() {
           <div className="text-gray-900">{formData.unit}</div>
         </div>
       )}
-      <div className="border-2 border-gray-800 rounded-lg p-3 mb-6">
-        <div className="text-sm text-gray-700 font-semibold mb-1">الدرس:</div>
-        <div className="text-gray-900">{formData.lesson || "لم يتم تحديد درس"}</div>
-      </div>
-      <div className="grid grid-cols-2 gap-6 mb-6">
-        <div className="border-2 border-gray-800 rounded-lg p-4">
-          <h3 className="text-gray-700 font-bold mb-3 pb-2 border-b-2 border-gray-300">الأدوات والوسائل التعليمية:</h3>
-          <div className="space-y-2">
-            {formData.tools.map((toolId, index) => {
-              const tool = tools.find(t => t.id === toolId);
-              return tool ? (
-                <div key={index} className="flex items-start gap-2 text-sm">
-                  <div className="w-4 h-4 mt-0.5 border-2 bg-gray-800 border-gray-800 rounded flex items-center justify-center flex-shrink-0">
-                    <span className="text-white text-xs">✓</span>
-                  </div>
-                  <span className="text-gray-700">{tool.label}</span>
-                </div>
-              ) : null;
-            })}
-            {formData.tools.length === 0 && (
-              <p className="text-gray-500 text-sm">لم يتم تحديد أدوات</p>
-            )}
-          </div>
+      {formData.lesson && (
+        <div className="border-2 border-gray-800 rounded-lg p-3 mb-6">
+          <div className="text-sm text-gray-700 font-semibold mb-1">الدرس:</div>
+          <div className="text-gray-900">{formData.lesson}</div>
         </div>
-        <div className="border-2 border-gray-800 rounded-lg p-4">
-          <h3 className="text-gray-700 font-bold mb-3 pb-2 border-b-2 border-gray-300">الأهداف:</h3>
-          <div className="space-y-2">
-            {formData.objectives.map((obj, index) => (
-              <div key={index} className="flex items-start gap-2 text-sm">
-                <div className="w-4 h-4 mt-0.5 border-2 bg-gray-800 border-gray-800 rounded flex items-center justify-center flex-shrink-0">
-                  <span className="text-white text-xs">✓</span>
-                </div>
-                <span className="text-gray-700">{obj}</span>
+      )}
+      {(formData.tools.length > 0 || formData.objectives.length > 0) && (
+        <div className="grid grid-cols-2 gap-6 mb-6">
+          {formData.tools.length > 0 && (
+            <div className="border-2 border-gray-800 rounded-lg p-4">
+              <h3 className="text-gray-700 font-bold mb-3 pb-2 border-b-2 border-gray-300">الأدوات والوسائل التعليمية:</h3>
+              <div className="space-y-2">
+                {formData.tools.map((toolId, index) => {
+                  const tool = tools.find(t => t.id === toolId);
+                  return tool ? (
+                    <div key={index} className="flex items-start gap-2 text-sm">
+                      <div className="w-4 h-4 mt-0.5 border-2 bg-gray-800 border-gray-800 rounded flex items-center justify-center flex-shrink-0">
+                        <span className="text-white text-xs">✓</span>
+                      </div>
+                      <span className="text-gray-700">{tool.label}</span>
+                    </div>
+                  ) : null;
+                })}
               </div>
-            ))}
-            {formData.objectives.length === 0 && (
-              <p className="text-gray-500 text-sm">لم يتم تحديد أهداف</p>
-            )}
-          </div>
+            </div>
+          )}
+          {formData.objectives.length > 0 && (
+            <div className="border-2 border-gray-800 rounded-lg p-4">
+              <h3 className="text-gray-700 font-bold mb-3 pb-2 border-b-2 border-gray-300">الأهداف:</h3>
+              <div className="space-y-2">
+                {formData.objectives.map((obj, index) => (
+                  <div key={index} className="flex items-start gap-2 text-sm">
+                    <div className="w-4 h-4 mt-0.5 border-2 bg-gray-800 border-gray-800 rounded flex items-center justify-center flex-shrink-0">
+                      <span className="text-white text-xs">✓</span>
+                    </div>
+                    <span className="text-gray-700">{obj}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
-      </div>
-      <div className="border-2 border-gray-800 rounded-lg p-4 mb-6">
-        <h3 className="text-gray-700 font-bold mb-3 pb-2 border-b-2 border-gray-300">الشواهد:</h3>
-        {formData.uploadedFiles.length > 0 ? (
+      )}
+      {formData.uploadedFiles.length > 0 && (
+        <div className="border-2 border-gray-800 rounded-lg p-4 mb-6">
+          <h3 className="text-gray-700 font-bold mb-3 pb-2 border-b-2 border-gray-300">الشواهد:</h3>
           <div className="grid grid-cols-2 gap-3">
             {formData.uploadedFiles.map((file, index) => (
               <div key={index} className="border-2 border-black rounded-lg overflow-hidden">
@@ -981,10 +983,8 @@ function MOEReportGenerator() {
               </div>
             ))}
           </div>
-        ) : (
-          <p className="text-gray-500 text-center py-8">لا توجد صور مرفقة</p>
-        )}
-      </div>
+        </div>
+      )}
       
       {/* Footer - Signatures */}
       <div className="px-4 sm:px-6 py-3 sm:py-4 mt-4 sm:mt-6">
@@ -1484,17 +1484,17 @@ function MOEReportGenerator() {
                 visibility: visible;
               }
               
-              /* وضع التقرير في بداية الصفحة */
+              /* وضع التقرير في بداية الصفحة وتوسيطه */
               #report-content {
                 position: absolute;
-                left: 0;
-                right: 0;
+                left: 50% !important;
+                right: auto !important;
                 top: 0;
-                transform: none;
+                transform: translateX(-50%) !important;
                 width: 100%;
-                max-width: 100%;
+                max-width: 210mm;
                 height: auto;
-                margin: 0;
+                margin: 0 auto;
                 padding: 0;
                 background: white;
                 box-shadow: none !important;
