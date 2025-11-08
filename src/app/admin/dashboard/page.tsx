@@ -2487,7 +2487,7 @@ function PerformanceReportGenerator() {
             ))}
           </div>
 
-          <div className="signatures-grid grid grid-cols-3 gap-8 pt-6 border-t-2 border-gray-200">
+          <div className="signatures-grid grid grid-cols-1 sm:grid-cols-3 gap-8 pt-6 border-t-2 border-gray-200">
             <div className="text-right">
               <p className="text-gray-600 font-semibold mb-2">معلم المادة</p>
               <p className="text-xl font-bold text-gray-800">{formData.teacherName}</p>
@@ -3002,7 +3002,7 @@ function PerformanceReportGenerator() {
 
               .signatures-grid {
                 display: grid !important;
-                grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+                grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
                 gap: 2rem !important;
               }
 
@@ -3012,6 +3012,60 @@ function PerformanceReportGenerator() {
 
               .signatures-grid .p-6 {
                 padding: 1.5rem !important;
+              }
+            }
+
+            @media print and (max-width: 600px) {
+              #report-content {
+                left: 0 !important;
+                transform: none !important;
+                width: 100% !important;
+                max-width: 100% !important;
+              }
+              
+              .print-header {
+                padding: 12px 16px !important;
+              }
+              
+              #report-content > div:nth-child(2) {
+                padding: 6px 16px !important;
+              }
+              
+              #report-content > div:nth-child(3) {
+                padding: 16px !important;
+              }
+              
+              .text-sm {
+                font-size: 11px !important;
+              }
+              
+              .gap-4 {
+                gap: 10px !important;
+              }
+              
+              .gap-6 {
+                gap: 10px !important;
+              }
+              
+              .p-3 {
+                padding: 10px !important;
+              }
+              
+              .p-4 {
+                padding: 12px !important;
+              }
+              
+              .p-6, .p-8 {
+                padding: 12px !important;
+              }
+              
+              .signatures-grid {
+                grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+                gap: 1rem !important;
+              }
+              
+              .performance-witness-grid {
+                gap: 1rem !important;
               }
             }
           `}</style>
