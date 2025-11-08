@@ -1482,34 +1482,41 @@ function MOEReportGenerator() {
                 visibility: visible !important;
               }
               
-              /* تنسيق الصفحة */
+              /* تنسيق الصفحة - هوامش أقل */
               @page {
                 size: A4 portrait;
-                margin: 8mm;
+                margin: 4mm 6mm 6mm 6mm !important;
               }
               
               html, body {
-                width: 210mm;
-                height: 297mm;
-                margin: 0;
-                padding: 0;
+                width: 210mm !important;
+                height: auto !important;
+                min-height: 297mm !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                overflow: hidden !important;
               }
               
-              /* وضع التقرير وتوسيطه */
+              /* وضع التقرير */
               #report-content {
-                position: absolute !important;
+                position: relative !important;
                 left: 0 !important;
                 right: 0 !important;
                 top: 0 !important;
                 transform: none !important;
-                width: 210mm !important;
-                max-width: 210mm !important;
-                margin: 0 auto !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                height: auto !important;
+                min-height: auto !important;
+                max-height: none !important;
+                margin: 0 !important;
                 padding: 0 !important;
                 background: white !important;
                 box-shadow: none !important;
                 border: none !important;
                 border-radius: 0 !important;
+                overflow: visible !important;
+                page-break-after: avoid !important;
               }
               
               /* إخفاء عناصر التحكم */
@@ -1674,23 +1681,23 @@ function MOEReportGenerator() {
             @media print and (max-width: 600px) {
               @page {
                 size: A4 portrait;
-                margin: 8mm;
+                margin: 4mm 6mm 6mm 6mm !important;
               }
               
               html, body {
                 width: 210mm !important;
-                height: 297mm !important;
+                height: auto !important;
+                min-height: 297mm !important;
+                overflow: hidden !important;
               }
               
               #report-content {
-                position: absolute !important;
-                left: 0 !important;
-                right: 0 !important;
-                top: 0 !important;
-                width: 210mm !important;
-                max-width: 210mm !important;
-                transform: none !important;
-                font-size: 12px !important;
+                position: relative !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                height: auto !important;
+                font-size: 11px !important;
+                page-break-after: avoid !important;
               }
             }
           `}</style>
@@ -2862,30 +2869,39 @@ function PerformanceReportGenerator() {
 
               #report-content,
               #report-content * {
-                visibility: visible;
+                visibility: visible !important;
               }
 
               #report-content {
-                position: absolute;
-                left: 0;
-                right: 0;
-                top: 0;
-                transform: none;
-                width: 100%;
-                max-width: 100%;
-                height: auto;
-                margin: 0;
-                padding: 0;
-                background: white;
+                position: relative !important;
+                left: 0 !important;
+                right: 0 !important;
+                top: 0 !important;
+                transform: none !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                height: auto !important;
+                min-height: auto !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                background: white !important;
                 box-shadow: none !important;
                 border: none !important;
                 border-radius: 0 !important;
                 overflow: visible !important;
+                page-break-after: avoid !important;
               }
 
               @page {
                 size: A4 portrait;
-                margin: 3mm 4mm 6mm 4mm;
+                margin: 4mm 6mm 6mm 6mm !important;
+              }
+              
+              html, body {
+                width: 210mm !important;
+                height: auto !important;
+                min-height: 297mm !important;
+                overflow: hidden !important;
               }
 
               .no-print {
@@ -3006,23 +3022,22 @@ function PerformanceReportGenerator() {
             @media print and (max-width: 600px) {
               @page {
                 size: A4 portrait;
-                margin: 8mm;
+                margin: 4mm 6mm 6mm 6mm !important;
               }
               
               html, body {
                 width: 210mm !important;
-                height: 297mm !important;
+                height: auto !important;
+                min-height: 297mm !important;
+                overflow: hidden !important;
               }
               
               #report-content {
-                position: absolute !important;
-                left: 0 !important;
-                right: 0 !important;
-                top: 0 !important;
-                width: 210mm !important;
-                max-width: 210mm !important;
-                transform: none !important;
-                font-size: 11px !important;
+                position: relative !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                font-size: 10px !important;
+                page-break-after: avoid !important;
               }
               
               .signatures-grid {
@@ -4300,7 +4315,7 @@ function GeneralReportsGenerator() {
           @media print {
             @page {
               size: A4 portrait;
-              margin: 3mm 4mm 5mm 4mm;
+              margin: 4mm 6mm 6mm 6mm !important;
             }
             
             * {
@@ -4308,17 +4323,28 @@ function GeneralReportsGenerator() {
             }
             
             #general-report-preview, #general-report-preview * {
-              visibility: visible;
+              visibility: visible !important;
+            }
+            
+            html, body {
+              width: 210mm !important;
+              height: auto !important;
+              min-height: 297mm !important;
+              overflow: hidden !important;
             }
             
             #general-report-preview {
-              position: absolute;
-              left: 50%;
-              top: 0;
-              transform: translateX(-50%);
-              width: 100%;
-              max-width: 210mm;
-              background: white;
+              position: relative !important;
+              left: 0 !important;
+              top: 0 !important;
+              transform: none !important;
+              width: 100% !important;
+              max-width: 100% !important;
+              height: auto !important;
+              background: white !important;
+              margin: 0 !important;
+              padding: 0 !important;
+              page-break-after: avoid !important;
             }
             
             .no-print {
@@ -4559,23 +4585,23 @@ function GeneralReportsGenerator() {
             @media print and (max-width: 600px) {
               @page {
                 size: A4 portrait;
-                margin: 6mm;
+                margin: 4mm 6mm 6mm 6mm !important;
               }
               
               html, body {
                 width: 210mm !important;
-                height: 297mm !important;
+                height: auto !important;
+                min-height: 297mm !important;
+                overflow: hidden !important;
               }
               
               #general-report-preview {
-                position: absolute !important;
-                left: 0 !important;
-                right: 0 !important;
-                top: 0 !important;
-                width: 210mm !important;
-                max-width: 210mm !important;
+                position: relative !important;
+                width: 100% !important;
+                max-width: 100% !important;
                 transform: none !important;
                 font-size: 9px !important;
+                page-break-after: avoid !important;
               }
             }
           }
