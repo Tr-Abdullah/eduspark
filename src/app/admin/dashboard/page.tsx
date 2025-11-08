@@ -804,52 +804,8 @@ function MOEReportGenerator() {
       {/* Header */}
       <div className="bg-gradient-to-r from-green-700 to-green-600 text-white px-4 sm:px-6 py-3 sm:py-4">
         <div className="flex items-center justify-between gap-1 sm:gap-2">
-          <div className="w-16 h-16 sm:w-20 sm:h-20 bg-white rounded-lg flex items-center justify-center p-2">
-            <svg viewBox="0 0 200 150" className="w-full h-full">
-              <g fill="#00a99d">
-                <circle cx="50" cy="25" r="5"/>
-                <circle cx="60" cy="25" r="5"/>
-                <circle cx="70" cy="25" r="5"/>
-                <circle cx="80" cy="28" r="4.5"/>
-                <circle cx="88" cy="32" r="4"/>
-                
-                <circle cx="50" cy="35" r="5"/>
-                <circle cx="60" cy="35" r="5"/>
-                <circle cx="70" cy="38" r="4.5"/>
-                <circle cx="78" cy="42" r="4"/>
-                <circle cx="85" cy="46" r="3.5"/>
-                
-                <circle cx="50" cy="45" r="5"/>
-                <circle cx="60" cy="45" r="5"/>
-                <circle cx="70" cy="48" r="4.5"/>
-                <circle cx="78" cy="52" r="4"/>
-                <circle cx="85" cy="56" r="3.5"/>
-                <circle cx="92" cy="60" r="3"/>
-                
-                <circle cx="105" cy="60" r="3"/>
-                <circle cx="112" cy="56" r="3.5"/>
-                <circle cx="119" cy="52" r="4"/>
-                <circle cx="126" cy="48" r="4.5"/>
-                <circle cx="133" cy="45" r="5"/>
-                <circle cx="143" cy="45" r="5"/>
-                <circle cx="153" cy="45" r="5"/>
-                
-                <circle cx="112" cy="46" r="3.5"/>
-                <circle cx="119" cy="42" r="4"/>
-                <circle cx="126" cy="38" r="4.5"/>
-                <circle cx="133" cy="35" r="5"/>
-                <circle cx="143" cy="35" r="5"/>
-                <circle cx="153" cy="35" r="5"/>
-                
-                <circle cx="119" cy="32" r="4"/>
-                <circle cx="126" cy="28" r="4.5"/>
-                <circle cx="133" cy="25" r="5"/>
-                <circle cx="143" cy="25" r="5"/>
-                <circle cx="153" cy="25" r="5"/>
-              </g>
-              <text x="100" y="90" textAnchor="middle" fill="#00a99d" fontSize="16" fontWeight="bold">وزارة التعليم</text>
-              <text x="100" y="110" textAnchor="middle" fill="#00a99d" fontSize="10">Ministry of Education</text>
-            </svg>
+          <div className="w-16 h-16 sm:w-20 sm:h-20 bg-[#1a4d5e] rounded-lg flex items-center justify-center p-1">
+            <img src="/images/moe-logo.svg" alt="وزارة التعليم" className="w-full h-full object-contain" />
           </div>
           <div className="text-center leading-tight flex-1">
             <div className="text-sm sm:text-base font-bold">وزارة التعليم</div>
@@ -2174,51 +2130,11 @@ function PerformanceReportGenerator() {
             {/* الجانب الأيمن */}
             <div className="text-right leading-tight">
               <div className="text-base font-bold">المملكة العربية السعودية</div>
-              <div className="text-xs opacity-90">Kingdom of Saudi Arabia</div>
             </div>
             
             {/* الشعار في الوسط */}
-            <div className="w-20 h-20 bg-white rounded-lg flex items-center justify-center p-2">
-              <svg viewBox="0 0 200 150" className="w-full h-full">
-                <g fill="#00a99d">
-                  <circle cx="50" cy="25" r="5"/>
-                  <circle cx="60" cy="25" r="5"/>
-                  <circle cx="70" cy="25" r="5"/>
-                  <circle cx="80" cy="28" r="4.5"/>
-                  <circle cx="88" cy="32" r="4"/>
-                  <circle cx="50" cy="35" r="5"/>
-                  <circle cx="60" cy="35" r="5"/>
-                  <circle cx="70" cy="38" r="4.5"/>
-                  <circle cx="78" cy="42" r="4"/>
-                  <circle cx="85" cy="46" r="3.5"/>
-                  <circle cx="50" cy="45" r="5"/>
-                  <circle cx="60" cy="45" r="5"/>
-                  <circle cx="70" cy="48" r="4.5"/>
-                  <circle cx="78" cy="52" r="4"/>
-                  <circle cx="85" cy="56" r="3.5"/>
-                  <circle cx="92" cy="60" r="3"/>
-                  <circle cx="105" cy="60" r="3"/>
-                  <circle cx="112" cy="56" r="3.5"/>
-                  <circle cx="119" cy="52" r="4"/>
-                  <circle cx="126" cy="48" r="4.5"/>
-                  <circle cx="133" cy="45" r="5"/>
-                  <circle cx="143" cy="45" r="5"/>
-                  <circle cx="153" cy="45" r="5"/>
-                  <circle cx="112" cy="46" r="3.5"/>
-                  <circle cx="119" cy="42" r="4"/>
-                  <circle cx="126" cy="38" r="4.5"/>
-                  <circle cx="133" cy="35" r="5"/>
-                  <circle cx="143" cy="35" r="5"/>
-                  <circle cx="153" cy="35" r="5"/>
-                  <circle cx="119" cy="32" r="4"/>
-                  <circle cx="126" cy="28" r="4.5"/>
-                  <circle cx="133" cy="25" r="5"/>
-                  <circle cx="143" cy="25" r="5"/>
-                  <circle cx="153" cy="25" r="5"/>
-                </g>
-                <text x="100" y="90" textAnchor="middle" fill="#00a99d" fontSize="16" fontWeight="bold" fontFamily="Cairo">وزارة التعليم</text>
-                <text x="100" y="110" textAnchor="middle" fill="#00a99d" fontSize="10" fontFamily="Arial">Ministry of Education</text>
-              </svg>
+            <div className="w-20 h-20 bg-[#1a4d5e] rounded-lg flex items-center justify-center p-1">
+              <img src="/images/moe-logo.svg" alt="وزارة التعليم" className="w-full h-full object-contain" />
             </div>
             
             {/* الجانب الأيسر */}
@@ -4138,47 +4054,8 @@ function GeneralReportsGenerator() {
           <div className="text-white px-4 sm:px-8 py-4 sm:py-6 print-header" style={{ backgroundColor: '#15445A' }}>
             <div className="flex items-center justify-between gap-1 sm:gap-2">
               {/* الشعار على اليمين */}
-              <div className="w-16 h-16 sm:w-20 sm:h-20 bg-white rounded-lg flex items-center justify-center p-2">
-                <svg viewBox="0 0 200 150" className="w-full h-full">
-                  <g fill="#00a99d">
-                    <circle cx="50" cy="25" r="5"/>
-                    <circle cx="60" cy="25" r="5"/>
-                    <circle cx="70" cy="25" r="5"/>
-                    <circle cx="80" cy="28" r="4.5"/>
-                    <circle cx="88" cy="32" r="4"/>
-                    <circle cx="50" cy="35" r="5"/>
-                    <circle cx="60" cy="35" r="5"/>
-                    <circle cx="70" cy="38" r="4.5"/>
-                    <circle cx="78" cy="42" r="4"/>
-                    <circle cx="85" cy="46" r="3.5"/>
-                    <circle cx="50" cy="45" r="5"/>
-                    <circle cx="60" cy="45" r="5"/>
-                    <circle cx="70" cy="48" r="4.5"/>
-                    <circle cx="78" cy="52" r="4"/>
-                    <circle cx="85" cy="56" r="3.5"/>
-                    <circle cx="92" cy="60" r="3"/>
-                    <circle cx="105" cy="60" r="3"/>
-                    <circle cx="112" cy="56" r="3.5"/>
-                    <circle cx="119" cy="52" r="4"/>
-                    <circle cx="126" cy="48" r="4.5"/>
-                    <circle cx="133" cy="45" r="5"/>
-                    <circle cx="143" cy="45" r="5"/>
-                    <circle cx="153" cy="45" r="5"/>
-                    <circle cx="112" cy="46" r="3.5"/>
-                    <circle cx="119" cy="42" r="4"/>
-                    <circle cx="126" cy="38" r="4.5"/>
-                    <circle cx="133" cy="35" r="5"/>
-                    <circle cx="143" cy="35" r="5"/>
-                    <circle cx="153" cy="35" r="5"/>
-                    <circle cx="119" cy="32" r="4"/>
-                    <circle cx="126" cy="28" r="4.5"/>
-                    <circle cx="133" cy="25" r="5"/>
-                    <circle cx="143" cy="25" r="5"/>
-                    <circle cx="153" cy="25" r="5"/>
-                  </g>
-                  <text x="100" y="90" textAnchor="middle" fill="#00a99d" fontSize="16" fontWeight="bold" fontFamily="Cairo">وزارة التعليم</text>
-                  <text x="100" y="110" textAnchor="middle" fill="#00a99d" fontSize="10" fontFamily="Arial">Ministry of Education</text>
-                </svg>
+              <div className="w-16 h-16 sm:w-20 sm:h-20 bg-[#1a4d5e] rounded-lg flex items-center justify-center p-1">
+                <img src="/images/moe-logo.svg" alt="وزارة التعليم" className="w-full h-full object-contain" />
               </div>
               
               {/* النصوص على اليسار فوق بعض */}
