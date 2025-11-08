@@ -1670,40 +1670,27 @@ function MOEReportGenerator() {
             }
             
             /* طباعة من الهاتف */
+            /* إزالة تنسيقات الهاتف - نفس التخطيط للجميع */
             @media print and (max-width: 600px) {
+              @page {
+                size: A4 portrait;
+                margin: 8mm;
+              }
+              
+              html, body {
+                width: 210mm !important;
+                height: 297mm !important;
+              }
+              
               #report-content {
+                position: absolute !important;
                 left: 0 !important;
+                right: 0 !important;
+                top: 0 !important;
+                width: 210mm !important;
+                max-width: 210mm !important;
                 transform: none !important;
-                width: 100% !important;
-                max-width: 100% !important;
-              }
-              
-              .print-header {
-                padding: 12px 16px !important;
-              }
-              
-              #report-content > div:nth-child(2) {
-                padding: 6px 16px !important;
-              }
-              
-              #report-content > div:nth-child(3) {
-                padding: 16px !important;
-              }
-              
-              .text-sm {
-                font-size: 11px !important;
-              }
-              
-              .gap-4 {
-                gap: 10px !important;
-              }
-              
-              .p-3 {
-                padding: 10px !important;
-              }
-              
-              .p-4 {
-                padding: 12px !important;
+                font-size: 12px !important;
               }
             }
           `}</style>
@@ -3015,57 +3002,31 @@ function PerformanceReportGenerator() {
               }
             }
 
+            /* الطباعة من الهاتف - نفس تخطيط اللاب توب */
             @media print and (max-width: 600px) {
+              @page {
+                size: A4 portrait;
+                margin: 8mm;
+              }
+              
+              html, body {
+                width: 210mm !important;
+                height: 297mm !important;
+              }
+              
               #report-content {
+                position: absolute !important;
                 left: 0 !important;
+                right: 0 !important;
+                top: 0 !important;
+                width: 210mm !important;
+                max-width: 210mm !important;
                 transform: none !important;
-                width: 100% !important;
-                max-width: 100% !important;
-              }
-              
-              .print-header {
-                padding: 12px 16px !important;
-              }
-              
-              #report-content > div:nth-child(2) {
-                padding: 6px 16px !important;
-              }
-              
-              #report-content > div:nth-child(3) {
-                padding: 16px !important;
-              }
-              
-              .text-sm {
                 font-size: 11px !important;
-              }
-              
-              .gap-4 {
-                gap: 10px !important;
-              }
-              
-              .gap-6 {
-                gap: 10px !important;
-              }
-              
-              .p-3 {
-                padding: 10px !important;
-              }
-              
-              .p-4 {
-                padding: 12px !important;
-              }
-              
-              .p-6, .p-8 {
-                padding: 12px !important;
               }
               
               .signatures-grid {
                 grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-                gap: 1rem !important;
-              }
-              
-              .performance-witness-grid {
-                gap: 1rem !important;
               }
             }
           `}</style>
@@ -4591,6 +4552,30 @@ function GeneralReportsGenerator() {
               #general-report-preview .h-32 {
                 width: 2.5rem !important;
                 height: 2.5rem !important;
+              }
+            }
+            
+            /* الطباعة من الهاتف - نفس تخطيط اللاب توب */
+            @media print and (max-width: 600px) {
+              @page {
+                size: A4 portrait;
+                margin: 6mm;
+              }
+              
+              html, body {
+                width: 210mm !important;
+                height: 297mm !important;
+              }
+              
+              #general-report-preview {
+                position: absolute !important;
+                left: 0 !important;
+                right: 0 !important;
+                top: 0 !important;
+                width: 210mm !important;
+                max-width: 210mm !important;
+                transform: none !important;
+                font-size: 9px !important;
               }
             }
           }
