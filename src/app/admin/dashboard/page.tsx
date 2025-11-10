@@ -4889,78 +4889,109 @@ function GeneralReportsGenerator() {
             }
             
             #general-report-preview .mb-1\\.5 {
-              margin-bottom: 0.375rem !important;
+              margin-bottom: 0.2rem !important;
             }
             
             #general-report-preview .mb-1 {
-              margin-bottom: 0.25rem !important;
+              margin-bottom: 0.15rem !important;
             }
             
             #general-report-preview .mb-0\\.5 {
-              margin-bottom: 0.125rem !important;
+              margin-bottom: 0.1rem !important;
             }
             
             #general-report-preview .mt-1 {
-              margin-top: 0.25rem !important;
+              margin-top: 0.15rem !important;
             }
             
             #general-report-preview .mt-0\\.5 {
-              margin-top: 0.125rem !important;
+              margin-top: 0.1rem !important;
+            }
+            
+            #general-report-preview .mt-4 {
+              margin-top: 0.3rem !important;
+            }
+            
+            #general-report-preview .mt-2 {
+              margin-top: 0.2rem !important;
             }
             
             #general-report-preview .p-3 {
-              padding: 0.5rem !important;
+              padding: 0.4rem !important;
             }
             
             #general-report-preview .p-2 {
-              padding: 0.35rem !important;
-            }
-            
-            #general-report-preview .p-1\\.5 {
               padding: 0.25rem !important;
             }
             
-            #general-report-preview .p-1 {
+            #general-report-preview .p-1\\.5 {
               padding: 0.2rem !important;
             }
             
+            #general-report-preview .p-1 {
+              padding: 0.15rem !important;
+            }
+            
             #general-report-preview .p-4 {
-              padding: 0.6rem !important;
+              padding: 0.5rem !important;
             }
             
             #general-report-preview .p-6 {
-              padding: 0.75rem !important;
+              padding: 0.6rem !important;
             }
             
             #general-report-preview .pt-2 {
-              padding-top: 0.3rem !important;
+              padding-top: 0.25rem !important;
             }
             
             #general-report-preview .pb-2 {
-              padding-bottom: 0.3rem !important;
+              padding-bottom: 0.25rem !important;
             }
             
             #general-report-preview .py-2 {
-              padding-top: 0.3rem !important;
-              padding-bottom: 0.3rem !important;
+              padding-top: 0.25rem !important;
+              padding-bottom: 0.25rem !important;
             }
             
             #general-report-preview .px-4 {
+              padding-left: 0.5rem !important;
+              padding-right: 0.5rem !important;
+            }
+            
+            #general-report-preview .px-6 {
               padding-left: 0.6rem !important;
               padding-right: 0.6rem !important;
             }
             
             #general-report-preview .space-y-2 > * + * {
-              margin-top: 0.3rem !important;
+              margin-top: 0.25rem !important;
             }
             
             #general-report-preview .space-y-4 > * + * {
+              margin-top: 0.3rem !important;
+            }
+            
+            #general-report-preview .space-y-6 > * + * {
               margin-top: 0.4rem !important;
             }
             
-            /* تقليل ارتفاع صور الشواهد */
+            /* تقليل ارتفاع صور الشواهد بشكل أكبر */
             #general-report-preview .aspect-square {
-              height: 140px !important;
+              height: 110px !important;
+            }
+            
+            /* تقليل المسافة حول الصور */
+            #general-report-preview .border-dashed {
+              padding: 0.3rem !important;
+            }
+            
+            /* تقليل مسافة الشبكة بين الصور */
+            #general-report-preview .md\\:grid-cols-2 {
+              gap: 0.3rem !important;
+            }
+            
+            #general-report-preview .sm\\:grid-cols-2 {
+              gap: 0.3rem !important;
             }
             
             /* منع تقطيع العناصر */
