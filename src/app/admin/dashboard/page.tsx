@@ -22,171 +22,81 @@ function DashboardContent() {
   return (
   <div className="min-h-screen bg-gray-50 dark:bg-slate-900">
       <style jsx global>{`
-        /* Universal One-Page Print Solution */
-        /* CSS Variables for easy paper size switching */
-        :root {
-          --paper-w: 210mm; /* A4 width; change to 8.5in for Letter */
-          --paper-h: 297mm; /* A4 height; change to 11in for Letter */
-          --page-margin: 10mm; /* Safe margins */
-          --printable-w: calc(var(--paper-w) - 2 * var(--page-margin));
-          --printable-h: calc(var(--paper-h) - 2 * var(--page-margin));
-          --sheet-pad: 5mm; /* Inner padding for .sheet */
-        }
-
+        /* حل احترافي للطباعة - يعمل مع أو بدون معاينة */
         @media print {
           @page {
-            size: var(--paper-w) var(--paper-h);
-            margin: var(--page-margin);
+            size: A4;
+            margin: 10mm;
           }
 
-          /* Hide everything except .sheet */
-          body > *:not(.sheet) {
+          /* إخفاء عناصر التنقل والقوائم */
+          header,
+          aside,
+          nav,
+          .no-print,
+          button:not(.sheet button) {
             display: none !important;
           }
 
-          /* Make .sheet the printable container */
+          /* إظهار المحتوى القابل للطباعة */
+          body {
+            background: white !important;
+          }
+
+          /* إذا كان هناك .sheet (معاينة)، اطبعه */
           .sheet {
-            width: var(--printable-w) !important;
-            max-width: var(--printable-w) !important;
-            min-width: var(--printable-w) !important;
+            display: block !important;
+            width: 100% !important;
+            max-width: 100% !important;
             height: auto !important;
-            max-height: var(--printable-h) !important;
-            padding: var(--sheet-pad) !important;
+            padding: 0 !important;
             margin: 0 !important;
             box-sizing: border-box !important;
             position: relative !important;
             overflow: visible !important;
             background: white !important;
             color: black !important;
-            font-family: Arial, sans-serif !important;
-            font-size: 12px !important;
-            line-height: 1.4 !important;
-          }
-
-          /* Prevent page breaks inside elements */
-          .sheet * {
-            break-inside: avoid !important;
             page-break-inside: avoid !important;
           }
 
-          /* Ensure header, content, footer are visible */
+          /* فرض طباعة الألوان */
+          * {
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+            color-adjust: exact !important;
+          }
+
+          /* إظهار جميع عناصر التقرير */
           #report-header,
           #report-content,
-          #report-footer {
+          #report-footer,
+          .print-content {
             display: block !important;
             visibility: visible !important;
             opacity: 1 !important;
           }
 
-          /* Force exact colors */
-          .sheet,
-          .sheet * {
-            -webkit-print-color-adjust: exact !important;
-            print-color-adjust: exact !important;
+          /* منع تقسيم الصفحات داخل العناصر المهمة */
+          .sheet *,
+          .print-content * {
+            break-inside: avoid !important;
+            page-break-inside: avoid !important;
           }
 
-          /* Convert fixed/sticky to static on print */
-          .make-static-on-print {
+          /* إصلاح الخلفيات والحدود */
+          .bg-gradient-to-r,
+          .bg-blue-600,
+          .bg-teal-500,
+          [class*="bg-"] {
+            background-color: inherit !important;
+          }
+
+          /* تحويل العناصر الثابتة إلى static */
+          .sticky,
+          .fixed {
             position: static !important;
           }
         }
-
-        /**
-         * Universal One-Page Print Fitter
-         * Automatically scales any report to fit one printable page.
-         */
-        (function() {
-          'use strict';
-
-          let originalScale = null;
-          let sheetElement = null;
-
-          // Get printable dimensions from CSS variables
-          function getPrintableDims() {
-            const style = getComputedStyle(document.documentElement);
-            const w = parseFloat(style.getPropertyValue('--printable-w'));
-            const h = parseFloat(style.getPropertyValue('--printable-h'));
-            return { w, h };
-          }
-
-          // Measure total content dimensions
-          function measureContent() {
-            if (!sheetElement) return { w: 0, h: 0 };
-            const rect = sheetElement.getBoundingClientRect();
-            return { w: rect.width, h: rect.height };
-          }
-
-          // Calculate auto scale
-          function calcScale() {
-            const printable = getPrintableDims();
-            const content = measureContent();
-            if (content.w === 0 || content.h === 0) return 1;
-            const scaleW = printable.w / content.w;
-            const scaleH = printable.h / content.h;
-            return Math.min(scaleW, scaleH, 1); // Never scale up
-          }
-
-          // Apply scale
-          function applyScale(scale) {
-            if (!sheetElement) return;
-            originalScale = sheetElement.style.transform || '';
-            sheetElement.style.transform = \`scale(\${scale})\`;
-            sheetElement.style.transformOrigin = 'top left';
-          }
-
-          // Reset scale
-          function resetScale() {
-            if (!sheetElement) return;
-            sheetElement.style.transform = originalScale;
-            originalScale = null;
-          }
-
-          // Public function to trigger one-page print
-          window.printOnePage = function() {
-            sheetElement = document.querySelector('.sheet');
-            if (!sheetElement) {
-              console.error('No .sheet element found for printing');
-              return;
-            }
-
-            const scale = calcScale();
-            applyScale(scale);
-            window.print();
-          };
-
-          // Auto-handle print events
-          window.addEventListener('beforeprint', function() {
-            sheetElement = document.querySelector('.sheet');
-            if (sheetElement) {
-              const scale = calcScale();
-              applyScale(scale);
-            }
-          });
-
-          window.addEventListener('afterprint', function() {
-            resetScale();
-          });
-
-          // Fallback for browsers without beforeprint/afterprint
-          let printInProgress = false;
-          const originalPrint = window.print;
-          window.print = function() {
-            if (printInProgress) return;
-            printInProgress = true;
-            sheetElement = document.querySelector('.sheet');
-            if (sheetElement) {
-              const scale = calcScale();
-              applyScale(scale);
-            }
-            originalPrint();
-            // Reset after a delay (since afterprint may not fire)
-            setTimeout(() => {
-              resetScale();
-              printInProgress = false;
-            }, 1000);
-          };
-
-        })();
       `}</style>
       {/* Top Header */}
       <header className="sticky top-0 z-50 bg-white/80 dark:bg-slate-800/80 backdrop-blur-lg shadow-sm border-b border-gray-200 dark:border-gray-700">
