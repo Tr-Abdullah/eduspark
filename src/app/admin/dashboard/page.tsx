@@ -21,6 +21,173 @@ function DashboardContent() {
 
   return (
   <div className="min-h-screen bg-gray-50 dark:bg-slate-900">
+      <style jsx global>{`
+        /* Universal One-Page Print Solution */
+        /* CSS Variables for easy paper size switching */
+        :root {
+          --paper-w: 210mm; /* A4 width; change to 8.5in for Letter */
+          --paper-h: 297mm; /* A4 height; change to 11in for Letter */
+          --page-margin: 10mm; /* Safe margins */
+          --printable-w: calc(var(--paper-w) - 2 * var(--page-margin));
+          --printable-h: calc(var(--paper-h) - 2 * var(--page-margin));
+          --sheet-pad: 5mm; /* Inner padding for .sheet */
+        }
+
+        @media print {
+          @page {
+            size: var(--paper-w) var(--paper-h);
+            margin: var(--page-margin);
+          }
+
+          /* Hide everything except .sheet */
+          body > *:not(.sheet) {
+            display: none !important;
+          }
+
+          /* Make .sheet the printable container */
+          .sheet {
+            width: var(--printable-w) !important;
+            max-width: var(--printable-w) !important;
+            min-width: var(--printable-w) !important;
+            height: auto !important;
+            max-height: var(--printable-h) !important;
+            padding: var(--sheet-pad) !important;
+            margin: 0 !important;
+            box-sizing: border-box !important;
+            position: relative !important;
+            overflow: visible !important;
+            background: white !important;
+            color: black !important;
+            font-family: Arial, sans-serif !important;
+            font-size: 12px !important;
+            line-height: 1.4 !important;
+          }
+
+          /* Prevent page breaks inside elements */
+          .sheet * {
+            break-inside: avoid !important;
+            page-break-inside: avoid !important;
+          }
+
+          /* Ensure header, content, footer are visible */
+          #report-header,
+          #report-content,
+          #report-footer {
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+          }
+
+          /* Force exact colors */
+          .sheet,
+          .sheet * {
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+          }
+
+          /* Convert fixed/sticky to static on print */
+          .make-static-on-print {
+            position: static !important;
+          }
+        }
+
+        /**
+         * Universal One-Page Print Fitter
+         * Automatically scales any report to fit one printable page.
+         */
+        (function() {
+          'use strict';
+
+          let originalScale = null;
+          let sheetElement = null;
+
+          // Get printable dimensions from CSS variables
+          function getPrintableDims() {
+            const style = getComputedStyle(document.documentElement);
+            const w = parseFloat(style.getPropertyValue('--printable-w'));
+            const h = parseFloat(style.getPropertyValue('--printable-h'));
+            return { w, h };
+          }
+
+          // Measure total content dimensions
+          function measureContent() {
+            if (!sheetElement) return { w: 0, h: 0 };
+            const rect = sheetElement.getBoundingClientRect();
+            return { w: rect.width, h: rect.height };
+          }
+
+          // Calculate auto scale
+          function calcScale() {
+            const printable = getPrintableDims();
+            const content = measureContent();
+            if (content.w === 0 || content.h === 0) return 1;
+            const scaleW = printable.w / content.w;
+            const scaleH = printable.h / content.h;
+            return Math.min(scaleW, scaleH, 1); // Never scale up
+          }
+
+          // Apply scale
+          function applyScale(scale) {
+            if (!sheetElement) return;
+            originalScale = sheetElement.style.transform || '';
+            sheetElement.style.transform = \`scale(\${scale})\`;
+            sheetElement.style.transformOrigin = 'top left';
+          }
+
+          // Reset scale
+          function resetScale() {
+            if (!sheetElement) return;
+            sheetElement.style.transform = originalScale;
+            originalScale = null;
+          }
+
+          // Public function to trigger one-page print
+          window.printOnePage = function() {
+            sheetElement = document.querySelector('.sheet');
+            if (!sheetElement) {
+              console.error('No .sheet element found for printing');
+              return;
+            }
+
+            const scale = calcScale();
+            applyScale(scale);
+            window.print();
+          };
+
+          // Auto-handle print events
+          window.addEventListener('beforeprint', function() {
+            sheetElement = document.querySelector('.sheet');
+            if (sheetElement) {
+              const scale = calcScale();
+              applyScale(scale);
+            }
+          });
+
+          window.addEventListener('afterprint', function() {
+            resetScale();
+          });
+
+          // Fallback for browsers without beforeprint/afterprint
+          let printInProgress = false;
+          const originalPrint = window.print;
+          window.print = function() {
+            if (printInProgress) return;
+            printInProgress = true;
+            sheetElement = document.querySelector('.sheet');
+            if (sheetElement) {
+              const scale = calcScale();
+              applyScale(scale);
+            }
+            originalPrint();
+            // Reset after a delay (since afterprint may not fire)
+            setTimeout(() => {
+              resetScale();
+              printInProgress = false;
+            }, 1000);
+          };
+
+        })();
+      `}</style>
       {/* Top Header */}
       <header className="sticky top-0 z-50 bg-white/80 dark:bg-slate-800/80 backdrop-blur-lg shadow-sm border-b border-gray-200 dark:border-gray-700">
         <div className="px-4 sm:px-6 lg:px-8 py-4">
@@ -837,7 +1004,7 @@ function MOEReportGenerator() {
   };
 
   const Report = () => (
-    <div id="report-content" className="bg-white border-4 border-gray-300" style={{ fontFamily: "'Helvetica Neue W23', 'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
+    <div id="report-content" className="sheet bg-white border-4 border-gray-300" style={{ fontFamily: "'Helvetica Neue W23', 'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
       {/* Header */}
       <div className="text-white px-4 sm:px-8 py-4 sm:py-6 print-header" style={{ backgroundColor: '#15445A' }}>
         <div className="flex items-center justify-center gap-3 sm:gap-4">
@@ -2387,7 +2554,7 @@ function PerformanceReportGenerator() {
     }));
 
     return (
-      <div id="report-content" className="bg-white border-4 border-gray-300" style={{ fontFamily: "'Helvetica Neue W23', 'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
+      <div id="report-content" className="sheet bg-white border-4 border-gray-300" style={{ fontFamily: "'Helvetica Neue W23', 'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
         <div className="text-white px-8 py-6 print-header" style={{ backgroundColor: '#15445A' }}>
           <div className="flex items-center justify-center gap-4">
             {/* الشعار في المنتصف يمين */}
@@ -4474,69 +4641,127 @@ function GeneralReportsGenerator() {
             }
             
             /* تحسينات خاصة للطباعة من الهاتف */
-            @media print and (max-width: 600px) {
+            @media print and (max-width: 768px) {
               @page {
                 size: A4 portrait;
-                margin: 2mm !important;
+                margin: 10mm 15mm 10mm 15mm !important;
               }
-              
+
+              /* إعدادات مثالية للطباعة على ورقة A4 */
               #general-report-preview {
-                transform: scale(0.95);
-                transform-origin: top center;
-                max-width: 100% !important;
-                font-size: 8px !important;
+                width: 170mm !important;
+                max-width: 170mm !important;
+                min-width: 170mm !important;
+                height: auto !important;
+                font-size: 12px !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                transform: none !important;
+                position: relative !important;
+                overflow: visible !important;
               }
-              
+
               #general-report-preview .print-header {
-                padding: 4px 6px !important;
+                padding: 12px 16px !important;
               }
-              
+
+              /* خطوط أكبر وأوضح للطباعة */
               #general-report-preview .text-xl,
               #general-report-preview .text-2xl {
-                font-size: 0.9rem !important;
+                font-size: 1.4rem !important;
+                font-weight: bold !important;
               }
-              
+
               #general-report-preview .text-base,
               #general-report-preview .text-sm {
-                font-size: 0.7rem !important;
+                font-size: 1rem !important;
               }
-              
+
               #general-report-preview .text-xs {
-                font-size: 0.6rem !important;
+                font-size: 0.85rem !important;
               }
-              
+
+              /* مساحات مناسبة للطباعة */
               #general-report-preview .p-3,
               #general-report-preview .p-2 {
-                padding: 0.25rem !important;
+                padding: 0.8rem !important;
               }
-              
+
               #general-report-preview .space-y-2 > * + * {
-                margin-top: 0.2rem !important;
+                margin-top: 0.5rem !important;
               }
-              
+
               #general-report-preview .gap-3,
               #general-report-preview .gap-2 {
-                gap: 0.25rem !important;
+                gap: 0.6rem !important;
               }
-              
+
               #general-report-preview .mb-2,
               #general-report-preview .mb-1\\.5,
               #general-report-preview .mb-1 {
-                margin-bottom: 0.15rem !important;
+                margin-bottom: 0.5rem !important;
               }
-              
+
+              /* صور بحجم مناسب للطباعة */
               #general-report-preview img {
-                max-height: 80px !important;
+                max-height: none !important;
+                max-width: none !important;
               }
-              
+
               #general-report-preview .h-20 {
-                height: 3rem !important;
+                height: 7rem !important;
               }
-              
+
               #general-report-preview .w-32,
               #general-report-preview .h-32 {
-                width: 2.5rem !important;
-                height: 2.5rem !important;
+                width: 10rem !important;
+                height: 10rem !important;
+              }
+
+              /* شبكة مناسبة للطباعة */
+              #general-report-preview .grid {
+                display: grid !important;
+                width: 100% !important;
+                overflow: visible !important;
+              }
+
+              #general-report-preview .grid-cols-2 {
+                grid-template-columns: repeat(2, 1fr) !important;
+              }
+
+              #general-report-preview .md\\:grid-cols-2 {
+                grid-template-columns: repeat(2, 1fr) !important;
+              }
+
+              #general-report-preview .sm\\:grid-cols-2 {
+                grid-template-columns: repeat(2, 1fr) !important;
+              }
+
+              /* حاويات مناسبة للطباعة */
+              #general-report-preview .max-w-4xl {
+                max-width: none !important;
+                width: 100% !important;
+              }
+
+              #general-report-preview .max-w-2xl {
+                max-width: none !important;
+                width: 100% !important;
+              }
+
+              #general-report-preview .mx-auto {
+                margin-left: 0 !important;
+                margin-right: 0 !important;
+              }
+
+              /* إصلاح خاص لـ iOS Safari */
+              @supports (-webkit-touch-callout: none) {
+                #general-report-preview {
+                  width: 170mm !important;
+                  min-width: 170mm !important;
+                  max-width: 170mm !important;
+                  -webkit-print-color-adjust: exact !important;
+                  print-color-adjust: exact !important;
+                }
               }
             }
           }
@@ -4563,7 +4788,7 @@ function GeneralReportsGenerator() {
           </button>
         </div>
 
-        <div id="general-report-preview" className="bg-white max-w-4xl mx-auto border-4 border-gray-300" style={{ fontFamily: "'Helvetica Neue W23', 'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
+        <div id="general-report-preview" className="sheet bg-white max-w-4xl mx-auto border-4 border-gray-300" style={{ fontFamily: "'Helvetica Neue W23', 'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
           {/* Header */}
           <div className="text-white px-4 sm:px-8 py-4 sm:py-6 print-header" style={{ backgroundColor: '#15445A' }}>
             <div className="flex items-center justify-center gap-3 sm:gap-4">

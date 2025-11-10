@@ -1,0 +1,68 @@
+/* Universal One-Page Print Solution */
+/* CSS Variables for easy paper size switching */
+:root {
+  --paper-w: 210mm; /* A4 width; change to 8.5in for Letter */
+  --paper-h: 297mm; /* A4 height; change to 11in for Letter */
+  --page-margin: 10mm; /* Safe margins */
+  --printable-w: calc(var(--paper-w) - 2 * var(--page-margin));
+  --printable-h: calc(var(--paper-h) - 2 * var(--page-margin));
+  --sheet-pad: 5mm; /* Inner padding for .sheet */
+}
+
+@media print {
+  @page {
+    size: var(--paper-w) var(--paper-h);
+    margin: var(--page-margin);
+  }
+
+  /* Hide everything except .sheet */
+  body > *:not(.sheet) {
+    display: none !important;
+  }
+
+  /* Make .sheet the printable container */
+  .sheet {
+    width: var(--printable-w) !important;
+    max-width: var(--printable-w) !important;
+    min-width: var(--printable-w) !important;
+    height: auto !important;
+    max-height: var(--printable-h) !important;
+    padding: var(--sheet-pad) !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+    position: relative !important;
+    overflow: visible !important;
+    background: white !important;
+    color: black !important;
+    font-family: Arial, sans-serif !important;
+    font-size: 12px !important;
+    line-height: 1.4 !important;
+  }
+
+  /* Prevent page breaks inside elements */
+  .sheet * {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  /* Ensure header, content, footer are visible */
+  #report-header,
+  #report-content,
+  #report-footer {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+
+  /* Force exact colors */
+  .sheet,
+  .sheet * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Convert fixed/sticky to static on print */
+  .make-static-on-print {
+    position: static !important;
+  }
+}

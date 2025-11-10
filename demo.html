@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>One-Page Print Demo</title>
+  <link rel="stylesheet" href="print.css">
+  <script src="print-fit.js" defer></script>
+</head>
+<body>
+  <div class="sheet">
+    <div id="report-header">
+      <h1>Report Header</h1>
+      <p>This is the header section.</p>
+    </div>
+    <div id="report-content">
+      <h2>Report Content</h2>
+      <p>This is the main content. Add your actual report here.</p>
+      <p>Any length of content will auto-scale to fit one page.</p>
+    </div>
+    <div id="report-footer">
+      <p>Report Footer - Page 1 of 1</p>
+    </div>
+  </div>
+
+  <button onclick="printOnePage()">Print One Page</button>
+</body>
+</html>
