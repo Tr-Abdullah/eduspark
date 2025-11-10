@@ -4745,29 +4745,29 @@ function GeneralReportsGenerator() {
               color-adjust: exact !important;
             }
             
-            /* تنسيق الهيدر - تقليل المسافات للطباعة */
+            /* تنسيق الهيدر - تقليل إلى الحد الأدنى */
             .print-header {
               background-color: #15445A !important;
               border-radius: 0 !important;
               page-break-after: avoid !important;
-              padding: 0.5rem 1rem !important;
+              padding: 0.3rem 0.75rem !important;
             }
             
-            /* تنسيق قسم اسم المدرسة - تقليل المسافات */
+            /* تنسيق قسم اسم المدرسة - تقليل إلى الحد الأدنى */
             #general-report-preview > div:nth-child(2) {
               background-color: #15445A !important;
-              padding: 0.25rem 1rem !important;
+              padding: 0.2rem 0.75rem !important;
             }
             
-            /* تنسيق محتوى التقرير - تقليل المسافات الداخلية */
+            /* تنسيق محتوى التقرير - تقليل إلى الحد الأدنى */
             #general-report-preview > div:nth-child(3) {
-              padding: 0.75rem !important;
+              padding: 0.5rem !important;
             }
             
-            /* تنسيق الشبكات (Grid) - تقليل الفجوات */
+            /* تنسيق الشبكات (Grid) - تقليل الفجوات إلى الحد الأدنى */
             .grid {
               display: grid !important;
-              gap: 0.5rem !important;
+              gap: 0.25rem !important;
             }
             
             .grid-cols-2,
@@ -4797,35 +4797,35 @@ function GeneralReportsGenerator() {
               border-radius: 8px !important;
             }
             
-            /* تنسيق النصوص - تقليل للطباعة */
+            /* تنسيق النصوص - تقليل أكثر للطباعة */
             #general-report-preview .text-sm {
-              font-size: 0.75rem !important;
-              line-height: 1rem !important;
+              font-size: 0.7rem !important;
+              line-height: 0.9rem !important;
             }
             
             #general-report-preview .text-base {
-              font-size: 0.875rem !important;
-              line-height: 1.25rem !important;
+              font-size: 0.8rem !important;
+              line-height: 1.1rem !important;
             }
             
             #general-report-preview .text-xl {
-              font-size: 1rem !important;
-              line-height: 1.5rem !important;
+              font-size: 0.95rem !important;
+              line-height: 1.3rem !important;
             }
             
             #general-report-preview .text-2xl {
-              font-size: 1.25rem !important;
-              line-height: 1.75rem !important;
+              font-size: 1.1rem !important;
+              line-height: 1.5rem !important;
             }
             
             #general-report-preview .text-3xl {
-              font-size: 1.5rem !important;
-              line-height: 2rem !important;
+              font-size: 1.3rem !important;
+              line-height: 1.7rem !important;
             }
             
             #general-report-preview .text-lg {
-              font-size: 0.9rem !important;
-              line-height: 1.4rem !important;
+              font-size: 0.85rem !important;
+              line-height: 1.2rem !important;
             }
             
             .text-gray-700 {
@@ -4855,143 +4855,152 @@ function GeneralReportsGenerator() {
             
             /* تنسيق الأيقونات - تقليل الحجم */
             #general-report-preview .w-6 {
-              width: 1rem !important;
-              height: 1rem !important;
+              width: 0.85rem !important;
+              height: 0.85rem !important;
             }
             
             #general-report-preview .max-w-2xl {
               max-width: 42rem !important;
             }
             
-            /* المسافات - تقليل للطباعة */
+            /* المسافات - تقليل إلى الحد الأدنى */
             #general-report-preview .gap-3 {
-              gap: 0.4rem !important;
-            }
-            
-            #general-report-preview .gap-2 {
-              gap: 0.3rem !important;
-            }
-            
-            #general-report-preview .gap-1\\.5 {
               gap: 0.25rem !important;
             }
             
+            #general-report-preview .gap-2 {
+              gap: 0.2rem !important;
+            }
+            
+            #general-report-preview .gap-1\\.5 {
+              gap: 0.15rem !important;
+            }
+            
+            #general-report-preview .gap-4 {
+              gap: 0.3rem !important;
+            }
+            
             #general-report-preview .mb-6 {
-              margin-bottom: 0.5rem !important;
+              margin-bottom: 0.3rem !important;
             }
             
             #general-report-preview .mb-4 {
-              margin-bottom: 0.4rem !important;
-            }
-            
-            #general-report-preview .mb-2 {
               margin-bottom: 0.25rem !important;
             }
             
-            #general-report-preview .mb-1\\.5 {
-              margin-bottom: 0.2rem !important;
-            }
-            
-            #general-report-preview .mb-1 {
+            #general-report-preview .mb-2 {
               margin-bottom: 0.15rem !important;
             }
             
-            #general-report-preview .mb-0\\.5 {
+            #general-report-preview .mb-1\\.5 {
               margin-bottom: 0.1rem !important;
             }
             
-            #general-report-preview .mt-1 {
-              margin-top: 0.15rem !important;
+            #general-report-preview .mb-1 {
+              margin-bottom: 0.1rem !important;
             }
             
-            #general-report-preview .mt-0\\.5 {
+            #general-report-preview .mb-0\\.5 {
+              margin-bottom: 0.05rem !important;
+            }
+            
+            #general-report-preview .mt-1 {
               margin-top: 0.1rem !important;
             }
             
-            #general-report-preview .mt-4 {
-              margin-top: 0.3rem !important;
+            #general-report-preview .mt-0\\.5 {
+              margin-top: 0.05rem !important;
             }
             
-            #general-report-preview .mt-2 {
+            #general-report-preview .mt-4 {
               margin-top: 0.2rem !important;
             }
             
+            #general-report-preview .mt-2 {
+              margin-top: 0.15rem !important;
+            }
+            
             #general-report-preview .p-3 {
-              padding: 0.4rem !important;
+              padding: 0.3rem !important;
             }
             
             #general-report-preview .p-2 {
-              padding: 0.25rem !important;
-            }
-            
-            #general-report-preview .p-1\\.5 {
               padding: 0.2rem !important;
             }
             
-            #general-report-preview .p-1 {
+            #general-report-preview .p-1\\.5 {
               padding: 0.15rem !important;
             }
             
+            #general-report-preview .p-1 {
+              padding: 0.1rem !important;
+            }
+            
             #general-report-preview .p-4 {
-              padding: 0.5rem !important;
+              padding: 0.35rem !important;
             }
             
             #general-report-preview .p-6 {
-              padding: 0.6rem !important;
+              padding: 0.4rem !important;
             }
             
             #general-report-preview .pt-2 {
-              padding-top: 0.25rem !important;
+              padding-top: 0.15rem !important;
             }
             
             #general-report-preview .pb-2 {
-              padding-bottom: 0.25rem !important;
+              padding-bottom: 0.15rem !important;
             }
             
             #general-report-preview .py-2 {
-              padding-top: 0.25rem !important;
-              padding-bottom: 0.25rem !important;
+              padding-top: 0.15rem !important;
+              padding-bottom: 0.15rem !important;
             }
             
             #general-report-preview .px-4 {
-              padding-left: 0.5rem !important;
-              padding-right: 0.5rem !important;
+              padding-left: 0.35rem !important;
+              padding-right: 0.35rem !important;
             }
             
             #general-report-preview .px-6 {
-              padding-left: 0.6rem !important;
-              padding-right: 0.6rem !important;
+              padding-left: 0.4rem !important;
+              padding-right: 0.4rem !important;
             }
             
             #general-report-preview .space-y-2 > * + * {
-              margin-top: 0.25rem !important;
+              margin-top: 0.15rem !important;
             }
             
             #general-report-preview .space-y-4 > * + * {
-              margin-top: 0.3rem !important;
+              margin-top: 0.2rem !important;
             }
             
             #general-report-preview .space-y-6 > * + * {
-              margin-top: 0.4rem !important;
+              margin-top: 0.25rem !important;
             }
             
             /* تقليل ارتفاع صور الشواهد بشكل أكبر */
             #general-report-preview .aspect-square {
-              height: 110px !important;
+              height: 90px !important;
             }
             
             /* تقليل المسافة حول الصور */
             #general-report-preview .border-dashed {
-              padding: 0.3rem !important;
+              padding: 0.2rem !important;
             }
             
             /* تقليل مسافة الشبكة بين الصور */
             #general-report-preview .md\\:grid-cols-2 {
-              gap: 0.3rem !important;
+              gap: 0.2rem !important;
             }
             
             #general-report-preview .sm\\:grid-cols-2 {
-              gap: 0.3rem !important;
+              gap: 0.2rem !important;
+            }
+            
+            /* تقليل الحدود */
+            #general-report-preview .border-2 {
+              border-width: 1px !important;
             }
             
             /* منع تقطيع العناصر */
@@ -5004,7 +5013,7 @@ function GeneralReportsGenerator() {
             
             /* تنسيق Footer - تقليل الـ padding */
             #general-report-preview > div:last-child {
-              padding: 0.4rem !important;
+              padding: 0.3rem !important;
             }
             
             .grid-cols-1.sm\\:grid-cols-3 {
