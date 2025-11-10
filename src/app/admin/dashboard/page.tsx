@@ -1629,34 +1629,40 @@ function MOEReportGenerator() {
                 visibility: visible !important;
               }
               
-              /* تنسيق الصفحة */
+              /* تنسيق الصفحة - ملء كامل بدون هوامش */
               @page {
                 size: A4 portrait;
-                margin: 8mm;
+                margin: 0;
               }
               
               html, body {
-                width: 210mm;
-                height: 297mm;
-                margin: 0;
-                padding: 0;
+                margin: 0 !important;
+                padding: 0 !important;
+                width: 100% !important;
+                height: 100% !important;
               }
               
-              /* وضع التقرير وتوسيطه */
+              /* التقرير يملأ الصفحة بالكامل */
               #report-content {
                 position: absolute !important;
                 left: 0 !important;
                 right: 0 !important;
                 top: 0 !important;
+                bottom: 0 !important;
                 transform: none !important;
-                width: 210mm !important;
-                max-width: 210mm !important;
-                margin: 0 auto !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                height: 100% !important;
+                margin: 0 !important;
                 padding: 0 !important;
                 background: white !important;
                 box-shadow: none !important;
-                border: none !important;
+                border-width: 0 !important;
                 border-radius: 0 !important;
+              }
+              
+              #report-content.sheet {
+                border: none !important;
               }
               
               /* إخفاء عناصر التحكم */
@@ -1672,29 +1678,29 @@ function MOEReportGenerator() {
                 color-adjust: exact !important;
               }
               
-              /* تنسيق الهيدر */
+              /* تنسيق الهيدر - مطابق للمعاينة */
               .print-header {
                 background-color: #15445A !important;
                 border-radius: 0 !important;
-                padding: 16px 20px !important;
                 page-break-after: avoid !important;
+                padding: 1rem 1.5rem !important;
               }
               
-              /* تنسيق قسم اسم المدرسة */
+              /* تنسيق قسم اسم المدرسة - مطابق للمعاينة */
               #report-content > div:nth-child(2) {
                 background-color: #15445A !important;
-                padding: 8px 20px !important;
+                padding: 0.5rem 1.5rem !important;
               }
               
-              /* تنسيق محتوى التقرير */
+              /* تنسيق محتوى التقرير - مع هوامش داخلية مناسبة */
               #report-content > div:nth-child(3) {
-                padding: 20px !important;
+                padding: 1.5rem !important;
               }
               
-              /* تنسيق الشبكات (Grid) */
+              /* تنسيق الشبكات (Grid) - مطابق للمعاينة */
               .grid {
                 display: grid !important;
-                gap: 12px !important;
+                gap: 1rem !important;
               }
               
               .grid-cols-2 {
@@ -1728,6 +1734,27 @@ function MOEReportGenerator() {
                 line-height: 1.4 !important;
               }
               
+              /* تنسيق النصوص - مطابق للمعاينة */
+              .text-sm {
+                font-size: 0.875rem !important;
+                line-height: 1.25rem !important;
+              }
+              
+              .text-base {
+                font-size: 1rem !important;
+                line-height: 1.5rem !important;
+              }
+              
+              .text-xl {
+                font-size: 1.25rem !important;
+                line-height: 1.75rem !important;
+              }
+              
+              .text-2xl {
+                font-size: 1.5rem !important;
+                line-height: 2rem !important;
+              }
+              
               .text-gray-700 {
                 color: #374151 !important;
               }
@@ -1740,54 +1767,58 @@ function MOEReportGenerator() {
                 color: #ffffff !important;
               }
               
-              /* تنسيق الصور */
+              /* تنسيق الصور - مطابق للمعاينة */
               img {
                 max-width: 100% !important;
                 height: auto !important;
                 page-break-inside: avoid !important;
               }
               
-              /* تنسيق صور الشواهد */
+              /* تنسيق صور الشواهد - مطابق للمعاينة */
               .h-48 {
-                height: 180px !important;
+                height: 12rem !important;
               }
               
-              /* تنسيق الأيقونات */
+              /* تنسيق الأيقونات - مطابق للمعاينة */
               .w-32 {
-                width: 128px !important;
+                width: 8rem !important;
               }
               
               .h-32 {
-                height: 128px !important;
+                height: 8rem !important;
               }
               
-              /* المسافات */
+              .h-20 {
+                height: 5rem !important;
+              }
+              
+              /* المسافات - مطابقة للمعاينة */
               .gap-3 {
-                gap: 12px !important;
+                gap: 0.75rem !important;
               }
               
               .gap-4 {
-                gap: 16px !important;
+                gap: 1rem !important;
               }
               
               .gap-6 {
-                gap: 24px !important;
+                gap: 1.5rem !important;
               }
               
               .mb-6 {
-                margin-bottom: 24px !important;
+                margin-bottom: 1.5rem !important;
               }
               
               .p-3 {
-                padding: 12px !important;
+                padding: 0.75rem !important;
               }
               
               .p-4 {
-                padding: 16px !important;
+                padding: 1rem !important;
               }
               
               .p-8 {
-                padding: 32px !important;
+                padding: 2rem !important;
               }
               
               /* منع تقطيع العناصر */
@@ -1816,41 +1847,56 @@ function MOEReportGenerator() {
               }
             }
             
-            /* طباعة من الهاتف */
+            /* طباعة من الهاتف - بدون هوامش */
             @media print and (max-width: 600px) {
+              @page {
+                margin: 0;
+              }
+              
+              html, body {
+                margin: 0 !important;
+                padding: 0 !important;
+              }
+              
               #report-content {
+                position: absolute !important;
                 left: 0 !important;
-                transform: none !important;
+                right: 0 !important;
+                top: 0 !important;
+                bottom: 0 !important;
                 width: 100% !important;
                 max-width: 100% !important;
+                height: 100% !important;
+                margin: 0 !important;
+                padding: 0 !important;
               }
               
               .print-header {
-                padding: 12px 16px !important;
+                padding: 0.75rem 1rem !important;
               }
               
               #report-content > div:nth-child(2) {
-                padding: 6px 16px !important;
+                padding: 0.5rem 1rem !important;
               }
               
               #report-content > div:nth-child(3) {
-                padding: 16px !important;
+                padding: 1rem !important;
               }
               
               .text-sm {
-                font-size: 11px !important;
+                font-size: 0.75rem !important;
               }
               
               .gap-4 {
-                gap: 10px !important;
+                gap: 0.625rem !important;
               }
               
               .p-3 {
-                padding: 10px !important;
+                padding: 0.625rem !important;
               }
               
               .p-4 {
-                padding: 12px !important;
+                padding: 0.75rem !important;
               }
             }
           `}</style>
@@ -3014,108 +3060,235 @@ function PerformanceReportGenerator() {
         <div className="max-w-5xl mx-auto" ref={reportContainerRef}>
           <style jsx global>{`
             @media print {
-              * {
+              /* إخفاء كل شيء ماعدا التقرير */
+              body * {
                 visibility: hidden;
-                margin: 0;
-                padding: 0;
               }
-
+              
+              /* إظهار التقرير وجميع محتوياته */
               #report-content,
               #report-content * {
-                visibility: visible;
+                visibility: visible !important;
               }
-
-              #report-content {
-                position: absolute;
-                left: 0;
-                right: 0;
-                top: 0;
-                transform: none;
-                width: 100%;
-                max-width: 100%;
-                height: auto;
-                margin: 0;
-                padding: 0;
-                background: white;
-                box-shadow: none !important;
-                border: none !important;
-                border-radius: 0 !important;
-                overflow: visible !important;
-              }
-
+              
+              /* تنسيق الصفحة - ملء كامل بدون هوامش */
               @page {
                 size: A4 portrait;
-                margin: 3mm 4mm 6mm 4mm;
+                margin: 0;
               }
-
+              
+              html, body {
+                margin: 0 !important;
+                padding: 0 !important;
+                width: 100% !important;
+                height: 100% !important;
+              }
+              
+              /* التقرير يملأ الصفحة بالكامل */
+              #report-content {
+                position: absolute !important;
+                left: 0 !important;
+                right: 0 !important;
+                top: 0 !important;
+                bottom: 0 !important;
+                transform: none !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                height: 100% !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                background: white !important;
+                box-shadow: none !important;
+                border-width: 0 !important;
+                border-radius: 0 !important;
+              }
+              
+              #report-content.sheet {
+                border: none !important;
+              }
+              
+              /* إخفاء عناصر التحكم */
               .no-print {
                 display: none !important;
                 visibility: hidden !important;
               }
-
-              .print-header {
-                border-radius: 0 !important;
-                page-break-after: avoid;
-                padding: 12px 15px !important;
-                background-color: #15445A !important;
-                -webkit-print-color-adjust: exact !important;
-                print-color-adjust: exact !important;
-              }
-
-              #report-content > div:last-child {
-                padding: 10px 12px !important;
-              }
-
-              body {
-                -webkit-print-color-adjust: exact !important;
-                print-color-adjust: exact !important;
-                color-adjust: exact !important;
-                width: 100% !important;
-                max-width: 210mm !important;
-              }
               
+              /* ضمان طباعة الألوان */
               * {
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
                 color-adjust: exact !important;
               }
-
-              img {
-                max-width: 100%;
-                page-break-inside: avoid;
+              
+              /* تنسيق الهيدر - تقليل المسافات للطباعة */
+              .print-header {
+                background-color: #15445A !important;
+                border-radius: 0 !important;
+                page-break-after: avoid !important;
+                padding: 0.5rem 1rem !important;
               }
-
-              .border-2, .border, .rounded-xl, .bg-white, div[class*="border"] {
-                page-break-inside: auto !important;
-                break-inside: auto !important;
+              
+              /* تنسيق قسم اسم المدرسة - تقليل المسافات */
+              #report-content > div:nth-child(2) {
+                background-color: #15445A !important;
+                padding: 0.25rem 1rem !important;
               }
-
-              #report-content {
-                font-size: 11px !important;
+              
+              /* تنسيق محتوى التقرير - تقليل المسافات الداخلية */
+              #report-content > div:nth-child(3) {
+                padding: 0.75rem !important;
               }
-
-              .text-3xl {
-                font-size: 1.3rem !important;
+              
+              /* تنسيق الشبكات (Grid) - تقليل الفجوات */
+              .grid {
+                display: grid !important;
+                gap: 0.5rem !important;
               }
-
-              .text-2xl {
-                font-size: 1.1rem !important;
+              
+              .grid-cols-2 {
+                grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
               }
-
+              
+              .grid-cols-3 {
+                grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+              }
+              
+              /* تنسيق الحدود والصناديق */
+              .border-2 {
+                border-width: 2px !important;
+              }
+              
+              .border-gray-800 {
+                border-color: #1f2937 !important;
+              }
+              
+              .border-black {
+                border-color: #000000 !important;
+              }
+              
+              .rounded-lg {
+                border-radius: 8px !important;
+              }
+              
+              /* تنسيق النصوص - تقليل الأحجام قليلاً */
+              .text-sm {
+                font-size: 0.75rem !important;
+                line-height: 1rem !important;
+              }
+              
+              .text-base {
+                font-size: 0.875rem !important;
+                line-height: 1.25rem !important;
+              }
+              
               .text-xl {
                 font-size: 1rem !important;
+                line-height: 1.5rem !important;
               }
-
+              
+              .text-2xl {
+                font-size: 1.25rem !important;
+                line-height: 1.75rem !important;
+              }
+              
+              .text-3xl {
+                font-size: 1.5rem !important;
+                line-height: 2rem !important;
+              }
+              
               .text-lg {
                 font-size: 0.9rem !important;
+                line-height: 1.4rem !important;
               }
-
+              
+              .text-gray-700 {
+                color: #374151 !important;
+              }
+              
+              .text-gray-900 {
+                color: #111827 !important;
+              }
+              
+              .text-white {
+                color: #ffffff !important;
+              }
+              
+              /* تنسيق الصور - تقليل الأحجام */
+              img {
+                max-width: 100% !important;
+                height: auto !important;
+                page-break-inside: avoid !important;
+              }
+              
+              /* تنسيق صور الشواهد - تقليل الارتفاع */
+              .h-48 {
+                height: 8rem !important;
+              }
+              
+              /* تنسيق الأيقونات - تقليل الأحجام */
+              .w-32 {
+                width: 5rem !important;
+              }
+              
+              .h-32 {
+                height: 5rem !important;
+              }
+              
+              .h-20 {
+                height: 3rem !important;
+              }
+              
+              .h-24 {
+                height: 3.5rem !important;
+              }
+              
+              /* المسافات - تقليل للطباعة */
+              .gap-3 {
+                gap: 0.4rem !important;
+              }
+              
+              .gap-4 {
+                gap: 0.5rem !important;
+              }
+              
               .gap-6 {
-                gap: 0.6rem !important;
+                gap: 0.75rem !important;
               }
-
-              .p-6, .p-8 {
-                padding: 0.7rem !important;
+              
+              .gap-8 {
+                gap: 1rem !important;
+              }
+              
+              .mb-6 {
+                margin-bottom: 0.5rem !important;
+              }
+              
+              .mb-4 {
+                margin-bottom: 0.4rem !important;
+              }
+              
+              .mb-2 {
+                margin-bottom: 0.25rem !important;
+              }
+              
+              .mt-2 {
+                margin-top: 0.25rem !important;
+              }
+              
+              .p-3 {
+                padding: 0.5rem !important;
+              }
+              
+              .p-4 {
+                padding: 0.6rem !important;
+              }
+              
+              .p-6 {
+                padding: 0.75rem !important;
+              }
+              
+              .p-8 {
+                padding: 0.75rem !important;
               }
               
               .py-4 {
@@ -3123,42 +3296,124 @@ function PerformanceReportGenerator() {
                 padding-bottom: 0.5rem !important;
               }
               
-              /* إصلاح الطباعة على الهاتف */
-              html, body {
-                width: 210mm !important;
-                height: 297mm !important;
+              .py-6 {
+                padding-top: 0.5rem !important;
+                padding-bottom: 0.5rem !important;
               }
               
-              @media (max-width: 768px) {
-                #report-content {
-                  transform: none !important;
-                  width: 100% !important;
-                  max-width: 100% !important;
-                }
-                
-                * {
-                  -webkit-transform: none !important;
-                  transform: none !important;
-                }
+              .py-2 {
+                padding-top: 0.25rem !important;
+                padding-bottom: 0.25rem !important;
               }
-
+              
+              .px-8 {
+                padding-left: 1rem !important;
+                padding-right: 1rem !important;
+              }
+              
+              .px-6 {
+                padding-left: 0.75rem !important;
+                padding-right: 0.75rem !important;
+              }
+              
+              .space-y-10 > * + * {
+                margin-top: 0.75rem !important;
+              }
+              
+              .space-y-4 > * + * {
+                margin-top: 0.4rem !important;
+              }
+              
+              .pt-6 {
+                padding-top: 0.5rem !important;
+              }
+              
+              /* منع تقطيع العناصر */
+              .border-2, 
+              .rounded-lg,
+              .grid > div {
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+              }
+              
+              /* تنسيق شبكات الشواهد - تقليل الفجوات */
               .performance-witness-grid {
                 grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-                gap: 1.25rem !important;
+                gap: 0.5rem !important;
+              }
+              
+              /* صور الشواهد - تقليل الارتفاع */
+              .performance-witness-grid .h-\\[240px\\] {
+                height: 160px !important;
               }
 
+              /* تنسيق التوقيعات - 3 أعمدة مع المدير على اليسار */
               .signatures-grid {
                 display: grid !important;
-                grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-                gap: 2rem !important;
+                grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+                gap: 0.5rem !important;
               }
-
+              
+              .signatures-grid .text-left {
+                text-align: left !important;
+              }
+              
+              .signatures-grid .text-right {
+                text-align: right !important;
+              }
+              
               .signatures-grid .mt-4 {
-                margin-top: 1.5rem !important;
+                margin-top: 0.25rem !important;
               }
 
               .signatures-grid .p-6 {
-                padding: 1.5rem !important;
+                padding: 0.5rem !important;
+              }
+              
+              /* تنسيق Footer - تقليل الـ padding */
+              #report-content > div:last-child {
+                padding: 0.5rem !important;
+              }
+              
+              .grid-cols-1.sm\\:grid-cols-3 {
+                grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+              }
+              
+              /* إزالة الظلال والتأثيرات */
+              * {
+                box-shadow: none !important;
+                text-shadow: none !important;
+              }
+              
+              /* طباعة الخلفيات */
+              div[style*="backgroundColor"] {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+              }
+            }
+            
+            /* طباعة من الهاتف - بدون هوامش */
+            @media print and (max-width: 600px) {
+              @page {
+                margin: 0;
+              }
+              
+              html, body {
+                margin: 0 !important;
+                padding: 0 !important;
+              }
+              
+              #report-content {
+                position: absolute !important;
+                left: 0 !important;
+                right: 0 !important;
+                top: 0 !important;
+                bottom: 0 !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                height: 100% !important;
+                margin: 0 !important;
+                padding: 0 !important;
               }
             }
           `}</style>
@@ -4428,168 +4683,163 @@ function GeneralReportsGenerator() {
   if (showPreview) {
     return (
       <div className="max-w-5xl mx-auto p-4">
-        <style jsx global>{`
+        <style>{`
           @media print {
-            @page {
-              size: A4 portrait;
-              margin: 3mm 4mm 5mm 4mm;
-            }
-            
-            * {
+            /* إخفاء كل شيء ماعدا التقرير */
+            body * {
               visibility: hidden;
             }
             
-            #general-report-preview, #general-report-preview * {
-              visibility: visible;
+            /* إظهار التقرير وجميع محتوياته */
+            #general-report-preview,
+            #general-report-preview * {
+              visibility: visible !important;
             }
             
+            /* تنسيق الصفحة - ملء كامل بدون هوامش */
+            @page {
+              size: A4 portrait;
+              margin: 0;
+            }
+            
+            html, body {
+              margin: 0 !important;
+              padding: 0 !important;
+              width: 100% !important;
+              height: 100% !important;
+            }
+            
+            /* التقرير يملأ الصفحة بالكامل */
             #general-report-preview {
-              position: absolute;
-              left: 50%;
-              top: 0;
-              transform: translateX(-50%);
-              width: 100%;
-              max-width: 210mm;
-              background: white;
+              position: absolute !important;
+              left: 0 !important;
+              right: 0 !important;
+              top: 0 !important;
+              bottom: 0 !important;
+              transform: none !important;
+              width: 100% !important;
+              max-width: 100% !important;
+              height: 100% !important;
+              margin: 0 !important;
+              padding: 0 !important;
+              background: white !important;
+              box-shadow: none !important;
+              border-width: 0 !important;
+              border-radius: 0 !important;
             }
             
+            #general-report-preview.sheet {
+              border: none !important;
+            }
+            
+            /* إخفاء عناصر التحكم */
             .no-print {
               display: none !important;
+              visibility: hidden !important;
             }
             
             /* ضمان طباعة الألوان */
-            body {
-              -webkit-print-color-adjust: exact !important;
-              print-color-adjust: exact !important;
-              color-adjust: exact !important;
-            }
-            
             * {
               -webkit-print-color-adjust: exact !important;
               print-color-adjust: exact !important;
               color-adjust: exact !important;
             }
             
-            /* تنسيق الهيدر للطباعة */
+            /* تنسيق الهيدر - مطابق للمعاينة */
             .print-header {
-              border-radius: 0 !important;
-              page-break-after: avoid;
-              padding: 8px 12px !important;
               background-color: #15445A !important;
+              border-radius: 0 !important;
+              page-break-after: avoid !important;
+              padding: 1rem 1.5rem !important;
             }
             
-            /* تنسيق أفضل للطباعة - يطابق المعاينة */
-            #general-report-preview {
-              font-size: 10px !important;
+            /* تنسيق قسم اسم المدرسة - مطابق للمعاينة */
+            #general-report-preview > div:nth-child(2) {
+              background-color: #15445A !important;
+              padding: 0.5rem 1.5rem !important;
             }
             
-            #general-report-preview .text-3xl {
-              font-size: 1.5rem !important;
+            /* تنسيق محتوى التقرير - مع هوامش داخلية مناسبة */
+            #general-report-preview > div:nth-child(3) {
+              padding: 1.5rem !important;
             }
             
-            #general-report-preview .text-2xl {
-              font-size: 1.2rem !important;
+            /* تنسيق الشبكات (Grid) - مطابق للمعاينة */
+            .grid {
+              display: grid !important;
+              gap: 1rem !important;
             }
             
-            #general-report-preview .text-xl {
-              font-size: 1rem !important;
+            .grid-cols-2,
+            .md\\:grid-cols-2,
+            .sm\\:grid-cols-2 {
+              grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
             }
             
-            #general-report-preview .text-lg {
-              font-size: 0.9rem !important;
+            .grid-cols-3 {
+              grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+            }
+            
+            /* تنسيق الحدود والصناديق */
+            .border-2 {
+              border-width: 2px !important;
+            }
+            
+            .border-gray-800 {
+              border-color: #1f2937 !important;
+            }
+            
+            .border-black {
+              border-color: #000000 !important;
+            }
+            
+            .rounded-lg {
+              border-radius: 8px !important;
+            }
+            
+            /* تنسيق النصوص - مطابق للمعاينة */
+            #general-report-preview .text-sm {
+              font-size: 0.875rem !important;
+              line-height: 1.25rem !important;
             }
             
             #general-report-preview .text-base {
-              font-size: 0.85rem !important;
+              font-size: 1rem !important;
+              line-height: 1.5rem !important;
             }
             
-            #general-report-preview .text-sm {
-              font-size: 0.8rem !important;
+            #general-report-preview .text-xl {
+              font-size: 1.25rem !important;
+              line-height: 1.75rem !important;
             }
             
-            #general-report-preview .text-xs {
-              font-size: 0.7rem !important;
+            #general-report-preview .text-2xl {
+              font-size: 1.5rem !important;
+              line-height: 2rem !important;
             }
             
-            /* توحيد حجم الصور بين المعاينة والطباعة */
-            #general-report-preview .max-w-2xl {
-              max-width: 42rem !important;
+            #general-report-preview .text-3xl {
+              font-size: 1.875rem !important;
+              line-height: 2.25rem !important;
             }
             
-            /* الحفاظ على المسافات كما في المعاينة */
-            #general-report-preview .p-3 {
-              padding: 0.5rem !important;
+            .text-gray-700 {
+              color: #374151 !important;
             }
             
-            #general-report-preview .p-2 {
-              padding: 0.35rem !important;
+            .text-gray-900 {
+              color: #111827 !important;
             }
             
-            #general-report-preview .p-1\\.5 {
-              padding: 0.25rem !important;
+            .text-white {
+              color: #ffffff !important;
             }
             
-            #general-report-preview .p-1 {
-              padding: 0.15rem !important;
-            }
-            
-            #general-report-preview .space-y-2 > * + * {
-              margin-top: 0.35rem !important;
-            }
-            
-            #general-report-preview .gap-3 {
-              gap: 0.5rem !important;
-            }
-            
-            #general-report-preview .gap-2 {
-              gap: 0.35rem !important;
-            }
-            
-            #general-report-preview .gap-1\\.5 {
-              gap: 0.25rem !important;
-            }
-            
-            #general-report-preview .mb-2 {
-              margin-bottom: 0.35rem !important;
-            }
-            
-            #general-report-preview .mb-1\\.5 {
-              margin-bottom: 0.25rem !important;
-            }
-            
-            #general-report-preview .mb-1 {
-              margin-bottom: 0.2rem !important;
-            }
-            
-            #general-report-preview .mb-0\\.5 {
-              margin-bottom: 0.15rem !important;
-            }
-            
-            #general-report-preview .mt-1 {
-              margin-top: 0.2rem !important;
-            }
-            
-            #general-report-preview .mt-0\\.5 {
-              margin-top: 0.15rem !important;
-            }
-            
-            #general-report-preview .pt-2 {
-              padding-top: 0.35rem !important;
-            }
-            
-            #general-report-preview .pb-2 {
-              padding-bottom: 0.35rem !important;
-            }
-            
-            #general-report-preview .py-2 {
-              padding-top: 0.15rem !important;
-              padding-bottom: 0.15rem !important;
-            }
-            
-            /* تقليل حجم الأيقونات */
-            #general-report-preview .w-6 {
-              width: 0.8rem !important;
-              height: 0.8rem !important;
+            /* تنسيق الصور - مطابق للمعاينة */
+            img {
+              max-width: 100% !important;
+              height: auto !important;
+              page-break-inside: avoid !important;
             }
             
             #general-report-preview .aspect-square img {
@@ -4598,151 +4848,138 @@ function GeneralReportsGenerator() {
               object-fit: cover !important;
             }
             
-            /* إصلاح عرض الشبكة في الطباعة - جنباً إلى جنب */
-            #general-report-preview .grid {
-              display: grid !important;
+            /* تنسيق الأيقونات - مطابق للمعاينة */
+            #general-report-preview .w-6 {
+              width: 1.5rem !important;
+              height: 1.5rem !important;
             }
             
-            #general-report-preview .grid-cols-2 {
-              grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+            #general-report-preview .max-w-2xl {
+              max-width: 42rem !important;
             }
             
-            #general-report-preview .md\\:grid-cols-2 {
-              grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+            /* المسافات - مطابقة للمعاينة */
+            #general-report-preview .gap-3 {
+              gap: 0.75rem !important;
             }
             
-            #general-report-preview .sm\\:grid-cols-2 {
-              grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+            #general-report-preview .gap-2 {
+              gap: 0.5rem !important;
             }
             
-            /* منع تقسيم الصفحات */
-            #general-report-preview * {
+            #general-report-preview .gap-1\\.5 {
+              gap: 0.375rem !important;
+            }
+            
+            #general-report-preview .mb-6 {
+              margin-bottom: 1.5rem !important;
+            }
+            
+            #general-report-preview .mb-2 {
+              margin-bottom: 0.5rem !important;
+            }
+            
+            #general-report-preview .mb-1\\.5 {
+              margin-bottom: 0.375rem !important;
+            }
+            
+            #general-report-preview .mb-1 {
+              margin-bottom: 0.25rem !important;
+            }
+            
+            #general-report-preview .mb-0\\.5 {
+              margin-bottom: 0.125rem !important;
+            }
+            
+            #general-report-preview .mt-1 {
+              margin-top: 0.25rem !important;
+            }
+            
+            #general-report-preview .mt-0\\.5 {
+              margin-top: 0.125rem !important;
+            }
+            
+            #general-report-preview .p-3 {
+              padding: 0.75rem !important;
+            }
+            
+            #general-report-preview .p-2 {
+              padding: 0.5rem !important;
+            }
+            
+            #general-report-preview .p-1\\.5 {
+              padding: 0.375rem !important;
+            }
+            
+            #general-report-preview .p-1 {
+              padding: 0.25rem !important;
+            }
+            
+            #general-report-preview .pt-2 {
+              padding-top: 0.5rem !important;
+            }
+            
+            #general-report-preview .pb-2 {
+              padding-bottom: 0.5rem !important;
+            }
+            
+            #general-report-preview .py-2 {
+              padding-top: 0.5rem !important;
+              padding-bottom: 0.5rem !important;
+            }
+            
+            #general-report-preview .space-y-2 > * + * {
+              margin-top: 0.5rem !important;
+            }
+            
+            /* منع تقطيع العناصر */
+            .border-2, 
+            .rounded-lg,
+            .grid > div {
               page-break-inside: avoid !important;
+              break-inside: avoid !important;
             }
             
-            /* تحسينات خاصة للطباعة من الهاتف */
-            @media print and (max-width: 768px) {
-              @page {
-                size: A4 portrait;
-                margin: 10mm 15mm 10mm 15mm !important;
-              }
-
-              /* إعدادات مثالية للطباعة على ورقة A4 */
-              #general-report-preview {
-                width: 170mm !important;
-                max-width: 170mm !important;
-                min-width: 170mm !important;
-                height: auto !important;
-                font-size: 12px !important;
-                margin: 0 !important;
-                padding: 0 !important;
-                transform: none !important;
-                position: relative !important;
-                overflow: visible !important;
-              }
-
-              #general-report-preview .print-header {
-                padding: 12px 16px !important;
-              }
-
-              /* خطوط أكبر وأوضح للطباعة */
-              #general-report-preview .text-xl,
-              #general-report-preview .text-2xl {
-                font-size: 1.4rem !important;
-                font-weight: bold !important;
-              }
-
-              #general-report-preview .text-base,
-              #general-report-preview .text-sm {
-                font-size: 1rem !important;
-              }
-
-              #general-report-preview .text-xs {
-                font-size: 0.85rem !important;
-              }
-
-              /* مساحات مناسبة للطباعة */
-              #general-report-preview .p-3,
-              #general-report-preview .p-2 {
-                padding: 0.8rem !important;
-              }
-
-              #general-report-preview .space-y-2 > * + * {
-                margin-top: 0.5rem !important;
-              }
-
-              #general-report-preview .gap-3,
-              #general-report-preview .gap-2 {
-                gap: 0.6rem !important;
-              }
-
-              #general-report-preview .mb-2,
-              #general-report-preview .mb-1\\.5,
-              #general-report-preview .mb-1 {
-                margin-bottom: 0.5rem !important;
-              }
-
-              /* صور بحجم مناسب للطباعة */
-              #general-report-preview img {
-                max-height: none !important;
-                max-width: none !important;
-              }
-
-              #general-report-preview .h-20 {
-                height: 7rem !important;
-              }
-
-              #general-report-preview .w-32,
-              #general-report-preview .h-32 {
-                width: 10rem !important;
-                height: 10rem !important;
-              }
-
-              /* شبكة مناسبة للطباعة */
-              #general-report-preview .grid {
-                display: grid !important;
-                width: 100% !important;
-                overflow: visible !important;
-              }
-
-              #general-report-preview .grid-cols-2 {
-                grid-template-columns: repeat(2, 1fr) !important;
-              }
-
-              #general-report-preview .md\\:grid-cols-2 {
-                grid-template-columns: repeat(2, 1fr) !important;
-              }
-
-              #general-report-preview .sm\\:grid-cols-2 {
-                grid-template-columns: repeat(2, 1fr) !important;
-              }
-
-              /* حاويات مناسبة للطباعة */
-              #general-report-preview .max-w-4xl {
-                max-width: none !important;
-                width: 100% !important;
-              }
-
-              #general-report-preview .max-w-2xl {
-                max-width: none !important;
-                width: 100% !important;
-              }
-
-              #general-report-preview .mx-auto {
-                margin-left: 0 !important;
-                margin-right: 0 !important;
-              }
-
-              /* إصلاح خاص لـ iOS Safari */
-              @supports (-webkit-touch-callout: none) {
-                #general-report-preview {
-                  width: 170mm !important;
-                  min-width: 170mm !important;
-                  max-width: 170mm !important;
-                  -webkit-print-color-adjust: exact !important;
-                  print-color-adjust: exact !important;
-                }
-              }
+            /* تنسيق Footer */
+            .grid-cols-1.sm\\:grid-cols-3 {
+              grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+            }
+            
+            /* إزالة الظلال والتأثيرات */
+            * {
+              box-shadow: none !important;
+              text-shadow: none !important;
+            }
+            
+            /* طباعة الخلفيات */
+            div[style*="backgroundColor"] {
+              -webkit-print-color-adjust: exact !important;
+              print-color-adjust: exact !important;
+            }
+          }
+          
+          /* طباعة من الهاتف - بدون هوامش */
+          @media print and (max-width: 600px) {
+            @page {
+              margin: 0;
+            }
+            
+            html, body {
+              margin: 0 !important;
+              padding: 0 !important;
+            }
+            
+            #general-report-preview {
+              position: absolute !important;
+              left: 0 !important;
+              right: 0 !important;
+              top: 0 !important;
+              bottom: 0 !important;
+              width: 100% !important;
+              max-width: 100% !important;
+              height: 100% !important;
+              margin: 0 !important;
+              padding: 0 !important;
             }
           }
         `}</style>
