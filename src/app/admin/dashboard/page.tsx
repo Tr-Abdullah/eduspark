@@ -492,6 +492,7 @@ function MOEReportGenerator() {
   const [barcodeImage, setBarcodeImage] = useState<string>("");
   const [showBarcodeModal, setShowBarcodeModal] = useState(false);
   const [showPreview, setShowPreview] = useState(false);
+  const [printing, setPrinting] = useState(false);
   const [savedReports, setSavedReports] = useState<Array<any>>([]);
 
   // تحميل التقارير المحفوظة
@@ -512,6 +513,18 @@ function MOEReportGenerator() {
       setFormData(prev => ({ ...prev, criteriaId }));
     }
   }, [criteriaId]);
+
+  // إظهار المعاينة قبل الطباعة تلقائياً
+  useEffect(() => {
+    if (printing) {
+      setShowPreview(true);
+      // انتظر حتى يتم رسم العنصر في DOM ثم اطبع
+      setTimeout(() => {
+        window.print();
+        setPrinting(false);
+      }, 500);
+    }
+  }, [printing]);
 
   // تغيير عنوان الصفحة عند المعاينة
   useEffect(() => {
@@ -1607,6 +1620,10 @@ function MOEReportGenerator() {
             <button onClick={() => setShowPreview(true)} className="px-8 py-4 bg-gradient-to-r from-teal-500 to-cyan-600 text-white rounded-xl font-bold text-lg hover:shadow-2xl transition-all transform hover:-translate-y-1 flex items-center gap-3">
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
               معاينة التقرير
+            </button>
+            <button onClick={() => setPrinting(true)} className="px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl font-bold text-lg hover:shadow-2xl transition-all transform hover:-translate-y-1 flex items-center gap-3">
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+              طباعة مباشرة
             </button>
           </div>
         </div>
