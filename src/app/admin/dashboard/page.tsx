@@ -41,6 +41,19 @@ function DashboardContent() {
           /* إظهار المحتوى القابل للطباعة */
           body {
             background: white !important;
+            margin: 0 !important;
+            padding: 0 !important;
+          }
+
+          /* الحاوية الرئيسية */
+          main,
+          .max-w-4xl,
+          .max-w-5xl,
+          .max-w-7xl {
+            max-width: 100% !important;
+            width: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
           }
 
           /* إذا كان هناك .sheet (معاينة)، اطبعه */
@@ -48,8 +61,9 @@ function DashboardContent() {
             display: block !important;
             width: 100% !important;
             max-width: 100% !important;
+            min-width: 100% !important;
             height: auto !important;
-            padding: 0 !important;
+            padding: 10mm !important;
             margin: 0 !important;
             box-sizing: border-box !important;
             position: relative !important;
@@ -57,6 +71,8 @@ function DashboardContent() {
             background: white !important;
             color: black !important;
             page-break-inside: avoid !important;
+            direction: rtl !important;
+            text-align: right !important;
           }
 
           /* فرض طباعة الألوان */
@@ -74,6 +90,8 @@ function DashboardContent() {
             display: block !important;
             visibility: visible !important;
             opacity: 1 !important;
+            width: 100% !important;
+            max-width: 100% !important;
           }
 
           /* منع تقسيم الصفحات داخل العناصر المهمة */
@@ -95,6 +113,34 @@ function DashboardContent() {
           .sticky,
           .fixed {
             position: static !important;
+          }
+
+          /* إصلاح Grid والجداول */
+          .grid {
+            display: grid !important;
+            width: 100% !important;
+          }
+
+          /* إصلاح الصور */
+          img {
+            max-width: 100% !important;
+            height: auto !important;
+          }
+
+          /* إزالة الظلال والتأثيرات */
+          .shadow,
+          .shadow-xl,
+          .shadow-2xl {
+            box-shadow: none !important;
+          }
+
+          /* إصلاح الحاويات */
+          .container,
+          .mx-auto {
+            margin-left: auto !important;
+            margin-right: auto !important;
+            padding-left: 0 !important;
+            padding-right: 0 !important;
           }
         }
       `}</style>
