@@ -4709,7 +4709,7 @@ function GeneralReportsGenerator() {
               height: 100% !important;
             }
             
-            /* التقرير يملأ الصفحة بالكامل مع Flexbox */
+            /* التقرير يملأ الصفحة بالكامل */
             #general-report-preview {
               position: absolute !important;
               left: 0 !important;
@@ -4726,25 +4726,10 @@ function GeneralReportsGenerator() {
               box-shadow: none !important;
               border-width: 0 !important;
               border-radius: 0 !important;
-              display: flex !important;
-              flex-direction: column !important;
             }
             
             #general-report-preview.sheet {
               border: none !important;
-            }
-            
-            /* المحتوى الرئيسي يأخذ المساحة المتاحة */
-            #general-report-preview > div:nth-child(3) {
-              padding: 0.5rem !important;
-              flex: 1 !important;
-              overflow: hidden !important;
-            }
-            
-            /* ضمان الفوتر (الشريط الملون مع العام الدراسي) في الأسفل دائماً */
-            #general-report-preview > div:last-child {
-              margin-top: auto !important;
-              flex-shrink: 0 !important;
             }
             
             /* إخفاء عناصر التحكم */
@@ -4772,6 +4757,11 @@ function GeneralReportsGenerator() {
             #general-report-preview > div:nth-child(2) {
               background-color: #15445A !important;
               padding: 0.2rem 0.75rem !important;
+            }
+            
+            /* تنسيق محتوى التقرير - تقليل إلى الحد الأدنى */
+            #general-report-preview > div:nth-child(3) {
+              padding: 0.5rem !important;
             }
             
             /* تنسيق الشبكات (Grid) - تقليل الفجوات إلى الحد الأدنى */
@@ -4861,13 +4851,6 @@ function GeneralReportsGenerator() {
               width: 100% !important;
               height: 100% !important;
               object-fit: cover !important;
-            }
-            
-            /* تقليل حجم صورة التوقيع */
-            #general-report-preview img[alt="توقيع"] {
-              max-height: 3rem !important;
-              width: auto !important;
-              object-fit: contain !important;
             }
             
             /* تنسيق الأيقونات - تقليل الحجم */
@@ -5018,23 +5001,6 @@ function GeneralReportsGenerator() {
             /* تقليل الحدود */
             #general-report-preview .border-2 {
               border-width: 1px !important;
-            }
-            
-            /* تقليل حجم صورة التوقيع في الطباعة */
-            #general-report-preview .h-20 {
-              height: 2.5rem !important;
-              max-height: 2.5rem !important;
-            }
-            
-            /* تقليل حجم الباركود في الطباعة */
-            #general-report-preview .w-32 {
-              width: 3rem !important;
-              height: 3rem !important;
-            }
-            
-            #general-report-preview .h-32 {
-              width: 3rem !important;
-              height: 3rem !important;
             }
             
             /* منع تقطيع العناصر */
