@@ -4728,7 +4728,6 @@ function GeneralReportsGenerator() {
               border-radius: 0 !important;
               display: flex !important;
               flex-direction: column !important;
-              justify-content: space-between !important;
             }
             
             #general-report-preview.sheet {
@@ -4740,13 +4739,12 @@ function GeneralReportsGenerator() {
               padding: 0.5rem !important;
               flex: 1 !important;
               overflow: hidden !important;
-              display: flex !important;
-              flex-direction: column !important;
             }
             
-            /* ضمان الفوتر في الأسفل دائماً */
+            /* ضمان الفوتر (الشريط الملون مع العام الدراسي) في الأسفل دائماً */
             #general-report-preview > div:last-child {
               margin-top: auto !important;
+              flex-shrink: 0 !important;
             }
             
             /* إخفاء عناصر التحكم */
@@ -4867,7 +4865,7 @@ function GeneralReportsGenerator() {
             
             /* تقليل حجم صورة التوقيع */
             #general-report-preview img[alt="توقيع"] {
-              max-height: 2rem !important;
+              max-height: 3rem !important;
               width: auto !important;
               object-fit: contain !important;
             }
