@@ -25,24 +25,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ar" dir="rtl" className="dark-mode-init">
-      <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function() {
-                const theme = localStorage.getItem('theme') || 
-                  (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-                if (theme === 'dark') {
-                  document.documentElement.classList.add('dark');
-                } else {
-                  document.documentElement.classList.remove('dark');
-                }
-              })();
-            `,
-          }}
-        />
-      </head>
+    <html lang="ar" dir="rtl">
       <body
         className={`${cairo.variable} ${inter.variable} font-sans antialiased bg-gradient-to-br from-slate-50 to-blue-50 dark:from-gray-950 dark:to-slate-900`}
       >
