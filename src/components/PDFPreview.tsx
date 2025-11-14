@@ -20,7 +20,12 @@ const PDFPreview: React.FC<PDFPreviewProps> = ({
   const [isLoading, setIsLoading] = React.useState(true);
 
   React.useEffect(() => {
-    generatePDF();
+    // انتظار قليلاً للتأكد من تحميل المحتوى
+    const timer = setTimeout(() => {
+      generatePDF();
+    }, 100);
+    
+    return () => clearTimeout(timer);
   }, []);
 
   const generatePDF = async () => {

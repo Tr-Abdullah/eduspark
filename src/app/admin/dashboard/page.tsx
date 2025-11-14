@@ -5262,7 +5262,7 @@ function GeneralReportsGenerator() {
       )}
       
       {/* معاينة PDF المتقدمة */}
-      {showPDFPreview && reportPreviewRef.current && (
+      {showPDFPreview && (
         <PDFPreview
           contentRef={reportPreviewRef}
           fileName={`تقرير-${formData.teacherName || 'عام'}.pdf`}
@@ -5635,6 +5635,118 @@ function GeneralReportsGenerator() {
             </svg>
             معاينة PDF المتقدمة 📄
           </button>
+        </div>
+        
+        {/* نسخة مخفية من المحتوى للـ PDF - دائماً موجودة */}
+        <div style={{ position: 'absolute', left: '-9999px', top: 0 }}>
+          <div id="general-report-preview" ref={reportPreviewRef} className="sheet bg-white" style={{ width: '210mm', minHeight: '297mm', fontFamily: "'Helvetica Neue W23', 'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
+            {/* Header */}
+            <div className="text-white px-4 sm:px-8 py-4 sm:py-6" style={{ backgroundColor: '#15445A' }}>
+              <div className="flex items-center justify-center gap-3 sm:gap-4">
+                <div className="bg-[#1a4d5e] rounded-lg flex items-center justify-center p-2" style={{ minWidth: '64px', minHeight: '64px' }}>
+                  {logoImage ? (
+                    <img src={logoImage} alt="وزارة التعليم" className="object-contain" style={{ maxWidth: '120px', maxHeight: '100px' }} />
+                  ) : (
+                    <div className="text-white text-xs text-center">ضع الشعار</div>
+                  )}
+                </div>
+                <div className="text-center leading-tight">
+                  <div className="text-sm sm:text-base font-bold">المملكة العربية السعودية</div>
+                  <div className="text-sm sm:text-base font-bold mt-1">وزارة التعليم</div>
+                  <div className="text-sm sm:text-base font-bold">الإدارة العامة للتعليم بمنطقة جازان</div>
+                </div>
+              </div>
+            </div>
+
+            <div className="text-center text-white py-2 px-4 sm:px-6" style={{ backgroundColor: '#15445A' }}>
+              <h1 className="text-xl sm:text-2xl font-bold">{formData.schoolName}</h1>
+            </div>
+
+            <div className="p-2 sm:p-3 space-y-2">
+              <div className="bg-gradient-to-r from-teal-50 to-cyan-50 rounded-lg p-2 border border-teal-200">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mb-2 pb-2 border-b border-teal-300">
+                  <div className="text-sm">
+                    <span className="font-bold text-gray-700">اسم البرنامج:</span>
+                    <div className="text-gray-900 mt-0.5">{formData.programName}</div>
+                  </div>
+                  {formData.programGoals.length > 0 && (
+                    <div className="text-sm">
+                      <span className="font-bold text-gray-700">أهداف البرنامج:</span>
+                      <ul className="list-disc list-inside mr-4 mt-0.5">
+                        {formData.programGoals.map((goal, index) => (
+                          <li key={index} className="text-gray-900">{goal}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm mb-1.5">
+                  <div className="flex gap-1">
+                    <span className="font-bold text-gray-700">المعيار:</span>
+                    <span className="text-gray-900">{formData.performanceItem}</span>
+                  </div>
+                  <div className="flex gap-1">
+                    <span className="font-bold text-gray-700">المؤشر:</span>
+                    <span className="text-gray-900">{formData.performanceElement}</span>
+                  </div>
+                </div>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
+                  <div className="flex gap-1">
+                    <span className="font-bold text-gray-700">تاريخ التنفيذ:</span>
+                    <span className="text-gray-900">{formData.executionDay}/{formData.executionMonth}/{formData.executionYear} هـ</span>
+                  </div>
+                  <div className="flex gap-1">
+                    <span className="font-bold text-gray-700">المستهدفون:</span>
+                    <span className="text-gray-900">{formData.targetAudience}</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="grid gap-1.5 grid-cols-1 sm:grid-cols-2 max-w-2xl mx-auto">
+                {(['img1', 'img2', 'img3', 'img4'] as const).map((imgKey, index) => {
+                  const colors = [
+                    { bg: 'from-blue-600 to-blue-700', border: 'border-blue-200', bgLight: 'bg-blue-50/50' },
+                    { bg: 'from-green-600 to-green-700', border: 'border-green-200', bgLight: 'bg-green-50/50' },
+                    { bg: 'from-orange-600 to-orange-700', border: 'border-orange-200', bgLight: 'bg-orange-50/50' },
+                    { bg: 'from-purple-600 to-purple-700', border: 'border-purple-200', bgLight: 'bg-purple-50/50' }
+                  ];
+                  const color = colors[index];
+                  return (
+                    <div key={imgKey} className={`border ${color.border} rounded p-1 ${color.bgLight}`}>
+                      <div className={`bg-white rounded p-1 border border-dashed ${color.border} flex items-center justify-center`} style={{ aspectRatio: '16 / 9' }}>
+                        {images[imgKey] ? (
+                          <img src={images[imgKey]!} alt={`الشاهد ${index + 1}`} className="max-w-full max-h-full object-cover rounded" />
+                        ) : (
+                          <div className="text-center text-gray-400"><span className="text-xl">📸</span></div>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2 border-t border-gray-200">
+                <div className="text-right">
+                  <p className="text-gray-600 font-semibold mb-0.5 text-sm">المعلم</p>
+                  <p className="text-sm sm:text-base font-bold text-gray-800">{formData.teacherName}</p>
+                  {signatureImage && <img src={signatureImage} alt="توقيع" className="h-20 object-contain ml-0 mt-1" />}
+                </div>
+                <div className="flex items-center justify-center">
+                  {barcodeImage && <img src={barcodeImage} alt="باركود" className="w-32 h-32 object-contain" />}
+                </div>
+                <div className="text-left">
+                  <p className="text-gray-600 font-semibold mb-0.5 text-sm">مدير المدرسة</p>
+                  <p className="text-sm sm:text-base font-bold text-gray-800">{formData.principalName}</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="text-white p-1.5 text-center bg-gradient-to-r from-[#3D7EB9] via-[#0DA9A6] to-[#07A869]">
+              <p className="text-sm font-bold">العام الدراسي {formData.academicYear} هـ</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
