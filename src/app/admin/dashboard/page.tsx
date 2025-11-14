@@ -5638,7 +5638,15 @@ function GeneralReportsGenerator() {
         </div>
         
         {/* نسخة مخفية من المحتوى للـ PDF - دائماً موجودة */}
-        <div style={{ position: 'absolute', left: '-9999px', top: 0 }}>
+        <div style={{ 
+          position: 'fixed', 
+          top: 0, 
+          left: 0, 
+          width: '210mm', 
+          opacity: 0, 
+          pointerEvents: 'none',
+          zIndex: -1
+        }}>
           <div id="general-report-preview" ref={reportPreviewRef} className="sheet bg-white" style={{ width: '210mm', minHeight: '297mm', fontFamily: "'Helvetica Neue W23', 'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
             {/* Header */}
             <div className="text-white px-4 sm:px-8 py-4 sm:py-6" style={{ backgroundColor: '#15445A' }}>

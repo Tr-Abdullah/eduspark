@@ -20,16 +20,26 @@ const PDFPreview: React.FC<PDFPreviewProps> = ({
   const [isLoading, setIsLoading] = React.useState(true);
 
   React.useEffect(() => {
-    // انتظار قليلاً للتأكد من تحميل المحتوى
+    // انتظار للتأكد من تحميل المحتوى
     const timer = setTimeout(() => {
-      generatePDF();
-    }, 100);
+      if (contentRef.current) {
+        generatePDF();
+      } else {
+        console.error('contentRef is null');
+        setIsLoading(false);
+        alert('خطأ: المحتوى غير جاهز للالتقاط');
+      }
+    }, 300);
     
     return () => clearTimeout(timer);
-  }, []);
+  }, [contentRef]);
 
   const generatePDF = async () => {
-    if (!contentRef.current) return;
+    if (!contentRef.current) {
+      console.error('contentRef is null in generatePDF');
+      setIsLoading(false);
+      return;
+    }
     
     setIsGenerating(true);
     try {
@@ -39,7 +49,9 @@ const PDFPreview: React.FC<PDFPreviewProps> = ({
         useCORS: true,
         allowTaint: true,
         backgroundColor: '#ffffff',
-        logging: false,
+        logging: true, // تمكين السجلات للتشخيص
+        windowWidth: contentRef.current.scrollWidth,
+        windowHeight: contentRef.current.scrollHeight,
       });
 
       // إنشاء PDF
