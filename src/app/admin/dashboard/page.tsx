@@ -3,6 +3,11 @@
 import { useState, useEffect, useRef, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
+import dynamic from 'next/dynamic';
+
+// تحميل مكونات PDF فقط في المتصفح
+const PDFPreview = dynamic(() => import('@/components/PDFPreview'), { ssr: false });
+const GeneralReportPDF = dynamic(() => import('@/components/GeneralReportPDF'), { ssr: false });
 
 function DashboardContent() {
   const router = useRouter();
@@ -4612,6 +4617,7 @@ function GeneralReportsGenerator() {
   });
 
   const [showPreview, setShowPreview] = useState(false);
+  const [showPDFPreview, setShowPDFPreview] = useState(false);
   const [logoImage, setLogoImage] = useState<string>("");
   const [signatureImage, setSignatureImage] = useState<string>("");
   const [barcodeImage, setBarcodeImage] = useState<string>("");
@@ -5255,6 +5261,38 @@ function GeneralReportsGenerator() {
         </div>
       )}
       
+      {/* معاينة PDF المتقدمة */}
+      {showPDFPreview && (
+        <div className="fixed inset-0 bg-white z-50">
+          <div className="absolute top-4 left-4 z-20">
+            <button
+              onClick={() => setShowPDFPreview(false)}
+              className="px-6 py-3 bg-red-600 hover:bg-red-700 text-white rounded-lg font-bold shadow-lg transition-all flex items-center gap-2"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+              إغلاق المعاينة
+            </button>
+          </div>
+          
+          <PDFPreview fileName={`تقرير-${formData.teacherName || 'عام'}.pdf`}>
+            <GeneralReportPDF
+              formData={formData}
+              images={{
+                img1: images.img1 || undefined,
+                img2: images.img2 || undefined,
+                img3: images.img3 || undefined,
+                img4: images.img4 || undefined,
+              }}
+              logoImage={logoImage || undefined}
+              signatureImage={signatureImage || undefined}
+              barcodeImage={barcodeImage || undefined}
+            />
+          </PDFPreview>
+        </div>
+      )}
+      
       <div className="mb-6">
         <h2 className="text-3xl font-bold text-gray-800 dark:text-white mb-2">التقارير العامة</h2>
         <p className="text-gray-600 dark:text-gray-400">املأ النموذج لإنشاء تقرير توثيق مهني</p>
@@ -5602,13 +5640,23 @@ function GeneralReportsGenerator() {
           </div>
         </div>
 
-        {/* زر المعاينة */}
+        {/* أزرار المعاينة */}
         <div className="flex gap-4">
           <button
             onClick={() => setShowPreview(true)}
             className="flex-1 px-8 py-4 bg-gradient-to-r from-teal-500 to-cyan-600 text-white rounded-xl hover:from-teal-600 hover:to-cyan-700 transition-all font-bold text-lg"
           >
-            معاينة التقرير 👁️
+            معاينة HTML 👁️
+          </button>
+          
+          <button
+            onClick={() => setShowPDFPreview(true)}
+            className="flex-1 px-8 py-4 bg-gradient-to-r from-purple-500 to-pink-600 text-white rounded-xl hover:from-purple-600 hover:to-pink-700 transition-all font-bold text-lg flex items-center justify-center gap-2"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+            </svg>
+            معاينة PDF المتقدمة 📄
           </button>
         </div>
       </div>
