@@ -58,11 +58,33 @@ const PDFPreview: React.FC<PDFPreviewProps> = ({
         logging: true,
         windowWidth: contentRef.current.scrollWidth,
         windowHeight: contentRef.current.scrollHeight,
+        ignoreElements: (element) => {
+          // تجاهل أي عناصر قد تسبب مشاكل
+          return element.classList?.contains('no-print') || false;
+        },
         onclone: (clonedDoc) => {
           const clonedElement = clonedDoc.getElementById('general-report-preview');
           if (clonedElement) {
             clonedElement.style.opacity = '1';
             clonedElement.style.position = 'relative';
+            
+            // تحويل جميع الألوان المتقدمة إلى RGB
+            const allElements = clonedElement.querySelectorAll('*');
+            allElements.forEach((el) => {
+              const htmlEl = el as HTMLElement;
+              const computedStyle = window.getComputedStyle(el);
+              
+              // نسخ الألوان المحسوبة
+              if (computedStyle.color) {
+                htmlEl.style.color = computedStyle.color;
+              }
+              if (computedStyle.backgroundColor) {
+                htmlEl.style.backgroundColor = computedStyle.backgroundColor;
+              }
+              if (computedStyle.borderColor) {
+                htmlEl.style.borderColor = computedStyle.borderColor;
+              }
+            });
           }
         }
       });
@@ -110,6 +132,27 @@ const PDFPreview: React.FC<PDFPreviewProps> = ({
         allowTaint: true,
         backgroundColor: '#ffffff',
         logging: false,
+        ignoreElements: (element) => {
+          return element.classList?.contains('no-print') || false;
+        },
+        onclone: (clonedDoc) => {
+          const clonedElement = clonedDoc.getElementById('general-report-preview');
+          if (clonedElement) {
+            clonedElement.style.opacity = '1';
+            clonedElement.style.position = 'relative';
+            
+            // تحويل الألوان المتقدمة إلى RGB
+            const allElements = clonedElement.querySelectorAll('*');
+            allElements.forEach((el) => {
+              const htmlEl = el as HTMLElement;
+              const computedStyle = window.getComputedStyle(el);
+              
+              if (computedStyle.color) htmlEl.style.color = computedStyle.color;
+              if (computedStyle.backgroundColor) htmlEl.style.backgroundColor = computedStyle.backgroundColor;
+              if (computedStyle.borderColor) htmlEl.style.borderColor = computedStyle.borderColor;
+            });
+          }
+        }
       });
 
       const imgWidth = 210;
