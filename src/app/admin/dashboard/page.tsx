@@ -5,9 +5,8 @@ import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import dynamic from 'next/dynamic';
 
-// تحميل مكونات PDF فقط في المتصفح
+// تحميل مكون PDF فقط في المتصفح
 const PDFPreview = dynamic(() => import('@/components/PDFPreview'), { ssr: false });
-const GeneralReportPDF = dynamic(() => import('@/components/GeneralReportPDF'), { ssr: false });
 
 function DashboardContent() {
   const router = useRouter();
@@ -4618,6 +4617,7 @@ function GeneralReportsGenerator() {
 
   const [showPreview, setShowPreview] = useState(false);
   const [showPDFPreview, setShowPDFPreview] = useState(false);
+  const reportPreviewRef = useRef<HTMLDivElement | null>(null);
   const [logoImage, setLogoImage] = useState<string>("");
   const [signatureImage, setSignatureImage] = useState<string>("");
   const [barcodeImage, setBarcodeImage] = useState<string>("");
@@ -5086,7 +5086,7 @@ function GeneralReportsGenerator() {
           </button>
         </div>
 
-        <div id="general-report-preview" className="sheet bg-white max-w-4xl mx-auto border-4 border-gray-300" style={{ fontFamily: "'Helvetica Neue W23', 'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
+        <div id="general-report-preview" ref={reportPreviewRef} className="sheet bg-white max-w-4xl mx-auto border-4 border-gray-300" style={{ fontFamily: "'Helvetica Neue W23', 'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
           {/* Header */}
           <div className="text-white px-4 sm:px-8 py-4 sm:py-6 print-header" style={{ backgroundColor: '#15445A' }}>
             <div className="flex items-center justify-center gap-3 sm:gap-4">
@@ -5262,35 +5262,12 @@ function GeneralReportsGenerator() {
       )}
       
       {/* معاينة PDF المتقدمة */}
-      {showPDFPreview && (
-        <div className="fixed inset-0 bg-white z-50">
-          <div className="absolute top-4 left-4 z-20">
-            <button
-              onClick={() => setShowPDFPreview(false)}
-              className="px-6 py-3 bg-red-600 hover:bg-red-700 text-white rounded-lg font-bold shadow-lg transition-all flex items-center gap-2"
-            >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-              إغلاق المعاينة
-            </button>
-          </div>
-          
-          <PDFPreview fileName={`تقرير-${formData.teacherName || 'عام'}.pdf`}>
-            <GeneralReportPDF
-              formData={formData}
-              images={{
-                img1: images.img1 || undefined,
-                img2: images.img2 || undefined,
-                img3: images.img3 || undefined,
-                img4: images.img4 || undefined,
-              }}
-              logoImage={logoImage || undefined}
-              signatureImage={signatureImage || undefined}
-              barcodeImage={barcodeImage || undefined}
-            />
-          </PDFPreview>
-        </div>
+      {showPDFPreview && reportPreviewRef.current && (
+        <PDFPreview
+          contentRef={reportPreviewRef}
+          fileName={`تقرير-${formData.teacherName || 'عام'}.pdf`}
+          onClose={() => setShowPDFPreview(false)}
+        />
       )}
       
       <div className="mb-6">
