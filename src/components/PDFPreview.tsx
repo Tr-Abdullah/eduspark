@@ -38,28 +38,45 @@ const PDFPreview: React.FC<PDFPreviewProps> = ({
     if (!contentRef.current) {
       console.error('contentRef is null in generatePDF');
       setIsLoading(false);
+      alert('خطأ: المحتوى غير موجود');
       return;
     }
     
     setIsGenerating(true);
     try {
+      console.log('بدء التقاط المحتوى...');
+      console.log('Element:', contentRef.current);
+      console.log('Width:', contentRef.current.scrollWidth);
+      console.log('Height:', contentRef.current.scrollHeight);
+      
       // التقاط المحتوى كصورة
       const canvas = await html2canvas(contentRef.current, {
-        scale: 2, // جودة عالية
+        scale: 2,
         useCORS: true,
         allowTaint: true,
         backgroundColor: '#ffffff',
-        logging: true, // تمكين السجلات للتشخيص
+        logging: true,
         windowWidth: contentRef.current.scrollWidth,
         windowHeight: contentRef.current.scrollHeight,
+        onclone: (clonedDoc) => {
+          const clonedElement = clonedDoc.getElementById('general-report-preview');
+          if (clonedElement) {
+            clonedElement.style.opacity = '1';
+            clonedElement.style.position = 'relative';
+          }
+        }
       });
+
+      console.log('Canvas created:', canvas.width, 'x', canvas.height);
 
       // إنشاء PDF
       const imgWidth = 210; // A4 width in mm
       const imgHeight = (canvas.height * imgWidth) / canvas.width;
       
+      console.log('Creating PDF...');
+      
       const pdf = new jsPDF({
-        orientation: imgHeight > imgWidth ? 'portrait' : 'portrait',
+        orientation: 'portrait',
         unit: 'mm',
         format: 'a4',
       });
@@ -71,9 +88,11 @@ const PDFPreview: React.FC<PDFPreviewProps> = ({
       const pdfBlob = pdf.output('blob');
       const url = URL.createObjectURL(pdfBlob);
       setPdfUrl(url);
+      
+      console.log('PDF generated successfully!');
     } catch (error) {
-      console.error('خطأ في توليد PDF:', error);
-      alert('حدث خطأ في توليد PDF');
+      console.error('خطأ تفصيلي في توليد PDF:', error);
+      alert(`حدث خطأ في توليد PDF: ${error instanceof Error ? error.message : 'خطأ غير معروف'}`);
     } finally {
       setIsGenerating(false);
       setIsLoading(false);
