@@ -4,6 +4,7 @@ import { useState, useEffect, useRef, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import dynamic from 'next/dynamic';
+import GeneralEvidenceForm from '@/components/evidence/GeneralEvidenceForm';
 
 // تحميل مكون PDF فقط في المتصفح
 const PDFPreview = dynamic(() => import('@/components/PDFPreview'), { ssr: false });
@@ -432,7 +433,7 @@ function DashboardContent() {
             <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700">
               {activeTab === "reports" && <MOEReportGenerator />}
               {activeTab === "performance" && <PerformanceReportGenerator />}
-              {activeTab === "general" && <GeneralReportsGenerator />}
+              {activeTab === "general" && <GeneralEvidenceForm />}
               {activeTab === "evidence" && <EvidenceReportsGenerator />}
               {activeTab === "tools" && <OtherTools />}
               {activeTab === "log" && <StudentFollowUpLog />}
@@ -4782,10 +4783,7 @@ function StudentFollowUpLog() {
   );
 }
 
-// مولد التقارير العامة - نسخة مطابقة لمولد تقارير الأداء الوظيفي
-function GeneralReportsGenerator() {
-  // بنود الأداء الوظيفي الـ 11 مع العناصر
-  const performanceItemsWithElements = {
+export default function AdminDashboard() {
     "أداء الواجبات الوظيفية": [
       "الالتزام بالنظام الرسمي",
       "كتابة التحضير وفق الجدول الدراسي",
