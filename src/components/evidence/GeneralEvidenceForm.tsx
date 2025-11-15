@@ -85,7 +85,7 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
   const [formData, setFormData] = useState({
     teacherName: "عبدالله حسن الفيفي",
     principalName: "احمد علي كريري",
-    schoolName: "مدرسة ابن سيناء المتوسطة وبرنامجي العوق الفكري والتوحد",
+    schoolName: "مدرسة ابن سيناء المتوسطة",
     academicYear: "1447",
     performanceItem: "",
     performanceElement: "",
