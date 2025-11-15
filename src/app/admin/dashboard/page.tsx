@@ -468,6 +468,11 @@ function EvidenceReportsGenerator() {
   const ProgramExecutionForm = dynamic(() => import('@/components/evidence/ProgramExecutionForm'), { ssr: false });
   const AchievementForm = dynamic(() => import('@/components/evidence/AchievementForm'), { ssr: false });
   const ProfessionalCommunitiesForm = dynamic(() => import('@/components/evidence/ProfessionalCommunitiesForm'), { ssr: false });
+  const RemedialPlanForm = dynamic(() => import('@/components/evidence/RemedialPlanForm'), { ssr: false });
+  const QRCodeForm = dynamic(() => import('@/components/evidence/QRCodeForm'), { ssr: false });
+  const CertificateForm = dynamic(() => import('@/components/evidence/CertificateForm'), { ssr: false });
+  const CoverForm = dynamic(() => import('@/components/evidence/CoverForm'), { ssr: false });
+  const DividersForm = dynamic(() => import('@/components/evidence/DividersForm'), { ssr: false });
 
   const evidenceTypes = [
     {
@@ -636,7 +641,27 @@ function EvidenceReportsGenerator() {
           <ProfessionalCommunitiesForm onBack={() => setSelectedType(null)} />
         )}
         
-        {selectedType && !["strategies", "visits", "general", "programs", "achievement", "communities"].includes(selectedType) && (
+        {selectedType === "remedial" && (
+          <RemedialPlanForm onBack={() => setSelectedType(null)} />
+        )}
+        
+        {selectedType === "barcode" && (
+          <QRCodeForm onBack={() => setSelectedType(null)} />
+        )}
+        
+        {selectedType === "certificate" && (
+          <CertificateForm onBack={() => setSelectedType(null)} />
+        )}
+        
+        {selectedType === "cover" && (
+          <CoverForm onBack={() => setSelectedType(null)} />
+        )}
+        
+        {selectedType === "dividers" && (
+          <DividersForm onBack={() => setSelectedType(null)} />
+        )}
+        
+        {selectedType && !["strategies", "visits", "general", "programs", "achievement", "communities", "remedial", "barcode", "certificate", "cover", "dividers"].includes(selectedType) && (
           <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 p-8">
             <div className="text-center py-20">
               <div className="text-6xl mb-4">
