@@ -285,7 +285,7 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
                   display: flex;
                   align-items: center;
                   border: 1px solid #3D7EB9 !important;
-                  padding: 0.3rem;
+                  padding: 0.25rem;
                   border-radius: 4px;
                   background: white !important;
               }
@@ -450,7 +450,7 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
                   ${formData.programGoals.filter(g => g.trim()).length > 0 ? `
                   <div class="info-item">
                       <div class="info-label">أهداف البرنامج</div>
-                      <div class="info-value" style="display: flex; flex-direction: column; gap: 0.3rem;">
+                      <div class="info-value" style="display: flex; flex-direction: column; gap: 0.2rem;">
                           ${formData.programGoals.filter(g => g.trim()).map((goal, idx) => `<div>${idx + 1}. ${goal}</div>`).join('')}
                       </div>
                   </div>
