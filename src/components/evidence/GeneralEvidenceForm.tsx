@@ -173,6 +173,11 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
                   margin: 0 0 0.2rem 0;
                   font-size: 1.1rem;
               }
+              .school-name-header {
+                  margin-top: 0.5rem;
+                  font-size: 1.2rem;
+                  font-weight: bold;
+              }
               .barcode-container {
                   width: 150px;
                   height: 150px;
@@ -268,17 +273,47 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
               }
               .signature-section {
                   margin-top: 1.5rem;
+                  display: grid;
+                  grid-template-columns: 1fr 1fr;
+                  gap: 1rem;
+              }
+              .signature-box {
                   padding: 0.8rem;
                   background: white !important;
                   border: 2px solid #3D7EB9 !important;
                   border-radius: 8px;
                   text-align: center;
               }
-              .signature-section img {
+              .signature-box-title {
+                  background: #15445A !important;
+                  color: white !important;
+                  padding: 0.4rem;
+                  border-radius: 4px;
+                  font-weight: bold;
+                  margin-bottom: 0.5rem;
+                  font-size: 1rem;
+              }
+              .signature-name {
+                  font-size: 1.1rem;
+                  font-weight: bold;
+                  color: #333;
+                  margin: 0.5rem 0;
+              }
+              .signature-box img {
                   max-width: 200px;
                   height: 80px;
                   object-fit: contain;
                   margin: 0.5rem auto;
+              }
+              .footer {
+                  background: #15445A !important;
+                  color: white !important;
+                  padding: 0.6rem;
+                  text-align: center;
+                  border-radius: 8px;
+                  margin-top: 1.5rem;
+                  font-size: 1.1rem;
+                  font-weight: bold;
               }
               @media print {
                   * {
@@ -305,32 +340,10 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
               <div class="header-text">
                   <h3>المملكة العربية السعودية</h3>
                   <h3>وزارة التعليم</h3>
-                  <h4>${formData.schoolName || 'اسم المدرسة'}</h4>
+                  <div class="school-name-header">${formData.schoolName || 'اسم المدرسة'}</div>
               </div>
               <div class="barcode-container">
                   ${barcodeImage ? `<img src="${barcodeImage}" alt="الباركود">` : '<div style="width:120px;height:120px;"></div>'}
-              </div>
-          </div>
-
-          <div class="info-section">
-              <div class="section-title">البيانات الأساسية</div>
-              <div class="info-grid">
-                  <div class="info-item">
-                      <div class="info-label">اسم المعلم</div>
-                      <div class="info-value">${formData.teacherName || 'غير محدد'}</div>
-                  </div>
-                  <div class="info-item">
-                      <div class="info-label">اسم مدير المدرسة</div>
-                      <div class="info-value">${formData.principalName || 'غير محدد'}</div>
-                  </div>
-                  <div class="info-item full-width">
-                      <div class="info-label">اسم المدرسة</div>
-                      <div class="info-value">${formData.schoolName || 'غير محدد'}</div>
-                  </div>
-                  <div class="info-item">
-                      <div class="info-label">العام الدراسي</div>
-                      <div class="info-value">${toArabicNumbers(formData.academicYear)}</div>
-                  </div>
               </div>
           </div>
 
@@ -385,12 +398,21 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
           </div>
           ` : ''}
 
-          ${signatureImage ? `
           <div class="signature-section">
-              <div class="section-title">توقيع المعلم</div>
-              <img src="${signatureImage}" alt="توقيع المعلم">
+              <div class="signature-box">
+                  <div class="signature-box-title">المعلم</div>
+                  <div class="signature-name">${formData.teacherName || 'غير محدد'}</div>
+                  ${signatureImage ? `<img src="${signatureImage}" alt="توقيع المعلم">` : '<div style="height:80px;"></div>'}
+              </div>
+              <div class="signature-box">
+                  <div class="signature-box-title">مدير المدرسة</div>
+                  <div class="signature-name">${formData.principalName || 'غير محدد'}</div>
+              </div>
           </div>
-          ` : ''}
+
+          <div class="footer">
+              العام الدراسي ${toArabicNumbers(formData.academicYear)}
+          </div>
       </body>
       </html>
     `;
