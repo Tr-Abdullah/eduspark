@@ -341,17 +341,12 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
               }
               .signature-box {
                   padding: 0.5rem;
-                  background: white !important;
-                  border: 2px solid #3D7EB9 !important;
-                  border-radius: 8px;
                   text-align: center;
                   min-height: 120px;
               }
               .signature-box-title {
-                  background: #15445A !important;
-                  color: white !important;
+                  color: #333 !important;
                   padding: 0.3rem;
-                  border-radius: 4px;
                   font-weight: bold;
                   margin-bottom: 0.4rem;
                   font-size: 0.9rem;
@@ -417,8 +412,8 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
                   <h4>الإدارة العامة للتعليم بمنطقة جازان</h4>
                   <div class="school-name-header">${formData.schoolName || 'اسم المدرسة'}</div>
               </div>
-              <div class="barcode-container">
-                  ${barcodeImage ? `<img src="${barcodeImage}" alt="الباركود">` : '<div style="width:120px;height:120px;"></div>'}
+              <div class="logo-container">
+                  <div style="width:120px;height:120px;"></div>
               </div>
           </div>
 
