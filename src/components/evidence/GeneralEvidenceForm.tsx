@@ -94,7 +94,7 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
     executionDay: "",
     executionMonth: "",
     executionYear: "",
-    targetAudience: "",
+    targetAudience: "الصف الثالث المتوسط",
   });
 
   const [logoImage, setLogoImage] = useState<string>("");
@@ -316,6 +316,7 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
                   border-radius: 8px;
                   padding: 0.5rem;
                   margin-bottom: 0.6rem;
+                  counter-reset: goal-counter;
               }
               .goal-item {
                   padding: 0.4rem 0.6rem;
@@ -323,6 +324,12 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
                   border-radius: 4px;
                   background: rgba(61, 126, 185, 0.1);
                   font-weight: bold;
+                  counter-increment: goal-counter;
+              }
+              .goal-item::before {
+                  content: counter(goal-counter) ". ";
+                  font-weight: bold;
+                  margin-left: 0.3rem;
               }
               .evidence-section {
                   margin-top: 0.6rem;
@@ -393,7 +400,7 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
                   text-align: center;
                   border-radius: 8px;
                   margin-top: 0.3rem;
-                  font-size: 1.1rem;
+                  font-size: 0.9rem;
                   font-weight: bold;
               }
               @media print {
@@ -705,7 +712,7 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
                     className="w-full px-4 py-2 border-2 border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
                   >
                     <option value="">السنة</option>
-                    {Array.from({length: 10}, (_, i) => 1445 + i).map(y => (
+                    {Array.from({length: 9}, (_, i) => 1447 + i).map(y => (
                       <option key={y} value={y}>{y}</option>
                     ))}
                   </select>
