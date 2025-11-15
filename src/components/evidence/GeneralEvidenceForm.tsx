@@ -333,35 +333,35 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
                   border: 2px solid #3D7EB9 !important;
               }
               .signature-section {
-                  margin-top: 1.5rem;
+                  margin-top: 4rem;
                   display: grid;
                   grid-template-columns: 1fr auto 1fr;
                   gap: 1.5rem;
-                  align-items: start;
+                  align-items: end;
               }
               .signature-box {
-                  padding: 0.5rem;
+                  padding: 0.3rem;
                   text-align: center;
-                  min-height: 120px;
+                  min-height: 60px;
               }
               .signature-box-title {
                   color: #333 !important;
-                  padding: 0.3rem;
+                  padding: 0.2rem;
                   font-weight: bold;
-                  margin-bottom: 0.4rem;
+                  margin-bottom: 0.3rem;
                   font-size: 0.9rem;
               }
               .signature-name {
                   font-size: 1rem;
                   font-weight: bold;
                   color: #333;
-                  margin: 0.4rem 0;
+                  margin: 0.3rem 0;
               }
               .signature-box img {
                   max-width: 150px;
-                  height: 60px;
+                  height: 40px;
                   object-fit: contain;
-                  margin: 0.3rem auto;
+                  margin: 0.2rem auto;
               }
               .barcode-center {
                   display: flex;
@@ -380,7 +380,7 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
                   padding: 0.6rem;
                   text-align: center;
                   border-radius: 8px;
-                  margin-top: 1.5rem;
+                  margin-top: 0.3rem;
                   font-size: 1.1rem;
                   font-weight: bold;
               }
@@ -469,7 +469,7 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
               <div class="signature-box">
                   <div class="signature-box-title">المعلم</div>
                   <div class="signature-name">${formData.teacherName || 'غير محدد'}</div>
-                  ${signatureImage ? `<img src="${signatureImage}" alt="توقيع المعلم">` : '<div style="height:60px;"></div>'}
+                  ${signatureImage ? `<img src="${signatureImage}" alt="توقيع المعلم">` : '<div style="height:40px;"></div>'}
               </div>
               <div class="barcode-center">
                   ${barcodeImage ? `<img src="${barcodeImage}" alt="الباركود">` : ''}
