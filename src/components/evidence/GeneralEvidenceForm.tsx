@@ -213,10 +213,10 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
               .header {
                   background: #15445A !important;
                   color: white !important;
-                  padding: 0.8rem;
+                  padding: 0.4rem 0.8rem;
                   text-align: center;
                   border-radius: 8px;
-                  margin-bottom: 1rem;
+                  margin-bottom: 0.8rem;
                   display: flex;
                   align-items: center;
                   justify-content: space-between;
