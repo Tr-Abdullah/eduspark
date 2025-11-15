@@ -4783,7 +4783,10 @@ function StudentFollowUpLog() {
   );
 }
 
-export default function AdminDashboard() {
+// مولد التقارير العامة - نسخة مطابقة لمولد تقارير الأداء الوظيفي
+function GeneralReportsGenerator() {
+  // بنود الأداء الوظيفي الـ 11 مع العناصر
+  const performanceItemsWithElements = {
     "أداء الواجبات الوظيفية": [
       "الالتزام بالنظام الرسمي",
       "كتابة التحضير وفق الجدول الدراسي",
@@ -5548,6 +5551,32 @@ export default function AdminDashboard() {
         </div>
 
         <div id="general-report-preview" ref={reportPreviewRef} className="sheet bg-white max-w-4xl mx-auto border-4 border-gray-300" style={{ fontFamily: "'Helvetica Neue W23', 'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
+          {/* Header */}
+          <div className="text-white px-4 sm:px-8 py-4 sm:py-6 print-header" style={{ backgroundColor: '#15445A' }}>
+            <div className="flex items-center justify-center gap-3 sm:gap-4">
+              {/* الشعار في المنتصف */}
+              <div className="bg-[#1a4d5e] rounded-lg flex items-center justify-center p-2" style={{ minWidth: '64px', minHeight: '64px' }}>
+                {logoImage ? (
+                  <img src={logoImage} alt="وزارة التعليم" className="object-contain" style={{ maxWidth: '120px', maxHeight: '100px' }} />
+                ) : (
+                  <div className="text-white text-xs text-center">ضع الشعار</div>
+                )}
+              </div>
+              
+              {/* النصوص في المنتصف */}
+              <div className="text-center leading-tight">
+                <div className="text-sm sm:text-base font-bold">المملكة العربية السعودية</div>
+                <div className="text-sm sm:text-base font-bold mt-1">وزارة التعليم</div>
+                <div className="text-sm sm:text-base font-bold">الإدارة العامة للتعليم بمنطقة جازان</div>
+              </div>
+            </div>
+          </div>
+
+          {/* اسم المدرسة - ملاصق للهيدر */}
+          <div className="text-center text-white py-2 px-4 sm:px-6" style={{ backgroundColor: '#15445A' }}>
+            <h1 className="text-xl sm:text-2xl font-bold">{formData.schoolName}</h1>
+          </div>
+
           {/* محتوى التقرير */}
           <div id="general-report-content" className="p-2 sm:p-3 space-y-2">
             {/* البيانات الأساسية */}
@@ -5625,6 +5654,44 @@ export default function AdminDashboard() {
                 );
               })}
             </div>
+
+            {/* التوقيعات */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2 border-t border-gray-200">
+              <div className="text-right">
+                <p className="text-gray-600 font-semibold mb-0.5 text-sm">المعلم</p>
+                <p className="text-sm sm:text-base font-bold text-gray-800">{formData.teacherName}</p>
+                {signatureImage && (
+                  <img 
+                    src={signatureImage} 
+                    alt="توقيع"
+                    className="h-20 object-contain ml-0 mt-1"
+                  />
+                )}
+              </div>
+              
+              {/* الباركود في المنتصف */}
+              <div className="flex items-center justify-center">
+                {barcodeImage && (
+                  <button
+                    onClick={() => setShowBarcodeModal(true)}
+                    className="cursor-pointer hover:opacity-80 transition-opacity"
+                    title="اضغط لتكبير الباركود"
+                  >
+                    <img src={barcodeImage} alt="باركود" className="w-32 h-32 object-contain" />
+                  </button>
+                )}
+              </div>
+              
+              <div className="text-left">
+                <p className="text-gray-600 font-semibold mb-0.5 text-sm">مدير المدرسة</p>
+                <p className="text-sm sm:text-base font-bold text-gray-800">{formData.principalName}</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Footer */}
+          <div className="text-white p-1.5 text-center bg-gradient-to-r from-[#3D7EB9] via-[#0DA9A6] to-[#07A869]">
+            <p className="text-sm font-bold">العام الدراسي {formData.academicYear} هـ</p>
           </div>
         </div>
       </div>

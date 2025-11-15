@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 interface GeneralFormProps {
-  onBack: () => void;
+  onBack?: () => void;
 }
 
 const performanceItemsWithElements = {
@@ -516,15 +516,17 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
   return (
     <div className="max-w-6xl mx-auto">
       {/* Back Button */}
-      <button
-        onClick={onBack}
-        className="mb-6 flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-slate-700 hover:bg-gray-200 dark:hover:bg-slate-600 rounded-lg transition-colors"
-      >
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-        </svg>
-        <span>العودة للقائمة</span>
-      </button>
+      {onBack && (
+        <button
+          onClick={onBack}
+          className="mb-6 flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-slate-700 hover:bg-gray-200 dark:hover:bg-slate-600 rounded-lg transition-colors"
+        >
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          </svg>
+          <span>العودة</span>
+        </button>
+      )}
 
       {/* Header */}
       <div className="mb-6 p-6 bg-gradient-to-r from-indigo-500 to-indigo-600 rounded-2xl text-white">
