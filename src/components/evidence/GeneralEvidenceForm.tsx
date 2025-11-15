@@ -348,7 +348,7 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
                   border: 2px solid #3D7EB9 !important;
               }
               .signature-section {
-                  margin-top: 0.5rem;
+                  margin-top: 0.3rem;
                   display: grid;
                   grid-template-columns: 1fr auto 1fr;
                   gap: 1.5rem;
@@ -363,7 +363,7 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
                   color: #333 !important;
                   padding: 0.2rem;
                   font-weight: bold;
-                  margin-bottom: 0.3rem;
+                  margin-bottom: 0.15rem;
                   font-size: 0.9rem;
               }
               .signature-name {
@@ -395,7 +395,7 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
                   padding: 0.6rem;
                   text-align: center;
                   border-radius: 8px;
-                  margin-top: 0.3rem;
+                  margin-top: 0.2rem;
                   font-size: 0.9rem;
                   font-weight: bold;
               }
@@ -410,7 +410,7 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
                       background: white !important;
                   }
                   @page {
-                      margin: 0.5cm;
+                      margin: 0.4cm;
                       size: A4;
                   }
               }
