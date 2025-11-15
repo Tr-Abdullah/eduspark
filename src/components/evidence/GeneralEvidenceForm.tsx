@@ -239,16 +239,16 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
                   text-align: center;
               }
               .header-text h3 {
-                  margin: 0 0 0.3rem 0;
-                  font-size: 1.4rem;
-              }
-              .header-text h4 {
                   margin: 0 0 0.2rem 0;
                   font-size: 1.1rem;
               }
+              .header-text h4 {
+                  margin: 0 0 0.15rem 0;
+                  font-size: 0.9rem;
+              }
               .school-name-header {
-                  margin-top: 0.5rem;
-                  font-size: 1.2rem;
+                  margin-top: 0.3rem;
+                  font-size: 1rem;
                   font-weight: bold;
               }
               .barcode-container {
@@ -267,44 +267,44 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
                   background: white !important;
                   border: 2px solid #3D7EB9 !important;
                   border-radius: 8px;
-                  padding: 0.8rem;
-                  margin-bottom: 1rem;
+                  padding: 0.5rem;
+                  margin-bottom: 0.6rem;
               }
               .section-title {
                   background: #15445A !important;
                   color: white !important;
-                  padding: 0.4rem;
+                  padding: 0.3rem;
                   border-radius: 4px;
                   text-align: center;
                   font-weight: bold;
-                  margin-bottom: 0.8rem;
-                  font-size: 1.1rem;
+                  margin-bottom: 0.5rem;
+                  font-size: 0.95rem;
               }
               .info-grid {
                   display: grid;
                   grid-template-columns: repeat(2, 1fr);
-                  gap: 0.6rem;
+                  gap: 0.4rem;
               }
               .info-item {
                   display: flex;
                   align-items: center;
                   border: 1px solid #3D7EB9 !important;
-                  padding: 0.4rem;
+                  padding: 0.3rem;
                   border-radius: 4px;
                   background: white !important;
               }
               .info-label {
                   color: #3D7EB9 !important;
                   font-weight: bold;
-                  font-size: 0.95rem;
-                  min-width: 120px;
+                  font-size: 0.85rem;
+                  min-width: 100px;
                   border-right: 2px solid #3D7EB9 !important;
-                  padding-right: 0.4rem;
-                  margin-right: 0.4rem;
+                  padding-right: 0.3rem;
+                  margin-right: 0.3rem;
               }
               .info-value {
                   flex: 1;
-                  font-size: 0.95rem;
+                  font-size: 0.85rem;
                   font-weight: bold;
               }
               .full-width {
@@ -314,8 +314,8 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
                   background: white !important;
                   border: 2px solid #3D7EB9 !important;
                   border-radius: 8px;
-                  padding: 0.8rem;
-                  margin-bottom: 1rem;
+                  padding: 0.5rem;
+                  margin-bottom: 0.6rem;
               }
               .goal-item {
                   padding: 0.4rem 0.6rem;
@@ -325,8 +325,8 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
                   font-weight: bold;
               }
               .evidence-section {
-                  margin-top: 1rem;
-                  padding: 0.8rem;
+                  margin-top: 0.6rem;
+                  padding: 0.5rem;
                   background: white !important;
                   border: 2px solid #3D7EB9 !important;
                   border-radius: 8px;
@@ -334,18 +334,18 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
               .evidence-grid {
                   display: grid;
                   grid-template-columns: 1fr 1fr;
-                  gap: 0.8rem;
-                  margin-top: 0.6rem;
+                  gap: 0.5rem;
+                  margin-top: 0.4rem;
               }
               .evidence-item img {
                   width: 100%;
-                  height: 220px;
+                  height: 160px;
                   object-fit: cover;
                   border-radius: 6px;
                   border: 2px solid #3D7EB9 !important;
               }
               .signature-section {
-                  margin-top: 4rem;
+                  margin-top: 1rem;
                   display: grid;
                   grid-template-columns: 1fr auto 1fr;
                   gap: 1.5rem;
