@@ -53,7 +53,369 @@ export default function StrategiesForm({ onBack }: StrategiesFormProps) {
   };
 
   const handlePrint = () => {
-    window.print();
+    // Generate objectives list HTML
+    const generateObjectivesList = (objectives: string) => {
+      const lines = objectives.split('\n').filter(line => line.trim());
+      return lines.map(line => `<div class="objective-item">${line}</div>`).join('');
+    };
+
+    // Get period text
+    const getPeriodText = (period: string) => {
+      return period || "غير محدد";
+    };
+
+    // Convert to Arabic numbers
+    const toArabicNumbers = (str: string) => {
+      const arabicNums = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+      return str.replace(/\d/g, d => arabicNums[parseInt(d)]);
+    };
+
+    const teacherGender = formData.schoolGender === "girls" ? "معلمة" : "معلم";
+    const directorGender = formData.schoolGender === "girls" ? "مديرة" : "مدير";
+    const studentsLabel = formData.schoolGender === "girls" ? "عدد الطالبات" : "عدد الطلاب";
+
+    const printWindow = window.open("", "_blank");
+    if (!printWindow) return;
+
+    const htmlContent = `
+      <!DOCTYPE html>
+      <html dir="rtl" lang="ar">
+      <head>
+          <meta charset="UTF-8">
+          <title>تقرير تطبيق استراتيجية تدريسية</title>
+          <style>
+              * { 
+                  print-color-adjust: exact !important; 
+                  -webkit-print-color-adjust: exact !important;
+                  color-adjust: exact !important; 
+                  margin: 0; 
+                  padding: 0; 
+                  box-sizing: border-box;
+              }
+              body { 
+                  font-family: 'Segoe UI', Tahoma, Arial, sans-serif; 
+                  margin: 10px; 
+                  direction: rtl; 
+                  line-height: 1.6;
+                  color: #333;
+                  font-size: 14px;
+                  background: white !important;
+              }
+              .header { 
+                  background: #15445A !important;
+                  color: white !important;
+                  padding: 0.6rem;
+                  text-align: center;
+                  border-radius: 8px;
+                  margin-bottom: 1rem;
+                  print-color-adjust: exact !important;
+                  -webkit-print-color-adjust: exact !important;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  gap: 1rem;
+              }
+              .ministry-logo { 
+                  width: 200px;
+                  height: 150px;
+                  display: flex; 
+                  align-items: center; 
+                  justify-content: center; 
+                  print-color-adjust: exact !important;
+                  -webkit-print-color-adjust: exact !important;
+                  flex-shrink: 0;
+              }
+              .ministry-logo img {
+                  width: 180px;
+                  height: 130px;
+                  object-fit: contain;
+              }
+              .header-text { 
+                  text-align: center;
+                  flex: 1;
+              }
+              .header-text h3 { margin: 0 0 0.2rem 0; font-size: 1.2rem; }
+              .header-text h4 { margin: 0 0 0.2rem 0; font-size: 1rem; }
+              .header-text h5 { margin: 0; font-size: 0.8rem; }
+              .info-grid { 
+                  display: grid; 
+                  grid-template-columns: repeat(3, 1fr); 
+                  gap: 0.6rem;
+                  margin-bottom: 1rem;
+                  background: white !important;
+              }
+              .info-item { 
+                  background: white !important; 
+                  padding: 0.3rem;
+                  display: flex; 
+                  align-items: center;
+                  border: 2px solid #3D7EB9 !important;
+                  border-radius: 4px;
+                  print-color-adjust: exact !important;
+                  -webkit-print-color-adjust: exact !important;
+              }
+              .info-label { 
+                  color: #3D7EB9 !important; 
+                  font-weight: bold; 
+                  font-size: 1rem;
+                  border-right: 2px solid #3D7EB9 !important;
+                  padding-right: 0.3rem;
+                  margin-right: 0.3rem;
+                  print-color-adjust: exact !important;
+                  -webkit-print-color-adjust: exact !important;
+              }
+              .info-value { 
+                  flex: 1; 
+                  font-size: 1rem; 
+                  font-weight: bold;
+              }
+              .lesson-section {
+                  background: white !important;
+                  padding: 0.3rem;
+                  margin-bottom: 1rem;
+                  display: flex;
+                  align-items: center;
+                  border: 2px solid #3D7EB9 !important;
+                  border-radius: 4px;
+                  print-color-adjust: exact !important;
+                  -webkit-print-color-adjust: exact !important;
+              }
+              .objectives-section { 
+                  margin: 1rem 0; 
+              }
+              .section-title { 
+                  background: white !important;
+                  color: #15445A !important; 
+                  padding: 0.3rem;
+                  border-radius: 4px;
+                  text-align: center; 
+                  font-weight: bold; 
+                  margin-bottom: 0.8rem;
+                  font-size: 1.2rem;
+                  border: 2px solid #0DA9A6 !important;
+                  print-color-adjust: exact !important;
+                  -webkit-print-color-adjust: exact !important;
+              }
+              .objectives-grid { 
+                  display: grid; 
+                  grid-template-columns: 1fr 1fr; 
+                  gap: 0.6rem; 
+              }
+              .objectives-list { 
+                  background: white !important; 
+                  padding: 0.6rem; 
+                  border: 2px solid #3D7EB9 !important;
+                  border-radius: 4px;
+                  print-color-adjust: exact !important;
+                  -webkit-print-color-adjust: exact !important;
+              }
+              .objective-item { 
+                  margin-bottom: 0.5rem; 
+                  font-size: 0.9rem; 
+                  line-height: 1.5; 
+                  padding: 0.2rem 0;
+                  font-weight: bold;
+              }
+              .objective-item:last-child {
+                  margin-bottom: 0;
+              }
+              .tools-section { 
+                  background: white !important; 
+                  padding: 0.6rem; 
+                  border: 2px solid #3D7EB9 !important;
+                  border-radius: 4px;
+                  print-color-adjust: exact !important;
+                  -webkit-print-color-adjust: exact !important;
+              }
+              .tools-title { 
+                  background: white !important;
+                  color: #15445A !important; 
+                  font-weight: bold; 
+                  margin-bottom: 0.5rem; 
+                  text-align: center; 
+                  font-size: 1.1rem;
+                  padding: 0.2rem;
+                  border-radius: 4px;
+                  border: 2px solid #0DA9A6 !important;
+                  print-color-adjust: exact !important;
+                  -webkit-print-color-adjust: exact !important;
+              }
+              .tools-list { 
+                  display: grid; 
+                  grid-template-columns: repeat(2, 1fr); 
+                  gap: 0.3rem; 
+              }
+              .tool-item { 
+                  font-size: 1rem; 
+                  padding: 0.2rem 0; 
+                  font-weight: bold;
+              }
+              .evidence-section {
+                  margin-top: 1rem;
+                  padding: 0.6rem;
+                  background: white !important;
+                  border: 2px solid #3D7EB9 !important;
+                  border-radius: 4px;
+                  print-color-adjust: exact !important;
+                  -webkit-print-color-adjust: exact !important;
+              }
+              .evidence-title {
+                  background: white !important;
+                  color: #15445A !important;
+                  font-weight: bold;
+                  font-size: 1.1rem;
+                  margin-bottom: 0.5rem;
+                  text-align: center;
+                  padding: 0.2rem;
+                  border-radius: 4px;
+                  border: 2px solid #0DA9A6 !important;
+                  print-color-adjust: exact !important;
+                  -webkit-print-color-adjust: exact !important;
+              }
+              .evidence-grid {
+                  display: grid;
+                  grid-template-columns: 1fr 1fr;
+                  gap: 0.6rem;
+              }
+              .evidence-item {
+                  text-align: center;
+              }
+              .evidence-item img {
+                  width: 100%;
+                  height: 250px;
+                  object-fit: fill;
+                  border-radius: 4px;
+                  border: 2px solid #3D7EB9 !important;
+                  display: block;
+              }
+              .signature-section { 
+                  display: grid; 
+                  grid-template-columns: 1fr 1fr; 
+                  gap: 0.6rem; 
+                  margin-top: 1rem; 
+                  padding-top: 0.6rem; 
+              }
+              .signature-item { 
+                  text-align: center; 
+                  padding: 0.3rem; 
+                  background: white !important;
+                  border: 2px solid #3D7EB9 !important;
+                  border-radius: 4px;
+                  print-color-adjust: exact !important;
+                  -webkit-print-color-adjust: exact !important;
+              }
+              .signature-title { 
+                  background: white !important;
+                  color: #15445A !important; 
+                  margin-bottom: 0.3rem; 
+                  font-size: 1.2rem;
+                  padding: 0.2rem;
+                  border-radius: 4px;
+                  border: 2px solid #0DA9A6 !important;
+                  print-color-adjust: exact !important;
+                  -webkit-print-color-adjust: exact !important;
+              }
+              .signature-name { 
+                  font-size: 1.2rem; 
+                  font-weight: bold; 
+                  color: #333; 
+              }
+              .footer {
+                  background: #15445A !important;
+                  color: white !important;
+                  padding: 0.4rem;
+                  text-align: center;
+                  font-size: 0.8rem;
+                  border-radius: 0 0 8px 8px;
+                  margin-top: 1rem;
+                  print-color-adjust: exact !important;
+                  -webkit-print-color-adjust: exact !important;
+              }
+              @media print {
+                  * { 
+                      print-color-adjust: exact !important; 
+                      -webkit-print-color-adjust: exact !important;
+                  }
+                  body { margin: 0; font-size: 12px; background: white !important; }
+                  @page { margin: 0.5cm; size: A4; }
+              }
+          </style>
+      </head>
+      <body>
+          <div class="header">
+              <div class="ministry-logo">
+                  <img src="/images/ministry-logo-white.png" alt="وزارة التعليم">
+              </div>
+              <div class="header-text">
+                  <h4>${formData.educationDepartment}</h4>
+                  <h4>${formData.schoolName}</h4>
+                  <h4>تقرير تطبيق استراتيجية تدريسية</h4>
+              </div>
+          </div>
+          
+          <div class="info-grid">
+              <div class="info-item"><div class="info-label">الاستراتيجية:</div><div class="info-value">${formData.strategy}</div></div>
+              <div class="info-item"><div class="info-label">المادة:</div><div class="info-value">${formData.subject}</div></div>
+              <div class="info-item"><div class="info-label">تاريخ التنفيذ:</div><div class="info-value">${toArabicNumbers(formData.implementationDate)}</div></div>
+              <div class="info-item"><div class="info-label">${studentsLabel}:</div><div class="info-value">${toArabicNumbers(formData.studentsCount)}</div></div>
+              <div class="info-item"><div class="info-label">الصف:</div><div class="info-value">${formData.grade}</div></div>
+              <div class="info-item"><div class="info-label">الفصل:</div><div class="info-value">${getPeriodText(formData.classroom)}</div></div>
+          </div>
+          
+          <div class="lesson-section">
+              <div class="info-label">الدرس:</div>
+              <div class="info-value">${formData.lesson}</div>
+          </div>
+          
+          <div class="objectives-section">
+              <div class="section-title">الأهداف والأدوات والوسائل التعليمية</div>
+              <div class="objectives-grid">
+                  <div class="objectives-list">
+                      ${generateObjectivesList(formData.objectives)}
+                  </div>
+                  <div class="tools-section">
+                      <div class="tools-title">الأدوات والوسائل التعليمية</div>
+                      <div class="tools-list">
+                          ${formData.tools.length > 0
+                            ? formData.tools.map(tool => `<div class="tool-item">✓ ${tool}</div>`).join('')
+                            : '<div class="tool-item">لا توجد أدوات محددة</div>'
+                          }
+                      </div>
+                  </div>
+              </div>
+          </div>
+          
+          ${evidence1 || evidence2 ? `
+          <div class="evidence-section">
+              <div class="evidence-title">الشواهد</div>
+              <div class="evidence-grid">
+                  ${evidence1 ? `<div class="evidence-item"><img src="${evidence1}" alt="الشاهد الأول"></div>` : ''}
+                  ${evidence2 ? `<div class="evidence-item"><img src="${evidence2}" alt="الشاهد الثاني"></div>` : ''}
+              </div>
+          </div>
+          ` : ''}
+          
+          <div class="signature-section">
+              <div class="signature-item">
+                  <div class="signature-title">اسم ${teacherGender}</div>
+                  <div class="signature-name">${formData.teacherName}</div>
+              </div>
+              <div class="signature-item">
+                  <div class="signature-title">${directorGender} المدرسة</div>
+                  <div class="signature-name">${formData.directorName}</div>
+              </div>
+          </div>
+          <div class="footer"></div>
+      </body>
+      </html>
+    `;
+
+    printWindow.document.write(htmlContent);
+    printWindow.document.close();
+    
+    setTimeout(() => {
+      printWindow.print();
+    }, 500);
   };
 
   const toolsList = [
