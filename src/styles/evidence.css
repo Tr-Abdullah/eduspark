@@ -1,40 +1,203 @@
 /* Evidence Forms Styles - Based on alshawahed.com design */
 
-/* Print Styles for Evidence Reports */
+/* Print Styles for Evidence Reports - Exact Match with alshawahed.com */
 @media print {
-  @page {
-    size: A4;
+  body {
+    background: white !important;
     margin: 0;
+    padding: 0;
   }
 
-  body * {
-    visibility: hidden;
-  }
-
-  .print-content,
-  .print-content * {
-    visibility: visible;
-  }
-
-  .print-content {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-  }
-
+  /* Hide all buttons and navigation */
+  button,
+  .bg-gray-100,
+  .dark\:bg-slate-700,
+  header,
+  nav,
+  .back-btn,
+  .btn-group,
   .no-print {
     display: none !important;
   }
 
-  /* Hide form controls in print */
-  button,
-  input:not([readonly]),
-  select,
-  textarea:not([readonly]),
-  .back-btn,
-  .file-upload-area {
-    display: none !important;
+  /* Container adjustments */
+  .max-w-4xl,
+  .max-w-7xl {
+    max-width: 100% !important;
+    margin: 0 !important;
+  }
+
+  .bg-white,
+  .dark\:bg-slate-800,
+  .rounded-2xl,
+  .shadow-xl {
+    box-shadow: none !important;
+    border: none !important;
+    background: white !important;
+    margin: 0 !important;
+    padding: 1rem !important;
+    border-radius: 0 !important;
+  }
+
+  /* Headers with dark background - #14445A */
+  .bg-gradient-to-r,
+  h2.text-2xl,
+  .section-header {
+    background: #14445a !important;
+    color: white !important;
+    padding: 1.5rem !important;
+    text-align: center !important;
+    margin-bottom: 1rem !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Form container */
+  .form-container,
+  .strategies-form {
+    box-shadow: none !important;
+    border: none !important;
+    margin: 0 !important;
+    background: white !important;
+  }
+
+  /* Form rows - 3 columns grid */
+  .grid.grid-cols-1,
+  .grid.grid-cols-2,
+  .grid.grid-cols-3,
+  .space-y-6 {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 0.2rem !important;
+    margin-bottom: 0.2rem !important;
+    page-break-inside: avoid;
+  }
+
+  /* Form groups with cyan gradient borders */
+  .space-y-6 > div,
+  .grid > div {
+    border: 1px solid #0da9a6 !important;
+    padding: 0.2rem !important;
+    margin: 0 !important;
+    background: linear-gradient(135deg, rgba(13, 169, 166, 0.1), rgba(3, 215, 235, 0.1)) !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Labels with cyan gradient background */
+  label,
+  .block.text-sm,
+  .form-label {
+    font-size: 0.7rem !important;
+    margin-bottom: 0.1rem !important;
+    background: linear-gradient(135deg, #0da9a6, #03d7eb) !important;
+    color: white !important;
+    padding: 0.2rem !important;
+    text-align: center !important;
+    border-radius: 3px !important;
+    display: block !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Inputs and textareas */
+  input,
+  textarea,
+  select {
+    font-size: 0.8rem !important;
+    padding: 0.2rem !important;
+    border: none !important;
+    background: transparent !important;
+    text-align: center !important;
+    min-height: 1.2rem !important;
+    color: black !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Full width sections */
+  .col-span-full,
+  .w-full {
+    grid-column: 1 / -1 !important;
+  }
+
+  /* Objectives and tools grid - 2 columns */
+  .grid.grid-cols-2 {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 0.3rem !important;
+    margin: 0.3rem 0 !important;
+  }
+
+  .grid.grid-cols-2 > div {
+    border: 1px solid #0da9a6 !important;
+    padding: 0.3rem !important;
+    background: linear-gradient(135deg, rgba(13, 169, 166, 0.1), rgba(3, 215, 235, 0.1)) !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Section titles (objectives, tools, evidence) */
+  .text-xl,
+  .text-lg,
+  h3,
+  h4 {
+    background: linear-gradient(135deg, #0da9a6, #03d7eb) !important;
+    color: white !important;
+    font-size: 0.8rem !important;
+    padding: 0.2rem !important;
+    text-align: center !important;
+    border-radius: 3px !important;
+    margin-bottom: 0.5rem !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Evidence/Image sections */
+  .p-8.bg-gray-50,
+  .border-2 {
+    border: 1px solid #0da9a6 !important;
+    background: linear-gradient(135deg, rgba(13, 169, 166, 0.1), rgba(3, 215, 235, 0.1)) !important;
+    padding: 0.5rem !important;
+    margin: 0.3rem 0 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Images */
+  img {
+    max-width: 200px !important;
+    max-height: 200px !important;
+    object-fit: cover !important;
+    border-radius: 8px !important;
+  }
+
+  /* Checkboxes and tool items */
+  .flex.items-center.gap-2,
+  .checkbox-group label {
+    font-size: 0.75rem !important;
+    padding: 0.2rem !important;
+  }
+
+  /* Page breaks */
+  .page-break-inside-avoid {
+    page-break-inside: avoid;
+  }
+
+  /* Ensure all colors print correctly */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Remove shadows and rounded corners */
+  .rounded-lg,
+  .rounded-xl,
+  .rounded-2xl,
+  .shadow-lg,
+  .shadow-xl {
+    border-radius: 0 !important;
+    box-shadow: none !important;
   }
 }
 
