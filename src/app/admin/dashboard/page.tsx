@@ -466,6 +466,8 @@ function EvidenceReportsGenerator() {
   const ExchangeVisitForm = dynamic(() => import('@/components/evidence/ExchangeVisitForm'), { ssr: false });
   const GeneralEvidenceForm = dynamic(() => import('@/components/evidence/GeneralEvidenceForm'), { ssr: false });
   const ProgramExecutionForm = dynamic(() => import('@/components/evidence/ProgramExecutionForm'), { ssr: false });
+  const AchievementForm = dynamic(() => import('@/components/evidence/AchievementForm'), { ssr: false });
+  const ProfessionalCommunitiesForm = dynamic(() => import('@/components/evidence/ProfessionalCommunitiesForm'), { ssr: false });
 
   const evidenceTypes = [
     {
@@ -626,7 +628,15 @@ function EvidenceReportsGenerator() {
           <ProgramExecutionForm onBack={() => setSelectedType(null)} />
         )}
         
-        {selectedType && !["strategies", "visits", "general", "programs"].includes(selectedType) && (
+        {selectedType === "achievement" && (
+          <AchievementForm onBack={() => setSelectedType(null)} />
+        )}
+        
+        {selectedType === "communities" && (
+          <ProfessionalCommunitiesForm onBack={() => setSelectedType(null)} />
+        )}
+        
+        {selectedType && !["strategies", "visits", "general", "programs", "achievement", "communities"].includes(selectedType) && (
           <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 p-8">
             <div className="text-center py-20">
               <div className="text-6xl mb-4">
