@@ -437,7 +437,7 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
           </div>
 
           <div class="info-section">
-              <div class="section-title">بيانات البرنامج</div>
+              <div class="section-title">${formData.programName || 'اسم التقرير'}</div>
               <div class="info-grid">
                   ${formData.performanceItem ? `
                   <div class="info-item">
@@ -451,14 +451,10 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
                       <div class="info-value">${formData.performanceElement}</div>
                   </div>
                   ` : ''}
-                  <div class="info-item">
-                      <div class="info-label">اسم البرنامج</div>
-                      <div class="info-value">${formData.programName || 'غير محدد'}</div>
-                  </div>
                   ${formData.programGoals.filter(g => g.trim()).length > 0 ? `
                   <div class="info-item">
                       <div class="info-label">أهداف البرنامج</div>
-                      <div class="info-value">${formData.programGoals.filter(g => g.trim()).join(' - ')}</div>
+                      <div class="info-value">${formData.programGoals.filter(g => g.trim()).map((goal, idx) => `${idx + 1}. ${goal}`).join(' - ')}</div>
                   </div>
                   ` : ''}
                   <div class="info-item">
@@ -629,12 +625,12 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
               </div>
             )}
             <div className="md:col-span-2">
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">اسم البرنامج</label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">اسم التقرير</label>
               <input
                 type="text"
                 value={formData.programName}
                 onChange={(e) => setFormData({...formData, programName: e.target.value})}
-                placeholder="مثال: برنامج تحفيز التفوق الدراسي"
+                placeholder="مثال: نشاط أو استراتيجية أو تطبيق"
                 className="w-full px-4 py-2 border-2 border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
               />
             </div>
