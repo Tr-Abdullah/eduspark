@@ -4851,7 +4851,7 @@ function GeneralReportsGenerator() {
 
   const [formData, setFormData] = useState({
     teacherName: "عبدالله حسن الفيفي",
-    schoolName: "مدرسة ابن سيناء المتوسطة وبرنامجي العوق الفكري والتوحد",
+    schoolName: "مدرسة ابن سيناء المتوسطة",
     principalName: "احمد علي كريري",
     academicYear: "1447",
     performanceItem: "", // المعيار من معايير الأداء الوظيفي
@@ -4881,6 +4881,7 @@ function GeneralReportsGenerator() {
   const reportPreviewRef = useRef<HTMLDivElement | null>(null);
   const [logoImage, setLogoImage] = useState<string>("");
   const [signatureImage, setSignatureImage] = useState<string>("");
+  const [principalSignatureImage, setPrincipalSignatureImage] = useState<string>("");
   const [barcodeImage, setBarcodeImage] = useState<string>("");
   const [showBarcodeModal, setShowBarcodeModal] = useState(false);
 
@@ -4901,6 +4902,17 @@ function GeneralReportsGenerator() {
       const reader = new FileReader();
       reader.onloadend = () => {
         setSignatureImage(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handlePrincipalSignatureUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPrincipalSignatureImage(reader.result as string);
       };
       reader.readAsDataURL(file);
     }
@@ -4932,7 +4944,197 @@ function GeneralReportsGenerator() {
   };
 
   const handlePrint = () => {
-    window.print();
+    const toArabicNumbers = (str: string): string => {
+      const arabicNumbers = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+      return str.replace(/[0-9]/g, (d) => arabicNumbers[parseInt(d)]);
+    };
+
+    const printWindow = window.open('', '_blank');
+    if (!printWindow) return;
+
+    // جمع محتوى التقرير من الصفحة الحالية
+    const reportContent = document.getElementById('general-report-content')?.innerHTML || '';
+
+    const htmlContent = `
+      <!DOCTYPE html>
+      <html lang="ar" dir="rtl">
+      <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>تقرير ${formData.programName} - ${formData.schoolName}</title>
+          <style>
+              * {
+                  margin: 0;
+                  padding: 0;
+                  box-sizing: border-box;
+              }
+              body {
+                  font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+                  margin: 10px;
+                  direction: rtl;
+                  line-height: 1.6;
+                  color: #333;
+                  font-size: 14px;
+                  background: white !important;
+              }
+              .header {
+                  background: #15445A !important;
+                  color: white !important;
+                  padding: 0.4rem 0.8rem;
+                  text-align: center;
+                  border-radius: 8px;
+                  margin-bottom: 0.8rem;
+                  display: flex;
+                  align-items: center;
+                  justify-content: space-between;
+                  gap: 1rem;
+              }
+              .logo-container {
+                  width: 150px;
+                  height: 150px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+              }
+              .logo-container img {
+                  width: 120px;
+                  height: 120px;
+                  object-fit: contain;
+              }
+              .header-text {
+                  flex: 1;
+                  text-align: center;
+              }
+              .header-text h3 {
+                  margin: 0 0 0.2rem 0;
+                  font-size: 1.1rem;
+              }
+              .header-text h4 {
+                  margin: 0 0 0.15rem 0;
+                  font-size: 0.9rem;
+              }
+              .school-name-header {
+                  margin-top: 0.3rem;
+                  font-size: 1rem;
+                  font-weight: bold;
+              }
+              .signature-section {
+                  margin-top: 0.3rem;
+                  display: grid;
+                  grid-template-columns: 1fr auto 1fr;
+                  gap: 1.5rem;
+                  align-items: end;
+              }
+              .signature-box {
+                  padding: 0.3rem;
+                  text-align: center;
+                  min-height: 60px;
+              }
+              .signature-box-title {
+                  color: #333 !important;
+                  padding: 0.2rem;
+                  font-weight: bold;
+                  margin-bottom: 0.15rem;
+                  font-size: 0.9rem;
+              }
+              .signature-name {
+                  font-size: 1rem;
+                  font-weight: bold;
+                  color: #333;
+                  margin: 0.3rem 0;
+              }
+              .signature-box img {
+                  max-width: 150px;
+                  height: 40px;
+                  object-fit: contain;
+                  margin: 0.2rem auto;
+                  display: block;
+              }
+              .barcode-center {
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  padding: 0.5rem;
+              }
+              .barcode-center img {
+                  width: 120px;
+                  height: 120px;
+                  object-fit: contain;
+              }
+              .footer {
+                  background: #15445A !important;
+                  color: white !important;
+                  padding: 0.6rem;
+                  text-align: center;
+                  border-radius: 8px;
+                  margin-top: 0.2rem;
+                  font-size: 0.9rem;
+                  font-weight: bold;
+              }
+              @media print {
+                  * {
+                      print-color-adjust: exact !important;
+                      -webkit-print-color-adjust: exact !important;
+                  }
+                  body {
+                      margin: 0;
+                      font-size: 13px;
+                      background: white !important;
+                  }
+                  @page {
+                      margin: 0.4cm;
+                      size: A4;
+                  }
+              }
+          </style>
+      </head>
+      <body>
+          <div class="header">
+              <div class="logo-container">
+                  ${logoImage ? `<img src="${logoImage}" alt="شعار الوزارة">` : '<div style="width:120px;height:120px;"></div>'}
+              </div>
+              <div class="header-text">
+                  <h3>المملكة العربية السعودية</h3>
+                  <h3>وزارة التعليم</h3>
+                  <h4>الإدارة العامة للتعليم بمنطقة جازان</h4>
+                  <div class="school-name-header">${formData.schoolName || 'اسم المدرسة'}</div>
+              </div>
+              <div class="logo-container">
+                  <div style="width:120px;height:120px;"></div>
+              </div>
+          </div>
+
+          ${reportContent}
+
+          <div class="signature-section">
+              <div class="signature-box">
+                  <div class="signature-box-title">المعلم</div>
+                  <div class="signature-name">${formData.teacherName || 'غير محدد'}</div>
+                  ${signatureImage ? `<img src="${signatureImage}" alt="توقيع المعلم">` : '<div style="height:40px;"></div>'}
+              </div>
+              <div class="barcode-center">
+                  ${barcodeImage ? `<img src="${barcodeImage}" alt="الباركود">` : ''}
+              </div>
+              <div class="signature-box">
+                  <div class="signature-box-title">مدير المدرسة</div>
+                  <div class="signature-name">${formData.principalName || 'غير محدد'}</div>
+                  ${principalSignatureImage ? `<img src="${principalSignatureImage}" alt="توقيع المدير">` : '<div style="height:40px;"></div>'}
+              </div>
+          </div>
+
+          <div class="footer">
+              العام الدراسي ${toArabicNumbers(formData.academicYear)}
+          </div>
+      </body>
+      </html>
+    `;
+
+    printWindow.document.write(htmlContent);
+    printWindow.document.close();
+
+    setTimeout(() => {
+      printWindow.print();
+    }, 500);
   };
 
   // تغيير عنوان الصفحة عند المعاينة
@@ -5375,7 +5577,7 @@ function GeneralReportsGenerator() {
           </div>
 
           {/* محتوى التقرير */}
-          <div className="p-2 sm:p-3 space-y-2">
+          <div id="general-report-content" className="p-2 sm:p-3 space-y-2">
             {/* البيانات الأساسية */}
             <div className="bg-gradient-to-r from-teal-50 to-cyan-50 rounded-lg p-2 border border-teal-200">
               {/* اسم البرنامج وأهداف البرنامج جنباً إلى جنب */}
@@ -5793,6 +5995,40 @@ function GeneralReportsGenerator() {
                       type="file"
                       accept="image/*"
                       onChange={handleSignatureUpload}
+                      className="hidden"
+                    />
+                    <svg className="w-12 h-12 mx-auto text-blue-400 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                    </svg>
+                    <p className="text-sm font-semibold text-blue-600 dark:text-blue-400">انقر لرفع صورة التوقيع</p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">PNG, JPG أو SVG</p>
+                  </label>
+                )}
+              </div>
+            </div>
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">توقيع المدير:</label>
+              <div className="border-2 border-dashed border-blue-300 dark:border-blue-600 rounded-lg p-4 text-center bg-white dark:bg-slate-800">
+                {principalSignatureImage ? (
+                  <div className="relative">
+                    <img 
+                      src={principalSignatureImage} 
+                      alt="توقيع المدير" 
+                      className="max-h-24 mx-auto object-contain mb-3"
+                    />
+                    <button
+                      onClick={() => setPrincipalSignatureImage("")}
+                      className="mt-2 px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg text-sm font-semibold transition-colors"
+                    >
+                      حذف الصورة
+                    </button>
+                  </div>
+                ) : (
+                  <label className="cursor-pointer block">
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handlePrincipalSignatureUpload}
                       className="hidden"
                     />
                     <svg className="w-12 h-12 mx-auto text-blue-400 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
