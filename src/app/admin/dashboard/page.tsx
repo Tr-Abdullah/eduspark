@@ -463,6 +463,9 @@ function EvidenceReportsGenerator() {
 
   // Import the forms dynamically
   const StrategiesForm = dynamic(() => import('@/components/evidence/StrategiesForm'), { ssr: false });
+  const ExchangeVisitForm = dynamic(() => import('@/components/evidence/ExchangeVisitForm'), { ssr: false });
+  const GeneralEvidenceForm = dynamic(() => import('@/components/evidence/GeneralEvidenceForm'), { ssr: false });
+  const ProgramExecutionForm = dynamic(() => import('@/components/evidence/ProgramExecutionForm'), { ssr: false });
 
   const evidenceTypes = [
     {
@@ -611,7 +614,19 @@ function EvidenceReportsGenerator() {
           <StrategiesForm onBack={() => setSelectedType(null)} />
         )}
         
-        {selectedType && selectedType !== "strategies" && (
+        {selectedType === "visits" && (
+          <ExchangeVisitForm onBack={() => setSelectedType(null)} />
+        )}
+        
+        {selectedType === "general" && (
+          <GeneralEvidenceForm onBack={() => setSelectedType(null)} />
+        )}
+        
+        {selectedType === "programs" && (
+          <ProgramExecutionForm onBack={() => setSelectedType(null)} />
+        )}
+        
+        {selectedType && !["strategies", "visits", "general", "programs"].includes(selectedType) && (
           <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 p-8">
             <div className="text-center py-20">
               <div className="text-6xl mb-4">
