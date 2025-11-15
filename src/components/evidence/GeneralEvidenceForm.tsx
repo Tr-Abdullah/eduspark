@@ -95,6 +95,7 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
     executionMonth: "",
     executionYear: "",
     targetAudience: "الصف الثالث المتوسط",
+    implementer: "عبدالله حسن الفيفي",
   });
 
   const [logoImage, setLogoImage] = useState<string>("");
@@ -352,7 +353,7 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
                   border: 2px solid #3D7EB9 !important;
               }
               .signature-section {
-                  margin-top: 1rem;
+                  margin-top: 0.5rem;
                   display: grid;
                   grid-template-columns: 1fr auto 1fr;
                   gap: 1.5rem;
@@ -452,9 +453,11 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
                   </div>
                   ` : ''}
                   ${formData.programGoals.filter(g => g.trim()).length > 0 ? `
-                  <div class="info-item">
+                  <div class="info-item full-width">
                       <div class="info-label">أهداف البرنامج</div>
-                      <div class="info-value">${formData.programGoals.filter(g => g.trim()).map((goal, idx) => `${idx + 1}. ${goal}`).join(' - ')}</div>
+                      <div class="info-value" style="display: flex; flex-direction: column; gap: 0.3rem;">
+                          ${formData.programGoals.filter(g => g.trim()).map((goal, idx) => `<div>${idx + 1}. ${goal}</div>`).join('')}
+                      </div>
                   </div>
                   ` : ''}
                   <div class="info-item">
@@ -464,6 +467,10 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
                   <div class="info-item">
                       <div class="info-label">المستهدفون</div>
                       <div class="info-value">${formData.targetAudience || 'غير محدد'}</div>
+                  </div>
+                  <div class="info-item">
+                      <div class="info-label">المنفذ</div>
+                      <div class="info-value">${formData.implementer || 'غير محدد'}</div>
                   </div>
               </div>
           </div>
@@ -715,13 +722,23 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
                 </div>
               </div>
             </div>
-            <div className="md:col-span-2">
+            <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">المستهدفون</label>
               <input
                 type="text"
                 value={formData.targetAudience}
                 onChange={(e) => setFormData({...formData, targetAudience: e.target.value})}
                 placeholder="مثال: طلاب الصف الثالث المتوسط"
+                className="w-full px-4 py-2 border-2 border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">المنفذ</label>
+              <input
+                type="text"
+                value={formData.implementer}
+                onChange={(e) => setFormData({...formData, implementer: e.target.value})}
+                placeholder="مثال: اسم المعلم المنفذ"
                 className="w-full px-4 py-2 border-2 border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
               />
             </div>
