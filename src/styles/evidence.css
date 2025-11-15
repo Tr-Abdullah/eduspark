@@ -1,28 +1,42 @@
 /* Evidence Forms Styles - Based on alshawahed.com design */
 
+/* Map Tailwind classes to alshawahed.com structure */
+.grid.grid-cols-1,
+.grid.grid-cols-2,
+.grid.grid-cols-3,
+.grid.md\:grid-cols-3 {
+  display: grid;
+}
+
 /* Print Styles for Evidence Reports - Exact Match with alshawahed.com */
 @media print {
+  @page {
+    size: A4;
+    margin: 15mm;
+  }
+
   body {
     background: white !important;
     margin: 0;
     padding: 0;
   }
 
-  /* Hide all buttons and navigation */
+  /* Hide all buttons, navigation and selection page */
   button,
   .bg-gray-100,
   .dark\:bg-slate-700,
   header,
   nav,
-  .back-btn,
-  .btn-group,
-  .no-print {
+  .selection-page,
+  svg {
     display: none !important;
   }
 
   /* Container adjustments */
   .max-w-4xl,
-  .max-w-7xl {
+  .max-w-6xl,
+  .max-w-7xl,
+  .mx-auto {
     max-width: 100% !important;
     margin: 0 !important;
   }
@@ -32,87 +46,186 @@
   .rounded-2xl,
   .shadow-xl {
     box-shadow: none !important;
-    border: none !important;
     background: white !important;
     margin: 0 !important;
-    padding: 1rem !important;
+    padding: 0 !important;
     border-radius: 0 !important;
   }
 
-  /* Headers with dark background - #14445A */
+  /* Header with gradient - Convert to solid dark blue */
   .bg-gradient-to-r,
-  h2.text-2xl,
-  .section-header {
+  .from-blue-500,
+  .from-green-500,
+  .from-purple-500,
+  .from-orange-500,
+  .from-red-500,
+  .from-teal-500 {
     background: #14445a !important;
     color: white !important;
-    padding: 1.5rem !important;
+    padding: 1rem !important;
     text-align: center !important;
-    margin-bottom: 1rem !important;
+    margin-bottom: 0.5rem !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
+    display: block !important;
+  }
+
+  h2.text-2xl {
+    font-size: 1.2rem !important;
+    color: white !important;
+  }
+
+  p.text-blue-100,
+  p.text-green-100,
+  p.text-purple-100 {
+    display: none !important;
   }
 
   /* Form container */
-  .form-container,
-  .strategies-form {
-    box-shadow: none !important;
-    border: none !important;
-    margin: 0 !important;
-    background: white !important;
+  .p-8,
+  .p-6 {
+    padding: 1rem !important;
   }
 
-  /* Form rows - 3 columns grid */
-  .grid.grid-cols-1,
-  .grid.grid-cols-2,
-  .grid.grid-cols-3,
   .space-y-6 {
+    display: block !important;
+  }
+
+  /* Grid layouts - Force 3 columns for main fields */
+  .grid.grid-cols-1,
+  .grid.md\:grid-cols-3,
+  .space-y-6 > .grid {
     display: grid !important;
     grid-template-columns: repeat(3, 1fr) !important;
     gap: 0.2rem !important;
     margin-bottom: 0.2rem !important;
-    page-break-inside: avoid;
+    page-break-inside: avoid !important;
   }
 
-  /* Form groups with cyan gradient borders */
-  .space-y-6 > div,
-  .grid > div {
+  /* Individual form fields */
+  .grid > div,
+  .space-y-6 > div {
     border: 1px solid #0da9a6 !important;
-    padding: 0.2rem !important;
+    padding: 0.3rem !important;
     margin: 0 !important;
+    background: linear-gradient(135deg, rgba(13, 169, 166, 0.1), rgba(3, 215, 235, 0.1)) !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    page-break-inside: avoid !important;
+  }
+
+  /* Labels */
+  label,
+  .block.text-sm {
+    font-size: 0.7rem !important;
+    margin-bottom: 0.1rem !important;
+    background: linear-gradient(135deg, #0da9a6, #03d7eb) !important;
+    color: white !important;
+    padding: 0.3rem !important;
+    text-align: center !important;
+    border-radius: 3px !important;
+    display: block !important;
+    font-weight: 600 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Inputs, textareas, selects */
+  input,
+  textarea,
+  select,
+  .px-4,
+  .py-3,
+  .border {
+    font-size: 0.75rem !important;
+    padding: 0.2rem !important;
+    border: none !important;
+    background: transparent !important;
+    text-align: center !important;
+    min-height: auto !important;
+    color: black !important;
+    width: 100% !important;
+    display: block !important;
+  }
+
+  textarea {
+    min-height: 2rem !important;
+    text-align: right !important;
+  }
+
+  /* Objectives and Tools - 2 column grid */
+  .grid.grid-cols-2 {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 0.3rem !important;
+    margin: 0.5rem 0 !important;
+    grid-column: 1 / -1 !important;
+  }
+
+  .grid.grid-cols-2 > div {
+    border: 1px solid #0da9a6 !important;
+    padding: 0.5rem !important;
     background: linear-gradient(135deg, rgba(13, 169, 166, 0.1), rgba(3, 215, 235, 0.1)) !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
   }
 
-  /* Labels with cyan gradient background */
-  label,
-  .block.text-sm,
-  .form-label {
-    font-size: 0.7rem !important;
-    margin-bottom: 0.1rem !important;
+  /* Titles for objectives, tools sections */
+  .text-xl,
+  .text-lg,
+  h3,
+  h4 {
     background: linear-gradient(135deg, #0da9a6, #03d7eb) !important;
     color: white !important;
-    padding: 0.2rem !important;
+    font-size: 0.85rem !important;
+    padding: 0.3rem !important;
     text-align: center !important;
     border-radius: 3px !important;
-    display: block !important;
+    margin-bottom: 0.5rem !important;
+    font-weight: 700 !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
   }
 
-  /* Inputs and textareas */
-  input,
-  textarea,
-  select {
-    font-size: 0.8rem !important;
+  /* Checkboxes section */
+  .flex.flex-wrap,
+  .gap-4 {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 0.3rem !important;
+  }
+
+  .flex.items-center.gap-2 {
+    font-size: 0.7rem !important;
     padding: 0.2rem !important;
-    border: none !important;
-    background: transparent !important;
-    text-align: center !important;
-    min-height: 1.2rem !important;
-    color: black !important;
+  }
+
+  input[type="checkbox"] {
+    width: 12px !important;
+    height: 12px !important;
+    margin-left: 0.3rem !important;
+  }
+
+  /* Images section */
+  .bg-gray-50,
+  .dark\:bg-slate-700 {
+    border: 1px solid #0da9a6 !important;
+    background: linear-gradient(135deg, rgba(13, 169, 166, 0.1), rgba(3, 215, 235, 0.1)) !important;
+    padding: 0.5rem !important;
+    margin: 0.5rem 0 !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
+    grid-column: 1 / -1 !important;
+  }
+
+  /* Images */
+  img {
+    max-width: 180px !important;
+    max-height: 180px !important;
+    object-fit: cover !important;
+    border-radius: 4px !important;
+    display: inline-block !important;
+    margin: 0.2rem !important;
   }
 
   /* Full width sections */
@@ -121,83 +234,37 @@
     grid-column: 1 / -1 !important;
   }
 
-  /* Objectives and tools grid - 2 columns */
-  .grid.grid-cols-2 {
-    display: grid !important;
-    grid-template-columns: 1fr 1fr !important;
-    gap: 0.3rem !important;
-    margin: 0.3rem 0 !important;
-  }
-
-  .grid.grid-cols-2 > div {
-    border: 1px solid #0da9a6 !important;
-    padding: 0.3rem !important;
-    background: linear-gradient(135deg, rgba(13, 169, 166, 0.1), rgba(3, 215, 235, 0.1)) !important;
-    -webkit-print-color-adjust: exact !important;
-    print-color-adjust: exact !important;
-  }
-
-  /* Section titles (objectives, tools, evidence) */
-  .text-xl,
-  .text-lg,
-  h3,
-  h4 {
-    background: linear-gradient(135deg, #0da9a6, #03d7eb) !important;
-    color: white !important;
-    font-size: 0.8rem !important;
-    padding: 0.2rem !important;
-    text-align: center !important;
-    border-radius: 3px !important;
-    margin-bottom: 0.5rem !important;
-    -webkit-print-color-adjust: exact !important;
-    print-color-adjust: exact !important;
-  }
-
-  /* Evidence/Image sections */
-  .p-8.bg-gray-50,
-  .border-2 {
-    border: 1px solid #0da9a6 !important;
-    background: linear-gradient(135deg, rgba(13, 169, 166, 0.1), rgba(3, 215, 235, 0.1)) !important;
-    padding: 0.5rem !important;
-    margin: 0.3rem 0 !important;
-    -webkit-print-color-adjust: exact !important;
-    print-color-adjust: exact !important;
-  }
-
-  /* Images */
-  img {
-    max-width: 200px !important;
-    max-height: 200px !important;
-    object-fit: cover !important;
-    border-radius: 8px !important;
-  }
-
-  /* Checkboxes and tool items */
-  .flex.items-center.gap-2,
-  .checkbox-group label {
-    font-size: 0.75rem !important;
-    padding: 0.2rem !important;
-  }
-
-  /* Page breaks */
-  .page-break-inside-avoid {
-    page-break-inside: avoid;
-  }
-
-  /* Ensure all colors print correctly */
+  /* Remove all shadows, transitions, hover effects */
   * {
+    box-shadow: none !important;
+    transition: none !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
   }
 
-  /* Remove shadows and rounded corners */
   .rounded-lg,
   .rounded-xl,
-  .rounded-2xl,
-  .shadow-lg,
-  .shadow-xl {
-    border-radius: 0 !important;
-    box-shadow: none !important;
+  .rounded-2xl {
+    border-radius: 3px !important;
+  }
+
+  /* Spacing adjustments */
+  .mb-6,
+  .mb-8 {
+    margin-bottom: 0.3rem !important;
+  }
+
+  .gap-6 {
+    gap: 0.2rem !important;
+  }
+
+  /* Force page breaks */
+  .page-break {
+    page-break-before: always;
+  }
+
+  .page-break-avoid {
+    page-break-inside: avoid;
   }
 }
 
