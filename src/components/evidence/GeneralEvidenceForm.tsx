@@ -335,36 +335,49 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
               .signature-section {
                   margin-top: 1.5rem;
                   display: grid;
-                  grid-template-columns: 1fr 1fr;
-                  gap: 1rem;
+                  grid-template-columns: 1fr auto 1fr;
+                  gap: 1.5rem;
+                  align-items: start;
               }
               .signature-box {
-                  padding: 0.8rem;
+                  padding: 0.5rem;
                   background: white !important;
                   border: 2px solid #3D7EB9 !important;
                   border-radius: 8px;
                   text-align: center;
+                  min-height: 120px;
               }
               .signature-box-title {
                   background: #15445A !important;
                   color: white !important;
-                  padding: 0.4rem;
+                  padding: 0.3rem;
                   border-radius: 4px;
                   font-weight: bold;
-                  margin-bottom: 0.5rem;
-                  font-size: 1rem;
+                  margin-bottom: 0.4rem;
+                  font-size: 0.9rem;
               }
               .signature-name {
-                  font-size: 1.1rem;
+                  font-size: 1rem;
                   font-weight: bold;
                   color: #333;
-                  margin: 0.5rem 0;
+                  margin: 0.4rem 0;
               }
               .signature-box img {
-                  max-width: 200px;
-                  height: 80px;
+                  max-width: 150px;
+                  height: 60px;
                   object-fit: contain;
-                  margin: 0.5rem auto;
+                  margin: 0.3rem auto;
+              }
+              .barcode-center {
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  padding: 0.5rem;
+              }
+              .barcode-center img {
+                  width: 120px;
+                  height: 120px;
+                  object-fit: contain;
               }
               .footer {
                   background: #15445A !important;
@@ -413,21 +426,27 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
               <div class="section-title">بيانات البرنامج</div>
               <div class="info-grid">
                   ${formData.performanceItem ? `
-                  <div class="info-item full-width">
-                      <div class="info-label">المعيار من معايير الأداء الوظيفي</div>
+                  <div class="info-item">
+                      <div class="info-label">المعيار</div>
                       <div class="info-value">${formData.performanceItem}</div>
                   </div>
                   ` : ''}
                   ${formData.performanceElement ? `
-                  <div class="info-item full-width">
+                  <div class="info-item">
                       <div class="info-label">المؤشر</div>
                       <div class="info-value">${formData.performanceElement}</div>
                   </div>
                   ` : ''}
-                  <div class="info-item full-width">
+                  <div class="info-item">
                       <div class="info-label">اسم البرنامج</div>
                       <div class="info-value">${formData.programName || 'غير محدد'}</div>
                   </div>
+                  ${formData.programGoals.filter(g => g.trim()).length > 0 ? `
+                  <div class="info-item">
+                      <div class="info-label">أهداف البرنامج</div>
+                      <div class="info-value">${formData.programGoals.filter(g => g.trim()).join(' - ')}</div>
+                  </div>
+                  ` : ''}
                   <div class="info-item">
                       <div class="info-label">تاريخ التنفيذ</div>
                       <div class="info-value">${executionDate || 'غير محدد'}</div>
@@ -438,15 +457,6 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
                   </div>
               </div>
           </div>
-
-          ${formData.programGoals.filter(g => g.trim()).length > 0 ? `
-          <div class="goals-section">
-              <div class="section-title">أهداف البرنامج</div>
-              ${formData.programGoals.filter(g => g.trim()).map((goal, index) => 
-                `<div class="goal-item">${toArabicNumbers((index + 1).toString())}. ${goal}</div>`
-              ).join('')}
-          </div>
-          ` : ''}
 
           ${Object.values(images).some(img => img) ? `
           <div class="evidence-section">
@@ -464,7 +474,10 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
               <div class="signature-box">
                   <div class="signature-box-title">المعلم</div>
                   <div class="signature-name">${formData.teacherName || 'غير محدد'}</div>
-                  ${signatureImage ? `<img src="${signatureImage}" alt="توقيع المعلم">` : '<div style="height:80px;"></div>'}
+                  ${signatureImage ? `<img src="${signatureImage}" alt="توقيع المعلم">` : '<div style="height:60px;"></div>'}
+              </div>
+              <div class="barcode-center">
+                  ${barcodeImage ? `<img src="${barcodeImage}" alt="الباركود">` : ''}
               </div>
               <div class="signature-box">
                   <div class="signature-box-title">مدير المدرسة</div>
@@ -571,7 +584,7 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
           <h3 className="text-lg font-bold text-gray-800 dark:text-white mb-4">بيانات البرنامج</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="md:col-span-2">
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">المعيار من معايير الأداء الوظيفي</label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">المعيار</label>
               <select
                 value={formData.performanceItem}
                 onChange={(e) => {
