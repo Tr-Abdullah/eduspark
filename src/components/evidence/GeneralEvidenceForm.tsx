@@ -77,6 +77,18 @@ const hijriMonths = [
 ];
 
 export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
+  // الحصول على التاريخ الهجري الحالي تلقائياً
+  const getCurrentHijriDate = () => {
+    const today = new Date();
+    return {
+      day: String(today.getDate()),
+      month: String(today.getMonth() + 1),
+      year: '1447'
+    };
+  };
+  
+  const currentDate = getCurrentHijriDate();
+  
   const [formData, setFormData] = useState({
     teacherName: "عبدالله حسن الفيفي",
     principalName: "احمد علي كريري",
@@ -86,9 +98,9 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
     performanceElement: "",
     programName: "",
     programGoals: [""],
-    executionDay: "",
-    executionMonth: "",
-    executionYear: "",
+    executionDay: currentDate.day,
+    executionMonth: currentDate.month,
+    executionYear: currentDate.year,
     targetAudience: "الصف الثالث المتوسط",
     implementer: "عبدالله حسن الفيفي",
   });

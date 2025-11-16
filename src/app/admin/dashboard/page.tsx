@@ -1289,27 +1289,27 @@ function MOEReportGenerator() {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '0.4rem' }}>
             <div style={{ display: 'flex', alignItems: 'center', border: '1px solid #3D7EB9', padding: '0.25rem', borderRadius: '4px', background: 'white' }}>
               <div style={{ color: '#3D7EB9', fontWeight: 'bold', fontSize: '0.85rem', minWidth: '100px', borderRight: '2px solid #3D7EB9', paddingRight: '0.3rem', marginRight: '0.3rem' }}>الاستراتيجية</div>
-              <div style={{ flex: 1, fontSize: '0.85rem', fontWeight: 'bold' }}>{formData.strategy}</div>
+              <div style={{ flex: 1, fontSize: '0.85rem', fontWeight: 'bold', color: '#1a1a1a' }}>{formData.strategy}</div>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', border: '1px solid #3D7EB9', padding: '0.25rem', borderRadius: '4px', background: 'white' }}>
               <div style={{ color: '#3D7EB9', fontWeight: 'bold', fontSize: '0.85rem', minWidth: '100px', borderRight: '2px solid #3D7EB9', paddingRight: '0.3rem', marginRight: '0.3rem' }}>المادة</div>
-              <div style={{ flex: 1, fontSize: '0.85rem', fontWeight: 'bold' }}>{formData.subject}</div>
+              <div style={{ flex: 1, fontSize: '0.85rem', fontWeight: 'bold', color: '#1a1a1a' }}>{formData.subject}</div>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', border: '1px solid #3D7EB9', padding: '0.25rem', borderRadius: '4px', background: 'white' }}>
               <div style={{ color: '#3D7EB9', fontWeight: 'bold', fontSize: '0.85rem', minWidth: '100px', borderRight: '2px solid #3D7EB9', paddingRight: '0.3rem', marginRight: '0.3rem' }}>تاريخ التنفيذ</div>
-              <div style={{ flex: 1, fontSize: '0.85rem', fontWeight: 'bold' }}>{formData.year}/{formData.month}/{formData.day}</div>
+              <div style={{ flex: 1, fontSize: '0.85rem', fontWeight: 'bold', color: '#1a1a1a' }}>{formData.year}/{formData.month}/{formData.day}</div>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', border: '1px solid #3D7EB9', padding: '0.25rem', borderRadius: '4px', background: 'white' }}>
               <div style={{ color: '#3D7EB9', fontWeight: 'bold', fontSize: '0.85rem', minWidth: '100px', borderRight: '2px solid #3D7EB9', paddingRight: '0.3rem', marginRight: '0.3rem' }}>عدد الطلاب</div>
-              <div style={{ flex: 1, fontSize: '0.85rem', fontWeight: 'bold' }}>{formData.students} طالب</div>
+              <div style={{ flex: 1, fontSize: '0.85rem', fontWeight: 'bold', color: '#1a1a1a' }}>{formData.students} طالب</div>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', border: '1px solid #3D7EB9', padding: '0.25rem', borderRadius: '4px', background: 'white' }}>
               <div style={{ color: '#3D7EB9', fontWeight: 'bold', fontSize: '0.85rem', minWidth: '100px', borderRight: '2px solid #3D7EB9', paddingRight: '0.3rem', marginRight: '0.3rem' }}>المرحلة الدراسية</div>
-              <div style={{ flex: 1, fontSize: '0.85rem', fontWeight: 'bold' }}>{formData.stage}</div>
+              <div style={{ flex: 1, fontSize: '0.85rem', fontWeight: 'bold', color: '#1a1a1a' }}>{formData.stage}</div>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', border: '1px solid #3D7EB9', padding: '0.25rem', borderRadius: '4px', background: 'white' }}>
               <div style={{ color: '#3D7EB9', fontWeight: 'bold', fontSize: '0.85rem', minWidth: '100px', borderRight: '2px solid #3D7EB9', paddingRight: '0.3rem', marginRight: '0.3rem' }}>الفصل</div>
-              <div style={{ flex: 1, fontSize: '0.85rem', fontWeight: 'bold' }}>{formData.semester}</div>
+              <div style={{ flex: 1, fontSize: '0.85rem', fontWeight: 'bold', color: '#1a1a1a' }}>{formData.semester}</div>
             </div>
           </div>
         </div>
@@ -1320,11 +1320,11 @@ function MOEReportGenerator() {
             <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '0.4rem' }}>
               <div style={{ display: 'flex', alignItems: 'center', border: '1px solid #3D7EB9', padding: '0.25rem', borderRadius: '4px', background: 'white' }}>
                 <div style={{ color: '#3D7EB9', fontWeight: 'bold', fontSize: '0.85rem', minWidth: '100px', borderRight: '2px solid #3D7EB9', paddingRight: '0.3rem', marginRight: '0.3rem' }}>البند</div>
-                <div style={{ flex: 1, fontSize: '0.85rem', fontWeight: 'bold' }}>{formData.performanceItem}</div>
+                <div style={{ flex: 1, fontSize: '0.85rem', fontWeight: 'bold', color: '#1a1a1a' }}>{formData.performanceItem}</div>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', border: '1px solid #3D7EB9', padding: '0.25rem', borderRadius: '4px', background: 'white' }}>
                 <div style={{ color: '#3D7EB9', fontWeight: 'bold', fontSize: '0.85rem', minWidth: '100px', borderRight: '2px solid #3D7EB9', paddingRight: '0.3rem', marginRight: '0.3rem' }}>العنصر</div>
-                <div style={{ flex: 1, fontSize: '0.85rem', fontWeight: 'bold' }}>{formData.performanceElement}</div>
+                <div style={{ flex: 1, fontSize: '0.85rem', fontWeight: 'bold', color: '#1a1a1a' }}>{formData.performanceElement}</div>
               </div>
             </div>
           </div>
@@ -1340,13 +1340,13 @@ function MOEReportGenerator() {
               {formData.unit && (
                 <div style={{ display: 'flex', alignItems: 'center', border: '1px solid #3D7EB9', padding: '0.25rem', borderRadius: '4px', background: 'white' }}>
                   <div style={{ color: '#3D7EB9', fontWeight: 'bold', fontSize: '0.85rem', minWidth: '100px', borderRight: '2px solid #3D7EB9', paddingRight: '0.3rem', marginRight: '0.3rem' }}>الوحدة</div>
-                  <div style={{ flex: 1, fontSize: '0.85rem', fontWeight: 'bold' }}>{formData.unit}</div>
+                  <div style={{ flex: 1, fontSize: '0.85rem', fontWeight: 'bold', color: '#1a1a1a' }}>{formData.unit}</div>
                 </div>
               )}
               {formData.lesson && (
                 <div style={{ display: 'flex', alignItems: 'center', border: '1px solid #3D7EB9', padding: '0.25rem', borderRadius: '4px', background: 'white' }}>
                   <div style={{ color: '#3D7EB9', fontWeight: 'bold', fontSize: '0.85rem', minWidth: '100px', borderRight: '2px solid #3D7EB9', paddingRight: '0.3rem', marginRight: '0.3rem' }}>الدرس</div>
-                  <div style={{ flex: 1, fontSize: '0.85rem', fontWeight: 'bold' }}>{formData.lesson}</div>
+                  <div style={{ flex: 1, fontSize: '0.85rem', fontWeight: 'bold', color: '#1a1a1a' }}>{formData.lesson}</div>
                 </div>
               )}
             </div>
@@ -1367,7 +1367,7 @@ function MOEReportGenerator() {
                     <div style={{ width: '12px', height: '12px', marginTop: '2px', background: '#3D7EB9', borderRadius: '2px', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                       <span style={{ color: 'white', fontSize: '10px' }}>✓</span>
                     </div>
-                    <span>{tool.label}</span>
+                    <span style={{ color: '#1a1a1a' }}>{tool.label}</span>
                   </div>
                 ) : null;
               })}
@@ -1387,7 +1387,7 @@ function MOEReportGenerator() {
                   <div style={{ width: '12px', height: '12px', marginTop: '2px', background: '#3D7EB9', borderRadius: '2px', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                     <span style={{ color: 'white', fontSize: '10px' }}>✓</span>
                   </div>
-                  <span>{obj}</span>
+                  <span style={{ color: '#1a1a1a' }}>{obj}</span>
                 </div>
               ))}
             </div>
@@ -2226,6 +2226,15 @@ function PerformanceReportGenerator() {
   const [selectedReport, setSelectedReport] = useState<number>(1);
   const [showPreview, setShowPreview] = useState(false);
   const reportContainerRef = useRef<HTMLDivElement>(null);
+  
+  // الحصول على التاريخ الهجري الحالي تلقائياً
+  const getCurrentHijriDate = () => {
+    const today = new Date();
+    const day = String(today.getDate());
+    const month = String(today.getMonth() + 1);
+    return `${day}/${month}/1447`;
+  };
+  
   const [formData, setFormData] = useState({
     teacherName: "عبدالله حسن الفيفي",
     principalName: "احمد علي كريري",
@@ -2234,7 +2243,7 @@ function PerformanceReportGenerator() {
     reportItem: "",
     performanceElement: "",
     programName: "",
-    implementationDate: "",
+    implementationDate: getCurrentHijriDate(),
     programObjectives: "",
     targetAudience: ""
   });
