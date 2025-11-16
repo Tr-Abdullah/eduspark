@@ -2314,6 +2314,8 @@ function PerformanceReportGenerator() {
                   margin: 0;
                   padding: 0;
                   box-sizing: border-box;
+                  print-color-adjust: exact !important;
+                  -webkit-print-color-adjust: exact !important;
               }
               body {
                   font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
@@ -2365,8 +2367,77 @@ function PerformanceReportGenerator() {
                   font-size: 1rem;
                   font-weight: bold;
               }
+              .info-section {
+                  background: white !important;
+                  border: 2px solid #3D7EB9 !important;
+                  border-radius: 8px;
+                  padding: 0.5rem;
+                  margin-bottom: 0.6rem;
+              }
+              .section-title {
+                  background: #15445A !important;
+                  color: white !important;
+                  padding: 0.3rem;
+                  border-radius: 4px;
+                  text-align: center;
+                  font-weight: bold;
+                  margin-bottom: 0.5rem;
+                  font-size: 0.95rem;
+              }
+              .info-grid {
+                  display: grid;
+                  grid-template-columns: repeat(2, 1fr);
+                  gap: 0.4rem;
+              }
+              .info-item {
+                  display: flex;
+                  align-items: center;
+                  border: 1px solid #3D7EB9 !important;
+                  padding: 0.25rem;
+                  border-radius: 4px;
+                  background: white !important;
+              }
+              .info-label {
+                  color: #3D7EB9 !important;
+                  font-weight: bold;
+                  font-size: 0.85rem;
+                  min-width: 100px;
+                  border-right: 2px solid #3D7EB9 !important;
+                  padding-right: 0.3rem;
+                  margin-right: 0.3rem;
+              }
+              .info-value {
+                  flex: 1;
+                  font-size: 0.85rem;
+                  font-weight: bold;
+              }
+              .full-width {
+                  grid-column: 1 / -1;
+              }
+              .evidence-section {
+                  margin-top: 0.6rem;
+                  padding: 0.5rem;
+                  background: white !important;
+                  border: 2px solid #3D7EB9 !important;
+                  border-radius: 8px;
+              }
+              .evidence-grid {
+                  display: grid;
+                  grid-template-columns: 1fr 1fr;
+                  gap: 0.5rem;
+                  margin-top: 0.4rem;
+              }
+              .evidence-item img {
+                  width: 100%;
+                  height: 160px;
+                  object-fit: cover;
+                  border-radius: 6px;
+                  border: 2px solid #3D7EB9 !important;
+              }
               .signature-section {
                   margin-top: 0.3rem;
+                  padding: 1rem;
+                  border-top: 2px solid #e5e7eb;
                   display: grid;
                   grid-template-columns: 1fr auto 1fr;
                   gap: 1.5rem;
@@ -2378,9 +2449,9 @@ function PerformanceReportGenerator() {
                   min-height: 60px;
               }
               .signature-box-title {
-                  color: #333 !important;
+                  color: #666 !important;
                   padding: 0.2rem;
-                  font-weight: bold;
+                  font-weight: 600;
                   margin-bottom: 0.15rem;
                   font-size: 0.9rem;
               }
@@ -2400,33 +2471,26 @@ function PerformanceReportGenerator() {
               .barcode-center {
                   display: flex;
                   align-items: center;
-                  justify-center: center;
+                  justify-content: center;
                   padding: 0.5rem;
               }
               .barcode-center img {
-                  width: 120px;
-                  height: 120px;
+                  width: 100px;
+                  height: 100px;
                   object-fit: contain;
               }
               .footer {
-                  background: #15445A !important;
+                  background: linear-gradient(90deg, #3D7EB9 0%, #0DA9A6 50%, #07A869 100%) !important;
                   color: white !important;
-                  padding: 0.6rem;
+                  padding: 0.75rem;
                   text-align: center;
-                  border-radius: 8px;
-                  margin-top: 0.2rem;
-                  font-size: 0.9rem;
+                  font-size: 0.95rem;
                   font-weight: bold;
               }
               @media print {
-                  * {
-                      print-color-adjust: exact !important;
-                      -webkit-print-color-adjust: exact !important;
-                  }
                   body {
                       margin: 0;
                       font-size: 13px;
-                      background: white !important;
                   }
                   @page {
                       margin: 0.4cm;
@@ -2454,7 +2518,7 @@ function PerformanceReportGenerator() {
           ${reportContent}
 
           <div class="signature-section">
-              <div class="signature-box">
+              <div class="signature-box" style="text-align: right;">
                   <div class="signature-box-title">المعلم</div>
                   <div class="signature-name">${formData.teacherName || 'غير محدد'}</div>
                   ${signatureImage ? `<img src="${signatureImage}" alt="توقيع المعلم">` : '<div style="height:40px;"></div>'}
@@ -2462,7 +2526,7 @@ function PerformanceReportGenerator() {
               <div class="barcode-center">
                   ${barcodeImage ? `<img src="${barcodeImage}" alt="الباركود">` : ''}
               </div>
-              <div class="signature-box">
+              <div class="signature-box" style="text-align: left;">
                   <div class="signature-box-title">مدير المدرسة</div>
                   <div class="signature-name">${formData.principalName || 'غير محدد'}</div>
                   ${principalSignatureImage ? `<img src="${principalSignatureImage}" alt="توقيع المدير">` : '<div style="height:40px;"></div>'}
@@ -3052,150 +3116,159 @@ function PerformanceReportGenerator() {
     }));
 
     return (
-      <div id="report-content" className="sheet bg-white border-4 border-gray-300" style={{ fontFamily: "'Helvetica Neue W23', 'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
+      <div className="max-w-4xl mx-auto bg-white border-4 border-gray-300 shadow-xl" style={{ fontFamily: "'Helvetica Neue W23', 'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
         {/* Header */}
-        <div className="text-white px-4 sm:px-8 py-4 sm:py-6" style={{ backgroundColor: '#15445A' }}>
-          <div className="flex items-center justify-center gap-3 sm:gap-4">
-            <div className="bg-[#1a4d5e] rounded-lg flex items-center justify-center p-2" style={{ minWidth: '64px', minHeight: '64px' }}>
+        <div className="text-white px-4 py-3" style={{ background: 'linear-gradient(135deg, #15445A 0%, #1a5570 100%)' }}>
+          <div className="flex items-center justify-center gap-4">
+            <div className="bg-white/10 rounded-lg p-2 backdrop-blur-sm" style={{ minWidth: '80px', minHeight: '80px' }}>
               {logoImage ? (
-                <img src={logoImage} alt="وزارة التعليم" className="object-contain" style={{ maxWidth: '120px', maxHeight: '100px' }} />
+                <img src={logoImage} alt="وزارة التعليم" className="object-contain w-full h-full" style={{ maxWidth: '100px', maxHeight: '80px' }} />
               ) : (
-                <div className="text-white text-xs text-center">ضع الشعار</div>
+                <div className="text-white text-xs text-center flex items-center justify-center h-full">شعار الوزارة</div>
               )}
             </div>
-            <div className="text-center leading-tight">
-              <div className="text-sm sm:text-base font-bold">المملكة العربية السعودية</div>
-              <div className="text-sm sm:text-base font-bold mt-1">وزارة التعليم</div>
-              <div className="text-sm sm:text-base font-bold">الإدارة العامة للتعليم بمنطقة جازان</div>
+            <div className="text-center flex-1">
+              <h3 className="text-base font-bold mb-1">المملكة العربية السعودية</h3>
+              <h3 className="text-base font-bold mb-1">وزارة التعليم</h3>
+              <h4 className="text-sm opacity-90">الإدارة العامة للتعليم بمنطقة جازان</h4>
+              <div className="mt-2 text-lg font-bold">{formData.schoolName}</div>
             </div>
+            <div style={{ minWidth: '80px', minHeight: '80px' }}></div>
           </div>
         </div>
 
-        {/* اسم المدرسة */}
-        <div className="text-center text-white py-2 px-4 sm:px-6" style={{ backgroundColor: '#15445A' }}>
-          <h1 className="text-xl sm:text-2xl font-bold">{formData.schoolName}</h1>
-        </div>
-
-        <div id="performance-report-content" className="p-2 sm:p-3 space-y-2">
-
+        <div id="performance-report-content" className="p-4">
           {/* Program Information Section */}
           {(formData.reportItem || formData.programName || formData.implementationDate || formData.targetAudience || formData.programObjectives) && (
-            <div className="bg-gradient-to-r from-teal-50 to-cyan-50 rounded-lg p-2 border border-teal-200">
-              <div className="text-sm font-bold text-gray-700 mb-1.5 flex items-center gap-1">
-                <span className="text-lg">📊</span>
-                <span>بيانات البرنامج</span>
+            <div className="bg-white border-2 border-[#3D7EB9] rounded-lg p-3 mb-3">
+              <div className="bg-[#15445A] text-white text-center font-bold py-2 rounded mb-3 text-sm">
+                بيانات البرنامج
               </div>
-              <div className="grid gap-2 sm:grid-cols-2 text-sm">
+              <div className="grid grid-cols-2 gap-2">
                 {formData.reportItem && (
-                  <div className="flex gap-1">
-                    <span className="font-bold text-gray-700">البند:</span>
-                    <span className="text-gray-900">{formData.reportItem}</span>
+                  <div className="flex items-center border border-[#3D7EB9] rounded p-2 bg-white">
+                    <span className="font-bold text-[#3D7EB9] text-sm border-r-2 border-[#3D7EB9] pr-2 mr-2" style={{ minWidth: '100px' }}>البند</span>
+                    <span className="text-sm font-bold flex-1">{formData.reportItem}</span>
                   </div>
                 )}
                 {formData.performanceElement && (
-                  <div className="flex gap-1">
-                    <span className="font-bold text-gray-700">العنصر:</span>
-                    <span className="text-gray-900">{formData.performanceElement}</span>
+                  <div className="flex items-center border border-[#3D7EB9] rounded p-2 bg-white">
+                    <span className="font-bold text-[#3D7EB9] text-sm border-r-2 border-[#3D7EB9] pr-2 mr-2" style={{ minWidth: '100px' }}>العنصر</span>
+                    <span className="text-sm font-bold flex-1">{formData.performanceElement}</span>
                   </div>
                 )}
                 {formData.programName && (
-                  <div className="flex gap-1">
-                    <span className="font-bold text-gray-700">اسم البرنامج:</span>
-                    <span className="text-gray-900">{formData.programName}</span>
+                  <div className="flex items-center border border-[#3D7EB9] rounded p-2 bg-white">
+                    <span className="font-bold text-[#3D7EB9] text-sm border-r-2 border-[#3D7EB9] pr-2 mr-2" style={{ minWidth: '100px' }}>اسم البرنامج</span>
+                    <span className="text-sm font-bold flex-1">{formData.programName}</span>
                   </div>
                 )}
                 {formData.implementationDate && (
-                  <div className="flex gap-1">
-                    <span className="font-bold text-gray-700">تاريخ التنفيذ:</span>
-                    <span className="text-gray-900">{formData.implementationDate}</span>
+                  <div className="flex items-center border border-[#3D7EB9] rounded p-2 bg-white">
+                    <span className="font-bold text-[#3D7EB9] text-sm border-r-2 border-[#3D7EB9] pr-2 mr-2" style={{ minWidth: '100px' }}>تاريخ التنفيذ</span>
+                    <span className="text-sm font-bold flex-1">{formData.implementationDate}</span>
                   </div>
                 )}
                 {formData.targetAudience && (
-                  <div className="flex gap-1">
-                    <span className="font-bold text-gray-700">المستهدفون:</span>
-                    <span className="text-gray-900">{formData.targetAudience}</span>
+                  <div className="flex items-center border border-[#3D7EB9] rounded p-2 bg-white col-span-2">
+                    <span className="font-bold text-[#3D7EB9] text-sm border-r-2 border-[#3D7EB9] pr-2 mr-2" style={{ minWidth: '100px' }}>المستهدفون</span>
+                    <span className="text-sm font-bold flex-1">{formData.targetAudience}</span>
+                  </div>
+                )}
+                {formData.programObjectives && (
+                  <div className="flex items-center border border-[#3D7EB9] rounded p-2 bg-white col-span-2">
+                    <span className="font-bold text-[#3D7EB9] text-sm border-r-2 border-[#3D7EB9] pr-2 mr-2" style={{ minWidth: '100px' }}>أهداف البرنامج</span>
+                    <span className="text-sm font-bold flex-1">{formData.programObjectives}</span>
                   </div>
                 )}
               </div>
-              {formData.programObjectives && (
-                <div className="mt-2 pt-2 border-t border-teal-300">
-                  <span className="font-bold text-gray-700 text-sm">أهداف البرنامج:</span>
-                  <p className="text-gray-900 text-sm mt-0.5 whitespace-pre-wrap leading-relaxed">{formData.programObjectives}</p>
-                </div>
-              )}
             </div>
           )}
 
-          <div className="grid gap-1.5 grid-cols-1 sm:grid-cols-2 performance-witness-grid">
-            {witnessCards.map((card, index) => {
-              const colors = [
-                { bg: 'from-blue-600 to-blue-700', border: 'border-blue-200', bgLight: 'bg-blue-50/50' },
-                { bg: 'from-green-600 to-green-700', border: 'border-green-200', bgLight: 'bg-green-50/50' },
-                { bg: 'from-orange-600 to-orange-700', border: 'border-orange-200', bgLight: 'bg-orange-50/50' },
-                { bg: 'from-purple-600 to-purple-700', border: 'border-purple-200', bgLight: 'bg-purple-50/50' }
-              ];
-              const color = colors[index % 4];
-
-              return (
-                <div key={card.id} className={`border ${color.border} rounded p-1 ${color.bgLight}`}>
-                  <div className={`bg-white rounded p-1 border border-dashed ${color.border} flex items-center justify-center`} style={{ aspectRatio: '16 / 9' }}>
-                    {card.image ? (
-                      <img src={card.image} alt={card.placeholder} className="max-w-full max-h-full object-cover rounded" />
-                    ) : (
+          {/* Evidence Section */}
+          <div className="bg-white border-2 border-[#3D7EB9] rounded-lg p-3">
+            <div className="bg-[#15445A] text-white text-center font-bold py-2 rounded mb-3 text-sm">
+              الشواهد
+            </div>
+            <div className="grid grid-cols-2 gap-2">
+              {witnessCards.map((card, index) => (
+                <div key={card.id}>
+                  {card.image ? (
+                    <img 
+                      src={card.image} 
+                      alt={card.placeholder}
+                      className="w-full object-cover rounded border-2 border-[#3D7EB9]"
+                      style={{ height: '160px' }}
+                    />
+                  ) : (
+                    <div className="w-full flex items-center justify-center border-2 border-dashed border-[#3D7EB9] rounded bg-[rgba(61,126,185,0.05)]" style={{ height: '160px' }}>
                       <div className="text-center text-gray-400">
-                        <span className="text-xl">📸</span>
+                        <div className="text-3xl mb-2">📸</div>
+                        <div className="text-xs">الشاهد {index + 1}</div>
                       </div>
-                    )}
-                  </div>
+                    </div>
+                  )}
                 </div>
-              );
-            })}
+              ))}
+            </div>
           </div>
         </div>
 
-        {/* التوقيعات */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2 border-t border-gray-200 px-2 sm:px-3">
-          <div className="text-right">
-            <p className="text-gray-600 font-semibold mb-0.5 text-sm">المعلم</p>
-            <p className="text-sm sm:text-base font-bold text-gray-800">{formData.teacherName}</p>
+        {/* Signatures */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: '1fr auto 1fr',
+          gap: '1.5rem',
+          padding: '1rem',
+          borderTop: '2px solid #e5e7eb',
+          alignItems: 'end'
+        }}>
+          <div style={{ textAlign: 'right' }}>
+            <p style={{ color: '#666', fontWeight: 600, marginBottom: '0.25rem', fontSize: '0.9rem' }}>المعلم</p>
+            <p style={{ fontSize: '1rem', fontWeight: 'bold', color: '#333', margin: '0.3rem 0' }}>{formData.teacherName}</p>
             {signatureImage && (
               <img 
                 src={signatureImage} 
-                alt="توقيع"
-                className="h-20 object-contain ml-0 mt-1"
+                alt="توقيع المعلم"
+                style={{ maxWidth: '150px', height: '40px', objectFit: 'contain', marginTop: '0.5rem' }}
               />
             )}
           </div>
           
-          {/* الباركود في المنتصف */}
-          <div className="flex items-center justify-center">
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0.5rem' }}>
             {barcodeImage && (
-              <button
+              <img 
+                src={barcodeImage} 
+                alt="الباركود" 
+                style={{ width: '100px', height: '100px', objectFit: 'contain', cursor: 'pointer' }}
                 onClick={() => setShowBarcodeModal(true)}
-                className="cursor-pointer hover:opacity-80 transition-opacity"
-                title="اضغط لتكبير الباركود"
-              >
-                <img src={barcodeImage} alt="باركود" className="w-32 h-32 object-contain" />
-              </button>
+              />
             )}
           </div>
           
-          <div className="text-left">
-            <p className="text-gray-600 font-semibold mb-0.5 text-sm">مدير المدرسة</p>
-            <p className="text-sm sm:text-base font-bold text-gray-800">{formData.principalName}</p>
+          <div style={{ textAlign: 'left' }}>
+            <p style={{ color: '#666', fontWeight: 600, marginBottom: '0.25rem', fontSize: '0.9rem' }}>مدير المدرسة</p>
+            <p style={{ fontSize: '1rem', fontWeight: 'bold', color: '#333', margin: '0.3rem 0' }}>{formData.principalName}</p>
             {principalSignatureImage && (
               <img 
                 src={principalSignatureImage} 
                 alt="توقيع المدير"
-                className="h-20 object-contain mr-0 mt-1"
+                style={{ maxWidth: '150px', height: '40px', objectFit: 'contain', marginTop: '0.5rem' }}
               />
             )}
           </div>
         </div>
 
         {/* Footer */}
-        <div className="text-white p-1.5 text-center bg-gradient-to-r from-[#3D7EB9] via-[#0DA9A6] to-[#07A869]">
-          <p className="text-sm font-bold">العام الدراسي {formData.academicYear} هـ</p>
+        <div style={{
+          background: 'linear-gradient(90deg, #3D7EB9 0%, #0DA9A6 50%, #07A869 100%)',
+          color: 'white',
+          padding: '0.75rem',
+          textAlign: 'center',
+          fontWeight: 'bold',
+          fontSize: '0.95rem'
+        }}>
+          العام الدراسي {formData.academicYear} هـ
         </div>
       </div>
     );
