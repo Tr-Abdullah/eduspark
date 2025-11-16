@@ -697,6 +697,12 @@ function MOEReportGenerator() {
         numberingSystem: 'latn'
       });
       
+      // الحصول على اسم اليوم بالعربية
+      const dayFormatter = new Intl.DateTimeFormat('ar-SA', {
+        weekday: 'long'
+      });
+      const dayName = dayFormatter.format(today);
+      
       const parts = formatter.formatToParts(today);
       const day = parts.find(p => p.type === 'day')?.value || '1';
       const month = parts.find(p => p.type === 'month')?.value || '1';
@@ -705,14 +711,16 @@ function MOEReportGenerator() {
       return {
         day: day,
         month: month,
-        year: year
+        year: year,
+        dayName: dayName
       };
     } catch (error) {
       // Fallback في حالة عدم دعم المتصفح
       return {
         day: '25',
         month: '5',
-        year: '1447'
+        year: '1447',
+        dayName: 'السبت'
       };
     }
   };
@@ -726,8 +734,9 @@ function MOEReportGenerator() {
     day: currentDate.day,
     month: currentDate.month,
     year: currentDate.year,
+    dayName: currentDate.dayName,
     programName: "",
-    subject: "Super Goal 3 - لغة انجليزية",
+    subject: "Super Goal 3 - لعة انجليزية",
     strategy: "التعلم المبني على حل المشكلات",
     students: "30",
     stage: "الأول متوسط",
@@ -1318,7 +1327,7 @@ function MOEReportGenerator() {
             </div>
             <div style={{ display: 'flex', alignItems: 'center', border: '1px solid #3D7EB9', padding: '0.25rem', borderRadius: '4px', background: 'white' }}>
               <div style={{ color: '#3D7EB9', fontWeight: 'bold', fontSize: '0.85rem', minWidth: '100px', borderRight: '2px solid #3D7EB9', paddingRight: '0.3rem', marginRight: '0.3rem' }}>تاريخ التنفيذ</div>
-              <div style={{ flex: 1, fontSize: '0.85rem', fontWeight: 'bold', color: '#1a1a1a' }}>{formData.year}/{formData.month}/{formData.day}</div>
+              <div style={{ flex: 1, fontSize: '0.85rem', fontWeight: 'bold', color: '#1a1a1a' }}>{formData.dayName} {formData.year}/{formData.month}/{formData.day}</div>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', border: '1px solid #3D7EB9', padding: '0.25rem', borderRadius: '4px', background: 'white' }}>
               <div style={{ color: '#3D7EB9', fontWeight: 'bold', fontSize: '0.85rem', minWidth: '100px', borderRight: '2px solid #3D7EB9', paddingRight: '0.3rem', marginRight: '0.3rem' }}>عدد الطلاب</div>
@@ -1551,6 +1560,18 @@ function MOEReportGenerator() {
                 <div>
                   <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">اسم المدرسة:</label>
                   <input type="text" value={formData.schoolName} onChange={(e) => setFormData({ ...formData, schoolName: e.target.value })} className="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/>
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">اليوم:</label>
+                  <select value={formData.dayName} onChange={(e) => setFormData({ ...formData, dayName: e.target.value })} className="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                    <option value="الأحد">الأحد</option>
+                    <option value="الإثنين">الإثنين</option>
+                    <option value="الثلاثاء">الثلاثاء</option>
+                    <option value="الأربعاء">الأربعاء</option>
+                    <option value="الخميس">الخميس</option>
+                    <option value="الجمعة">الجمعة</option>
+                    <option value="السبت">السبت</option>
+                  </select>
                 </div>
                 <div className="md:col-span-2">
                   <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">تاريخ التنفيذ (هجري):</label>
