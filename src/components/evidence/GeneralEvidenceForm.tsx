@@ -121,7 +121,7 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
   const [formData, setFormData] = useState({
     teacherName: "عبدالله حسن الفيفي",
     principalName: "احمد علي كريري",
-    schoolName: "مدرسة ابن سيناء المتوسطة",
+    schoolName: "مدرسة ابن سيناء المتوسطة\nوبرنامجي العوق الفكري والتوحد",
     academicYear: "1447",
     performanceItem: "",
     performanceElement: "",
@@ -288,6 +288,8 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
                   margin-top: 0.3rem;
                   font-size: 1rem;
                   font-weight: bold;
+                  white-space: pre-line;
+                  line-height: 1.4;
               }
               .barcode-container {
                   width: 150px;
