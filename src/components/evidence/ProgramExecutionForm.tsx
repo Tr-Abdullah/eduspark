@@ -1,30 +1,39 @@
 "use client";
 
 import { useState } from "react";
+import { getCurrentHijriDate, formatHijriDate, DEFAULT_SCHOOL_DATA } from "./shared/utils";
+import { sharedPrintStyles, generateHeader, generateSignatureSection } from "./shared/PrintStyles";
 
 interface ProgramExecutionFormProps {
   onBack: () => void;
 }
 
 export default function ProgramExecutionForm({ onBack }: ProgramExecutionFormProps) {
+  const currentDate = getCurrentHijriDate();
+  
   const [formData, setFormData] = useState({
-    educationDepartment: "الإدارة العامة للتعليم بمحافظة ",
-    schoolName: "",
+    schoolName: DEFAULT_SCHOOL_DATA.schoolName,
+    teacherName: "",
     schoolGender: "boys" as "boys" | "girls",
     beneficiariesCount: "",
     executorName: "",
-    directorName: "",
     programName: "",
     location: "",
     beneficiaries: "",
-    implementationDate: "",
+    executionDay: currentDate.day,
+    executionMonth: currentDate.month,
+    executionYear: currentDate.year,
     objectives: "",
   });
 
+  const [logoImage, setLogoImage] = useState<string | null>(null);
+  const [signatureImage, setSignatureImage] = useState<string | null>(null);
+  const [principalSignatureImage, setPrincipalSignatureImage] = useState<string | null>(null);
+  const [barcodeImage, setBarcodeImage] = useState<string | null>(null);
   const [evidence1, setEvidence1] = useState<string | null>(null);
   const [evidence2, setEvidence2] = useState<string | null>(null);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
@@ -41,7 +50,91 @@ export default function ProgramExecutionForm({ onBack }: ProgramExecutionFormPro
   };
 
   const handlePrint = () => {
-    window.print();
+    const executionDate = formatHijriDate(
+      currentDate.dayName,
+      formData.executionYear,
+      formData.executionMonth,
+      formData.executionDay
+    );
+
+    const printContent = `
+      <!DOCTYPE html>
+      <html dir="rtl" lang="ar">
+      <head>
+        <meta charset="UTF-8">
+        <title>تقرير تنفيذ برنامج - ${formData.programName}</title>
+        ${sharedPrintStyles}
+      </head>
+      <body>
+        <div class="print-container">
+          ${generateHeader(logoImage || '', formData.schoolName)}
+          
+          <div class="content-section">
+            <h2 class="section-title">تقرير تنفيذ برنامج / مبادرة</h2>
+            
+            <div class="info-grid">
+              <div class="info-item">
+                <span class="label">اسم البرنامج:</span>
+                <span class="value">${formData.programName}</span>
+              </div>
+              <div class="info-item">
+                <span class="label">مكان التنفيذ:</span>
+                <span class="value">${formData.location}</span>
+              </div>
+              <div class="info-item">
+                <span class="label">المستفيدون:</span>
+                <span class="value">${formData.beneficiaries === 'students' ? 'طلاب' : formData.beneficiaries === 'teachers' ? 'معلمين' : formData.beneficiaries === 'girls' ? 'طالبات' : formData.beneficiaries === 'girlsteachers' ? 'معلمات' : 'آخرون'}</span>
+              </div>
+              <div class="info-item">
+                <span class="label">عدد المستفيدين:</span>
+                <span class="value">${formData.beneficiariesCount}</span>
+              </div>
+              <div class="info-item">
+                <span class="label">تاريخ التنفيذ:</span>
+                <span class="value">${executionDate}</span>
+              </div>
+              <div class="info-item">
+                <span class="label">اسم المنفذ:</span>
+                <span class="value">${formData.executorName}</span>
+              </div>
+            </div>
+
+            <div class="objectives-section">
+              <h3 class="sub-title">أهداف البرنامج:</h3>
+              <div class="objectives-content">${formData.objectives}</div>
+            </div>
+
+            ${evidence1 || evidence2 ? `
+              <div class="evidence-section">
+                <h3 class="sub-title">الشواهد والصور:</h3>
+                <div class="evidence-grid">
+                  ${evidence1 ? `<img src="${evidence1}" alt="الشاهد الأول" class="evidence-image" />` : ''}
+                  ${evidence2 ? `<img src="${evidence2}" alt="الشاهد الثاني" class="evidence-image" />` : ''}
+                </div>
+              </div>
+            ` : ''}
+          </div>
+
+          ${generateSignatureSection(
+            signatureImage || '',
+            formData.executorName || 'المعلم',
+            principalSignatureImage || '',
+            formData.schoolGender === 'boys' ? 'المدير' : 'المديرة',
+            barcodeImage || ''
+          )}
+        </div>
+      </body>
+      </html>
+    `;
+
+    const printWindow = window.open('', '_blank');
+    if (printWindow) {
+      printWindow.document.write(printContent);
+      printWindow.document.close();
+      printWindow.onload = () => {
+        printWindow.print();
+      };
+    }
   };
 
   return (
@@ -70,179 +163,219 @@ export default function ProgramExecutionForm({ onBack }: ProgramExecutionFormPro
 
       {/* Form */}
       <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 p-8">
-        <form className="space-y-6">
-          {/* Row 1 */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                اسم الإدارة التعليمية
-              </label>
-              <input
-                type="text"
-                name="educationDepartment"
-                value={formData.educationDepartment}
-                onChange={handleInputChange}
-                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 dark:bg-slate-700 dark:text-white"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                اسم المدرسة
-              </label>
-              <input
-                type="text"
-                name="schoolName"
-                value={formData.schoolName}
-                onChange={handleInputChange}
-                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 dark:bg-slate-700 dark:text-white"
-                required
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                نوع المدرسة
-              </label>
-              <select
-                name="schoolGender"
-                value={formData.schoolGender}
-                onChange={handleInputChange}
-                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 dark:bg-slate-700 dark:text-white"
-              >
-                <option value="boys">مدرسة بنين</option>
-                <option value="girls">مدرسة بنات</option>
-              </select>
+        <form className="space-y-8">
+          {/* البيانات الأساسية */}
+          <div className="bg-gradient-to-r from-purple-50 to-pink-50 dark:from-slate-700 dark:to-slate-700 p-6 rounded-xl">
+            <h3 className="text-lg font-bold text-purple-800 dark:text-purple-300 mb-4 flex items-center gap-2">
+              <span>📋</span>
+              <span>البيانات الأساسية</span>
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  اسم المدرسة *
+                </label>
+                <input
+                  type="text"
+                  name="schoolName"
+                  value={formData.schoolName}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 dark:bg-slate-700 dark:text-white"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  نوع المدرسة
+                </label>
+                <select
+                  name="schoolGender"
+                  value={formData.schoolGender}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 dark:bg-slate-700 dark:text-white"
+                >
+                  <option value="boys">مدرسة بنين</option>
+                  <option value="girls">مدرسة بنات</option>
+                </select>
+              </div>
             </div>
           </div>
 
-          {/* Row 2 */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                عدد المستفيدين
-              </label>
-              <input
-                type="text"
-                name="beneficiariesCount"
-                value={formData.beneficiariesCount}
-                onChange={handleInputChange}
-                placeholder="عدد المستفيدين"
-                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 dark:bg-slate-700 dark:text-white"
-                required
-              />
+          {/* معلومات البرنامج */}
+          <div className="bg-gradient-to-r from-blue-50 to-cyan-50 dark:from-slate-700 dark:to-slate-700 p-6 rounded-xl">
+            <h3 className="text-lg font-bold text-blue-800 dark:text-blue-300 mb-4 flex items-center gap-2">
+              <span>📚</span>
+              <span>معلومات البرنامج</span>
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  اسم البرنامج *
+                </label>
+                <input
+                  type="text"
+                  name="programName"
+                  value={formData.programName}
+                  onChange={handleInputChange}
+                  placeholder="أدخل اسم البرنامج"
+                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 dark:bg-slate-700 dark:text-white"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  مكان التنفيذ *
+                </label>
+                <input
+                  type="text"
+                  name="location"
+                  value={formData.location}
+                  onChange={handleInputChange}
+                  placeholder="أدخل مكان التنفيذ"
+                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 dark:bg-slate-700 dark:text-white"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  اسم المنفذ *
+                </label>
+                <input
+                  type="text"
+                  name="executorName"
+                  value={formData.executorName}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 dark:bg-slate-700 dark:text-white"
+                  required
+                />
+              </div>
             </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                اسم المنفذ
-              </label>
-              <input
-                type="text"
-                name="executorName"
-                value={formData.executorName}
-                onChange={handleInputChange}
-                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 dark:bg-slate-700 dark:text-white"
-                required
-              />
+          </div>
+
+          {/* معلومات المستفيدين */}
+          <div className="bg-gradient-to-r from-green-50 to-emerald-50 dark:from-slate-700 dark:to-slate-700 p-6 rounded-xl">
+            <h3 className="text-lg font-bold text-green-800 dark:text-green-300 mb-4 flex items-center gap-2">
+              <span>👥</span>
+              <span>معلومات المستفيدين</span>
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  المستفيدون *
+                </label>
+                <select
+                  name="beneficiaries"
+                  value={formData.beneficiaries}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 dark:bg-slate-700 dark:text-white"
+                  required
+                >
+                  <option value="">اختر نوع المستفيدين</option>
+                  <option value="students">طلاب</option>
+                  <option value="teachers">معلمين</option>
+                  <option value="girls">طالبات</option>
+                  <option value="girlsteachers">معلمات</option>
+                  <option value="other">آخرون</option>
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  عدد المستفيدين *
+                </label>
+                <input
+                  type="text"
+                  name="beneficiariesCount"
+                  value={formData.beneficiariesCount}
+                  onChange={handleInputChange}
+                  placeholder="عدد المستفيدين"
+                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 dark:bg-slate-700 dark:text-white"
+                  required
+                />
+              </div>
             </div>
+          </div>
+
+          {/* تاريخ التنفيذ */}
+          <div className="bg-gradient-to-r from-amber-50 to-orange-50 dark:from-slate-700 dark:to-slate-700 p-6 rounded-xl">
+            <h3 className="text-lg font-bold text-amber-800 dark:text-amber-300 mb-4 flex items-center gap-2">
+              <span>📅</span>
+              <span>تاريخ التنفيذ الهجري</span>
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  اليوم
+                </label>
+                <select
+                  name="executionDay"
+                  value={formData.executionDay}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 dark:bg-slate-700 dark:text-white"
+                >
+                  {Array.from({ length: 30 }, (_, i) => i + 1).map(day => (
+                    <option key={day} value={day}>{day}</option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  الشهر
+                </label>
+                <select
+                  name="executionMonth"
+                  value={formData.executionMonth}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 dark:bg-slate-700 dark:text-white"
+                >
+                  {Array.from({ length: 12 }, (_, i) => i + 1).map(month => (
+                    <option key={month} value={month}>{month}</option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  السنة
+                </label>
+                <select
+                  name="executionYear"
+                  value={formData.executionYear}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 dark:bg-slate-700 dark:text-white"
+                >
+                  {Array.from({ length: 5 }, (_, i) => 1446 + i).map(year => (
+                    <option key={year} value={year}>{year}</option>
+                  ))}
+                </select>
+              </div>
+            </div>
+          </div>
+
+          {/* الأهداف */}
+          <div className="bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-slate-700 dark:to-slate-700 p-6 rounded-xl">
+            <h3 className="text-lg font-bold text-indigo-800 dark:text-indigo-300 mb-4 flex items-center gap-2">
+              <span>🎯</span>
+              <span>الأهداف</span>
+            </h3>
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                {formData.schoolGender === "boys" ? "اسم المدير" : "اسم المديرة"}
-              </label>
-              <input
-                type="text"
-                name="directorName"
-                value={formData.directorName}
+              <textarea
+                name="objectives"
+                value={formData.objectives}
                 onChange={handleInputChange}
-                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 dark:bg-slate-700 dark:text-white"
+                rows={6}
+                placeholder="اكتب الأهداف هنا ويفضل خمس أهداف تحت بعض:&#10;1. الهدف الأول&#10;2. الهدف الثاني&#10;3. الهدف الثالث&#10;4. الهدف الرابع&#10;5. الهدف الخامس"
+                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 dark:bg-slate-700 dark:text-white resize-none"
                 required
               />
             </div>
           </div>
 
-          {/* Row 3 */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                اسم البرنامج *
-              </label>
-              <input
-                type="text"
-                name="programName"
-                value={formData.programName}
-                onChange={handleInputChange}
-                placeholder="أدخل اسم البرنامج"
-                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 dark:bg-slate-700 dark:text-white"
-                required
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                مكان التنفيذ *
-              </label>
-              <input
-                type="text"
-                name="location"
-                value={formData.location}
-                onChange={handleInputChange}
-                placeholder="أدخل مكان التنفيذ"
-                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 dark:bg-slate-700 dark:text-white"
-                required
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                المستفيدون *
-              </label>
-              <select
-                name="beneficiaries"
-                value={formData.beneficiaries}
-                onChange={handleInputChange}
-                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 dark:bg-slate-700 dark:text-white"
-                required
-              >
-                <option value="">اختر نوع المستفيدين</option>
-                <option value="students">طلاب</option>
-                <option value="teachers">معلمين</option>
-                <option value="girls">طالبات</option>
-                <option value="girlsteachers">معلمات</option>
-                <option value="other">آخرون</option>
-              </select>
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                تاريخ التنفيذ *
-              </label>
-              <input
-                type="text"
-                name="implementationDate"
-                value={formData.implementationDate}
-                onChange={handleInputChange}
-                placeholder="مثلا ١٤٤٦/١٢/١٢"
-                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 dark:bg-slate-700 dark:text-white"
-                required
-              />
-            </div>
-          </div>
-
-          {/* Objectives */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              الأهداف *
-            </label>
-            <textarea
-              name="objectives"
-              value={formData.objectives}
-              onChange={handleInputChange}
-              rows={6}
-              placeholder="اكتب الأهداف هنا ويفضل خمس أهداف تحت بعض:&#10;1. الهدف الأول&#10;2. الهدف الثاني&#10;3. الهدف الثالث&#10;4. الهدف الرابع&#10;5. الهدف الخامس"
-              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 dark:bg-slate-700 dark:text-white resize-none"
-              required
-            />
-          </div>
-
-          {/* Evidence Images */}
-          <div>
-            <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-4">الشواهد والصور</h3>
-            <p className="text-red-600 font-bold text-center mb-4">
+          {/* الشواهد والصور */}
+          <div className="bg-gradient-to-r from-rose-50 to-pink-50 dark:from-slate-700 dark:to-slate-700 p-6 rounded-xl">
+            <h3 className="text-lg font-bold text-rose-800 dark:text-rose-300 mb-4 flex items-center gap-2">
+              <span>📸</span>
+              <span>الشواهد والصور</span>
+            </h3>
+            <p className="text-red-600 dark:text-red-400 font-bold text-center mb-4">
               لا يتم الاحتفاظ بأي صور أو معلومات في الموقع
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -296,6 +429,127 @@ export default function ProgramExecutionForm({ onBack }: ProgramExecutionFormPro
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
                         </svg>
                         <p className="mt-2 text-sm text-gray-500">اضغط لرفع الصورة الثانية</p>
+                      </div>
+                    )}
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* الشعار والتوقيعات */}
+          <div className="bg-gradient-to-r from-violet-50 to-purple-50 dark:from-slate-700 dark:to-slate-700 p-6 rounded-xl">
+            <h3 className="text-lg font-bold text-violet-800 dark:text-violet-300 mb-4 flex items-center gap-2">
+              <span>🖼️</span>
+              <span>الشعار والتوقيعات</span>
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {/* Logo */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  شعار المدرسة
+                </label>
+                <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-4 text-center hover:border-purple-500 transition-colors cursor-pointer">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => handleImageUpload(e, setLogoImage)}
+                    className="hidden"
+                    id="logoImageProgram"
+                  />
+                  <label htmlFor="logoImageProgram" className="cursor-pointer">
+                    {logoImage ? (
+                      <img src={logoImage} alt="الشعار" className="max-h-32 mx-auto rounded" />
+                    ) : (
+                      <div>
+                        <svg className="mx-auto h-8 w-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                        <p className="mt-1 text-xs text-gray-500">الشعار</p>
+                      </div>
+                    )}
+                  </label>
+                </div>
+              </div>
+
+              {/* Teacher Signature */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  توقيع المنفذ
+                </label>
+                <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-4 text-center hover:border-purple-500 transition-colors cursor-pointer">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => handleImageUpload(e, setSignatureImage)}
+                    className="hidden"
+                    id="signatureImageProgram"
+                  />
+                  <label htmlFor="signatureImageProgram" className="cursor-pointer">
+                    {signatureImage ? (
+                      <img src={signatureImage} alt="التوقيع" className="max-h-32 mx-auto rounded" />
+                    ) : (
+                      <div>
+                        <svg className="mx-auto h-8 w-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                        </svg>
+                        <p className="mt-1 text-xs text-gray-500">التوقيع</p>
+                      </div>
+                    )}
+                  </label>
+                </div>
+              </div>
+
+              {/* Principal Signature */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  توقيع {formData.schoolGender === 'boys' ? 'المدير' : 'المديرة'}
+                </label>
+                <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-4 text-center hover:border-purple-500 transition-colors cursor-pointer">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => handleImageUpload(e, setPrincipalSignatureImage)}
+                    className="hidden"
+                    id="principalSignatureImageProgram"
+                  />
+                  <label htmlFor="principalSignatureImageProgram" className="cursor-pointer">
+                    {principalSignatureImage ? (
+                      <img src={principalSignatureImage} alt="توقيع المدير" className="max-h-32 mx-auto rounded" />
+                    ) : (
+                      <div>
+                        <svg className="mx-auto h-8 w-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                        </svg>
+                        <p className="mt-1 text-xs text-gray-500">التوقيع</p>
+                      </div>
+                    )}
+                  </label>
+                </div>
+              </div>
+
+              {/* Barcode */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  الباركود
+                </label>
+                <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-4 text-center hover:border-purple-500 transition-colors cursor-pointer">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => handleImageUpload(e, setBarcodeImage)}
+                    className="hidden"
+                    id="barcodeImageProgram"
+                  />
+                  <label htmlFor="barcodeImageProgram" className="cursor-pointer">
+                    {barcodeImage ? (
+                      <img src={barcodeImage} alt="الباركود" className="max-h-32 mx-auto rounded" />
+                    ) : (
+                      <div>
+                        <svg className="mx-auto h-8 w-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />
+                        </svg>
+                        <p className="mt-1 text-xs text-gray-500">الباركود</p>
                       </div>
                     )}
                   </label>

@@ -22,10 +22,10 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.NodeNode;
 }>) {
   return (
-    <html lang="ar" dir="rtl" className="dark-mode-init">
+    <html lang="ar" dir="rtl" suppressHydrationWarning>
       <head>
         <script
           dangerouslySetInnerHTML={{
