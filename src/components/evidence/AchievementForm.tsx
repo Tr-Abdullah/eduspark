@@ -228,12 +228,10 @@ export default function AchievementForm({ onBack }: AchievementFormProps) {
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   التاريخ
                 </label>
-                <input
-                  type="text"
-                  name="achievementDate"
-                  value={formData.achievementDate}
+                <select
+                  name="executionDay"
+                  value={formData.executionDay}
                   onChange={handleInputChange}
-                  placeholder="مثلا ١٤٤٦/١٢/١٢"
                   className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-teal-500 dark:bg-slate-700 dark:text-white"
                 />
               </div>
@@ -258,18 +256,7 @@ export default function AchievementForm({ onBack }: AchievementFormProps) {
               </div>
             )}
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                اسم الإدارة التعليمية
-              </label>
-              <input
-                type="text"
-                name="educationDepartment"
-                value={formData.educationDepartment}
-                onChange={handleInputChange}
-                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-teal-500 dark:bg-slate-700 dark:text-white"
-              />
-            </div>
+
 
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
@@ -313,21 +300,6 @@ export default function AchievementForm({ onBack }: AchievementFormProps) {
                 value={formData.teacherName}
                 onChange={handleInputChange}
                 placeholder={formData.schoolGender === "boys" ? "أدخل اسم المعلم" : "أدخل اسم المعلمة"}
-                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-teal-500 dark:bg-slate-700 dark:text-white"
-                required
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                {formData.schoolGender === "boys" ? "اسم المدير" : "اسم المديرة"}
-              </label>
-              <input
-                type="text"
-                name="directorName"
-                value={formData.directorName}
-                onChange={handleInputChange}
-                placeholder={formData.schoolGender === "boys" ? "أدخل اسم المدير" : "أدخل اسم المديرة"}
                 className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-teal-500 dark:bg-slate-700 dark:text-white"
                 required
               />
