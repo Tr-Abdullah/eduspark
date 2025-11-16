@@ -320,7 +320,7 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
               }
               .info-grid {
                   display: grid;
-                  grid-template-columns: repeat(3, 1fr);
+                  grid-template-columns: repeat(6, 1fr);
                   gap: 0.4rem;
               }
               .info-item {
@@ -479,13 +479,13 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
               <div class="info-grid">
                   ${(formData.performanceItem || formData.performanceElement) ? `
                   ${formData.performanceItem ? `
-                  <div class="info-item" style="grid-column: 1 / span 1;">
+                  <div class="info-item" style="grid-column: 1 / span 3;">
                       <div class="info-label">المعيار</div>
                       <div class="info-value">${formData.performanceItem}</div>
                   </div>
-                  ` : '<div style="grid-column: 1 / span 1;"></div>'}
+                  ` : '<div style="grid-column: 1 / span 3;"></div>'}
                   ${formData.performanceElement ? `
-                  <div class="info-item" style="grid-column: 2 / span 1;">
+                  <div class="info-item" style="grid-column: 4 / span 3;">
                       <div class="info-label">المؤشر</div>
                       <div class="info-value">${formData.performanceElement}</div>
                   </div>
@@ -499,15 +499,15 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
                       </div>
                   </div>
                   ` : ''}
-                  <div class="info-item" style="grid-column: 1;">
+                  <div class="info-item" style="grid-column: 1 / span 2;">
                       <div class="info-label">المستهدفون</div>
                       <div class="info-value">${formData.targetAudience || 'غير محدد'}</div>
                   </div>
-                  <div class="info-item" style="grid-column: 2;">
+                  <div class="info-item" style="grid-column: 3 / span 2;">
                       <div class="info-label">تاريخ التنفيذ</div>
                       <div class="info-value">${executionDate || 'غير محدد'}</div>
                   </div>
-                  <div class="info-item" style="grid-column: 3;">
+                  <div class="info-item" style="grid-column: 5 / span 2;">
                       <div class="info-label">المنفذ</div>
                       <div class="info-value">${formData.implementer || 'غير محدد'}</div>
                   </div>
