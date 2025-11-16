@@ -492,13 +492,15 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
                   ${formData.programGoals.filter(g => g.trim()).length > 0 ? `
                   <div class="info-item" style="grid-column: 1 / -1;">
                       <div class="info-label">أهداف البرنامج</div>
-                      <div class="info-value" style="display: grid; grid-template-columns: 1fr 0.3rem 1fr; gap: 0; row-gap: 0.3rem;">
+                      <div class="info-value" style="display: grid; grid-template-columns: 1fr 0.5rem 1fr 0.5rem 1fr; gap: 0; row-gap: 0.3rem;">
                           ${formData.programGoals.filter(g => g.trim()).map((goal, idx) => {
-                            const isOdd = idx % 2 === 0;
-                            if (isOdd) {
+                            const col = (idx % 3);
+                            if (col === 0) {
                               return `<div style="grid-column: 1;">${idx + 1}. ${goal}</div>`;
-                            } else {
+                            } else if (col === 1) {
                               return `<div style="grid-column: 2;"></div><div style="grid-column: 3;">${idx + 1}. ${goal}</div>`;
+                            } else {
+                              return `<div style="grid-column: 4;"></div><div style="grid-column: 5;">${idx + 1}. ${goal}</div>`;
                             }
                           }).join('')}
                       </div>
