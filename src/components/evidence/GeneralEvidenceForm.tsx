@@ -475,7 +475,7 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
           </div>
 
           <div class="info-section">
-              <div class="section-title">${formData.programName || 'اسم التقرير'}</div>
+              <div class="section-title">تقرير: ${formData.programName || 'اسم التقرير'}</div>
               <div class="info-grid">
                   ${formData.performanceItem ? `
                   <div class="info-item">
