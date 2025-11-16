@@ -1,21 +1,25 @@
 "use client";
 
 import { useState } from "react";
+import { getCurrentHijriDate, formatHijriDate, DEFAULT_SCHOOL_DATA } from "./shared/utils";
+import { sharedPrintStyles, generateHeader, generateSignatureSection } from "./shared/PrintStyles";
 
 interface AchievementFormProps {
   onBack: () => void;
 }
 
 export default function AchievementForm({ onBack }: AchievementFormProps) {
+  const currentDate = getCurrentHijriDate();
+  
   const [formData, setFormData] = useState({
     reportType: "" as "" | "daily" | "weekly",
-    achievementDate: "",
+    executionDay: currentDate.day,
+    executionMonth: currentDate.month,
+    executionYear: currentDate.year,
     achievementWeek: "",
-    educationDepartment: "الإدارة العامة للتعليم بمحافظة ",
-    schoolName: "",
+    schoolName: DEFAULT_SCHOOL_DATA.schoolName,
     schoolGender: "boys" as "boys" | "girls",
     teacherName: "",
-    directorName: "",
     studentUnderstanding: "",
     studentParticipation: "",
     attendanceCount: "",
@@ -30,13 +34,147 @@ export default function AchievementForm({ onBack }: AchievementFormProps) {
     notes: "",
   });
 
+  const [logoImage, setLogoImage] = useState<string | null>(null);
+  const [signatureImage, setSignatureImage] = useState<string | null>(null);
+  const [principalSignatureImage, setPrincipalSignatureImage] = useState<string | null>(null);
+  const [barcodeImage, setBarcodeImage] = useState<string | null>(null);
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>, setImage: (img: string) => void) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        setImage(event.target?.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const handlePrint = () => {
-    window.print();
+    const executionDate = formatHijriDate(
+      currentDate.dayName,
+      formData.executionYear,
+      formData.executionMonth,
+      formData.executionDay
+    );
+
+    const reportTitle = formData.reportType === 'daily' ? 'تقرير الإنجاز اليومي' : 'تقرير الإنجاز الأسبوعي';
+
+    const printContent = `
+      <!DOCTYPE html>
+      <html dir="rtl" lang="ar">
+      <head>
+        <meta charset="UTF-8">
+        <title>${reportTitle}</title>
+        ${sharedPrintStyles}
+      </head>
+      <body>
+        <div class="print-container">
+          ${generateHeader(logoImage || '', formData.schoolName)}
+          
+          <div class="content-section">
+            <h2 class="section-title">${reportTitle}</h2>
+            
+            <div class="info-grid">
+              <div class="info-item">
+                <span class="label">نوع التقرير:</span>
+                <span class="value">${formData.reportType === 'daily' ? 'يومي' : 'أسبوعي'}</span>
+              </div>
+              <div class="info-item">
+                <span class="label">${formData.reportType === 'daily' ? 'التاريخ' : 'الأسبوع'}:</span>
+                <span class="value">${formData.reportType === 'daily' ? executionDate : formData.achievementWeek}</span>
+              </div>
+            </div>
+
+            <div class="info-grid">
+              <div class="info-item">
+                <span class="label">فهم ${formData.schoolGender === 'boys' ? 'الطلاب' : 'الطالبات'}:</span>
+                <span class="value">${formData.studentUnderstanding}</span>
+              </div>
+              <div class="info-item">
+                <span class="label">مشاركة ${formData.schoolGender === 'boys' ? 'الطلاب' : 'الطالبات'}:</span>
+                <span class="value">${formData.studentParticipation}</span>
+              </div>
+              <div class="info-item">
+                <span class="label">عدد الحاضرين:</span>
+                <span class="value">${formData.attendanceCount}</span>
+              </div>
+              <div class="info-item">
+                <span class="label">عدد الغائبين:</span>
+                <span class="value">${formData.absenceCount}</span>
+              </div>
+              <div class="info-item">
+                <span class="label">عدد الدروس:</span>
+                <span class="value">${formData.lessonsCount}</span>
+              </div>
+              <div class="info-item">
+                <span class="label">عدد الواجبات:</span>
+                <span class="value">${formData.homeworkCount}</span>
+              </div>
+              <div class="info-item">
+                <span class="label">عدد الاختبارات:</span>
+                <span class="value">${formData.testsCount}</span>
+              </div>
+              <div class="info-item">
+                <span class="label">عدد الأنشطة:</span>
+                <span class="value">${formData.activitiesCount}</span>
+              </div>
+            </div>
+
+            ${formData.goalsAchieved ? `
+              <div class="section-box">
+                <h3 class="sub-title">الأهداف المحققة:</h3>
+                <div class="value">${formData.goalsAchieved}</div>
+              </div>
+            ` : ''}
+
+            ${formData.challenges ? `
+              <div class="section-box">
+                <h3 class="sub-title">التحديات:</h3>
+                <div class="value">${formData.challenges}</div>
+              </div>
+            ` : ''}
+
+            ${formData.interventions ? `
+              <div class="section-box">
+                <h3 class="sub-title">التدخلات:</h3>
+                <div class="value">${formData.interventions}</div>
+              </div>
+            ` : ''}
+
+            ${formData.notes ? `
+              <div class="section-box">
+                <h3 class="sub-title">ملاحظات:</h3>
+                <div class="value">${formData.notes}</div>
+              </div>
+            ` : ''}
+          </div>
+
+          ${generateSignatureSection(
+            signatureImage || '',
+            formData.teacherName || 'المعلم',
+            principalSignatureImage || '',
+            formData.schoolGender === 'boys' ? 'المدير' : 'المديرة',
+            barcodeImage || ''
+          )}
+        </div>
+      </body>
+      </html>
+    `;
+
+    const printWindow = window.open('', '_blank');
+    if (printWindow) {
+      printWindow.document.write(printContent);
+      printWindow.document.close();
+      printWindow.onload = () => {
+        printWindow.print();
+      };
+    }
   };
 
   return (
