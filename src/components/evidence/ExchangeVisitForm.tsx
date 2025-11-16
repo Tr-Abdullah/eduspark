@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { getCurrentHijriDate, formatHijriDate, DEFAULT_SCHOOL_DATA } from "./shared/utils";
-import { sharedPrintStyles, generateHeader, generateSignatureSection } from "./shared/printStyles";
+import { sharedPrintStyles, generateHeader, generateSignatureSection } from "./shared/PrintStyles";
 
 interface ExchangeVisitFormProps {
   onBack: () => void;
@@ -483,7 +483,6 @@ export default function ExchangeVisitForm({ onBack }: ExchangeVisitFormProps) {
             <p className="text-red-600 dark:text-red-400 font-bold text-center mb-4">
               ⚠️ لا يتم الاحتفاظ بأي صور أو معلومات في الموقع
             </p>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6"
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Evidence 1 */}
               <div>
