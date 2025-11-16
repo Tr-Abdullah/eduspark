@@ -79,11 +79,33 @@ const hijriMonths = [
 export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
   // الحصول على التاريخ الهجري الحالي تلقائياً
   const getCurrentHijriDate = () => {
+    // تحويل التاريخ الميلادي إلى هجري باستخدام خوارزمية دقيقة
     const today = new Date();
+    const gYear = today.getFullYear();
+    const gMonth = today.getMonth() + 1;
+    const gDay = today.getDate();
+    
+    // خوارزمية التحويل من ميلادي إلى هجري
+    const julianDay = Math.floor((1461 * (gYear + 4800 + Math.floor((gMonth - 14) / 12))) / 4) +
+                      Math.floor((367 * (gMonth - 2 - 12 * Math.floor((gMonth - 14) / 12))) / 12) -
+                      Math.floor((3 * Math.floor((gYear + 4900 + Math.floor((gMonth - 14) / 12)) / 100)) / 4) +
+                      gDay - 32075;
+    
+    const islamicDay = julianDay - 1948440 + 1;
+    let hYear = Math.floor((30 * islamicDay + 10646) / 10631);
+    const daysInYear = Math.floor((11 * hYear + 3) / 30);
+    let hMonth = Math.floor((islamicDay - daysInYear) / 29.5) + 1;
+    let hDay = islamicDay - Math.floor((hMonth - 1) * 29.5) - daysInYear;
+    
+    if (hMonth > 12) {
+      hMonth -= 12;
+      hYear += 1;
+    }
+    
     return {
-      day: String(today.getDate()),
-      month: String(today.getMonth() + 1),
-      year: '1447'
+      day: String(Math.floor(hDay)),
+      month: String(Math.floor(hMonth)),
+      year: String(hYear)
     };
   };
   
