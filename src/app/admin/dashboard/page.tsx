@@ -2290,6 +2290,200 @@ function PerformanceReportGenerator() {
     }
   };
 
+  const handlePrint = () => {
+    const toArabicNumbers = (str: string): string => {
+      const arabicNumbers = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+      return str.replace(/[0-9]/g, (d) => arabicNumbers[parseInt(d)]);
+    };
+
+    const printWindow = window.open('', '_blank');
+    if (!printWindow) return;
+
+    // جمع محتوى التقرير من الصفحة الحالية
+    const reportContent = document.getElementById('performance-report-content')?.innerHTML || '';
+
+    const htmlContent = `
+      <!DOCTYPE html>
+      <html lang="ar" dir="rtl">
+      <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>تقرير الأداء الوظيفي - ${formData.schoolName}</title>
+          <style>
+              * {
+                  margin: 0;
+                  padding: 0;
+                  box-sizing: border-box;
+              }
+              body {
+                  font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+                  margin: 10px;
+                  direction: rtl;
+                  line-height: 1.6;
+                  color: #333;
+                  font-size: 14px;
+                  background: white !important;
+              }
+              .header {
+                  background: #15445A !important;
+                  color: white !important;
+                  padding: 0.4rem 0.8rem;
+                  text-align: center;
+                  border-radius: 8px;
+                  margin-bottom: 0.8rem;
+                  display: flex;
+                  align-items: center;
+                  justify-content: space-between;
+                  gap: 1rem;
+              }
+              .logo-container {
+                  width: 150px;
+                  height: 150px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+              }
+              .logo-container img {
+                  width: 120px;
+                  height: 120px;
+                  object-fit: contain;
+              }
+              .header-text {
+                  flex: 1;
+                  text-align: center;
+              }
+              .header-text h3 {
+                  margin: 0 0 0.2rem 0;
+                  font-size: 1.1rem;
+              }
+              .header-text h4 {
+                  margin: 0 0 0.15rem 0;
+                  font-size: 0.9rem;
+              }
+              .school-name-header {
+                  margin-top: 0.3rem;
+                  font-size: 1rem;
+                  font-weight: bold;
+              }
+              .signature-section {
+                  margin-top: 0.3rem;
+                  display: grid;
+                  grid-template-columns: 1fr auto 1fr;
+                  gap: 1.5rem;
+                  align-items: end;
+              }
+              .signature-box {
+                  padding: 0.3rem;
+                  text-align: center;
+                  min-height: 60px;
+              }
+              .signature-box-title {
+                  color: #333 !important;
+                  padding: 0.2rem;
+                  font-weight: bold;
+                  margin-bottom: 0.15rem;
+                  font-size: 0.9rem;
+              }
+              .signature-name {
+                  font-size: 1rem;
+                  font-weight: bold;
+                  color: #333;
+                  margin: 0.3rem 0;
+              }
+              .signature-box img {
+                  max-width: 150px;
+                  height: 40px;
+                  object-fit: contain;
+                  margin: 0.2rem auto;
+                  display: block;
+              }
+              .barcode-center {
+                  display: flex;
+                  align-items: center;
+                  justify-center: center;
+                  padding: 0.5rem;
+              }
+              .barcode-center img {
+                  width: 120px;
+                  height: 120px;
+                  object-fit: contain;
+              }
+              .footer {
+                  background: #15445A !important;
+                  color: white !important;
+                  padding: 0.6rem;
+                  text-align: center;
+                  border-radius: 8px;
+                  margin-top: 0.2rem;
+                  font-size: 0.9rem;
+                  font-weight: bold;
+              }
+              @media print {
+                  * {
+                      print-color-adjust: exact !important;
+                      -webkit-print-color-adjust: exact !important;
+                  }
+                  body {
+                      margin: 0;
+                      font-size: 13px;
+                      background: white !important;
+                  }
+                  @page {
+                      margin: 0.4cm;
+                      size: A4;
+                  }
+              }
+          </style>
+      </head>
+      <body>
+          <div class="header">
+              <div class="logo-container">
+                  ${logoImage ? `<img src="${logoImage}" alt="شعار الوزارة">` : '<div style="width:120px;height:120px;"></div>'}
+              </div>
+              <div class="header-text">
+                  <h3>المملكة العربية السعودية</h3>
+                  <h3>وزارة التعليم</h3>
+                  <h4>الإدارة العامة للتعليم بمنطقة جازان</h4>
+                  <div class="school-name-header">${formData.schoolName || 'اسم المدرسة'}</div>
+              </div>
+              <div class="logo-container">
+                  <div style="width:120px;height:120px;"></div>
+              </div>
+          </div>
+
+          ${reportContent}
+
+          <div class="signature-section">
+              <div class="signature-box">
+                  <div class="signature-box-title">المعلم</div>
+                  <div class="signature-name">${formData.teacherName || 'غير محدد'}</div>
+                  ${signatureImage ? `<img src="${signatureImage}" alt="توقيع المعلم">` : '<div style="height:40px;"></div>'}
+              </div>
+              <div class="barcode-center">
+                  ${barcodeImage ? `<img src="${barcodeImage}" alt="الباركود">` : ''}
+              </div>
+              <div class="signature-box">
+                  <div class="signature-box-title">مدير المدرسة</div>
+                  <div class="signature-name">${formData.principalName || 'غير محدد'}</div>
+                  ${principalSignatureImage ? `<img src="${principalSignatureImage}" alt="توقيع المدير">` : '<div style="height:40px;"></div>'}
+              </div>
+          </div>
+
+          <div class="footer">
+              العام الدراسي ${toArabicNumbers(formData.academicYear)} هـ
+          </div>
+      </body>
+      </html>
+    `;
+
+    printWindow.document.write(htmlContent);
+    printWindow.document.close();
+
+    setTimeout(() => {
+      printWindow.print();
+    }, 500);
+  };
+
   const reports = [
     { id: 1, name: "أداء الواجبات الوظيفية", icon: "📋" },
     { id: 2, name: "التفاعل مع المجتمع المهني", icon: "�" },
@@ -2859,32 +3053,7 @@ function PerformanceReportGenerator() {
 
     return (
       <div id="report-content" className="sheet bg-white border-4 border-gray-300" style={{ fontFamily: "'Helvetica Neue W23', 'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
-        <div className="text-white px-8 py-6 print-header" style={{ backgroundColor: '#15445A' }}>
-          <div className="flex items-center justify-center gap-4">
-            {/* الشعار في المنتصف يمين */}
-            <div className="bg-[#1a4d5e] rounded-lg flex items-center justify-center p-2" style={{ minWidth: '64px', minHeight: '64px' }}>
-              {logoImage ? (
-                <img src={logoImage} alt="وزارة التعليم" className="object-contain" style={{ maxWidth: '120px', maxHeight: '100px' }} />
-              ) : (
-                <div className="text-white text-xs text-center">ضع الشعار</div>
-              )}
-            </div>
-            
-            {/* النص في المنتصف يسار */}
-            <div className="text-center leading-tight">
-              <div className="text-base font-bold">المملكة العربية السعودية</div>
-              <div className="text-base font-bold">وزارة التعليم</div>
-              <div className="text-xs opacity-90">إدارة تعليم جازان</div>
-            </div>
-          </div>
-        </div>
-
-        {/* اسم المدرسة - ملاصق للهيدر */}
-        <div className="text-center text-white py-2 px-6" style={{ backgroundColor: '#15445A' }}>
-          <h1 className="text-2xl font-bold">{formData.schoolName}</h1>
-        </div>
-
-        <div className="p-8 space-y-10">
+        <div id="performance-report-content" className="p-8 space-y-10">
 
           {/* Program Information Section */}
           {(formData.reportItem || formData.programName || formData.implementationDate || formData.targetAudience || formData.programObjectives) && (
@@ -2957,42 +3126,6 @@ function PerformanceReportGenerator() {
               </div>
             ))}
           </div>
-
-          <div className="signatures-grid grid grid-cols-3 gap-8 pt-6 border-t-2 border-gray-200">
-            <div className="text-right">
-              <p className="text-gray-600 font-semibold mb-2">معلم المادة</p>
-              <p className="text-xl font-bold text-gray-800">{formData.teacherName}</p>
-              {signatureImage && (
-                <img 
-                  src={signatureImage} 
-                  alt="توقيع"
-                  className="h-24 object-contain ml-0 mt-2"
-                />
-              )}
-            </div>
-            
-            {/* الباركود في المنتصف */}
-            <div className="flex items-center justify-center">
-              {barcodeImage && (
-                <button
-                  onClick={() => setShowBarcodeModal(true)}
-                  className="cursor-pointer hover:opacity-80 transition-opacity"
-                  title="اضغط لتكبير الباركود"
-                >
-                  <img src={barcodeImage} alt="باركود" className="w-32 h-32 object-contain" />
-                </button>
-              )}
-            </div>
-            
-            <div className="text-left">
-              <p className="text-gray-600 font-semibold mb-2">مدير المدرسة</p>
-              <p className="text-xl font-bold text-gray-800">{formData.principalName}</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="text-white p-4 text-center bg-gradient-to-r from-[#3D7EB9] via-[#0DA9A6] to-[#07A869]">
-          <p className="text-lg font-bold">العام الدراسي {formData.academicYear} هـ</p>
         </div>
       </div>
     );
@@ -3740,7 +3873,7 @@ function PerformanceReportGenerator() {
               العودة للتعديل
             </button>
             <button
-              onClick={() => window.print()}
+              onClick={handlePrint}
               className="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 flex items-center gap-2"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
