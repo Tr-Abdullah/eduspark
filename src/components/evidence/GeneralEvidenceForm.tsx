@@ -215,11 +215,6 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
       return str.replace(/\d/g, d => arabicNums[parseInt(d)]);
     };
 
-    const getMonthName = (monthNum: string) => {
-      const num = parseInt(monthNum);
-      return num > 0 && num <= 12 ? hijriMonths[num - 1] : "";
-    };
-
     const executionDate = `${formData.executionDayName || ''} ${toArabicNumbers(formData.executionYear)}/${toArabicNumbers(formData.executionMonth)}/${toArabicNumbers(formData.executionDay)}`;
 
     const printWindow = window.open("", "_blank");
