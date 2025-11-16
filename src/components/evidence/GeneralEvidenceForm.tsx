@@ -764,8 +764,8 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
                     className="w-full px-4 py-2 border-2 border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
                   >
                     <option value="">الشهر</option>
-                    {hijriMonths.map((month, index) => (
-                      <option key={index} value={index + 1}>{month}</option>
+                    {Array.from({length: 12}, (_, i) => i + 1).map(m => (
+                      <option key={m} value={m}>{m}</option>
                     ))}
                   </select>
                 </div>
