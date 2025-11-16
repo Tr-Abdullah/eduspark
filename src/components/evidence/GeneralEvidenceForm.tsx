@@ -479,13 +479,13 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
               <div class="info-grid">
                   ${(formData.performanceItem || formData.performanceElement) ? `
                   ${formData.performanceItem ? `
-                  <div class="info-item" style="grid-column: 1 / 2;">
+                  <div class="info-item" style="grid-column: 1 / span 1;">
                       <div class="info-label">المعيار</div>
                       <div class="info-value">${formData.performanceItem}</div>
                   </div>
-                  ` : '<div style="grid-column: 1 / 2;"></div>'}
+                  ` : '<div style="grid-column: 1 / span 1;"></div>'}
                   ${formData.performanceElement ? `
-                  <div class="info-item" style="grid-column: 2 / -1;">
+                  <div class="info-item" style="grid-column: 2 / span 2;">
                       <div class="info-label">المؤشر</div>
                       <div class="info-value">${formData.performanceElement}</div>
                   </div>
