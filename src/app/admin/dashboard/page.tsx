@@ -686,50 +686,35 @@ function MOEReportGenerator() {
   const searchParams = useSearchParams();
   const criteriaId = searchParams.get('criteria');
   
-  // الحصول على التاريخ الهجري الحالي تلقائياً
+  // الحصول على التاريخ الهجري الحالي تلقائياً باستخدام Intl API
   const getCurrentDate = () => {
-    // تحويل التاريخ الميلادي إلى هجري باستخدام خوارزمية محسّنة
-    const today = new Date();
-    const gYear = today.getFullYear();
-    const gMonth = today.getMonth() + 1;
-    const gDay = today.getDate();
-    
-    // خوارزمية تحويل دقيقة من ميلادي إلى هجري
-    let iy = gYear;
-    let im = gMonth;
-    let id = gDay;
-    
-    let ii = iy - 1900;
-    let iln = (ii - 1) / 4;
-    let ijd = 365 * ii + iln + id;
-    
-    const monthDays = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
-    ijd += monthDays[im - 1];
-    
-    if (im > 2 && ((ii % 4 === 0 && ii % 100 !== 0) || ii % 400 === 0)) {
-      ijd += 1;
+    try {
+      const today = new Date();
+      const formatter = new Intl.DateTimeFormat('ar-SA-u-ca-islamic-umalqura', {
+        day: 'numeric',
+        month: 'numeric',
+        year: 'numeric',
+        numberingSystem: 'latn'
+      });
+      
+      const parts = formatter.formatToParts(today);
+      const day = parts.find(p => p.type === 'day')?.value || '1';
+      const month = parts.find(p => p.type === 'month')?.value || '1';
+      const year = parts.find(p => p.type === 'year')?.value || '1447';
+      
+      return {
+        day: day,
+        month: month,
+        year: year
+      };
+    } catch (error) {
+      // Fallback في حالة عدم دعم المتصفح
+      return {
+        day: '25',
+        month: '5',
+        year: '1447'
+      };
     }
-    
-    const z = ijd + 492267;
-    let hYear = Math.floor((30 * z - 58443) / 10631);
-    let q = Math.floor((z - Math.floor((10631 * hYear + 28634) / 30)) / 29);
-    let hMonth = Math.ceil(q / 2) + 1;
-    let hDay = z - Math.floor((10631 * hYear + 28634) / 30) - Math.floor((hMonth - 1) * 29.5);
-    
-    if (hDay > 29) {
-      hDay = 1;
-      hMonth += 1;
-    }
-    if (hMonth > 12) {
-      hMonth = 1;
-      hYear += 1;
-    }
-    
-    return {
-      day: String(Math.round(hDay)),
-      month: String(Math.round(hMonth)),
-      year: String(hYear)
-    };
   };
 
   const currentDate = getCurrentDate();
@@ -2263,46 +2248,27 @@ function PerformanceReportGenerator() {
   const [showPreview, setShowPreview] = useState(false);
   const reportContainerRef = useRef<HTMLDivElement>(null);
   
-  // الحصول على التاريخ الهجري الحالي تلقائياً
+  // الحصول على التاريخ الهجري الحالي تلقائياً باستخدام Intl API
   const getCurrentHijriDate = () => {
-    // تحويل التاريخ الميلادي إلى هجري باستخدام خوارزمية محسّنة
-    const today = new Date();
-    const gYear = today.getFullYear();
-    const gMonth = today.getMonth() + 1;
-    const gDay = today.getDate();
-    
-    // خوارزمية تحويل دقيقة من ميلادي إلى هجري
-    let iy = gYear;
-    let im = gMonth;
-    let id = gDay;
-    
-    let ii = iy - 1900;
-    let iln = (ii - 1) / 4;
-    let ijd = 365 * ii + iln + id;
-    
-    const monthDays = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
-    ijd += monthDays[im - 1];
-    
-    if (im > 2 && ((ii % 4 === 0 && ii % 100 !== 0) || ii % 400 === 0)) {
-      ijd += 1;
+    try {
+      const today = new Date();
+      const formatter = new Intl.DateTimeFormat('ar-SA-u-ca-islamic-umalqura', {
+        day: 'numeric',
+        month: 'numeric',
+        year: 'numeric',
+        numberingSystem: 'latn'
+      });
+      
+      const parts = formatter.formatToParts(today);
+      const day = parts.find(p => p.type === 'day')?.value || '1';
+      const month = parts.find(p => p.type === 'month')?.value || '1';
+      const year = parts.find(p => p.type === 'year')?.value || '1447';
+      
+      return `${day}/${month}/${year}`;
+    } catch (error) {
+      // Fallback في حالة عدم دعم المتصفح
+      return '25/5/1447';
     }
-    
-    const z = ijd + 492267;
-    let hYear = Math.floor((30 * z - 58443) / 10631);
-    let q = Math.floor((z - Math.floor((10631 * hYear + 28634) / 30)) / 29);
-    let hMonth = Math.ceil(q / 2) + 1;
-    let hDay = z - Math.floor((10631 * hYear + 28634) / 30) - Math.floor((hMonth - 1) * 29.5);
-    
-    if (hDay > 29) {
-      hDay = 1;
-      hMonth += 1;
-    }
-    if (hMonth > 12) {
-      hMonth = 1;
-      hYear += 1;
-    }
-    
-    return `${Math.round(hDay)}/${Math.round(hMonth)}/${hYear}`;
   };
   
   const [formData, setFormData] = useState({
