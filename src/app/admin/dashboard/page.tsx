@@ -1243,189 +1243,234 @@ function MOEReportGenerator() {
   };
 
   const Report = () => (
-    <div id="report-content" className="sheet bg-white border-4 border-gray-300" style={{ fontFamily: "'Helvetica Neue W23', 'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
+    <div id="report-content" className="max-w-4xl mx-auto bg-white border-4 border-gray-300 shadow-xl" style={{ fontFamily: "'Helvetica Neue W23', 'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
       {/* Header */}
-      <div className="text-white px-4 sm:px-8 py-4 sm:py-6 print-header" style={{ backgroundColor: '#15445A' }}>
-        <div className="flex items-center justify-center gap-3 sm:gap-4">
-          <div className="bg-[#1a4d5e] rounded-lg flex items-center justify-center p-2" style={{ minWidth: '64px', minHeight: '64px' }}>
+      <div className="text-white px-4 py-3" style={{ background: 'linear-gradient(135deg, #15445A 0%, #1a5570 100%)' }}>
+        <div className="flex items-center justify-center gap-4">
+          <div className="bg-white/10 rounded-lg p-2 backdrop-blur-sm" style={{ minWidth: '80px', minHeight: '80px' }}>
             {logoImage ? (
-              <img src={logoImage} alt="وزارة التعليم" className="object-contain" style={{ maxWidth: '120px', maxHeight: '100px' }} />
+              <img src={logoImage} alt="وزارة التعليم" className="object-contain w-full h-full" style={{ maxWidth: '100px', maxHeight: '80px' }} />
             ) : (
-              <div className="text-white text-xs text-center">ضع الشعار</div>
+              <div className="text-white text-xs text-center flex items-center justify-center h-full">شعار الوزارة</div>
             )}
           </div>
-          <div className="text-center leading-tight">
-            <div className="text-sm sm:text-base font-bold">المملكة العربية السعودية</div>
-            <div className="text-sm sm:text-base font-bold mt-1">وزارة التعليم</div>
-            <div className="text-sm sm:text-base font-bold">الإدارة العامة للتعليم بمنطقة جازان</div>
+          <div className="text-center flex-1">
+            <h3 className="text-base font-bold mb-1">المملكة العربية السعودية</h3>
+            <h3 className="text-base font-bold mb-1">وزارة التعليم</h3>
+            <h4 className="text-sm opacity-90">الإدارة العامة للتعليم بمنطقة جازان</h4>
+            <div className="mt-2 text-lg font-bold">{formData.schoolName}</div>
           </div>
+          <div style={{ minWidth: '80px', minHeight: '80px' }}></div>
         </div>
-      </div>
-
-      {/* اسم المدرسة - ملاصق للهيدر */}
-      <div className="text-center text-white py-2 px-4 sm:px-6" style={{ backgroundColor: '#15445A' }}>
-        <h1 className="text-xl sm:text-2xl font-bold">{formData.schoolName}</h1>
       </div>
 
       {/* محتوى التقرير */}
-      <div className="p-8">
-      <div className="grid grid-cols-3 gap-4 mb-6">
-        <div className="border-2 border-gray-800 rounded-lg p-3">
-          <div className="text-sm text-gray-700 font-semibold mb-1">الاستراتيجية:</div>
-          <div className="text-gray-900">{formData.strategy}</div>
-        </div>
-        <div className="border-2 border-gray-800 rounded-lg p-3">
-          <div className="text-sm text-gray-700 font-semibold mb-1">المادة:</div>
-          <div className="text-gray-900">{formData.subject}</div>
-        </div>
-        <div className="border-2 border-gray-800 rounded-lg p-3">
-          <div className="text-sm text-gray-700 font-semibold mb-1">تاريخ التنفيذ:</div>
-          <div className="text-gray-900">{formData.year}/{formData.month}/{formData.day}</div>
-        </div>
-      </div>
-      <div className="grid grid-cols-3 gap-4 mb-6">
-        <div className="border-2 border-gray-800 rounded-lg p-3">
-          <div className="text-sm text-gray-700 font-semibold mb-1">عدد الطلاب:</div>
-          <div className="text-gray-900">{formData.students} طالب</div>
-        </div>
-        <div className="border-2 border-gray-800 rounded-lg p-3">
-          <div className="text-sm text-gray-700 font-semibold mb-1">المرحلة الدراسية:</div>
-          <div className="text-gray-900">{formData.stage}</div>
-        </div>
-        <div className="border-2 border-gray-800 rounded-lg p-3">
-          <div className="text-sm text-gray-700 font-semibold mb-1">الفصل:</div>
-          <div className="text-gray-900">{formData.semester}</div>
-        </div>
-      </div>
-      {formData.performanceItem && formData.performanceElement && (
-        <div className="grid grid-cols-2 gap-4 mb-6">
-          <div className="border-2 border-gray-800 rounded-lg p-3">
-            <div className="text-sm text-gray-700 font-semibold mb-1">البند:</div>
-            <div className="text-gray-900 text-sm">{formData.performanceItem}</div>
+      <div className="p-4">
+        {/* معلومات التقرير الأساسية */}
+        <div className="bg-white border-2 border-[#3D7EB9] rounded-lg p-3 mb-3">
+          <div className="bg-[#15445A] text-white text-center font-bold py-2 rounded mb-3 text-sm">
+            معلومات التقرير
           </div>
-          <div className="border-2 border-gray-800 rounded-lg p-3">
-            <div className="text-sm text-gray-700 font-semibold mb-1">العنصر:</div>
-            <div className="text-gray-900 text-sm">{formData.performanceElement}</div>
+          <div className="grid grid-cols-2 gap-2">
+            <div className="flex items-center border border-[#3D7EB9] rounded p-2 bg-white">
+              <span className="font-bold text-[#3D7EB9] text-sm border-r-2 border-[#3D7EB9] pr-2 mr-2" style={{ minWidth: '100px' }}>الاستراتيجية</span>
+              <span className="text-sm font-bold flex-1">{formData.strategy}</span>
+            </div>
+            <div className="flex items-center border border-[#3D7EB9] rounded p-2 bg-white">
+              <span className="font-bold text-[#3D7EB9] text-sm border-r-2 border-[#3D7EB9] pr-2 mr-2" style={{ minWidth: '100px' }}>المادة</span>
+              <span className="text-sm font-bold flex-1">{formData.subject}</span>
+            </div>
+            <div className="flex items-center border border-[#3D7EB9] rounded p-2 bg-white">
+              <span className="font-bold text-[#3D7EB9] text-sm border-r-2 border-[#3D7EB9] pr-2 mr-2" style={{ minWidth: '100px' }}>تاريخ التنفيذ</span>
+              <span className="text-sm font-bold flex-1">{formData.year}/{formData.month}/{formData.day}</span>
+            </div>
+            <div className="flex items-center border border-[#3D7EB9] rounded p-2 bg-white">
+              <span className="font-bold text-[#3D7EB9] text-sm border-r-2 border-[#3D7EB9] pr-2 mr-2" style={{ minWidth: '100px' }}>عدد الطلاب</span>
+              <span className="text-sm font-bold flex-1">{formData.students} طالب</span>
+            </div>
+            <div className="flex items-center border border-[#3D7EB9] rounded p-2 bg-white">
+              <span className="font-bold text-[#3D7EB9] text-sm border-r-2 border-[#3D7EB9] pr-2 mr-2" style={{ minWidth: '100px' }}>المرحلة الدراسية</span>
+              <span className="text-sm font-bold flex-1">{formData.stage}</span>
+            </div>
+            <div className="flex items-center border border-[#3D7EB9] rounded p-2 bg-white">
+              <span className="font-bold text-[#3D7EB9] text-sm border-r-2 border-[#3D7EB9] pr-2 mr-2" style={{ minWidth: '100px' }}>الفصل</span>
+              <span className="text-sm font-bold flex-1">{formData.semester}</span>
+            </div>
           </div>
         </div>
-      )}
-      {formData.unit && (
-        <div className="border-2 border-gray-800 rounded-lg p-3 mb-6">
-          <div className="text-sm text-gray-700 font-semibold mb-1">الوحدة:</div>
-          <div className="text-gray-900">{formData.unit}</div>
-        </div>
-      )}
-      {formData.lesson && (
-        <div className="border-2 border-gray-800 rounded-lg p-3 mb-6">
-          <div className="text-sm text-gray-700 font-semibold mb-1">الدرس:</div>
-          <div className="text-gray-900">{formData.lesson}</div>
-        </div>
-      )}
-      {(formData.tools.length > 0 || formData.objectives.length > 0) && (
-        <div className="grid grid-cols-2 gap-6 mb-6">
-          {formData.tools.length > 0 && (
-            <div className="border-2 border-gray-800 rounded-lg p-4">
-              <h3 className="text-gray-700 font-bold mb-3 pb-2 border-b-2 border-gray-300">الأدوات والوسائل التعليمية:</h3>
-              <div className="space-y-2">
-                {formData.tools.map((toolId, index) => {
-                  const tool = tools.find(t => t.id === toolId);
-                  return tool ? (
-                    <div key={index} className="flex items-start gap-2 text-sm">
-                      <div className="w-4 h-4 mt-0.5 border-2 bg-gray-800 border-gray-800 rounded flex items-center justify-center flex-shrink-0">
-                        <span className="text-white text-xs">✓</span>
-                      </div>
-                      <span className="text-gray-700">{tool.label}</span>
-                    </div>
-                  ) : null;
-                })}
+
+        {/* معلومات الأداء الوظيفي */}
+        {formData.performanceItem && formData.performanceElement && (
+          <div className="bg-white border-2 border-[#3D7EB9] rounded-lg p-3 mb-3">
+            <div className="bg-[#15445A] text-white text-center font-bold py-2 rounded mb-3 text-sm">
+              معلومات الأداء الوظيفي
+            </div>
+            <div className="grid grid-cols-1 gap-2">
+              <div className="flex items-center border border-[#3D7EB9] rounded p-2 bg-white">
+                <span className="font-bold text-[#3D7EB9] text-sm border-r-2 border-[#3D7EB9] pr-2 mr-2" style={{ minWidth: '100px' }}>البند</span>
+                <span className="text-sm font-bold flex-1">{formData.performanceItem}</span>
+              </div>
+              <div className="flex items-center border border-[#3D7EB9] rounded p-2 bg-white">
+                <span className="font-bold text-[#3D7EB9] text-sm border-r-2 border-[#3D7EB9] pr-2 mr-2" style={{ minWidth: '100px' }}>العنصر</span>
+                <span className="text-sm font-bold flex-1">{formData.performanceElement}</span>
               </div>
             </div>
-          )}
-          {formData.objectives.length > 0 && (
-            <div className="border-2 border-gray-800 rounded-lg p-4">
-              <h3 className="text-gray-700 font-bold mb-3 pb-2 border-b-2 border-gray-300">الأهداف:</h3>
-              <div className="space-y-2">
-                {formData.objectives.map((obj, index) => (
-                  <div key={index} className="flex items-start gap-2 text-sm">
-                    <div className="w-4 h-4 mt-0.5 border-2 bg-gray-800 border-gray-800 rounded flex items-center justify-center flex-shrink-0">
-                      <span className="text-white text-xs">✓</span>
-                    </div>
-                    <span className="text-gray-700">{obj}</span>
+          </div>
+        )}
+
+        {/* معلومات الوحدة والدرس */}
+        {(formData.unit || formData.lesson) && (
+          <div className="bg-white border-2 border-[#3D7EB9] rounded-lg p-3 mb-3">
+            <div className="bg-[#15445A] text-white text-center font-bold py-2 rounded mb-3 text-sm">
+              معلومات الدرس
+            </div>
+            <div className="grid grid-cols-1 gap-2">
+              {formData.unit && (
+                <div className="flex items-center border border-[#3D7EB9] rounded p-2 bg-white">
+                  <span className="font-bold text-[#3D7EB9] text-sm border-r-2 border-[#3D7EB9] pr-2 mr-2" style={{ minWidth: '100px' }}>الوحدة</span>
+                  <span className="text-sm font-bold flex-1">{formData.unit}</span>
+                </div>
+              )}
+              {formData.lesson && (
+                <div className="flex items-center border border-[#3D7EB9] rounded p-2 bg-white">
+                  <span className="font-bold text-[#3D7EB9] text-sm border-r-2 border-[#3D7EB9] pr-2 mr-2" style={{ minWidth: '100px' }}>الدرس</span>
+                  <span className="text-sm font-bold flex-1">{formData.lesson}</span>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* الأدوات والأهداف */}
+        {(formData.tools.length > 0 || formData.objectives.length > 0) && (
+          <div className="bg-white border-2 border-[#3D7EB9] rounded-lg p-3 mb-3">
+            <div className="bg-[#15445A] text-white text-center font-bold py-2 rounded mb-3 text-sm">
+              الأدوات والأهداف
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              {formData.tools.length > 0 && (
+                <div className="border border-[#3D7EB9] rounded p-3 bg-white">
+                  <h3 className="text-[#3D7EB9] font-bold mb-2 text-sm">الأدوات والوسائل:</h3>
+                  <div className="space-y-1.5">
+                    {formData.tools.map((toolId, index) => {
+                      const tool = tools.find(t => t.id === toolId);
+                      return tool ? (
+                        <div key={index} className="flex items-start gap-2 text-xs">
+                          <div className="w-3 h-3 mt-0.5 bg-[#3D7EB9] rounded flex items-center justify-center flex-shrink-0">
+                            <span className="text-white text-[10px]">✓</span>
+                          </div>
+                          <span className="text-gray-700">{tool.label}</span>
+                        </div>
+                      ) : null;
+                    })}
                   </div>
-                ))}
-              </div>
+                </div>
+              )}
+              {formData.objectives.length > 0 && (
+                <div className="border border-[#3D7EB9] rounded p-3 bg-white">
+                  <h3 className="text-[#3D7EB9] font-bold mb-2 text-sm">الأهداف:</h3>
+                  <div className="space-y-1.5">
+                    {formData.objectives.map((obj, index) => (
+                      <div key={index} className="flex items-start gap-2 text-xs">
+                        <div className="w-3 h-3 mt-0.5 bg-[#3D7EB9] rounded flex items-center justify-center flex-shrink-0">
+                          <span className="text-white text-[10px]">✓</span>
+                        </div>
+                        <span className="text-gray-700">{obj}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
-          )}
-        </div>
-      )}
-      {formData.uploadedFiles.length > 0 && (
-        <div className="border-2 border-gray-800 rounded-lg p-4 mb-6">
-          <h3 className="text-gray-700 font-bold mb-3 pb-2 border-b-2 border-gray-300">الشواهد:</h3>
-          <div className="grid grid-cols-2 gap-3">
-            {formData.uploadedFiles.map((file, index) => (
-              <div key={index} className="border-2 border-black rounded-lg overflow-hidden">
-                {file.name.match(/\.(jpg|jpeg|png|gif|webp)$/i) ? (
-                  <div className="relative">
+          </div>
+        )}
+
+        {/* الشواهد */}
+        {formData.uploadedFiles.length > 0 && (
+          <div className="bg-white border-2 border-[#3D7EB9] rounded-lg p-3">
+            <div className="bg-[#15445A] text-white text-center font-bold py-2 rounded mb-3 text-sm">
+              الشواهد
+            </div>
+            <div className="grid grid-cols-2 gap-2">
+              {formData.uploadedFiles.map((file, index) => (
+                <div key={index}>
+                  {file.name.match(/\.(jpg|jpeg|png|gif|webp)$/i) ? (
                     <img 
                       src={file.url} 
                       alt={file.name}
-                      className="w-full h-48 object-cover"
+                      className="w-full object-cover rounded border-2 border-[#3D7EB9]"
+                      style={{ height: '160px' }}
                     />
-                    <div className="absolute bottom-0 left-0 right-0 bg-black/60 text-white px-2 py-1">
-                      <p className="text-xs truncate">{file.name}</p>
+                  ) : (
+                    <div className="w-full flex items-center justify-center border-2 border-dashed border-[#3D7EB9] rounded bg-[rgba(61,126,185,0.05)]" style={{ height: '160px' }}>
+                      <div className="text-center">
+                        <svg className="w-10 h-10 mx-auto text-[#3D7EB9] mb-2" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M8 4a3 3 0 00-3 3v4a5 5 0 0010 0V7a1 1 0 112 0v4a7 7 0 11-14 0V7a5 5 0 0110 0v4a3 3 0 11-6 0V7a1 1 0 012 0v4a1 1 0 102 0V7a3 3 0 00-3-3z" clipRule="evenodd" />
+                        </svg>
+                        <p className="text-xs text-gray-600 font-medium truncate px-2">{file.name}</p>
+                      </div>
                     </div>
-                  </div>
-                ) : (
-                  <div className="flex items-center gap-2 p-3 bg-gray-50">
-                    <svg className="w-8 h-8 text-gray-600 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M8 4a3 3 0 00-3 3v4a5 5 0 0010 0V7a1 1 0 112 0v4a7 7 0 11-14 0V7a5 5 0 0110 0v4a3 3 0 11-6 0V7a1 1 0 012 0v4a1 1 0 102 0V7a3 3 0 00-3-3z" clipRule="evenodd" />
-                    </svg>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm text-gray-700 truncate font-medium">{file.name}</p>
-                      <p className="text-xs text-gray-500">ملف مرفق</p>
-                    </div>
-                  </div>
-                )}
-              </div>
-            ))}
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
+        )}
+      </div>
+
+      {/* التوقيعات */}
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: '1fr auto 1fr',
+        gap: '1.5rem',
+        padding: '1rem',
+        borderTop: '2px solid #e5e7eb',
+        alignItems: 'end'
+      }}>
+        <div style={{ textAlign: 'right' }}>
+          <p style={{ color: '#666', fontWeight: 600, marginBottom: '0.25rem', fontSize: '0.9rem' }}>المعلم</p>
+          <p style={{ fontSize: '1rem', fontWeight: 'bold', color: '#333', margin: '0.3rem 0' }}>{formData.teacherName}</p>
+          {signatureImage && (
+            <img 
+              src={signatureImage} 
+              alt="توقيع المعلم"
+              style={{ maxWidth: '150px', height: '40px', objectFit: 'contain', marginTop: '0.5rem' }}
+            />
+          )}
         </div>
-      )}
-      
-      {/* Footer - Signatures */}
-      <div className="px-4 sm:px-6 py-3 sm:py-4 mt-4 sm:mt-6">
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2 border-t border-gray-200">
-          <div className="text-right">
-            <p className="text-gray-600 font-semibold mb-0.5 text-sm">المعلم</p>
-            <p className="text-sm sm:text-base font-bold text-gray-800">{formData.teacherName}</p>
-            {signatureImage && (
+        
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0.5rem' }}>
+          {barcodeImage && (
+            <button
+              onClick={() => setShowBarcodeModal(true)}
+              className="cursor-pointer hover:opacity-80 transition-opacity"
+              title="اضغط لتكبير الباركود"
+            >
               <img 
-                src={signatureImage} 
-                alt="توقيع"
-                className="h-20 object-contain ml-0 mt-1"
+                src={barcodeImage} 
+                alt="الباركود" 
+                style={{ width: '100px', height: '100px', objectFit: 'contain' }}
               />
-            )}
-          </div>
-          
-          {/* الباركود في المنتصف */}
-          <div className="flex items-center justify-center">
-            {barcodeImage && (
-              <button
-                onClick={() => setShowBarcodeModal(true)}
-                className="cursor-pointer hover:opacity-80 transition-opacity"
-                title="اضغط لتكبير الباركود"
-              >
-                <img src={barcodeImage} alt="باركود" className="w-32 h-32 object-contain" />
-              </button>
-            )}
-          </div>
-          
-          <div className="text-left">
-            <p className="text-gray-600 font-semibold mb-0.5 text-sm">مدير المدرسة</p>
-            <p className="text-sm sm:text-base font-bold text-gray-800">{formData.principalName}</p>
-          </div>
+            </button>
+          )}
+        </div>
+        
+        <div style={{ textAlign: 'left' }}>
+          <p style={{ color: '#666', fontWeight: 600, marginBottom: '0.25rem', fontSize: '0.9rem' }}>مدير المدرسة</p>
+          <p style={{ fontSize: '1rem', fontWeight: 'bold', color: '#333', margin: '0.3rem 0' }}>{formData.principalName}</p>
         </div>
       </div>
+
+      {/* Footer */}
+      <div style={{
+        background: 'linear-gradient(90deg, #3D7EB9 0%, #0DA9A6 50%, #07A869 100%)',
+        color: 'white',
+        padding: '0.75rem',
+        textAlign: 'center',
+        fontWeight: 'bold',
+        fontSize: '0.95rem'
+      }}>
+        العام الدراسي {formData.year} هـ
       </div>
     </div>
   );
