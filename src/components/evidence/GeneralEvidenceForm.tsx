@@ -477,17 +477,19 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
           <div class="info-section">
               <div class="section-title">تقرير: ${formData.programName || 'اسم التقرير'}</div>
               <div class="info-grid">
+                  ${(formData.performanceItem || formData.performanceElement) ? `
                   ${formData.performanceItem ? `
-                  <div class="info-item">
+                  <div class="info-item" style="grid-column: 1 / 2;">
                       <div class="info-label">المعيار</div>
                       <div class="info-value">${formData.performanceItem}</div>
                   </div>
-                  ` : ''}
+                  ` : '<div style="grid-column: 1 / 2;"></div>'}
                   ${formData.performanceElement ? `
-                  <div class="info-item">
+                  <div class="info-item" style="grid-column: 2 / -1;">
                       <div class="info-label">المؤشر</div>
                       <div class="info-value">${formData.performanceElement}</div>
                   </div>
+                  ` : ''}
                   ` : ''}
                   ${formData.programGoals.filter(g => g.trim()).length > 0 ? `
                   <div class="info-item" style="grid-column: 1 / -1;">
