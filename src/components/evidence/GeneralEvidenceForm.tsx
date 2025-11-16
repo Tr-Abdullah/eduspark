@@ -210,12 +210,17 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
   };
 
   const handlePrint = () => {
-    const toArabicNumbers = (str: string) => {
+    const toArabicNumbers = (str: string | number) => {
       const arabicNums = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
-      return str.replace(/\d/g, d => arabicNums[parseInt(d)]);
+      return String(str).replace(/\d/g, d => arabicNums[parseInt(d)]);
     };
 
-    const executionDate = `${formData.executionDayName || ''} ${toArabicNumbers(formData.executionYear)}/${toArabicNumbers(formData.executionMonth)}/${toArabicNumbers(formData.executionDay)}`;
+    // التأكد من أن الشهر رقم وليس نص
+    const monthNumber = typeof formData.executionMonth === 'string' 
+      ? formData.executionMonth.replace(/[^\d]/g, '') 
+      : String(formData.executionMonth);
+    
+    const executionDate = `${formData.executionDayName || ''} ${toArabicNumbers(formData.executionYear)}/${toArabicNumbers(monthNumber)}/${toArabicNumbers(formData.executionDay)}`;
 
     const printWindow = window.open("", "_blank");
     if (!printWindow) return;
