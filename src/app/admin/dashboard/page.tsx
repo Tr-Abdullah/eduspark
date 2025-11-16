@@ -688,36 +688,46 @@ function MOEReportGenerator() {
   
   // الحصول على التاريخ الهجري الحالي تلقائياً
   const getCurrentDate = () => {
-    // تحويل التاريخ الميلادي إلى هجري باستخدام خوارزمية دقيقة
+    // تحويل التاريخ الميلادي إلى هجري باستخدام خوارزمية محسّنة
     const today = new Date();
     const gYear = today.getFullYear();
     const gMonth = today.getMonth() + 1;
     const gDay = today.getDate();
     
-    // خوارزمية التحويل من ميلادي إلى هجري
-    let hYear, hMonth, hDay;
-    const gMonthDays = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
-    const hMonthDays = [0, 30, 59, 89, 118, 148, 177, 207, 236, 266, 295, 325];
+    // خوارزمية تحويل دقيقة من ميلادي إلى هجري
+    let iy = gYear;
+    let im = gMonth;
+    let id = gDay;
     
-    const julianDay = Math.floor((1461 * (gYear + 4800 + Math.floor((gMonth - 14) / 12))) / 4) +
-                      Math.floor((367 * (gMonth - 2 - 12 * Math.floor((gMonth - 14) / 12))) / 12) -
-                      Math.floor((3 * Math.floor((gYear + 4900 + Math.floor((gMonth - 14) / 12)) / 100)) / 4) +
-                      gDay - 32075;
+    let ii = iy - 1900;
+    let iln = (ii - 1) / 4;
+    let ijd = 365 * ii + iln + id;
     
-    const islamicDay = julianDay - 1948440 + 1;
-    hYear = Math.floor((30 * islamicDay + 10646) / 10631);
-    const daysInYear = Math.floor((11 * hYear + 3) / 30);
-    hMonth = Math.floor((islamicDay - daysInYear) / 29.5) + 1;
-    hDay = islamicDay - Math.floor((hMonth - 1) * 29.5) - daysInYear;
+    const monthDays = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
+    ijd += monthDays[im - 1];
     
+    if (im > 2 && ((ii % 4 === 0 && ii % 100 !== 0) || ii % 400 === 0)) {
+      ijd += 1;
+    }
+    
+    const z = ijd + 492267;
+    let hYear = Math.floor((30 * z - 58443) / 10631);
+    let q = Math.floor((z - Math.floor((10631 * hYear + 28634) / 30)) / 29);
+    let hMonth = Math.ceil(q / 2) + 1;
+    let hDay = z - Math.floor((10631 * hYear + 28634) / 30) - Math.floor((hMonth - 1) * 29.5);
+    
+    if (hDay > 29) {
+      hDay = 1;
+      hMonth += 1;
+    }
     if (hMonth > 12) {
-      hMonth -= 12;
+      hMonth = 1;
       hYear += 1;
     }
     
     return {
-      day: String(Math.floor(hDay)),
-      month: String(Math.floor(hMonth)),
+      day: String(Math.round(hDay)),
+      month: String(Math.round(hMonth)),
       year: String(hYear)
     };
   };
@@ -2255,30 +2265,44 @@ function PerformanceReportGenerator() {
   
   // الحصول على التاريخ الهجري الحالي تلقائياً
   const getCurrentHijriDate = () => {
-    // تحويل التاريخ الميلادي إلى هجري باستخدام خوارزمية دقيقة
+    // تحويل التاريخ الميلادي إلى هجري باستخدام خوارزمية محسّنة
     const today = new Date();
     const gYear = today.getFullYear();
     const gMonth = today.getMonth() + 1;
     const gDay = today.getDate();
     
-    // خوارزمية التحويل من ميلادي إلى هجري
-    const julianDay = Math.floor((1461 * (gYear + 4800 + Math.floor((gMonth - 14) / 12))) / 4) +
-                      Math.floor((367 * (gMonth - 2 - 12 * Math.floor((gMonth - 14) / 12))) / 12) -
-                      Math.floor((3 * Math.floor((gYear + 4900 + Math.floor((gMonth - 14) / 12)) / 100)) / 4) +
-                      gDay - 32075;
+    // خوارزمية تحويل دقيقة من ميلادي إلى هجري
+    let iy = gYear;
+    let im = gMonth;
+    let id = gDay;
     
-    const islamicDay = julianDay - 1948440 + 1;
-    let hYear = Math.floor((30 * islamicDay + 10646) / 10631);
-    const daysInYear = Math.floor((11 * hYear + 3) / 30);
-    let hMonth = Math.floor((islamicDay - daysInYear) / 29.5) + 1;
-    let hDay = islamicDay - Math.floor((hMonth - 1) * 29.5) - daysInYear;
+    let ii = iy - 1900;
+    let iln = (ii - 1) / 4;
+    let ijd = 365 * ii + iln + id;
     
+    const monthDays = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
+    ijd += monthDays[im - 1];
+    
+    if (im > 2 && ((ii % 4 === 0 && ii % 100 !== 0) || ii % 400 === 0)) {
+      ijd += 1;
+    }
+    
+    const z = ijd + 492267;
+    let hYear = Math.floor((30 * z - 58443) / 10631);
+    let q = Math.floor((z - Math.floor((10631 * hYear + 28634) / 30)) / 29);
+    let hMonth = Math.ceil(q / 2) + 1;
+    let hDay = z - Math.floor((10631 * hYear + 28634) / 30) - Math.floor((hMonth - 1) * 29.5);
+    
+    if (hDay > 29) {
+      hDay = 1;
+      hMonth += 1;
+    }
     if (hMonth > 12) {
-      hMonth -= 12;
+      hMonth = 1;
       hYear += 1;
     }
     
-    return `${Math.floor(hDay)}/${Math.floor(hMonth)}/${hYear}`;
+    return `${Math.round(hDay)}/${Math.round(hMonth)}/${hYear}`;
   };
   
   const [formData, setFormData] = useState({
