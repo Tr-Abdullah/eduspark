@@ -481,7 +481,7 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
                   </div>
                   ` : ''}
                   ${formData.programGoals.filter(g => g.trim()).length > 0 ? `
-                  <div class="info-item">
+                  <div class="info-item" style="grid-column: 1 / -1;">
                       <div class="info-label">أهداف البرنامج</div>
                       <div class="info-value" style="display: flex; flex-direction: column; gap: 0.2rem;">
                           ${formData.programGoals.filter(g => g.trim()).map((goal, idx) => `<div>${idx + 1}. ${goal}</div>`).join('')}
@@ -489,12 +489,12 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
                   </div>
                   ` : ''}
                   <div class="info-item">
-                      <div class="info-label">تاريخ التنفيذ</div>
-                      <div class="info-value">${executionDate || 'غير محدد'}</div>
-                  </div>
-                  <div class="info-item">
                       <div class="info-label">المستهدفون</div>
                       <div class="info-value">${formData.targetAudience || 'غير محدد'}</div>
+                  </div>
+                  <div class="info-item">
+                      <div class="info-label">تاريخ التنفيذ</div>
+                      <div class="info-value">${executionDate || 'غير محدد'}</div>
                   </div>
                   <div class="info-item">
                       <div class="info-label">المنفذ</div>
