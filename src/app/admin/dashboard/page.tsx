@@ -2209,6 +2209,7 @@ function PerformanceReportGenerator() {
   });
   const [logoImage, setLogoImage] = useState<string>("");
   const [signatureImage, setSignatureImage] = useState<string>("");
+  const [principalSignatureImage, setPrincipalSignatureImage] = useState<string>("");
   const [barcodeImage, setBarcodeImage] = useState<string>("");
   const [showBarcodeModal, setShowBarcodeModal] = useState(false);
 
@@ -2262,6 +2263,17 @@ function PerformanceReportGenerator() {
       const reader = new FileReader();
       reader.onloadend = () => {
         setSignatureImage(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handlePrincipalSignatureUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPrincipalSignatureImage(reader.result as string);
       };
       reader.readAsDataURL(file);
     }
@@ -3213,6 +3225,40 @@ function PerformanceReportGenerator() {
                               type="file"
                               accept="image/*"
                               onChange={handleSignatureUpload}
+                              className="hidden"
+                            />
+                            <svg className="w-12 h-12 mx-auto text-blue-400 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                            </svg>
+                            <p className="text-sm font-semibold text-blue-600 dark:text-blue-400">انقر لرفع صورة التوقيع</p>
+                            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">PNG, JPG أو SVG</p>
+                          </label>
+                        )}
+                      </div>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">توقيع المدير:</label>
+                      <div className="border-2 border-dashed border-blue-300 dark:border-blue-600 rounded-lg p-4 text-center bg-white dark:bg-slate-800">
+                        {principalSignatureImage ? (
+                          <div className="relative">
+                            <img 
+                              src={principalSignatureImage} 
+                              alt="توقيع المدير" 
+                              className="max-h-24 mx-auto object-contain mb-3"
+                            />
+                            <button
+                              onClick={() => setPrincipalSignatureImage("")}
+                              className="mt-2 px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg text-sm font-semibold transition-colors"
+                            >
+                              حذف الصورة
+                            </button>
+                          </div>
+                        ) : (
+                          <label className="cursor-pointer block">
+                            <input
+                              type="file"
+                              accept="image/*"
+                              onChange={handlePrincipalSignatureUpload}
                               className="hidden"
                             />
                             <svg className="w-12 h-12 mx-auto text-blue-400 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
