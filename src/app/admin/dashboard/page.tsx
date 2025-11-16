@@ -3053,79 +3053,149 @@ function PerformanceReportGenerator() {
 
     return (
       <div id="report-content" className="sheet bg-white border-4 border-gray-300" style={{ fontFamily: "'Helvetica Neue W23', 'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
-        <div id="performance-report-content" className="p-8 space-y-10">
+        {/* Header */}
+        <div className="text-white px-4 sm:px-8 py-4 sm:py-6" style={{ backgroundColor: '#15445A' }}>
+          <div className="flex items-center justify-center gap-3 sm:gap-4">
+            <div className="bg-[#1a4d5e] rounded-lg flex items-center justify-center p-2" style={{ minWidth: '64px', minHeight: '64px' }}>
+              {logoImage ? (
+                <img src={logoImage} alt="وزارة التعليم" className="object-contain" style={{ maxWidth: '120px', maxHeight: '100px' }} />
+              ) : (
+                <div className="text-white text-xs text-center">ضع الشعار</div>
+              )}
+            </div>
+            <div className="text-center leading-tight">
+              <div className="text-sm sm:text-base font-bold">المملكة العربية السعودية</div>
+              <div className="text-sm sm:text-base font-bold mt-1">وزارة التعليم</div>
+              <div className="text-sm sm:text-base font-bold">الإدارة العامة للتعليم بمنطقة جازان</div>
+            </div>
+          </div>
+        </div>
+
+        {/* اسم المدرسة */}
+        <div className="text-center text-white py-2 px-4 sm:px-6" style={{ backgroundColor: '#15445A' }}>
+          <h1 className="text-xl sm:text-2xl font-bold">{formData.schoolName}</h1>
+        </div>
+
+        <div id="performance-report-content" className="p-2 sm:p-3 space-y-2">
 
           {/* Program Information Section */}
           {(formData.reportItem || formData.programName || formData.implementationDate || formData.targetAudience || formData.programObjectives) && (
-            <div className="bg-gradient-to-br from-blue-50 to-cyan-50 border-2 border-blue-200 rounded-xl p-6 space-y-4">
-              <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
-                <span className="text-2xl">📊</span>
+            <div className="bg-gradient-to-r from-teal-50 to-cyan-50 rounded-lg p-2 border border-teal-200">
+              <div className="text-sm font-bold text-gray-700 mb-1.5 flex items-center gap-1">
+                <span className="text-lg">📊</span>
                 <span>بيانات البرنامج</span>
-              </h3>
-              <div className="grid gap-4 sm:grid-cols-2">
+              </div>
+              <div className="grid gap-2 sm:grid-cols-2 text-sm">
                 {formData.reportItem && (
-                  <div className="bg-white rounded-lg p-4 border border-blue-200">
-                    <p className="text-sm text-gray-600 font-semibold mb-1">البند</p>
-                    <p className="text-gray-800 font-bold">{formData.reportItem}</p>
+                  <div className="flex gap-1">
+                    <span className="font-bold text-gray-700">البند:</span>
+                    <span className="text-gray-900">{formData.reportItem}</span>
                   </div>
                 )}
                 {formData.performanceElement && (
-                  <div className="bg-white rounded-lg p-4 border border-blue-200">
-                    <p className="text-sm text-gray-600 font-semibold mb-1">العنصر</p>
-                    <p className="text-gray-800 font-bold">{formData.performanceElement}</p>
+                  <div className="flex gap-1">
+                    <span className="font-bold text-gray-700">العنصر:</span>
+                    <span className="text-gray-900">{formData.performanceElement}</span>
                   </div>
                 )}
                 {formData.programName && (
-                  <div className="bg-white rounded-lg p-4 border border-blue-200">
-                    <p className="text-sm text-gray-600 font-semibold mb-1">اسم البرنامج</p>
-                    <p className="text-gray-800 font-bold">{formData.programName}</p>
+                  <div className="flex gap-1">
+                    <span className="font-bold text-gray-700">اسم البرنامج:</span>
+                    <span className="text-gray-900">{formData.programName}</span>
                   </div>
                 )}
                 {formData.implementationDate && (
-                  <div className="bg-white rounded-lg p-4 border border-blue-200">
-                    <p className="text-sm text-gray-600 font-semibold mb-1">تاريخ التنفيذ</p>
-                    <p className="text-gray-800 font-bold">{formData.implementationDate}</p>
+                  <div className="flex gap-1">
+                    <span className="font-bold text-gray-700">تاريخ التنفيذ:</span>
+                    <span className="text-gray-900">{formData.implementationDate}</span>
                   </div>
                 )}
                 {formData.targetAudience && (
-                  <div className="bg-white rounded-lg p-4 border border-blue-200">
-                    <p className="text-sm text-gray-600 font-semibold mb-1">المستهدفون</p>
-                    <p className="text-gray-800 font-bold">{formData.targetAudience}</p>
+                  <div className="flex gap-1">
+                    <span className="font-bold text-gray-700">المستهدفون:</span>
+                    <span className="text-gray-900">{formData.targetAudience}</span>
                   </div>
                 )}
               </div>
               {formData.programObjectives && (
-                <div className="bg-white rounded-lg p-4 border border-blue-200">
-                  <p className="text-sm text-gray-600 font-semibold mb-2">أهداف البرنامج</p>
-                  <p className="text-gray-800 whitespace-pre-wrap leading-relaxed">{formData.programObjectives}</p>
+                <div className="mt-2 pt-2 border-t border-teal-300">
+                  <span className="font-bold text-gray-700 text-sm">أهداف البرنامج:</span>
+                  <p className="text-gray-900 text-sm mt-0.5 whitespace-pre-wrap leading-relaxed">{formData.programObjectives}</p>
                 </div>
               )}
             </div>
           )}
 
-          <div className="grid gap-6 sm:grid-cols-2 performance-witness-grid">
-            {witnessCards.map(card => (
-              <div key={card.id} className={card.wrapperClass}>
-                <div className="flex items-start gap-4 mb-4">
-                  <div className={card.badgeClass}>{card.id}</div>
-                  <div className="flex-1">
-                    <h3 className="text-xl font-bold text-gray-800 mb-1">{card.title}</h3>
+          <div className="grid gap-1.5 grid-cols-1 sm:grid-cols-2 performance-witness-grid">
+            {witnessCards.map((card, index) => {
+              const colors = [
+                { bg: 'from-blue-600 to-blue-700', border: 'border-blue-200', bgLight: 'bg-blue-50/50' },
+                { bg: 'from-green-600 to-green-700', border: 'border-green-200', bgLight: 'bg-green-50/50' },
+                { bg: 'from-orange-600 to-orange-700', border: 'border-orange-200', bgLight: 'bg-orange-50/50' },
+                { bg: 'from-purple-600 to-purple-700', border: 'border-purple-200', bgLight: 'bg-purple-50/50' }
+              ];
+              const color = colors[index % 4];
+
+              return (
+                <div key={card.id} className={`border ${color.border} rounded p-1 ${color.bgLight}`}>
+                  <div className={`bg-white rounded p-1 border border-dashed ${color.border} flex items-center justify-center`} style={{ aspectRatio: '16 / 9' }}>
+                    {card.image ? (
+                      <img src={card.image} alt={card.placeholder} className="max-w-full max-h-full object-cover rounded" />
+                    ) : (
+                      <div className="text-center text-gray-400">
+                        <span className="text-xl">📸</span>
+                      </div>
+                    )}
                   </div>
                 </div>
-                <div className={`bg-white rounded-lg p-4 border-2 border-dashed ${card.borderAccent} h-[240px] flex items-center justify-center overflow-hidden`}>
-                  {card.image ? (
-                    <img src={card.image} alt={card.placeholder} className="w-full h-full object-contain rounded-lg" />
-                  ) : (
-                    <div className="text-center text-gray-400">
-                      <span className="text-5xl mb-2 block">📸</span>
-                      <p className="font-semibold">ضع صورة الشاهد هنا</p>
-                      <p className="text-sm">{card.placeholder}</p>
-                    </div>
-                  )}
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
+        </div>
+
+        {/* التوقيعات */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2 border-t border-gray-200 px-2 sm:px-3">
+          <div className="text-right">
+            <p className="text-gray-600 font-semibold mb-0.5 text-sm">المعلم</p>
+            <p className="text-sm sm:text-base font-bold text-gray-800">{formData.teacherName}</p>
+            {signatureImage && (
+              <img 
+                src={signatureImage} 
+                alt="توقيع"
+                className="h-20 object-contain ml-0 mt-1"
+              />
+            )}
+          </div>
+          
+          {/* الباركود في المنتصف */}
+          <div className="flex items-center justify-center">
+            {barcodeImage && (
+              <button
+                onClick={() => setShowBarcodeModal(true)}
+                className="cursor-pointer hover:opacity-80 transition-opacity"
+                title="اضغط لتكبير الباركود"
+              >
+                <img src={barcodeImage} alt="باركود" className="w-32 h-32 object-contain" />
+              </button>
+            )}
+          </div>
+          
+          <div className="text-left">
+            <p className="text-gray-600 font-semibold mb-0.5 text-sm">مدير المدرسة</p>
+            <p className="text-sm sm:text-base font-bold text-gray-800">{formData.principalName}</p>
+            {principalSignatureImage && (
+              <img 
+                src={principalSignatureImage} 
+                alt="توقيع المدير"
+                className="h-20 object-contain mr-0 mt-1"
+              />
+            )}
+          </div>
+        </div>
+
+        {/* Footer */}
+        <div className="text-white p-1.5 text-center bg-gradient-to-r from-[#3D7EB9] via-[#0DA9A6] to-[#07A869]">
+          <p className="text-sm font-bold">العام الدراسي {formData.academicYear} هـ</p>
         </div>
       </div>
     );
