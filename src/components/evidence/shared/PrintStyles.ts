@@ -1,12 +1,14 @@
 // الأنماط المشتركة لجميع نماذج التقارير
 export const sharedPrintStyles = `
     * {
+        print-color-adjust: exact !important;
+        -webkit-print-color-adjust: exact !important;
         margin: 0;
         padding: 0;
         box-sizing: border-box;
     }
     body {
-        font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+        font-family: 'Sakkal Majalla', 'Traditional Arabic', 'Segoe UI', Tahoma, Arial, sans-serif;
         margin: 10px;
         direction: rtl;
         line-height: 1.6;
@@ -54,6 +56,8 @@ export const sharedPrintStyles = `
         margin-top: 0.3rem;
         font-size: 1rem;
         font-weight: bold;
+        white-space: pre-line;
+        line-height: 1.4;
     }
     .barcode-container {
         width: 150px;
@@ -132,6 +136,10 @@ export const sharedPrintStyles = `
         @page {
             margin: 0.4cm;
             size: A4;
+        }
+        /* إخفاء رابط الصفحة في الطباعة */
+        header, footer {
+            display: none !important;
         }
     }
 `;
