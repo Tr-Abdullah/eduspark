@@ -88,6 +88,12 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
         numberingSystem: 'latn'
       });
       
+      // الحصول على اسم اليوم بالعربية
+      const dayFormatter = new Intl.DateTimeFormat('ar-SA', {
+        weekday: 'long'
+      });
+      const dayName = dayFormatter.format(today);
+      
       const parts = formatter.formatToParts(today);
       const day = parts.find(p => p.type === 'day')?.value || '1';
       const month = parts.find(p => p.type === 'month')?.value || '1';
@@ -96,14 +102,16 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
       return {
         day: day,
         month: month,
-        year: year
+        year: year,
+        dayName: dayName
       };
     } catch (error) {
       // Fallback في حالة عدم دعم المتصفح
       return {
         day: '25',
         month: '5',
-        year: '1447'
+        year: '1447',
+        dayName: 'السبت'
       };
     }
   };
@@ -122,6 +130,7 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
     executionDay: currentDate.day,
     executionMonth: currentDate.month,
     executionYear: currentDate.year,
+    executionDayName: currentDate.dayName,
     targetAudience: "الصف الثالث المتوسط",
     implementer: "عبدالله حسن الفيفي",
   });
@@ -211,7 +220,7 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
       return num > 0 && num <= 12 ? hijriMonths[num - 1] : "";
     };
 
-    const executionDate = `${toArabicNumbers(formData.executionDay)} ${getMonthName(formData.executionMonth)} ${toArabicNumbers(formData.executionYear)}`;
+    const executionDate = `${formData.executionDayName || ''} ${toArabicNumbers(formData.executionDay)} ${getMonthName(formData.executionMonth)} ${toArabicNumbers(formData.executionYear)}`;
 
     const printWindow = window.open("", "_blank");
     if (!printWindow) return;
@@ -483,20 +492,27 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
                   ${formData.programGoals.filter(g => g.trim()).length > 0 ? `
                   <div class="info-item" style="grid-column: 1 / -1;">
                       <div class="info-label">أهداف البرنامج</div>
-                      <div class="info-value" style="display: flex; flex-direction: column; gap: 0.2rem;">
-                          ${formData.programGoals.filter(g => g.trim()).map((goal, idx) => `<div>${idx + 1}. ${goal}</div>`).join('')}
+                      <div class="info-value" style="display: grid; grid-template-columns: 1fr 0.3rem 1fr; gap: 0; row-gap: 0.3rem;">
+                          ${formData.programGoals.filter(g => g.trim()).map((goal, idx) => {
+                            const isOdd = idx % 2 === 0;
+                            if (isOdd) {
+                              return `<div style="grid-column: 1;">${idx + 1}. ${goal}</div>`;
+                            } else {
+                              return `<div style="grid-column: 2;"></div><div style="grid-column: 3;">${idx + 1}. ${goal}</div>`;
+                            }
+                          }).join('')}
                       </div>
                   </div>
                   ` : ''}
-                  <div class="info-item">
+                  <div class="info-item" style="grid-column: 1;">
                       <div class="info-label">المستهدفون</div>
                       <div class="info-value">${formData.targetAudience || 'غير محدد'}</div>
                   </div>
-                  <div class="info-item">
+                  <div class="info-item" style="grid-column: 2;">
                       <div class="info-label">تاريخ التنفيذ</div>
                       <div class="info-value">${executionDate || 'غير محدد'}</div>
                   </div>
-                  <div class="info-item">
+                  <div class="info-item" style="grid-column: 3;">
                       <div class="info-label">المنفذ</div>
                       <div class="info-value">${formData.implementer || 'غير محدد'}</div>
                   </div>
@@ -710,6 +726,22 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
                   إضافة هدف
                 </button>
               </div>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">اليوم</label>
+              <select 
+                value={formData.executionDayName} 
+                onChange={(e) => setFormData({...formData, executionDayName: e.target.value})} 
+                className="w-full px-4 py-2 border-2 border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
+              >
+                <option value="الأحد">الأحد</option>
+                <option value="الإثنين">الإثنين</option>
+                <option value="الثلاثاء">الثلاثاء</option>
+                <option value="الأربعاء">الأربعاء</option>
+                <option value="الخميس">الخميس</option>
+                <option value="الجمعة">الجمعة</option>
+                <option value="السبت">السبت</option>
+              </select>
             </div>
             <div className="md:col-span-2">
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">تاريخ التنفيذ (هجري)</label>
