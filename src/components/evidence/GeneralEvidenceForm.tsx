@@ -450,6 +450,10 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
                       margin: 0.4cm;
                       size: A4;
                   }
+                  /* إخفاء رابط الصفحة في الطباعة */
+                  header, footer {
+                      display: none !important;
+                  }
               }
           </style>
       </head>
