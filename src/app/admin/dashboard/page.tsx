@@ -686,13 +686,26 @@ function MOEReportGenerator() {
   const searchParams = useSearchParams();
   const criteriaId = searchParams.get('criteria');
   
+  // الحصول على التاريخ الحالي تلقائياً
+  const getCurrentDate = () => {
+    const today = new Date();
+    return {
+      day: String(today.getDate()),
+      month: String(today.getMonth() + 1),
+      year: '1447' // السنة الهجرية الحالية
+    };
+  };
+
+  const currentDate = getCurrentDate();
+  
   const [formData, setFormData] = useState({
     criteriaId: criteriaId || "",
     region: "إدارة التعليم جازان",
     schoolName: "مدرسة ابن سيناء المتوسطة وبرنامجي العوق الفكري والتوحد",
-    day: "12",
-    month: "12",
-  year: "1447",
+    day: currentDate.day,
+    month: currentDate.month,
+    year: currentDate.year,
+    programName: "",
     subject: "Super Goal 3 - لغة انجليزية",
     strategy: "التعلم المبني على حل المشكلات",
     students: "30",
@@ -1271,7 +1284,7 @@ function MOEReportGenerator() {
         {/* معلومات التقرير الأساسية */}
         <div style={{ background: 'white', border: '2px solid #3D7EB9', borderRadius: '8px', padding: '0.5rem', marginBottom: '0.6rem' }}>
           <div style={{ background: '#15445A', color: 'white', padding: '0.3rem', borderRadius: '4px', textAlign: 'center', fontWeight: 'bold', marginBottom: '0.5rem', fontSize: '0.95rem' }}>
-            معلومات التقرير
+            {formData.programName || 'تقرير الأداء الوظيفي'}
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '0.4rem' }}>
             <div style={{ display: 'flex', alignItems: 'center', border: '1px solid #3D7EB9', padding: '0.25rem', borderRadius: '4px', background: 'white' }}>
@@ -1304,9 +1317,6 @@ function MOEReportGenerator() {
         {/* معلومات الأداء الوظيفي */}
         {formData.performanceItem && formData.performanceElement && (
           <div style={{ background: 'white', border: '2px solid #3D7EB9', borderRadius: '8px', padding: '0.5rem', marginBottom: '0.6rem' }}>
-            <div style={{ background: '#15445A', color: 'white', padding: '0.3rem', borderRadius: '4px', textAlign: 'center', fontWeight: 'bold', marginBottom: '0.5rem', fontSize: '0.95rem' }}>
-              معلومات الأداء الوظيفي
-            </div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '0.4rem' }}>
               <div style={{ display: 'flex', alignItems: 'center', border: '1px solid #3D7EB9', padding: '0.25rem', borderRadius: '4px', background: 'white' }}>
                 <div style={{ color: '#3D7EB9', fontWeight: 'bold', fontSize: '0.85rem', minWidth: '100px', borderRight: '2px solid #3D7EB9', paddingRight: '0.3rem', marginRight: '0.3rem' }}>البند</div>
@@ -1343,46 +1353,43 @@ function MOEReportGenerator() {
           </div>
         )}
 
-        {/* الأدوات والأهداف */}
-        {(formData.tools.length > 0 || formData.objectives.length > 0) && (
+        {/* الأدوات والوسائل التعليمية */}
+        {formData.tools.length > 0 && (
           <div style={{ background: 'white', border: '2px solid #3D7EB9', borderRadius: '8px', padding: '0.5rem', marginBottom: '0.6rem' }}>
             <div style={{ background: '#15445A', color: 'white', padding: '0.3rem', borderRadius: '4px', textAlign: 'center', fontWeight: 'bold', marginBottom: '0.5rem', fontSize: '0.95rem' }}>
-              الأدوات والأهداف
+              الأدوات والوسائل التعليمية
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.4rem' }}>
-              {formData.tools.length > 0 && (
-                <div style={{ border: '1px solid #3D7EB9', borderRadius: '4px', padding: '0.3rem', background: 'rgba(61, 126, 185, 0.05)' }}>
-                  <div style={{ color: '#3D7EB9', fontWeight: 'bold', marginBottom: '0.3rem', fontSize: '0.85rem' }}>الأدوات والوسائل:</div>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.2rem' }}>
-                    {formData.tools.map((toolId, index) => {
-                      const tool = tools.find(t => t.id === toolId);
-                      return tool ? (
-                        <div key={index} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.3rem', fontSize: '0.75rem' }}>
-                          <div style={{ width: '12px', height: '12px', marginTop: '2px', background: '#3D7EB9', borderRadius: '2px', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                            <span style={{ color: 'white', fontSize: '10px' }}>✓</span>
-                          </div>
-                          <span>{tool.label}</span>
-                        </div>
-                      ) : null;
-                    })}
+              {formData.tools.map((toolId, index) => {
+                const tool = tools.find(t => t.id === toolId);
+                return tool ? (
+                  <div key={index} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.3rem', fontSize: '0.75rem', padding: '0.2rem' }}>
+                    <div style={{ width: '12px', height: '12px', marginTop: '2px', background: '#3D7EB9', borderRadius: '2px', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                      <span style={{ color: 'white', fontSize: '10px' }}>✓</span>
+                    </div>
+                    <span>{tool.label}</span>
                   </div>
-                </div>
-              )}
-              {formData.objectives.length > 0 && (
-                <div style={{ border: '1px solid #3D7EB9', borderRadius: '4px', padding: '0.3rem', background: 'rgba(61, 126, 185, 0.05)' }}>
-                  <div style={{ color: '#3D7EB9', fontWeight: 'bold', marginBottom: '0.3rem', fontSize: '0.85rem' }}>الأهداف:</div>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.2rem' }}>
-                    {formData.objectives.map((obj, index) => (
-                      <div key={index} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.3rem', fontSize: '0.75rem' }}>
-                        <div style={{ width: '12px', height: '12px', marginTop: '2px', background: '#3D7EB9', borderRadius: '2px', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                          <span style={{ color: 'white', fontSize: '10px' }}>✓</span>
-                        </div>
-                        <span>{obj}</span>
-                      </div>
-                    ))}
+                ) : null;
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* الأهداف */}
+        {formData.objectives.length > 0 && (
+          <div style={{ background: 'white', border: '2px solid #3D7EB9', borderRadius: '8px', padding: '0.5rem', marginBottom: '0.6rem' }}>
+            <div style={{ background: '#15445A', color: 'white', padding: '0.3rem', borderRadius: '4px', textAlign: 'center', fontWeight: 'bold', marginBottom: '0.5rem', fontSize: '0.95rem' }}>
+              الأهداف
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '0.2rem' }}>
+              {formData.objectives.map((obj, index) => (
+                <div key={index} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.3rem', fontSize: '0.75rem', padding: '0.2rem' }}>
+                  <div style={{ width: '12px', height: '12px', marginTop: '2px', background: '#3D7EB9', borderRadius: '2px', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                    <span style={{ color: 'white', fontSize: '10px' }}>✓</span>
                   </div>
+                  <span>{obj}</span>
                 </div>
-              )}
+              ))}
             </div>
           </div>
         )}
@@ -1428,9 +1435,9 @@ function MOEReportGenerator() {
             <img 
               src={signatureImage} 
               alt="توقيع المعلم"
-              style={{ maxWidth: '150px', height: '40px', objectFit: 'contain', margin: '0.2rem auto', display: 'block' }}
+              style={{ maxHeight: '24px', objectFit: 'contain', margin: '0.2rem auto', display: 'block' }}
             />
-          ) : <div style={{ height: '40px' }}></div>}
+          ) : <div style={{ height: '24px' }}></div>}
         </div>
         
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0.5rem' }}>
@@ -1554,6 +1561,16 @@ function MOEReportGenerator() {
             <div className="bg-white dark:bg-slate-700/50 p-6 rounded-xl border-2 border-gray-200 dark:border-gray-600">
               <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">تفاصيل التقرير</h3>
               <div className="grid md:grid-cols-3 gap-4">
+                <div className="md:col-span-3">
+                  <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">اسم البرنامج/النشاط:</label>
+                  <input
+                    type="text"
+                    value={formData.programName}
+                    onChange={(e) => setFormData({ ...formData, programName: e.target.value })}
+                    className="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    placeholder="مثال: برنامج التعلم النشط"
+                  />
+                </div>
                 <div>
                   <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">المادة:</label>
                   <select value={formData.subject} onChange={(e) => setFormData({ ...formData, subject: e.target.value })} className="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
