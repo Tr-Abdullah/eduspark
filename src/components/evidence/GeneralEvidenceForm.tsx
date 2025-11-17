@@ -297,6 +297,23 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
                   white-space: normal;
                   line-height: 1.4;
               }
+              
+              /* تصغير حجم الخط في الشاشات الصغيرة فقط */
+              @media (max-width: 640px) {
+                .school-name-header {
+                  font-size: 0.75rem;
+                  line-height: 1.2;
+                }
+              }
+              
+              /* في الطباعة: منع الالتفاف وتصغير الخط قليلاً */
+              @media print {
+                .school-name-header {
+                  white-space: nowrap !important;
+                  font-size: 0.85rem !important;
+                  overflow: hidden;
+                }
+              }
               .barcode-container {
                   width: 150px;
                   height: 150px;
