@@ -552,6 +552,8 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
                       margin: 0;
                       font-size: 9px !important;
                       background: white !important;
+                      transform: scale(0.9);
+                      transform-origin: top right;
                   }
                   @page {
                       margin: 0.3cm;

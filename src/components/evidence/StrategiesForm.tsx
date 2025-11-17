@@ -391,7 +391,9 @@ export default function StrategiesForm({ onBack }: StrategiesFormProps) {
                   body { 
                       margin: 0; 
                       font-size: 8px !important; 
-                      background: white !important; 
+                      background: white !important;
+                      transform: scale(0.9);
+                      transform-origin: top right;
                   }
                   @page { 
                       margin: 0.3cm; 
