@@ -163,8 +163,6 @@ export const sharedPrintStyles = `
         body {
             margin: 0;
             font-size: 10px !important;
-            transform: scale(0.89);
-            transform-origin: top right;
         }
         @page {
             margin: 0.3cm;
