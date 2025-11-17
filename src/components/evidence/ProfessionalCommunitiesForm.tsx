@@ -149,12 +149,19 @@ export default function ProfessionalCommunitiesForm({ onBack }: ProfessionalComm
               /* طباعة من الموبايل */
               @media print and (max-width: 640px) {
                 .info-label {
-                  font-size: 0.5rem !important;
-                  padding: 0.15rem !important;
+                  font-size: 0.45rem !important;
+                  padding: 0.1rem !important;
+                  white-space: nowrap !important;
                 }
                 .info-value {
-                  font-size: 0.5rem !important;
-                  padding: 0.15rem !important;
+                  font-size: 0.45rem !important;
+                  padding: 0.1rem !important;
+                  white-space: nowrap !important;
+                  overflow: hidden !important;
+                  text-overflow: ellipsis !important;
+                }
+                .info-item {
+                  white-space: nowrap !important;
                 }
               }
               

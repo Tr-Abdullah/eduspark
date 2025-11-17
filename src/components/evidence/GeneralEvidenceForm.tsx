@@ -406,28 +406,33 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
               /* طباعة من الموبايل */
               @media print and (max-width: 640px) {
                 .info-label {
-                  font-size: 0.5rem !important;
-                  min-width: 50px !important;
-                  padding-right: 0.15rem !important;
-                  margin-right: 0.15rem !important;
+                  font-size: 0.45rem !important;
+                  min-width: 40px !important;
+                  padding-right: 0.1rem !important;
+                  margin-right: 0.1rem !important;
+                  white-space: nowrap !important;
                 }
                 .info-value {
-                  font-size: 0.5rem !important;
+                  font-size: 0.45rem !important;
+                  white-space: nowrap !important;
+                  overflow: hidden !important;
+                  text-overflow: ellipsis !important;
                 }
                 .section-title {
-                  font-size: 0.55rem !important;
-                  padding: 0.2rem !important;
-                  margin-bottom: 0.3rem !important;
+                  font-size: 0.5rem !important;
+                  padding: 0.15rem !important;
+                  margin-bottom: 0.2rem !important;
                 }
                 .info-section {
-                  padding: 0.3rem !important;
-                  margin-bottom: 0.3rem !important;
+                  padding: 0.2rem !important;
+                  margin-bottom: 0.2rem !important;
                 }
                 .info-grid {
-                  gap: 0.2rem !important;
+                  gap: 0.15rem !important;
                 }
                 .info-item {
-                  padding: 0.15rem !important;
+                  padding: 0.1rem !important;
+                  white-space: nowrap !important;
                 }
               }
               
@@ -559,7 +564,10 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
                   .goal-item {
                       padding: 0.2rem 0.3rem !important;
                       margin-bottom: 0.2rem !important;
-                      font-size: 0.5rem !important;
+                      font-size: 0.45rem !important;
+                      white-space: nowrap !important;
+                      overflow: hidden !important;
+                      text-overflow: ellipsis !important;
                   }
                   .evidence-section {
                       padding: 0.3rem !important;
@@ -567,11 +575,11 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
                   }
                   .evidence-item {
                       padding: 0.2rem !important;
-                      font-size: 0.5rem !important;
+                      font-size: 0.45rem !important;
                   }
                   .footer {
                       padding: 0.3rem !important;
-                      font-size: 0.6rem !important;
+                      font-size: 0.55rem !important;
                   }
               }
               

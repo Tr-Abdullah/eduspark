@@ -189,9 +189,11 @@ export const sharedPrintStyles = `
             margin: 0 0 0.1rem 0 !important;
         }
         .school-name-header {
-            font-size: 0.55rem !important;
+            font-size: 0.5rem !important;
             margin-top: 0.15rem !important;
             white-space: nowrap !important;
+            overflow: hidden !important;
+            text-overflow: ellipsis !important;
         }
         .signature-section {
             margin-top: 0.2rem !important;
@@ -207,8 +209,11 @@ export const sharedPrintStyles = `
             margin-bottom: 0.1rem !important;
         }
         .signature-name {
-            font-size: 0.55rem !important;
+            font-size: 0.5rem !important;
             margin: 0.15rem 0 !important;
+            white-space: nowrap !important;
+            overflow: hidden !important;
+            text-overflow: ellipsis !important;
         }
         .signature-box img {
             max-width: 80px !important;
@@ -221,7 +226,7 @@ export const sharedPrintStyles = `
         .footer {
             padding: 0.3rem !important;
             margin-top: 0.15rem !important;
-            font-size: 0.6rem !important;
+            font-size: 0.55rem !important;
         }
     }
     

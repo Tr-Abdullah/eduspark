@@ -194,12 +194,19 @@ export default function StrategiesForm({ onBack }: StrategiesFormProps) {
               /* طباعة من الموبايل */
               @media print and (max-width: 640px) {
                 .info-label {
-                  font-size: 0.5rem !important;
-                  padding: 0.15rem !important;
+                  font-size: 0.45rem !important;
+                  padding: 0.1rem !important;
+                  white-space: nowrap !important;
                 }
                 .info-value {
-                  font-size: 0.5rem !important;
-                  padding: 0.15rem !important;
+                  font-size: 0.45rem !important;
+                  padding: 0.1rem !important;
+                  white-space: nowrap !important;
+                  overflow: hidden !important;
+                  text-overflow: ellipsis !important;
+                }
+                .info-item {
+                  white-space: nowrap !important;
                 }
               }
               
@@ -383,7 +390,7 @@ export default function StrategiesForm({ onBack }: StrategiesFormProps) {
                   }
                   body { 
                       margin: 0; 
-                      font-size: 9px !important; 
+                      font-size: 8px !important; 
                       background: white !important; 
                   }
                   @page { 
@@ -392,12 +399,13 @@ export default function StrategiesForm({ onBack }: StrategiesFormProps) {
                   }
                   .strategies-table th,
                   .strategies-table td {
-                      font-size: 0.5rem !important;
-                      padding: 0.15rem !important;
+                      font-size: 0.45rem !important;
+                      padding: 0.1rem !important;
+                      white-space: nowrap !important;
                   }
                   .footer {
-                      padding: 0.2rem !important;
-                      font-size: 0.5rem !important;
+                      padding: 0.15rem !important;
+                      font-size: 0.45rem !important;
                   }
               }
               
