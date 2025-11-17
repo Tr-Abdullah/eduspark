@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 interface GeneralFormProps {
   onBack?: () => void;
@@ -151,6 +151,12 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
     img4: null,
   });
 
+  // تحميل الصور الافتراضية
+  useEffect(() => {
+    setLogoImage('/images/moe-logo.WEBP');
+    setSignatureImage('/images/signature.png');
+  }, []);
+
   const handleImageUpload = (
     key: 'img1' | 'img2' | 'img3' | 'img4',
     e: React.ChangeEvent<HTMLInputElement>
@@ -288,7 +294,7 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
                   margin-top: 0.3rem;
                   font-size: 1rem;
                   font-weight: bold;
-                  white-space: pre-line;
+                  white-space: normal;
                   line-height: 1.4;
               }
               .barcode-container {

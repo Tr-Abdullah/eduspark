@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
+import { getCurrentHijriDate, formatHijriDate, DEFAULT_SCHOOL_DATA, DEFAULT_IMAGES } from "./shared/utils";
 
 interface StrategiesFormProps {
   onBack: () => void;
@@ -26,6 +27,16 @@ export default function StrategiesForm({ onBack }: StrategiesFormProps) {
 
   const [evidence1, setEvidence1] = useState<string | null>(null);
   const [evidence2, setEvidence2] = useState<string | null>(null);
+  const [logoImage, setLogoImage] = useState<string | null>(null);
+  const [signatureImage, setSignatureImage] = useState<string | null>(null);
+  const [principalSignatureImage, setPrincipalSignatureImage] = useState<string | null>(null);
+  const [barcodeImage, setBarcodeImage] = useState<string | null>(null);
+
+  // تحميل الصور الافتراضية
+  useEffect(() => {
+    setLogoImage(DEFAULT_IMAGES.logo);
+    setSignatureImage(DEFAULT_IMAGES.signature);
+  }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;

@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { getCurrentHijriDate, formatHijriDate, DEFAULT_SCHOOL_DATA } from "./shared/utils";
+import { useState, useEffect } from "react";
+import { getCurrentHijriDate, formatHijriDate, DEFAULT_SCHOOL_DATA, DEFAULT_IMAGES } from "./shared/utils";
 import { sharedPrintStyles, generateHeader, generateSignatureSection } from "./shared/PrintStyles";
 
 interface ProgramExecutionFormProps {
@@ -32,6 +32,12 @@ export default function ProgramExecutionForm({ onBack }: ProgramExecutionFormPro
   const [barcodeImage, setBarcodeImage] = useState<string | null>(null);
   const [evidence1, setEvidence1] = useState<string | null>(null);
   const [evidence2, setEvidence2] = useState<string | null>(null);
+
+  // تحميل الصور الافتراضية
+  useEffect(() => {
+    setLogoImage(DEFAULT_IMAGES.logo);
+    setSignatureImage(DEFAULT_IMAGES.signature);
+  }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;

@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { getCurrentHijriDate, formatHijriDate, DEFAULT_SCHOOL_DATA } from "./shared/utils";
+import { useState, useEffect } from "react";
+import { getCurrentHijriDate, formatHijriDate, DEFAULT_SCHOOL_DATA, DEFAULT_IMAGES } from "./shared/utils";
 import { sharedPrintStyles, generateHeader, generateSignatureSection } from "./shared/PrintStyles";
 
 interface ProfessionalCommunitiesFormProps {
@@ -36,6 +36,12 @@ export default function ProfessionalCommunitiesForm({ onBack }: ProfessionalComm
   const [signatureImage, setSignatureImage] = useState<string>("");
   const [principalSignatureImage, setPrincipalSignatureImage] = useState<string>("");
   const [barcodeImage, setBarcodeImage] = useState<string>("");
+
+  // تحميل الصور الافتراضية
+  useEffect(() => {
+    setLogoImage(DEFAULT_IMAGES.logo);
+    setSignatureImage(DEFAULT_IMAGES.signature);
+  }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -127,7 +133,7 @@ export default function ProfessionalCommunitiesForm({ onBack }: ProfessionalComm
                 text-align: center;
                 background: white;
                 font-size: 0.9rem;
-                white-space: pre-line;
+                white-space: normal;
               }
               .teachers-list {
                 border: 2px solid #15445A;
@@ -170,10 +176,10 @@ export default function ProfessionalCommunitiesForm({ onBack }: ProfessionalComm
                 margin-bottom: 0.8rem;
                 text-align: center;
               }
-              .objectives-section .content, .outcomes-section .content {
+              .outcomes-section .content, .session-outcomes-section .content {
                 padding: 0.5rem;
                 line-height: 1.8;
-                white-space: pre-line;
+                white-space: normal;
               }
           </style>
       </head>

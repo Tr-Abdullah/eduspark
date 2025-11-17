@@ -69,9 +69,38 @@ export const formatHijriDate = (dayName: string, year: string | number, month: s
  * البيانات الافتراضية للمدرسة
  */
 export const DEFAULT_SCHOOL_DATA = {
-  schoolName: "مدرسة ابن سيناء المتوسطة\nوبرنامجي العوق الفكري والتوحد",
+  schoolName: "مدرسة ابن سيناء المتوسطة وبرنامجي العوق الفكري والتوحد",
   teacherName: "عبدالله حسن الفيفي",
   principalName: "احمد علي كريري",
   academicYear: "1447",
   educationDepartment: "الإدارة العامة للتعليم بمنطقة جازان"
+};
+
+/**
+ * مسارات الصور الافتراضية
+ */
+export const DEFAULT_IMAGES = {
+  logo: '/images/moe-logo.WEBP',
+  signature: '/images/signature.png',
+  principalSignature: '',
+  barcode: ''
+};
+
+/**
+ * تحميل صورة من URL وتحويلها إلى Base64
+ */
+export const loadImageFromURL = async (url: string): Promise<string> => {
+  try {
+    const response = await fetch(url);
+    const blob = await response.blob();
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = reject;
+      reader.readAsDataURL(blob);
+    });
+  } catch (error) {
+    console.error('Error loading image:', error);
+    return '';
+  }
 };

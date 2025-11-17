@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { getCurrentHijriDate, formatHijriDate, DEFAULT_SCHOOL_DATA } from "./shared/utils";
+import { useState, useEffect } from "react";
+import { getCurrentHijriDate, formatHijriDate, DEFAULT_SCHOOL_DATA, DEFAULT_IMAGES } from "./shared/utils";
 import { sharedPrintStyles, generateHeader, generateSignatureSection } from "./shared/PrintStyles";
 
 interface ExchangeVisitFormProps {
@@ -33,6 +33,19 @@ export default function ExchangeVisitForm({ onBack }: ExchangeVisitFormProps) {
   const [barcodeImage, setBarcodeImage] = useState<string>("");
   const [evidence1, setEvidence1] = useState<string>("");
   const [evidence2, setEvidence2] = useState<string>("");
+
+  // تحميل الصور الافتراضية عند تحميل المكون
+  useEffect(() => {
+    const loadDefaultImages = async () => {
+      try {
+        setLogoImage(DEFAULT_IMAGES.logo);
+        setSignatureImage(DEFAULT_IMAGES.signature);
+      } catch (error) {
+        console.error('Error loading default images:', error);
+      }
+    };
+    loadDefaultImages();
+  }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -113,7 +126,7 @@ export default function ExchangeVisitForm({ onBack }: ExchangeVisitFormProps) {
                 text-align: center;
                 background: white;
                 font-size: 0.9rem;
-                white-space: pre-line;
+                white-space: normal;
               }
               .objectives-section, .recommendations-section {
                 border: 2px solid #15445A;
@@ -133,7 +146,7 @@ export default function ExchangeVisitForm({ onBack }: ExchangeVisitFormProps) {
               .objectives-section .content, .recommendations-section .content {
                 padding: 0.5rem;
                 line-height: 1.8;
-                white-space: pre-line;
+                white-space: normal;
               }
               .evidence-section {
                 margin-bottom: 1rem;

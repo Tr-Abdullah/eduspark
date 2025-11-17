@@ -25,8 +25,8 @@ function DashboardContent() {
   };
 
   return (
-  <div className="min-h-screen bg-gray-50 dark:bg-slate-900">
-      <style jsx global>{`
+    <div className="min-h-screen bg-gray-50 dark:bg-slate-900">
+      <style dangerouslySetInnerHTML={{__html: `
         /* حل احترافي للطباعة - يعمل مع أو بدون معاينة */
         @media print {
           @page {
@@ -148,7 +148,7 @@ function DashboardContent() {
             padding-right: 0 !important;
           }
         }
-      `}</style>
+      `}} />
       {/* Top Header */}
       <header className="sticky top-0 z-50 bg-white/80 dark:bg-slate-800/80 backdrop-blur-lg shadow-sm border-b border-gray-200 dark:border-gray-700">
         <div className="px-4 sm:px-6 lg:px-8 py-4">
@@ -1961,7 +1961,7 @@ function MOEReportGenerator() {
             </div>
           )}
           
-          <style jsx global>{`
+          <style dangerouslySetInnerHTML={{__html: `
             @media print {
               /* إخفاء كل شيء ماعدا التقرير */
               body * {
@@ -2244,7 +2244,7 @@ function MOEReportGenerator() {
                 padding: 0.75rem !important;
               }
             }
-          `}</style>
+          `}} />
           <div className="flex items-center justify-between mb-6 no-print">
             <button onClick={() => setShowPreview(false)} className="flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
@@ -3749,7 +3749,7 @@ function PerformanceReportGenerator() {
         </div>
       ) : (
         <div className="max-w-5xl mx-auto" ref={reportContainerRef}>
-          <style jsx global>{`
+          <style dangerouslySetInnerHTML={{__html: `
             @media print {
               /* إخفاء كل شيء ماعدا التقرير */
               body * {
@@ -4107,7 +4107,7 @@ function PerformanceReportGenerator() {
                 padding: 0 !important;
               }
             }
-          `}</style>
+          `}} />
           <div className="flex items-center justify-between mb-6 no-print">
             <button
               onClick={() => setShowPreview(false)}
@@ -5578,7 +5578,7 @@ function GeneralReportsGenerator() {
   if (showPreview) {
     return (
       <div className="max-w-5xl mx-auto p-4">
-        <style>{`
+        <style dangerouslySetInnerHTML={{__html: `
           @media print {
             /* إخفاء كل شيء ماعدا التقرير */
             body * {
@@ -5952,7 +5952,7 @@ function GeneralReportsGenerator() {
               padding: 0 !important;
             }
           }
-        `}</style>
+        `}} />
 
         <div className="no-print mb-6 flex gap-4">
           <button
@@ -6680,9 +6680,9 @@ function GeneralReportsGenerator() {
           </div>
         </div>
       </div>
-    </div>
-  );
-}
+      </div>
+    );
+  }
 
 export default function AdminDashboard() {
   return (
