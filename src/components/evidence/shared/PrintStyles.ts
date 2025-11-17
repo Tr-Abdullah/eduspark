@@ -66,6 +66,18 @@ export const sharedPrintStyles = `
             font-size: 0.75rem;
             line-height: 1.2;
         }
+        .header-text h3 {
+            font-size: 0.85rem;
+        }
+        .header-text h4 {
+            font-size: 0.7rem;
+        }
+        .signature-box-title {
+            font-size: 0.7rem !important;
+        }
+        .signature-name {
+            font-size: 0.8rem !important;
+        }
     }
     
     /* في الطباعة: منع الالتفاف وتصغير الخط قليلاً */
@@ -74,6 +86,12 @@ export const sharedPrintStyles = `
             white-space: nowrap !important;
             font-size: 0.85rem !important;
             overflow: hidden;
+        }
+        .header-text h3 {
+            font-size: 0.95rem !important;
+        }
+        .header-text h4 {
+            font-size: 0.8rem !important;
         }
     }
     .barcode-container {
@@ -140,6 +158,74 @@ export const sharedPrintStyles = `
         font-size: 0.9rem;
         font-weight: bold;
     }
+    /* طباعة من الموبايل: تصغير كل شيء */
+    @media print and (max-width: 640px) {
+        body {
+            margin: 0;
+            font-size: 10px !important;
+        }
+        @page {
+            margin: 0.3cm;
+            size: A4 landscape;
+        }
+        .header {
+            padding: 0.2rem 0.4rem !important;
+            margin-bottom: 0.4rem !important;
+        }
+        .logo-container {
+            width: 80px !important;
+            height: 80px !important;
+        }
+        .logo-container img {
+            width: 60px !important;
+            height: 60px !important;
+        }
+        .header-text h3 {
+            font-size: 0.6rem !important;
+            margin: 0 0 0.1rem 0 !important;
+        }
+        .header-text h4 {
+            font-size: 0.55rem !important;
+            margin: 0 0 0.1rem 0 !important;
+        }
+        .school-name-header {
+            font-size: 0.55rem !important;
+            margin-top: 0.15rem !important;
+            white-space: nowrap !important;
+        }
+        .signature-section {
+            margin-top: 0.2rem !important;
+            gap: 0.5rem !important;
+        }
+        .signature-box {
+            padding: 0.15rem !important;
+            min-height: 40px !important;
+        }
+        .signature-box-title {
+            font-size: 0.5rem !important;
+            padding: 0.1rem !important;
+            margin-bottom: 0.1rem !important;
+        }
+        .signature-name {
+            font-size: 0.55rem !important;
+            margin: 0.15rem 0 !important;
+        }
+        .signature-box img {
+            max-width: 80px !important;
+            height: 25px !important;
+        }
+        .barcode-center img {
+            width: 80px !important;
+            height: 80px !important;
+        }
+        .footer {
+            padding: 0.3rem !important;
+            margin-top: 0.15rem !important;
+            font-size: 0.6rem !important;
+        }
+    }
+    
+    /* طباعة من الديسكتوب: كما هو */
     @media print {
         * {
             print-color-adjust: exact !important;

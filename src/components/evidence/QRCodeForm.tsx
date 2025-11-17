@@ -11,6 +11,46 @@ export default function QRCodeForm({ onBack }: QRCodeFormProps) {
   const [qrCodeData, setQrCodeData] = useState("");
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
+  // إضافة styles للطباعة
+  useEffect(() => {
+    const style = document.createElement('style');
+    style.innerHTML = `
+      @media print {
+        body * {
+          visibility: hidden;
+        }
+        .qr-print-area,
+        .qr-print-area * {
+          visibility: visible !important;
+        }
+        .qr-print-area {
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          padding: 2rem;
+        }
+        .no-print {
+          display: none !important;
+        }
+      }
+      @media (max-width: 640px) {
+        .qr-link-text {
+          font-size: 0.75rem !important;
+          word-break: break-all;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+    return () => {
+      document.head.removeChild(style);
+    };
+  }, []);
+
   const generateQRCode = async () => {
     if (!fileLink.trim()) return;
 
@@ -102,8 +142,8 @@ export default function QRCodeForm({ onBack }: QRCodeFormProps) {
 
           {/* QR Code Display */}
           {qrCodeData && (
-            <div className="mt-8 p-8 bg-gray-50 dark:bg-slate-700 rounded-2xl text-center">
-              <h3 className="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-6">
+            <div className="qr-print-area mt-8 p-8 bg-gray-50 dark:bg-slate-700 rounded-2xl text-center">
+              <h3 className="no-print text-xl font-semibold text-gray-700 dark:text-gray-300 mb-6">
                 رمز QR جاهز
               </h3>
               
@@ -114,13 +154,13 @@ export default function QRCodeForm({ onBack }: QRCodeFormProps) {
               </div>
 
               <div className="mt-4 p-4 bg-white dark:bg-slate-600 rounded-lg">
-                <p className="text-sm text-gray-600 dark:text-gray-400 break-all">
+                <p className="qr-link-text text-sm text-gray-600 dark:text-gray-400 break-all">
                   {qrCodeData}
                 </p>
               </div>
 
               {/* Action Buttons */}
-              <div className="flex justify-center gap-4 mt-6">
+              <div className="no-print flex justify-center gap-4 mt-6">
                 <button
                   type="button"
                   onClick={handleDownload}

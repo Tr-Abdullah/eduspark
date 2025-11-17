@@ -135,6 +135,38 @@ export default function ProfessionalCommunitiesForm({ onBack }: ProfessionalComm
                 font-size: 0.9rem;
                 white-space: normal;
               }
+              
+              /* تصغير في الشاشات الصغيرة */
+              @media (max-width: 640px) {
+                .info-label {
+                  font-size: 0.65rem;
+                }
+                .info-value {
+                  font-size: 0.65rem;
+                }
+              }
+              
+              /* طباعة من الموبايل */
+              @media print and (max-width: 640px) {
+                .info-label {
+                  font-size: 0.5rem !important;
+                  padding: 0.15rem !important;
+                }
+                .info-value {
+                  font-size: 0.5rem !important;
+                  padding: 0.15rem !important;
+                }
+              }
+              
+              /* طباعة من الديسكتوب */
+              @media print {
+                .info-label {
+                  font-size: 0.75rem !important;
+                }
+                .info-value {
+                  font-size: 0.75rem !important;
+                }
+              }
               .teachers-list {
                 border: 2px solid #15445A;
                 border-radius: 6px;

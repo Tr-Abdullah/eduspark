@@ -180,6 +180,38 @@ export default function StrategiesForm({ onBack }: StrategiesFormProps) {
                   font-size: 1rem; 
                   font-weight: bold;
               }
+              
+              /* تصغير في الشاشات الصغيرة */
+              @media (max-width: 640px) {
+                .info-label {
+                  font-size: 0.65rem;
+                }
+                .info-value {
+                  font-size: 0.65rem;
+                }
+              }
+              
+              /* طباعة من الموبايل */
+              @media print and (max-width: 640px) {
+                .info-label {
+                  font-size: 0.5rem !important;
+                  padding: 0.15rem !important;
+                }
+                .info-value {
+                  font-size: 0.5rem !important;
+                  padding: 0.15rem !important;
+                }
+              }
+              
+              /* طباعة من الديسكتوب */
+              @media print {
+                .info-label {
+                  font-size: 0.75rem !important;
+                }
+                .info-value {
+                  font-size: 0.75rem !important;
+                }
+              }
               .lesson-section {
                   background: white !important;
                   padding: 0.3rem;
@@ -342,6 +374,34 @@ export default function StrategiesForm({ onBack }: StrategiesFormProps) {
                   print-color-adjust: exact !important;
                   -webkit-print-color-adjust: exact !important;
               }
+              
+              /* طباعة من الموبايل */
+              @media print and (max-width: 640px) {
+                  * { 
+                      print-color-adjust: exact !important; 
+                      -webkit-print-color-adjust: exact !important;
+                  }
+                  body { 
+                      margin: 0; 
+                      font-size: 9px !important; 
+                      background: white !important; 
+                  }
+                  @page { 
+                      margin: 0.3cm; 
+                      size: A4 landscape; 
+                  }
+                  .strategies-table th,
+                  .strategies-table td {
+                      font-size: 0.5rem !important;
+                      padding: 0.15rem !important;
+                  }
+                  .footer {
+                      padding: 0.2rem !important;
+                      font-size: 0.5rem !important;
+                  }
+              }
+              
+              /* طباعة من الديسكتوب */
               @media print {
                   * { 
                       print-color-adjust: exact !important; 

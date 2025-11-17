@@ -128,6 +128,52 @@ export default function ExchangeVisitForm({ onBack }: ExchangeVisitFormProps) {
                 font-size: 0.9rem;
                 white-space: normal;
               }
+              
+              /* تصغير في الشاشات الصغيرة */
+              @media (max-width: 640px) {
+                .info-label {
+                  font-size: 0.65rem;
+                }
+                .info-value {
+                  font-size: 0.65rem;
+                }
+              }
+              
+              /* طباعة من الموبايل */
+              @media print and (max-width: 640px) {
+                .info-label {
+                  font-size: 0.5rem !important;
+                  padding: 0.15rem !important;
+                }
+                .info-value {
+                  font-size: 0.5rem !important;
+                  padding: 0.15rem !important;
+                }
+                .objectives-section, .recommendations-section {
+                  padding: 0.4rem !important;
+                  margin-bottom: 0.4rem !important;
+                }
+                .objectives-section .title, .recommendations-section .title {
+                  padding: 0.2rem 0.4rem !important;
+                  margin-bottom: 0.4rem !important;
+                  font-size: 0.6rem !important;
+                }
+                .objectives-section .content, .recommendations-section .content {
+                  padding: 0.2rem !important;
+                  font-size: 0.5rem !important;
+                  line-height: 1.3 !important;
+                }
+              }
+              
+              /* طباعة من الديسكتوب */
+              @media print {
+                .info-label {
+                  font-size: 0.75rem !important;
+                }
+                .info-value {
+                  font-size: 0.75rem !important;
+                }
+              }
               .objectives-section, .recommendations-section {
                 border: 2px solid #15445A;
                 border-radius: 6px;
