@@ -440,7 +440,7 @@ export default function CertificateForm({ onBack }: CertificateFormProps) {
               </div>
               
               <div className="text-center flex-1">
-                <h3 className="ministry-title text-xl font-bold text-gray-800 dark:text-gray-200 mb-1">
+                <h3 className="ministry-title text-xl font-bold text-gray-800 dark:text-gray-200 mb-1" style={{letterSpacing: '0.5px', wordSpacing: '2px'}}>
                   المملكة العربية السعودية
                 </h3>
                 <h4 className="ministry-subtitle text-lg font-semibold text-gray-700 dark:text-gray-300 mb-1">

@@ -285,10 +285,13 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
               .header-text h3 {
                   margin: 0 0 0.2rem 0;
                   font-size: 1.25rem;
+                  letter-spacing: 0.5px;
+                  word-spacing: 2px;
               }
               .header-text h4 {
                   margin: 0 0 0.15rem 0;
                   font-size: 1.1rem;
+                  letter-spacing: 0.3px;
               }
               .school-name-header {
                   margin-top: 0.3rem;
