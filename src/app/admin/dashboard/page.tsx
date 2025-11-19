@@ -1341,17 +1341,37 @@ function MOEReportGenerator() {
           </div>
         </div>
 
-        {/* معلومات الأداء الوظيفي */}
+        {/* معلومات الأداء الوظيفي - تصميم موحد احترافي */}
         {formData.performanceItem && formData.performanceElement && (
-          <div style={{ background: 'white', border: '2px solid #3D7EB9', borderRadius: '8px', padding: '0.5rem', marginBottom: '0.6rem' }}>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '0.4rem' }}>
-              <div style={{ display: 'flex', alignItems: 'center', border: '1px solid #3D7EB9', padding: '0.25rem', borderRadius: '4px', background: 'white' }}>
-                <div style={{ color: '#3D7EB9', fontWeight: 'bold', fontSize: '0.85rem', minWidth: '100px', borderRight: '2px solid #3D7EB9', paddingRight: '0.3rem', marginRight: '0.3rem' }}>البند</div>
-                <div style={{ flex: 1, fontSize: '0.85rem', fontWeight: 'bold', color: '#1a1a1a' }}>{formData.performanceItem}</div>
+          <div style={{ background: 'linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)', border: '3px solid #15445A', borderRadius: '12px', padding: '0.8rem', marginBottom: '0.8rem', boxShadow: '0 4px 6px rgba(21, 68, 90, 0.1)' }}>
+            <div style={{ background: 'linear-gradient(135deg, #15445A 0%, #1e5a7a 100%)', color: 'white', padding: '0.5rem', borderRadius: '8px', textAlign: 'center', fontWeight: 'bold', marginBottom: '0.8rem', fontSize: '1.1rem', letterSpacing: '1px', wordSpacing: '2px', boxShadow: '0 2px 4px rgba(0,0,0,0.2)' }}>
+              📊 معيار الأداء الوظيفي ومؤشره
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '0.6rem' }}>
+              {/* المعيار */}
+              <div style={{ background: 'white', border: '2px solid #15445A', padding: '0.6rem', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0,0,0,0.05)' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.4rem' }}>
+                  <div style={{ background: '#15445A', color: 'white', padding: '0.3rem 0.6rem', borderRadius: '6px', fontSize: '0.8rem', fontWeight: 'bold', letterSpacing: '0.5px' }}>
+                    المعيار
+                  </div>
+                  <div style={{ flex: 1, height: '2px', background: 'linear-gradient(to left, #15445A, transparent)' }}></div>
+                </div>
+                <div style={{ fontSize: '0.95rem', fontWeight: 'bold', color: '#1a1a1a', paddingRight: '1rem', lineHeight: '1.6' }}>
+                  {formData.performanceItem}
+                </div>
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', border: '1px solid #3D7EB9', padding: '0.25rem', borderRadius: '4px', background: 'white' }}>
-                <div style={{ color: '#3D7EB9', fontWeight: 'bold', fontSize: '0.85rem', minWidth: '100px', borderRight: '2px solid #3D7EB9', paddingRight: '0.3rem', marginRight: '0.3rem' }}>العنصر</div>
-                <div style={{ flex: 1, fontSize: '0.85rem', fontWeight: 'bold', color: '#1a1a1a' }}>{formData.performanceElement}</div>
+              
+              {/* المؤشر */}
+              <div style={{ background: 'white', border: '2px solid #3D7EB9', padding: '0.6rem', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0,0,0,0.05)' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.4rem' }}>
+                  <div style={{ background: '#3D7EB9', color: 'white', padding: '0.3rem 0.6rem', borderRadius: '6px', fontSize: '0.8rem', fontWeight: 'bold', letterSpacing: '0.5px' }}>
+                    المؤشر
+                  </div>
+                  <div style={{ flex: 1, height: '2px', background: 'linear-gradient(to left, #3D7EB9, transparent)' }}></div>
+                </div>
+                <div style={{ fontSize: '0.95rem', fontWeight: 'bold', color: '#1a1a1a', paddingRight: '1rem', lineHeight: '1.6' }}>
+                  {formData.performanceElement}
+                </div>
               </div>
             </div>
           </div>
