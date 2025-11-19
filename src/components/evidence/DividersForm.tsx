@@ -31,10 +31,46 @@ export default function DividersForm({ onBack }: DividersFormProps) {
 
   return (
     <div className="max-w-4xl mx-auto">
+      <style dangerouslySetInnerHTML={{
+        __html: `
+          @media print {
+            .no-print,
+            button,
+            input,
+            select,
+            label,
+            form > div:not(.print-preview),
+            h3 {
+              display: none !important;
+            }
+
+            body {
+              background: white !important;
+              print-color-adjust: exact;
+              -webkit-print-color-adjust: exact;
+            }
+
+            .print-preview {
+              display: flex !important;
+              align-items: center;
+              justify-content: center;
+              width: 100%;
+              height: 100vh;
+              page-break-inside: avoid;
+            }
+
+            .print-preview > div {
+              width: 100%;
+              height: 80vh;
+            }
+          }
+        `
+      }} />
+
       {/* Back Button */}
       <button
         onClick={onBack}
-        className="mb-6 flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-slate-700 hover:bg-gray-200 dark:hover:bg-slate-600 rounded-lg transition-colors"
+        className="mb-6 flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-slate-700 hover:bg-gray-200 dark:hover:bg-slate-600 rounded-lg transition-colors no-print"
       >
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -43,7 +79,7 @@ export default function DividersForm({ onBack }: DividersFormProps) {
       </button>
 
       {/* Header */}
-      <div className="mb-6 p-6 bg-gradient-to-r from-lime-500 to-lime-600 rounded-2xl text-white">
+      <div className="mb-6 p-6 bg-gradient-to-r from-lime-500 to-lime-600 rounded-2xl text-white no-print">
         <div className="flex items-center gap-3">
           <div className="text-4xl">📑</div>
           <div>
@@ -54,7 +90,7 @@ export default function DividersForm({ onBack }: DividersFormProps) {
       </div>
 
       {/* Form */}
-      <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 p-8">
+      <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 p-8 no-print">
         <form className="space-y-6">
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
@@ -77,7 +113,7 @@ export default function DividersForm({ onBack }: DividersFormProps) {
 
           {/* Preview */}
           {selectedDividerData && (
-            <div className="mt-8">
+            <div className="mt-8 print-preview">
               <h3 className="text-lg font-semibold text-gray-700 dark:text-gray-300 mb-4">معاينة الفاصل:</h3>
               <div className={`p-16 rounded-2xl bg-gradient-to-br ${selectedDividerData.color} shadow-2xl`}>
                 <div className="text-center">

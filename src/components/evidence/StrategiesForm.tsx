@@ -191,26 +191,7 @@ export default function StrategiesForm({ onBack }: StrategiesFormProps) {
                 }
               }
               
-              /* طباعة من الموبايل */
-              @media print and (max-width: 640px) {
-                .info-label {
-                  font-size: 0.45rem !important;
-                  padding: 0.1rem !important;
-                  white-space: nowrap !important;
-                }
-                .info-value {
-                  font-size: 0.45rem !important;
-                  padding: 0.1rem !important;
-                  white-space: nowrap !important;
-                  overflow: hidden !important;
-                  text-overflow: ellipsis !important;
-                }
-                .info-item {
-                  white-space: nowrap !important;
-                }
-              }
-              
-              /* طباعة من الديسكتوب */
+              /* في الطباعة */
               @media print {
                 .info-label {
                   font-size: 0.75rem !important;
@@ -381,37 +362,6 @@ export default function StrategiesForm({ onBack }: StrategiesFormProps) {
                   print-color-adjust: exact !important;
                   -webkit-print-color-adjust: exact !important;
               }
-              
-              /* طباعة من الموبايل */
-              @media print and (max-width: 640px) {
-                  * { 
-                      print-color-adjust: exact !important; 
-                      -webkit-print-color-adjust: exact !important;
-                  }
-                  body { 
-                      margin: 0; 
-                      font-size: 8px !important; 
-                      background: white !important;
-                      transform: scale(0.9);
-                      transform-origin: top right;
-                  }
-                  @page { 
-                      margin: 0.3cm; 
-                      size: A4 landscape; 
-                  }
-                  .strategies-table th,
-                  .strategies-table td {
-                      font-size: 0.45rem !important;
-                      padding: 0.1rem !important;
-                      white-space: nowrap !important;
-                  }
-                  .footer {
-                      padding: 0.15rem !important;
-                      font-size: 0.45rem !important;
-                  }
-              }
-              
-              /* طباعة من الديسكتوب */
               @media print {
                   * { 
                       print-color-adjust: exact !important; 

@@ -188,7 +188,7 @@ export default function AchievementForm({ onBack }: AchievementFormProps) {
       {/* Back Button */}
       <button
         onClick={onBack}
-        className="mb-6 flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-slate-700 hover:bg-gray-200 dark:hover:bg-slate-600 rounded-lg transition-colors"
+        className="mb-6 flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-slate-700 hover:bg-gray-200 dark:hover:bg-slate-600 rounded-lg transition-colors no-print"
       >
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -197,7 +197,7 @@ export default function AchievementForm({ onBack }: AchievementFormProps) {
       </button>
 
       {/* Header */}
-      <div className="mb-6 p-6 bg-gradient-to-r from-teal-500 to-teal-600 rounded-2xl text-white">
+      <div className="mb-6 p-6 bg-gradient-to-r from-teal-500 to-teal-600 rounded-2xl text-white no-print">
         <div className="flex items-center gap-3">
           <div className="text-4xl">✅</div>
           <div>
@@ -208,7 +208,7 @@ export default function AchievementForm({ onBack }: AchievementFormProps) {
       </div>
 
       {/* Form */}
-      <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 p-8">
+      <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 p-8 no-print">
         <form className="space-y-6">
           {/* Row 1 */}
           <div className="grid grid-cols-1 md:grid-cols-5 gap-6">

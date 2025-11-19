@@ -24,10 +24,42 @@ export default function CoverForm({ onBack }: CoverFormProps) {
 
   return (
     <div className="max-w-4xl mx-auto">
+      <style dangerouslySetInnerHTML={{
+        __html: `
+          @media print {
+            .no-print,
+            button,
+            input,
+            textarea,
+            label,
+            form > div:not(.print-preview) {
+              display: none !important;
+            }
+
+            body {
+              background: white !important;
+              print-color-adjust: exact;
+              -webkit-print-color-adjust: exact;
+            }
+
+            .print-preview {
+              display: block !important;
+              page-break-inside: avoid;
+              margin: 0 auto;
+              width: 100%;
+              height: 100vh;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            }
+          }
+        `
+      }} />
+
       {/* Back Button */}
       <button
         onClick={onBack}
-        className="mb-6 flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-slate-700 hover:bg-gray-200 dark:hover:bg-slate-600 rounded-lg transition-colors"
+        className="mb-6 flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-slate-700 hover:bg-gray-200 dark:hover:bg-slate-600 rounded-lg transition-colors no-print"
       >
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -36,7 +68,7 @@ export default function CoverForm({ onBack }: CoverFormProps) {
       </button>
 
       {/* Header */}
-      <div className="mb-6 p-6 bg-gradient-to-r from-cyan-500 to-cyan-600 rounded-2xl text-white">
+      <div className="mb-6 p-6 bg-gradient-to-r from-cyan-500 to-cyan-600 rounded-2xl text-white no-print">
         <div className="flex items-center gap-3">
           <div className="text-4xl">📔</div>
           <div>
@@ -47,7 +79,7 @@ export default function CoverForm({ onBack }: CoverFormProps) {
       </div>
 
       {/* Form */}
-      <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 p-8">
+      <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 p-8 no-print">
         <form className="space-y-6">
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
@@ -91,7 +123,7 @@ export default function CoverForm({ onBack }: CoverFormProps) {
           </div>
 
           {/* Preview */}
-          <div className="mt-8 p-12 border-4 border-cyan-500 rounded-2xl bg-gradient-to-br from-cyan-50 to-blue-50 dark:from-slate-700 dark:to-slate-600">
+          <div className="mt-8 p-12 border-4 border-cyan-500 rounded-2xl bg-gradient-to-br from-cyan-50 to-blue-50 dark:from-slate-700 dark:to-slate-600 print-preview">
             <div className="text-center space-y-8">
               <h1 className="text-4xl font-bold text-cyan-600 dark:text-cyan-400">
                 {formData.coverTitle}

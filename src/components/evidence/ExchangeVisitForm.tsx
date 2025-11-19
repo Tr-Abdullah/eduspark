@@ -139,40 +139,7 @@ export default function ExchangeVisitForm({ onBack }: ExchangeVisitFormProps) {
                 }
               }
               
-              /* طباعة من الموبايل */
-              @media print and (max-width: 640px) {
-                .info-label {
-                  font-size: 0.45rem !important;
-                  padding: 0.1rem !important;
-                  white-space: nowrap !important;
-                }
-                .info-value {
-                  font-size: 0.45rem !important;
-                  padding: 0.1rem !important;
-                  white-space: nowrap !important;
-                  overflow: hidden !important;
-                  text-overflow: ellipsis !important;
-                }
-                .objectives-section, .recommendations-section {
-                  padding: 0.3rem !important;
-                  margin-bottom: 0.3rem !important;
-                }
-                .objectives-section .title, .recommendations-section .title {
-                  padding: 0.15rem 0.3rem !important;
-                  margin-bottom: 0.3rem !important;
-                  font-size: 0.5rem !important;
-                }
-                .objectives-section .content, .recommendations-section .content {
-                  padding: 0.15rem !important;
-                  font-size: 0.45rem !important;
-                  line-height: 1.2 !important;
-                }
-                .info-item {
-                  white-space: nowrap !important;
-                }
-              }
-              
-              /* طباعة من الديسكتوب */
+              /* في الطباعة */
               @media print {
                 .info-label {
                   font-size: 0.75rem !important;

@@ -11,46 +11,6 @@ export default function QRCodeForm({ onBack }: QRCodeFormProps) {
   const [qrCodeData, setQrCodeData] = useState("");
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  // إضافة styles للطباعة
-  useEffect(() => {
-    const style = document.createElement('style');
-    style.innerHTML = `
-      @media print {
-        body * {
-          visibility: hidden;
-        }
-        .qr-print-area,
-        .qr-print-area * {
-          visibility: visible !important;
-        }
-        .qr-print-area {
-          position: absolute;
-          left: 0;
-          top: 0;
-          width: 100%;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          padding: 2rem;
-        }
-        .no-print {
-          display: none !important;
-        }
-      }
-      @media (max-width: 640px) {
-        .qr-link-text {
-          font-size: 0.75rem !important;
-          word-break: break-all;
-        }
-      }
-    `;
-    document.head.appendChild(style);
-    return () => {
-      document.head.removeChild(style);
-    };
-  }, []);
-
   const generateQRCode = async () => {
     if (!fileLink.trim()) return;
 
@@ -90,10 +50,43 @@ export default function QRCodeForm({ onBack }: QRCodeFormProps) {
 
   return (
     <div className="max-w-4xl mx-auto">
+      <style dangerouslySetInnerHTML={{
+        __html: `
+          @media print {
+            .no-print,
+            button:not(.print-show),
+            input,
+            form > div:not(.print-content),
+            header,
+            nav {
+              display: none !important;
+            }
+
+            body {
+              background: white !important;
+              print-color-adjust: exact;
+              -webkit-print-color-adjust: exact;
+            }
+
+            .print-content {
+              display: block !important;
+              page-break-inside: avoid;
+              margin: 0 auto;
+              padding: 20px;
+            }
+
+            canvas {
+              max-width: 100% !important;
+              height: auto !important;
+            }
+          }
+        `
+      }} />
+
       {/* Back Button */}
       <button
         onClick={onBack}
-        className="mb-6 flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-slate-700 hover:bg-gray-200 dark:hover:bg-slate-600 rounded-lg transition-colors"
+        className="mb-6 flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-slate-700 hover:bg-gray-200 dark:hover:bg-slate-600 rounded-lg transition-colors no-print"
       >
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -102,7 +95,7 @@ export default function QRCodeForm({ onBack }: QRCodeFormProps) {
       </button>
 
       {/* Header */}
-      <div className="mb-6 p-6 bg-gradient-to-r from-slate-700 to-slate-800 rounded-2xl text-white">
+      <div className="mb-6 p-6 bg-gradient-to-r from-slate-700 to-slate-800 rounded-2xl text-white no-print">
         <div className="flex items-center gap-3">
           <div className="text-4xl">📱</div>
           <div>
@@ -113,7 +106,7 @@ export default function QRCodeForm({ onBack }: QRCodeFormProps) {
       </div>
 
       {/* Form */}
-      <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 p-8">
+      <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 p-8 no-print">
         <form className="space-y-6" onSubmit={(e) => { e.preventDefault(); generateQRCode(); }}>
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
@@ -142,8 +135,8 @@ export default function QRCodeForm({ onBack }: QRCodeFormProps) {
 
           {/* QR Code Display */}
           {qrCodeData && (
-            <div className="qr-print-area mt-8 p-8 bg-gray-50 dark:bg-slate-700 rounded-2xl text-center">
-              <h3 className="no-print text-xl font-semibold text-gray-700 dark:text-gray-300 mb-6">
+            <div className="mt-8 p-8 bg-gray-50 dark:bg-slate-700 rounded-2xl text-center print-content">
+              <h3 className="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-6">
                 رمز QR جاهز
               </h3>
               
@@ -154,13 +147,13 @@ export default function QRCodeForm({ onBack }: QRCodeFormProps) {
               </div>
 
               <div className="mt-4 p-4 bg-white dark:bg-slate-600 rounded-lg">
-                <p className="qr-link-text text-sm text-gray-600 dark:text-gray-400 break-all">
+                <p className="text-sm text-gray-600 dark:text-gray-400 break-all">
                   {qrCodeData}
                 </p>
               </div>
 
               {/* Action Buttons */}
-              <div className="no-print flex justify-center gap-4 mt-6">
+              <div className="flex justify-center gap-4 mt-6">
                 <button
                   type="button"
                   onClick={handleDownload}

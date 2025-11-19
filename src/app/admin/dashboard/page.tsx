@@ -581,37 +581,34 @@ function EvidenceReportsGenerator() {
           </button>
         )}
 
-        {/* Grid of Evidence Types */}
+        {/* List of Evidence Types */}
         {!selectedType && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="max-w-4xl mx-auto space-y-4">
             {evidenceTypes.map((type) => (
               <button
                 key={type.id}
                 onClick={() => setSelectedType(type.id as any)}
-                className="group relative p-6 bg-white dark:bg-slate-800 rounded-2xl shadow-lg hover:shadow-2xl border border-gray-200 dark:border-gray-700 transition-all duration-300 hover:scale-105 text-right"
+                className="group relative w-full p-5 bg-white dark:bg-slate-800 rounded-xl shadow hover:shadow-lg border border-gray-200 dark:border-gray-700 transition-all duration-200 hover:border-gray-300 dark:hover:border-gray-600 text-right flex items-center gap-4"
               >
-                {/* Gradient Background */}
-                <div className={`absolute inset-0 bg-gradient-to-br ${type.color} opacity-0 group-hover:opacity-10 rounded-2xl transition-opacity`} />
-                
                 {/* Icon */}
-                <div className="text-5xl mb-4">{type.icon}</div>
+                <div className="text-4xl flex-shrink-0">{type.icon}</div>
                 
-                {/* Title */}
-                <h3 className="text-xl font-bold text-gray-800 dark:text-white mb-2">
-                  {type.title}
-                </h3>
-                
-                {/* Description */}
-                <p className="text-gray-600 dark:text-gray-400 text-sm">
-                  {type.description}
-                </p>
+                <div className="flex-1">
+                  {/* Title */}
+                  <h3 className="text-xl font-bold text-gray-800 dark:text-white mb-1">
+                    {type.title}
+                  </h3>
+                  
+                  {/* Description */}
+                  <p className="text-gray-600 dark:text-gray-400 text-sm">
+                    {type.description}
+                  </p>
+                </div>
 
                 {/* Arrow Icon */}
-                <div className="absolute bottom-6 left-6 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <svg className="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </div>
+                <svg className="w-6 h-6 text-gray-400 group-hover:text-gray-600 dark:group-hover:text-gray-300 transition-colors flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
               </button>
             ))}
           </div>
