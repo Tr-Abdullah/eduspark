@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { getCurrentHijriDate, formatHijriDate, DEFAULT_SCHOOL_DATA, DEFAULT_IMAGES } from "./shared/utils";
-import { sharedPrintStyles, generateHeader, generateSignatureSection } from "./shared/PrintStyles";
+import { UnifiedPrintTemplate } from "./shared/UnifiedPrintTemplate";
 
 interface AchievementFormProps {
   onBack: () => void;
@@ -39,7 +39,6 @@ export default function AchievementForm({ onBack }: AchievementFormProps) {
   const [principalSignatureImage, setPrincipalSignatureImage] = useState<string | null>(null);
   const [barcodeImage, setBarcodeImage] = useState<string | null>(null);
 
-  // تحميل الصور الافتراضية
   useEffect(() => {
     setLogoImage(DEFAULT_IMAGES.logo);
     setSignatureImage(DEFAULT_IMAGES.signature);
@@ -50,141 +49,151 @@ export default function AchievementForm({ onBack }: AchievementFormProps) {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>, setImage: (img: string) => void) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        setImage(event.target?.result as string);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
+  const executionDate = formatHijriDate(
+    currentDate.dayName,
+    formData.executionYear,
+    formData.executionMonth,
+    formData.executionDay
+  );
 
-  const handlePrint = () => {
-    const executionDate = formatHijriDate(
-      currentDate.dayName,
-      formData.executionYear,
-      formData.executionMonth,
-      formData.executionDay
-    );
+  const reportTitle = formData.reportType === 'daily' ? 'تقرير الإنجاز اليومي' : 'تقرير الإنجاز الأسبوعي';
 
-    const reportTitle = formData.reportType === 'daily' ? 'تقرير الإنجاز اليومي' : 'تقرير الإنجاز الأسبوعي';
-
-    const printContent = `
-      <!DOCTYPE html>
-      <html dir="rtl" lang="ar">
-      <head>
-        <meta charset="UTF-8">
-        <title>${reportTitle}</title>
-        ${sharedPrintStyles}
-      </head>
-      <body>
-        <div class="print-container">
-          ${generateHeader(logoImage || '', formData.schoolName)}
-          
-          <div class="content-section">
-            <h2 class="section-title">${reportTitle}</h2>
-            
-            <div class="info-grid">
-              <div class="info-item">
-                <span class="label">نوع التقرير:</span>
-                <span class="value">${formData.reportType === 'daily' ? 'يومي' : 'أسبوعي'}</span>
-              </div>
-              <div class="info-item">
-                <span class="label">${formData.reportType === 'daily' ? 'التاريخ' : 'الأسبوع'}:</span>
-                <span class="value">${formData.reportType === 'daily' ? executionDate : formData.achievementWeek}</span>
-              </div>
-            </div>
-
-            <div class="info-grid">
-              <div class="info-item">
-                <span class="label">فهم ${formData.schoolGender === 'boys' ? 'الطلاب' : 'الطالبات'}:</span>
-                <span class="value">${formData.studentUnderstanding}</span>
-              </div>
-              <div class="info-item">
-                <span class="label">مشاركة ${formData.schoolGender === 'boys' ? 'الطلاب' : 'الطالبات'}:</span>
-                <span class="value">${formData.studentParticipation}</span>
-              </div>
-              <div class="info-item">
-                <span class="label">عدد الحاضرين:</span>
-                <span class="value">${formData.attendanceCount}</span>
-              </div>
-              <div class="info-item">
-                <span class="label">عدد الغائبين:</span>
-                <span class="value">${formData.absenceCount}</span>
-              </div>
-              <div class="info-item">
-                <span class="label">عدد الدروس:</span>
-                <span class="value">${formData.lessonsCount}</span>
-              </div>
-              <div class="info-item">
-                <span class="label">عدد الواجبات:</span>
-                <span class="value">${formData.homeworkCount}</span>
-              </div>
-              <div class="info-item">
-                <span class="label">عدد الاختبارات:</span>
-                <span class="value">${formData.testsCount}</span>
-              </div>
-              <div class="info-item">
-                <span class="label">عدد الأنشطة:</span>
-                <span class="value">${formData.activitiesCount}</span>
-              </div>
-            </div>
-
-            ${formData.goalsAchieved ? `
-              <div class="section-box">
-                <h3 class="sub-title">الأهداف المحققة:</h3>
-                <div class="value">${formData.goalsAchieved}</div>
-              </div>
-            ` : ''}
-
-            ${formData.challenges ? `
-              <div class="section-box">
-                <h3 class="sub-title">التحديات:</h3>
-                <div class="value">${formData.challenges}</div>
-              </div>
-            ` : ''}
-
-            ${formData.interventions ? `
-              <div class="section-box">
-                <h3 class="sub-title">التدخلات:</h3>
-                <div class="value">${formData.interventions}</div>
-              </div>
-            ` : ''}
-
-            ${formData.notes ? `
-              <div class="section-box">
-                <h3 class="sub-title">ملاحظات:</h3>
-                <div class="value">${formData.notes}</div>
-              </div>
-            ` : ''}
+  const printableContent = (
+    <>
+      <style dangerouslySetInnerHTML={{__html: `
+        .content-section {
+          padding: 1rem;
+        }
+        .section-title {
+          text-align: center;
+          font-size: 1.3rem;
+          font-weight: bold;
+          color: #15445A;
+          margin-bottom: 1rem;
+          padding: 0.5rem;
+          background: #f0f4f8;
+          border-radius: 8px;
+        }
+        .info-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+          gap: 0.8rem;
+          margin-bottom: 1rem;
+        }
+        .info-item {
+          display: flex;
+          gap: 0.5rem;
+          padding: 0.5rem;
+          background: #f9fafb;
+          border-radius: 6px;
+          border: 1px solid #e5e7eb;
+        }
+        .label {
+          font-weight: 600;
+          color: #374151;
+          min-width: 100px;
+        }
+        .value {
+          color: #1f2937;
+          flex: 1;
+        }
+        .section-box {
+          margin: 1rem 0;
+          padding: 0.8rem;
+          background: #f9fafb;
+          border-radius: 8px;
+          border: 1px solid #e5e7eb;
+        }
+        .sub-title {
+          font-weight: bold;
+          color: #15445A;
+          margin-bottom: 0.5rem;
+          font-size: 1.1rem;
+        }
+      `}} />
+      
+      <div className="content-section">
+        <h2 className="section-title">{reportTitle}</h2>
+        
+        <div className="info-grid">
+          <div className="info-item">
+            <span className="label">نوع التقرير:</span>
+            <span className="value">{formData.reportType === 'daily' ? 'يومي' : 'أسبوعي'}</span>
           </div>
-
-          ${generateSignatureSection(
-            signatureImage || '',
-            formData.teacherName || 'المعلم',
-            principalSignatureImage || '',
-            formData.schoolGender === 'boys' ? 'المدير' : 'المديرة',
-            barcodeImage || ''
-          )}
+          <div className="info-item">
+            <span className="label">{formData.reportType === 'daily' ? 'التاريخ' : 'الأسبوع'}:</span>
+            <span className="value">{formData.reportType === 'daily' ? executionDate : `الأسبوع ${formData.achievementWeek}`}</span>
+          </div>
         </div>
-      </body>
-      </html>
-    `;
 
-    const printWindow = window.open('', '_blank');
-    if (printWindow) {
-      printWindow.document.write(printContent);
-      printWindow.document.close();
-      printWindow.onload = () => {
-        printWindow.print();
-      };
-    }
-  };
+        <div className="info-grid">
+          <div className="info-item">
+            <span className="label">فهم {formData.schoolGender === 'boys' ? 'الطلاب' : 'الطالبات'}:</span>
+            <span className="value">{formData.studentUnderstanding === 'excellent' ? 'ممتاز' : formData.studentUnderstanding === 'good' ? 'جيد' : 'ضعيف'}</span>
+          </div>
+          <div className="info-item">
+            <span className="label">مشاركة {formData.schoolGender === 'boys' ? 'الطلاب' : 'الطالبات'}:</span>
+            <span className="value">{formData.studentParticipation === 'high' ? 'عالي' : formData.studentParticipation === 'medium' ? 'متوسط' : 'منخفض'}</span>
+          </div>
+          <div className="info-item">
+            <span className="label">عدد الحاضرين:</span>
+            <span className="value">{formData.attendanceCount}</span>
+          </div>
+          <div className="info-item">
+            <span className="label">عدد الغائبين:</span>
+            <span className="value">{formData.absenceCount}</span>
+          </div>
+          <div className="info-item">
+            <span className="label">عدد الدروس:</span>
+            <span className="value">{formData.lessonsCount}</span>
+          </div>
+          <div className="info-item">
+            <span className="label">عدد الواجبات:</span>
+            <span className="value">{formData.homeworkCount}</span>
+          </div>
+          <div className="info-item">
+            <span className="label">عدد الاختبارات:</span>
+            <span className="value">{formData.testsCount}</span>
+          </div>
+          <div className="info-item">
+            <span className="label">عدد الأنشطة:</span>
+            <span className="value">{formData.activitiesCount}</span>
+          </div>
+        </div>
+
+        {formData.goalsAchieved && (
+          <div className="section-box">
+            <h3 className="sub-title">الأهداف المحققة:</h3>
+            <div className="value">{formData.goalsAchieved === 'achieved' ? 'تحققت' : 'لم تتحقق'}</div>
+          </div>
+        )}
+
+        {formData.challenges && (
+          <div className="section-box">
+            <h3 className="sub-title">الصعوبات والتحديات:</h3>
+            <div className="value">{formData.challenges}</div>
+          </div>
+        )}
+
+        {formData.interventions && (
+          <div className="section-box">
+            <h3 className="sub-title">المعالجات والتدخلات:</h3>
+            <div className="value">{formData.interventions}</div>
+          </div>
+        )}
+
+        {formData.notes && (
+          <div className="section-box">
+            <h3 className="sub-title">ملاحظات:</h3>
+            <div className="value">{formData.notes}</div>
+          </div>
+        )}
+      </div>
+    </>
+  );
 
   return (
-    <div className="max-w-6xl mx-auto">
+    <div className="max-w-6xl mx-auto px-4">
       {/* Back Button */}
       <button
         onClick={onBack}
@@ -501,17 +510,32 @@ export default function AchievementForm({ onBack }: AchievementFormProps) {
           <div className="flex justify-center pt-6">
             <button
               type="button"
-              onClick={handlePrint}
-              className="px-8 py-3 bg-gradient-to-r from-teal-500 to-teal-600 text-white font-semibold rounded-lg hover:from-teal-600 hover:to-teal-700 transition-all shadow-lg hover:shadow-xl flex items-center gap-2"
+              onClick={() => {}} 
+              disabled
+              className="px-8 py-3 bg-gradient-to-r from-teal-500 to-teal-600 text-white font-semibold rounded-lg hover:from-teal-600 hover:to-teal-700 transition-all shadow-lg hover:shadow-xl flex items-center gap-2 opacity-50 cursor-not-allowed"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
               </svg>
-              طباعة تقرير الإنجاز PDF
+              استخدم زر الطباعة العائم بالأسفل
             </button>
           </div>
         </form>
       </div>
+
+      {/* Unified Print Template */}
+      <UnifiedPrintTemplate
+        logoImage={logoImage || DEFAULT_IMAGES.logo}
+        schoolName={formData.schoolName}
+        teacherName={formData.teacherName || 'المعلم'}
+        principalName={formData.schoolGender === 'boys' ? 'المدير' : 'المديرة'}
+        signatureImage={signatureImage || DEFAULT_IMAGES.signature}
+        principalSignatureImage={principalSignatureImage || ''}
+        barcodeImage={barcodeImage || ''}
+        academicYear="1446-1447"
+      >
+        {printableContent}
+      </UnifiedPrintTemplate>
     </div>
   );
 }
