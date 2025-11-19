@@ -284,15 +284,15 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
               }
               .header-text h3 {
                   margin: 0 0 0.2rem 0;
-                  font-size: 1.1rem;
+                  font-size: 1.25rem;
               }
               .header-text h4 {
                   margin: 0 0 0.15rem 0;
-                  font-size: 0.9rem;
+                  font-size: 1.1rem;
               }
               .school-name-header {
                   margin-top: 0.3rem;
-                  font-size: 1rem;
+                  font-size: 1.15rem;
                   font-weight: bold;
                   white-space: normal;
                   line-height: 1.4;
@@ -359,7 +359,7 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
                   text-align: center;
                   font-weight: bold;
                   margin-bottom: 0.5rem;
-                  font-size: 0.95rem;
+                  font-size: 1.1rem;
               }
               .info-grid {
                   display: grid;
@@ -377,7 +377,7 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
               .info-label {
                   color: #3D7EB9 !important;
                   font-weight: bold;
-                  font-size: 0.85rem;
+                  font-size: 1rem;
                   min-width: 100px;
                   border-right: 2px solid #3D7EB9 !important;
                   padding-right: 0.3rem;
@@ -385,7 +385,7 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
               }
               .info-value {
                   flex: 1;
-                  font-size: 0.85rem;
+                  font-size: 1rem;
                   font-weight: bold;
               }
               
@@ -406,10 +406,25 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
               /* في الطباعة */
               @media print {
                 .info-label {
-                  font-size: 0.75rem !important;
+                  font-size: 0.9rem !important;
                 }
                 .info-value {
-                  font-size: 0.75rem !important;
+                  font-size: 0.9rem !important;
+                }
+                .section-title {
+                  font-size: 1rem !important;
+                }
+                .signature-box-title {
+                  font-size: 0.95rem !important;
+                }
+                .signature-name {
+                  font-size: 1rem !important;
+                }
+                .goal-item {
+                  font-size: 0.9rem !important;
+                }
+                .footer {
+                  font-size: 1rem !important;
                 }
               }
               .full-width {
@@ -473,10 +488,10 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
                   padding: 0.2rem;
                   font-weight: bold;
                   margin-bottom: 0.15rem;
-                  font-size: 0.9rem;
+                  font-size: 1rem;
               }
               .signature-name {
-                  font-size: 1rem;
+                  font-size: 1.1rem;
                   font-weight: bold;
                   color: #333;
                   margin: 0.3rem 0;
@@ -505,7 +520,7 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
                   text-align: center;
                   border-radius: 8px;
                   margin-top: 0.2rem;
-                  font-size: 0.9rem;
+                  font-size: 1.05rem;
                   font-weight: bold;
               }
               @media print {
