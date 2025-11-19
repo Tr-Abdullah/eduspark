@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import dynamic from 'next/dynamic';
 import GeneralEvidenceForm from '@/components/evidence/GeneralEvidenceForm';
+import PerformanceEvidenceForm from '@/components/evidence/PerformanceEvidenceForm';
 
 // تحميل مكون PDF فقط في المتصفح
 const PDFPreview = dynamic(() => import('@/components/PDFPreview'), { ssr: false });
@@ -432,7 +433,7 @@ function DashboardContent() {
             {/* Content */}
             <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700">
               {activeTab === "reports" && <MOEReportGenerator />}
-              {activeTab === "performance" && <PerformanceReportGenerator />}
+              {activeTab === "performance" && <PerformanceEvidenceForm />}
               {activeTab === "general" && <GeneralEvidenceForm />}
               {activeTab === "evidence" && <EvidenceReportsGenerator />}
               {activeTab === "tools" && <OtherTools />}
