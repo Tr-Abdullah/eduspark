@@ -318,18 +318,18 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
                 }
               }
               
-              /* في الطباعة: منع الالتفاف وتصغير الخط قليلاً */
+              /* في الطباعة: منع الالتفاف مع الحفاظ على حجم خط مناسب */
               @media print {
                 .school-name-header {
                   white-space: nowrap !important;
-                  font-size: 0.85rem !important;
+                  font-size: 1.1rem !important;
                   overflow: hidden;
                 }
                 .header-text h3 {
-                  font-size: 0.95rem !important;
+                  font-size: 1.2rem !important;
                 }
                 .header-text h4 {
-                  font-size: 0.8rem !important;
+                  font-size: 1.05rem !important;
                 }
               }
               .barcode-container {
