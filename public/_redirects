@@ -1,0 +1,11 @@
+# Netlify Redirects for Next.js SPA routing
+# هذا الملف يضمن عمل التوجيه الديناميكي
+
+# إعادة توجيه جميع الطلبات إلى index.html (للصفحات الديناميكية)
+/*    /index.html   200
+
+# API routes تبقى كما هي
+/api/*  /api/:splat  200
+
+# الصفحات الثابتة
+/_next/*  /_next/:splat  200

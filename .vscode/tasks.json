@@ -2,12 +2,78 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
-			"label": "Run Eduspark Dev Server",
+			"label": "🧪 تطوير محلي (Dev Server)",
 			"type": "shell",
 			"command": "npm run dev",
 			"isBackground": true,
+			"problemMatcher": {
+				"pattern": {
+					"regexp": ".",
+					"file": 1,
+					"location": 2,
+					"message": 3
+				},
+				"background": {
+					"activeOnStart": true,
+					"beginsPattern": "^.*compiling.*$",
+					"endsPattern": "^.*compiled.*successfully.*$"
+				}
+			},
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"presentation": {
+				"reveal": "always",
+				"panel": "dedicated"
+			}
+		},
+		{
+			"label": "🚀 بناء الإنتاج (Production Build)",
+			"type": "shell",
+			"command": "npm run build",
+			"group": "build",
 			"problemMatcher": [],
-			"group": "build"
+			"presentation": {
+				"reveal": "always",
+				"panel": "new"
+			}
+		},
+		{
+			"label": "🔍 معاينة محلية (Local Preview)",
+			"type": "shell",
+			"command": "npm run start",
+			"group": "test",
+			"problemMatcher": [],
+			"presentation": {
+				"reveal": "always",
+				"panel": "new"
+			},
+			"dependsOn": ["🚀 بناء الإنتاج (Production Build)"]
+		},
+		{
+			"label": "📦 تثبيت Netlify Plugin",
+			"type": "shell",
+			"command": "npm install --save-dev @netlify/plugin-nextjs",
+			"group": "none",
+			"problemMatcher": []
+		},
+		{
+			"label": "☁️ تثبيت Cloudflare Adapter",
+			"type": "shell",
+			"command": "npm install --save-dev @cloudflare/next-on-pages",
+			"group": "none",
+			"problemMatcher": []
+		},
+		{
+			"label": "🧹 تنظيف ملفات البناء",
+			"type": "shell",
+			"command": "if exist .next rmdir /s /q .next & if exist .netlify rmdir /s /q .netlify & if exist .vercel rmdir /s /q .vercel & if exist out rmdir /s /q out",
+			"windows": {
+				"command": "if exist .next rmdir /s /q .next & if exist .netlify rmdir /s /q .netlify & if exist .vercel rmdir /s /q .vercel & if exist out rmdir /s /q out"
+			},
+			"group": "none",
+			"problemMatcher": []
 		}
 	]
 }

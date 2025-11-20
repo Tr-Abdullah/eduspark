@@ -1,0 +1,27 @@
+# Cloudflare Workers/Pages Configuration
+# EDUSPARK Platform
+
+name = "eduspark"
+compatibility_date = "2024-11-20"
+compatibility_flags = ["nodejs_compat"]
+
+# إعدادات Pages
+pages_build_output_dir = ".vercel/output/static"
+
+# إعدادات Node.js
+node_compat = true
+
+# متغيرات البيئة (سيتم تعيينها من لوحة التحكم)
+[vars]
+  # NODE_ENV = "production"
+
+# إعدادات KV Storage (إذا احتجت لتخزين بيانات)
+# [[kv_namespaces]]
+#   binding = "EDUSPARK_KV"
+#   id = "your-kv-namespace-id"
+
+# إعدادات D1 Database (إذا أردت استخدام قاعدة بيانات Cloudflare)
+# [[d1_databases]]
+#   binding = "DB"
+#   database_name = "eduspark-db"
+#   database_id = "your-database-id"
