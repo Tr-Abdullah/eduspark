@@ -241,13 +241,15 @@ export default function PerformanceEvidenceForm({ onBack }: PerformanceFormProps
                   box-sizing: border-box;
               }
               body {
-                  font-family: 'Sakkal Majalla', 'Traditional Arabic', 'Segoe UI', Tahoma, Arial, sans-serif;
+                  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans Arabic', 'Traditional Arabic', 'Geeza Pro', Arial, sans-serif;
                   margin: 10px;
                   direction: rtl;
                   line-height: 1.6;
                   color: #333;
                   font-size: 14px;
                   background: white !important;
+                  -webkit-font-smoothing: antialiased;
+                  -moz-osx-font-smoothing: grayscale;
               }
               .header {
                   background: #15445A !important;
@@ -280,6 +282,9 @@ export default function PerformanceEvidenceForm({ onBack }: PerformanceFormProps
               .header-text h3 {
                   margin: 0 0 0.2rem 0;
                   font-size: 1rem;
+                  font-weight: 700;
+                  text-rendering: optimizeLegibility;
+                  letter-spacing: 0.3px;
               }
               .header-text h4 {
                   margin: 0 0 0.15rem 0;

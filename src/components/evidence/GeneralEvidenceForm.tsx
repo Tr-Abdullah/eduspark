@@ -246,13 +246,15 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
                   box-sizing: border-box;
               }
               body {
-                  font-family: 'Sakkal Majalla', 'Traditional Arabic', 'Segoe UI', Tahoma, Arial, sans-serif;
+                  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans Arabic', 'Traditional Arabic', 'Geeza Pro', Arial, sans-serif;
                   margin: 10px;
                   direction: rtl;
                   line-height: 1.6;
                   color: #333;
                   font-size: 14px;
                   background: white !important;
+                  -webkit-font-smoothing: antialiased;
+                  -moz-osx-font-smoothing: grayscale;
               }
               .header {
                   background: #15445A !important;
@@ -287,6 +289,8 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
                   font-size: 1.25rem;
                   letter-spacing: 0.5px;
                   word-spacing: 2px;
+                  font-weight: 700;
+                  text-rendering: optimizeLegibility;
               }
               .header-text h4 {
                   margin: 0 0 0.15rem 0;
