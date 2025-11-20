@@ -4,10 +4,9 @@ const nextConfig: NextConfig = {
   /* config options here */
   reactCompiler: true,
   
-  // إعدادات Cloudflare Pages
-  output: 'export', // تصدير ثابت للصفحات
+  // إعدادات الصور
   images: {
-    unoptimized: true, // تعطيل تحسين الصور لـ Cloudflare
+    unoptimized: true, // لتوافق أفضل مع منصات النشر
   },
 };
 
