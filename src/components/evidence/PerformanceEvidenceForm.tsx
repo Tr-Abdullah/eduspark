@@ -459,6 +459,9 @@ export default function PerformanceEvidenceForm({ onBack }: PerformanceFormProps
                   padding: 0.3rem;
                   text-align: center;
                   min-height: 60px;
+                  display: flex;
+                  flex-direction: column;
+                  justify-content: flex-end;
               }
               .signature-box-title {
                   color: #666 !important;

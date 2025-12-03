@@ -572,6 +572,9 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
                   padding: 0.3rem;
                   text-align: center;
                   min-height: 60px;
+                  display: flex;
+                  flex-direction: column;
+                  justify-content: flex-end;
               }
               .signature-box-title {
                   color: #333 !important;
