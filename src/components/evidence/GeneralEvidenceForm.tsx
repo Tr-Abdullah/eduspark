@@ -323,7 +323,7 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
                   box-sizing: border-box;
               }
               body {
-                  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans Arabic', 'Traditional Arabic', 'Geeza Pro', Arial, sans-serif;
+                  font-family: Arial, sans-serif;
                   margin: 10px;
                   direction: rtl;
                   line-height: 1.6;

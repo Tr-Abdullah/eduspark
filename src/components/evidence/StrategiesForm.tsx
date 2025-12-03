@@ -104,7 +104,7 @@ export default function StrategiesForm({ onBack }: StrategiesFormProps) {
                   box-sizing: border-box;
               }
               body { 
-                  font-family: 'Segoe UI', Tahoma, Arial, sans-serif; 
+                  font-family: Arial, sans-serif; 
                   margin: 10px; 
                   direction: rtl; 
                   line-height: 1.6;
