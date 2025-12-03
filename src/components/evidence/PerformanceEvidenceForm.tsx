@@ -601,7 +601,7 @@ export default function PerformanceEvidenceForm({ onBack }: PerformanceFormProps
               <div class="signature-box">
                   <div class="signature-box-title">المعلم:</div>
                   <div class="signature-name">${formData.teacherName}</div>
-                  ${signatureImage ? `<img src="${signatureImage}" alt="توقيع المعلم">` : ''}
+                  ${signatureImage ? `<img src="${signatureImage}" alt="توقيع المعلم">` : '<div style="height:50px;"></div>'}
               </div>
               <div class="barcode-container">
                   ${barcodeImage ? `<img src="${barcodeImage}" alt="باركود">` : ''}
@@ -609,7 +609,7 @@ export default function PerformanceEvidenceForm({ onBack }: PerformanceFormProps
               <div class="signature-box">
                   <div class="signature-box-title">قائد المدرسة:</div>
                   <div class="signature-name">${formData.principalName}</div>
-                  ${principalSignatureImage ? `<img src="${principalSignatureImage}" alt="توقيع القائد">` : ''}
+                  ${principalSignatureImage ? `<img src="${principalSignatureImage}" alt="توقيع القائد">` : '<div style="height:50px;"></div>'}
               </div>
           </div>
 
