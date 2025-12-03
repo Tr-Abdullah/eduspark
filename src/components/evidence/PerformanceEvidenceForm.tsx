@@ -356,12 +356,18 @@ export default function PerformanceEvidenceForm({ onBack }: PerformanceFormProps
                   gap: 0.5rem;
                   margin-top: 0.4rem;
               }
+              .evidence-item {
+                  page-break-inside: avoid;
+              }
               .evidence-item img {
-                  width: 100%;
-                  height: 160px;
+                  width: 100% !important;
+                  height: 160px !important;
                   object-fit: cover;
                   border-radius: 6px;
                   border: 2px solid #3D7EB9 !important;
+                  display: block !important;
+                  max-width: 100% !important;
+                  image-rendering: -webkit-optimize-contrast;
               }
               .signature-section {
                   margin-top: 0.8rem;
@@ -502,9 +508,9 @@ export default function PerformanceEvidenceForm({ onBack }: PerformanceFormProps
           <div class="evidence-section">
               <div class="section-title">الشواهد المصورة</div>
               <div class="evidence-grid">
-                  ${Object.values(images).map(img => img ? `
+                  ${Object.values(images).map((img, idx) => img ? `
                   <div class="evidence-item">
-                      <img src="${img}" alt="شاهد">
+                      <img src="${img}" alt="شاهد ${idx + 1}" loading="eager" decoding="sync">
                   </div>
                   ` : '').join('')}
               </div>
@@ -537,7 +543,7 @@ export default function PerformanceEvidenceForm({ onBack }: PerformanceFormProps
     printWindow.document.write(htmlContent);
     printWindow.document.close();
     
-    // انتظار تحميل جميع الصور قبل الطباعة
+    // انتظار تحميل جميع الصور قبل الطباعة - مع وقت أطول للصور الكبيرة
     printWindow.onload = () => {
       const allImages = printWindow.document.querySelectorAll('img');
       let loadedCount = 0;
@@ -549,34 +555,37 @@ export default function PerformanceEvidenceForm({ onBack }: PerformanceFormProps
         return;
       }
 
+      const checkAndPrint = () => {
+        if (loadedCount === totalImages) {
+          // انتظار إضافي 1 ثانية بعد تحميل كل الصور لضمان العرض
+          setTimeout(() => printWindow.print(), 1000);
+        }
+      };
+
       allImages.forEach((img) => {
-        if (img.complete) {
+        if (img.complete && img.naturalHeight > 0) {
           loadedCount++;
-          if (loadedCount === totalImages) {
-            setTimeout(() => printWindow.print(), 500);
-          }
+          checkAndPrint();
         } else {
           img.onload = () => {
             loadedCount++;
-            if (loadedCount === totalImages) {
-              setTimeout(() => printWindow.print(), 500);
-            }
+            checkAndPrint();
           };
           img.onerror = () => {
+            console.error('فشل تحميل صورة:', img.src.substring(0, 50));
             loadedCount++;
-            if (loadedCount === totalImages) {
-              setTimeout(() => printWindow.print(), 500);
-            }
+            checkAndPrint();
           };
         }
       });
 
-      // Fallback: طباعة بعد 3 ثواني حتى لو لم تكتمل الصور
+      // Fallback: طباعة بعد 5 ثواني حتى لو لم تكتمل الصور
       setTimeout(() => {
         if (loadedCount < totalImages) {
+          console.warn(`تم تحميل ${loadedCount} من ${totalImages} صورة فقط`);
           printWindow.print();
         }
-      }, 3000);
+      }, 5000);
     };
   };
 

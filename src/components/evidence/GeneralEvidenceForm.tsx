@@ -471,12 +471,18 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
                   gap: 0.5rem;
                   margin-top: 0.4rem;
               }
+              .evidence-item {
+                  page-break-inside: avoid;
+              }
               .evidence-item img {
-                  width: 100%;
-                  height: 160px;
+                  width: 100% !important;
+                  height: 160px !important;
                   object-fit: cover;
                   border-radius: 6px;
                   border: 2px solid #3D7EB9 !important;
+                  display: block !important;
+                  max-width: 100% !important;
+                  image-rendering: -webkit-optimize-contrast;
               }
               .signature-section {
                   margin-top: 0.3rem;
@@ -611,10 +617,10 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
           <div class="evidence-section">
               <div class="section-title">الشواهد</div>
               <div class="evidence-grid">
-                  ${images.img1 ? `<div class="evidence-item"><img src="${images.img1}" alt="الشاهد 1"></div>` : ''}
-                  ${images.img2 ? `<div class="evidence-item"><img src="${images.img2}" alt="الشاهد 2"></div>` : ''}
-                  ${images.img3 ? `<div class="evidence-item"><img src="${images.img3}" alt="الشاهد 3"></div>` : ''}
-                  ${images.img4 ? `<div class="evidence-item"><img src="${images.img4}" alt="الشاهد 4"></div>` : ''}
+                  ${images.img1 ? `<div class="evidence-item"><img src="${images.img1}" alt="الشاهد 1" loading="eager" decoding="sync"></div>` : ''}
+                  ${images.img2 ? `<div class="evidence-item"><img src="${images.img2}" alt="الشاهد 2" loading="eager" decoding="sync"></div>` : ''}
+                  ${images.img3 ? `<div class="evidence-item"><img src="${images.img3}" alt="الشاهد 3" loading="eager" decoding="sync"></div>` : ''}
+                  ${images.img4 ? `<div class="evidence-item"><img src="${images.img4}" alt="الشاهد 4" loading="eager" decoding="sync"></div>` : ''}
               </div>
           </div>
           ` : ''}
@@ -645,7 +651,7 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
     printWindow.document.write(htmlContent);
     printWindow.document.close();
 
-    // انتظار تحميل جميع الصور قبل الطباعة
+    // انتظار تحميل جميع الصور قبل الطباعة - مع وقت أطول للصور الكبيرة
     printWindow.onload = () => {
       const allImages = printWindow.document.querySelectorAll('img');
       let loadedCount = 0;
@@ -657,34 +663,37 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
         return;
       }
 
+      const checkAndPrint = () => {
+        if (loadedCount === totalImages) {
+          // انتظار إضافي 1 ثانية بعد تحميل كل الصور لضمان العرض
+          setTimeout(() => printWindow.print(), 1000);
+        }
+      };
+
       allImages.forEach((img) => {
-        if (img.complete) {
+        if (img.complete && img.naturalHeight > 0) {
           loadedCount++;
-          if (loadedCount === totalImages) {
-            setTimeout(() => printWindow.print(), 500);
-          }
+          checkAndPrint();
         } else {
           img.onload = () => {
             loadedCount++;
-            if (loadedCount === totalImages) {
-              setTimeout(() => printWindow.print(), 500);
-            }
+            checkAndPrint();
           };
           img.onerror = () => {
+            console.error('فشل تحميل صورة:', img.src.substring(0, 50));
             loadedCount++;
-            if (loadedCount === totalImages) {
-              setTimeout(() => printWindow.print(), 500);
-            }
+            checkAndPrint();
           };
         }
       });
 
-      // Fallback: طباعة بعد 3 ثواني حتى لو لم تكتمل الصور
+      // Fallback: طباعة بعد 5 ثواني حتى لو لم تكتمل الصور
       setTimeout(() => {
         if (loadedCount < totalImages) {
+          console.warn(`تم تحميل ${loadedCount} من ${totalImages} صورة فقط`);
           printWindow.print();
         }
-      }, 3000);
+      }, 5000);
     };
   };
 
