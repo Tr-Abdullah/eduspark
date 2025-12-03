@@ -645,9 +645,47 @@ export default function GeneralEvidenceForm({ onBack }: GeneralFormProps) {
     printWindow.document.write(htmlContent);
     printWindow.document.close();
 
-    setTimeout(() => {
-      printWindow.print();
-    }, 500);
+    // انتظار تحميل جميع الصور قبل الطباعة
+    printWindow.onload = () => {
+      const allImages = printWindow.document.querySelectorAll('img');
+      let loadedCount = 0;
+      const totalImages = allImages.length;
+
+      if (totalImages === 0) {
+        // لا توجد صور، طباعة مباشرة
+        setTimeout(() => printWindow.print(), 500);
+        return;
+      }
+
+      allImages.forEach((img) => {
+        if (img.complete) {
+          loadedCount++;
+          if (loadedCount === totalImages) {
+            setTimeout(() => printWindow.print(), 500);
+          }
+        } else {
+          img.onload = () => {
+            loadedCount++;
+            if (loadedCount === totalImages) {
+              setTimeout(() => printWindow.print(), 500);
+            }
+          };
+          img.onerror = () => {
+            loadedCount++;
+            if (loadedCount === totalImages) {
+              setTimeout(() => printWindow.print(), 500);
+            }
+          };
+        }
+      });
+
+      // Fallback: طباعة بعد 3 ثواني حتى لو لم تكتمل الصور
+      setTimeout(() => {
+        if (loadedCount < totalImages) {
+          printWindow.print();
+        }
+      }, 3000);
+    };
   };
 
   return (
