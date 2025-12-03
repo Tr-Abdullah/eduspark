@@ -153,7 +153,24 @@ export default function PerformanceEvidenceForm({ onBack }: PerformanceFormProps
     setSignatureImage('/images/signature.png');
   }, []);
 
-  const handleImageUpload = (
+  // دالة مساعدة لتحويل HEIC
+  const convertHEICtoJPEG = async (file: File): Promise<string> => {
+    const heic2any = (await import('heic2any')).default;
+    const convertedBlob = await heic2any({
+      blob: file,
+      toType: 'image/jpeg',
+      quality: 0.9
+    }) as Blob;
+    
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = (event) => resolve(event.target?.result as string);
+      reader.onerror = reject;
+      reader.readAsDataURL(convertedBlob);
+    });
+  };
+
+  const handleImageUpload = async (
     key: 'img1' | 'img2' | 'img3' | 'img4',
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -162,24 +179,13 @@ export default function PerformanceEvidenceForm({ onBack }: PerformanceFormProps
       const isHEIC = file.type === 'image/heic' || file.type === 'image/heif' || file.name.toLowerCase().endsWith('.heic') || file.name.toLowerCase().endsWith('.heif');
       
       if (isHEIC) {
-        const reader = new FileReader();
-        reader.onload = (event) => {
-          const img = new Image();
-          img.onload = () => {
-            const canvas = document.createElement('canvas');
-            canvas.width = img.width;
-            canvas.height = img.height;
-            const ctx = canvas.getContext('2d');
-            ctx?.drawImage(img, 0, 0);
-            const jpegDataUrl = canvas.toDataURL('image/jpeg', 0.9);
-            setImages({ ...images, [key]: jpegDataUrl });
-          };
-          img.onerror = () => {
-            alert('فشل تحويل صورة HEIC. الرجاء استخدام صيغة JPG أو PNG');
-          };
-          img.src = event.target?.result as string;
-        };
-        reader.readAsDataURL(file);
+        try {
+          const dataUrl = await convertHEICtoJPEG(file);
+          setImages({ ...images, [key]: dataUrl });
+        } catch (error) {
+          console.error('HEIC conversion error:', error);
+          alert('فشل تحويل صورة HEIC. الرجاء استخدام صيغة JPG أو PNG');
+        }
       } else {
         const reader = new FileReader();
         reader.onload = (event) => {
@@ -190,30 +196,19 @@ export default function PerformanceEvidenceForm({ onBack }: PerformanceFormProps
     }
   };
 
-  const handleLogoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleLogoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       const isHEIC = file.type === 'image/heic' || file.type === 'image/heif' || file.name.toLowerCase().endsWith('.heic') || file.name.toLowerCase().endsWith('.heif');
       
       if (isHEIC) {
-        const reader = new FileReader();
-        reader.onload = (event) => {
-          const img = new Image();
-          img.onload = () => {
-            const canvas = document.createElement('canvas');
-            canvas.width = img.width;
-            canvas.height = img.height;
-            const ctx = canvas.getContext('2d');
-            ctx?.drawImage(img, 0, 0);
-            const jpegDataUrl = canvas.toDataURL('image/jpeg', 0.9);
-            setLogoImage(jpegDataUrl);
-          };
-          img.onerror = () => {
-            alert('فشل تحويل صورة HEIC. الرجاء استخدام صيغة JPG أو PNG');
-          };
-          img.src = event.target?.result as string;
-        };
-        reader.readAsDataURL(file);
+        try {
+          const dataUrl = await convertHEICtoJPEG(file);
+          setLogoImage(dataUrl);
+        } catch (error) {
+          console.error('HEIC conversion error:', error);
+          alert('فشل تحويل صورة HEIC. الرجاء استخدام صيغة JPG أو PNG');
+        }
       } else {
         const reader = new FileReader();
         reader.onload = (event) => {
@@ -224,30 +219,19 @@ export default function PerformanceEvidenceForm({ onBack }: PerformanceFormProps
     }
   };
 
-  const handleSignatureUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSignatureUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       const isHEIC = file.type === 'image/heic' || file.type === 'image/heif' || file.name.toLowerCase().endsWith('.heic') || file.name.toLowerCase().endsWith('.heif');
       
       if (isHEIC) {
-        const reader = new FileReader();
-        reader.onload = (event) => {
-          const img = new Image();
-          img.onload = () => {
-            const canvas = document.createElement('canvas');
-            canvas.width = img.width;
-            canvas.height = img.height;
-            const ctx = canvas.getContext('2d');
-            ctx?.drawImage(img, 0, 0);
-            const jpegDataUrl = canvas.toDataURL('image/jpeg', 0.9);
-            setSignatureImage(jpegDataUrl);
-          };
-          img.onerror = () => {
-            alert('فشل تحويل صورة HEIC. الرجاء استخدام صيغة JPG أو PNG');
-          };
-          img.src = event.target?.result as string;
-        };
-        reader.readAsDataURL(file);
+        try {
+          const dataUrl = await convertHEICtoJPEG(file);
+          setSignatureImage(dataUrl);
+        } catch (error) {
+          console.error('HEIC conversion error:', error);
+          alert('فشل تحويل صورة HEIC. الرجاء استخدام صيغة JPG أو PNG');
+        }
       } else {
         const reader = new FileReader();
         reader.onload = (event) => {
@@ -258,30 +242,19 @@ export default function PerformanceEvidenceForm({ onBack }: PerformanceFormProps
     }
   };
 
-  const handlePrincipalSignatureUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handlePrincipalSignatureUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       const isHEIC = file.type === 'image/heic' || file.type === 'image/heif' || file.name.toLowerCase().endsWith('.heic') || file.name.toLowerCase().endsWith('.heif');
       
       if (isHEIC) {
-        const reader = new FileReader();
-        reader.onload = (event) => {
-          const img = new Image();
-          img.onload = () => {
-            const canvas = document.createElement('canvas');
-            canvas.width = img.width;
-            canvas.height = img.height;
-            const ctx = canvas.getContext('2d');
-            ctx?.drawImage(img, 0, 0);
-            const jpegDataUrl = canvas.toDataURL('image/jpeg', 0.9);
-            setPrincipalSignatureImage(jpegDataUrl);
-          };
-          img.onerror = () => {
-            alert('فشل تحويل صورة HEIC. الرجاء استخدام صيغة JPG أو PNG');
-          };
-          img.src = event.target?.result as string;
-        };
-        reader.readAsDataURL(file);
+        try {
+          const dataUrl = await convertHEICtoJPEG(file);
+          setPrincipalSignatureImage(dataUrl);
+        } catch (error) {
+          console.error('HEIC conversion error:', error);
+          alert('فشل تحويل صورة HEIC. الرجاء استخدام صيغة JPG أو PNG');
+        }
       } else {
         const reader = new FileReader();
         reader.onload = (event) => {
@@ -292,30 +265,19 @@ export default function PerformanceEvidenceForm({ onBack }: PerformanceFormProps
     }
   };
 
-  const handleBarcodeUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleBarcodeUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       const isHEIC = file.type === 'image/heic' || file.type === 'image/heif' || file.name.toLowerCase().endsWith('.heic') || file.name.toLowerCase().endsWith('.heif');
       
       if (isHEIC) {
-        const reader = new FileReader();
-        reader.onload = (event) => {
-          const img = new Image();
-          img.onload = () => {
-            const canvas = document.createElement('canvas');
-            canvas.width = img.width;
-            canvas.height = img.height;
-            const ctx = canvas.getContext('2d');
-            ctx?.drawImage(img, 0, 0);
-            const jpegDataUrl = canvas.toDataURL('image/jpeg', 0.9);
-            setBarcodeImage(jpegDataUrl);
-          };
-          img.onerror = () => {
-            alert('فشل تحويل صورة HEIC. الرجاء استخدام صيغة JPG أو PNG');
-          };
-          img.src = event.target?.result as string;
-        };
-        reader.readAsDataURL(file);
+        try {
+          const dataUrl = await convertHEICtoJPEG(file);
+          setBarcodeImage(dataUrl);
+        } catch (error) {
+          console.error('HEIC conversion error:', error);
+          alert('فشل تحويل صورة HEIC. الرجاء استخدام صيغة JPG أو PNG');
+        }
       } else {
         const reader = new FileReader();
         reader.onload = (event) => {
