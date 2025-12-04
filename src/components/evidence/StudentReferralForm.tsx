@@ -155,6 +155,11 @@ const StudentReferralForm: React.FC = () => {
   const [recipientSigImage, setRecipientSigImage] = useState<string>('');
   const [principalSigImage, setPrincipalSigImage] = useState<string>('');
   const [barcodeImage, setBarcodeImage] = useState<string>('');
+  const [evidenceImage1, setEvidenceImage1] = useState<string>('');
+  const [evidenceImage2, setEvidenceImage2] = useState<string>('');
+  const [evidenceImage3, setEvidenceImage3] = useState<string>('');
+  const [evidenceImage4, setEvidenceImage4] = useState<string>('');
+  const [evidenceImage5, setEvidenceImage5] = useState<string>('');
 
   // تحميل الشعار والتوقيعات من localStorage
   useEffect(() => {
@@ -519,6 +524,16 @@ const StudentReferralForm: React.FC = () => {
               ${formData.referralDetails || 'لا توجد تفاصيل إضافية'}
           </div>
 
+          ${evidenceImage1 || evidenceImage2 || evidenceImage3 || evidenceImage4 || evidenceImage5 ? `
+          <div class="section-title">صور الشواهد</div>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1rem;">
+              ${evidenceImage1 ? `<div style="border: 2px solid #e5e7eb; border-radius: 8px; padding: 0.5rem; text-align: center;"><img src="${evidenceImage1}" style="max-width: 100%; height: 200px; object-fit: contain;"></div>` : ''}
+              ${evidenceImage2 ? `<div style="border: 2px solid #e5e7eb; border-radius: 8px; padding: 0.5rem; text-align: center;"><img src="${evidenceImage2}" style="max-width: 100%; height: 200px; object-fit: contain;"></div>` : ''}
+              ${evidenceImage3 ? `<div style="border: 2px solid #e5e7eb; border-radius: 8px; padding: 0.5rem; text-align: center;"><img src="${evidenceImage3}" style="max-width: 100%; height: 200px; object-fit: contain;"></div>` : ''}
+              ${evidenceImage4 ? `<div style="border: 2px solid #e5e7eb; border-radius: 8px; padding: 0.5rem; text-align: center;"><img src="${evidenceImage4}" style="max-width: 100%; height: 200px; object-fit: contain;"></div>` : ''}
+              ${evidenceImage5 ? `<div style="border: 2px solid #e5e7eb; border-radius: 8px; padding: 0.5rem; text-align: center;"><img src="${evidenceImage5}" style="max-width: 100%; height: 200px; object-fit: contain;"></div>` : ''}
+          </div>` : ''}
+
           <div class="signature-section">
               <div class="signature-box">
                   <div class="signature-box-title">المعلم</div>
@@ -756,6 +771,241 @@ const StudentReferralForm: React.FC = () => {
                 className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white resize-none"
                 placeholder="أضف أي تفاصيل إضافية حول الحالة..."
               />
+            </div>
+          </div>
+
+          {/* صور الشواهد */}
+          <div className="mb-6">
+            <h2 className="text-xl font-bold text-gray-800 dark:text-white mb-4 flex items-center gap-2">
+              <Upload className="w-5 h-5" />
+              صور الشواهد
+            </h2>
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+              {[1, 2, 3, 4, 5].map((num) => {
+                const imageState = [evidenceImage1, evidenceImage2, evidenceImage3, evidenceImage4, evidenceImage5][num - 1];
+                const setImageState = [setEvidenceImage1, setEvidenceImage2, setEvidenceImage3, setEvidenceImage4, setEvidenceImage5][num - 1];
+                
+                return (
+                  <div key={num} className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-3 text-center hover:border-blue-500 transition-colors">
+                    <input
+                      type="file"
+                      accept="image/*,.heic,.heif"
+                      onChange={(e) => handleImageUpload(e, setImageState)}
+                      className="hidden"
+                      id={`evidence-${num}`}
+                    />
+                    <label htmlFor={`evidence-${num}`} className="cursor-pointer block">
+                      {imageState ? (
+                        <div className="relative">
+                          <img
+                            src={imageState}
+                            alt={`شاهد ${num}`}
+                            className="w-full h-32 object-cover rounded-lg mb-2"
+                          />
+                          <button
+                            onClick={(e) => {
+                              e.preventDefault();
+                              setImageState('');
+                            }}
+                            className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1 hover:bg-red-600"
+                          >
+                            <X className="w-4 h-4" />
+                          </button>
+                        </div>
+                      ) : (
+                        <div className="flex flex-col items-center justify-center py-4">
+                          <Upload className="w-8 h-8 text-gray-400 mb-2" />
+                          <span className="text-sm text-gray-600 dark:text-gray-400">شاهد {num}</span>
+                        </div>
+                      )}
+                    </label>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* رفع التوقيعات والصور */}
+          <div className="mb-6">
+            <h2 className="text-xl font-bold text-gray-800 dark:text-white mb-4 flex items-center gap-2">
+              <Upload className="w-5 h-5" />
+              رفع الصور والتوقيعات
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* شعار الوزارة */}
+              <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-4 hover:border-blue-500 transition-colors">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  شعار الوزارة
+                </label>
+                <input
+                  type="file"
+                  accept="image/*,.heic,.heif"
+                  onChange={(e) => handleImageUpload(e, setLogoImage)}
+                  className="hidden"
+                  id="logo-upload"
+                />
+                <label htmlFor="logo-upload" className="cursor-pointer block">
+                  {logoImage ? (
+                    <div className="relative">
+                      <img src={logoImage} alt="الشعار" className="w-full h-32 object-contain rounded-lg" />
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setLogoImage('');
+                        }}
+                        className="absolute top-0 right-0 bg-red-500 text-white rounded-full p-1 hover:bg-red-600"
+                      >
+                        <X className="w-4 h-4" />
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="flex flex-col items-center justify-center py-8 text-gray-400">
+                      <Upload className="w-12 h-12 mb-2" />
+                      <span className="text-sm">اضغط لرفع الشعار</span>
+                    </div>
+                  )}
+                </label>
+              </div>
+
+              {/* توقيع المعلم */}
+              <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-4 hover:border-blue-500 transition-colors">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  توقيع المعلم
+                </label>
+                <input
+                  type="file"
+                  accept="image/*,.heic,.heif"
+                  onChange={(e) => handleImageUpload(e, setTeacherSigImage)}
+                  className="hidden"
+                  id="teacher-sig-upload"
+                />
+                <label htmlFor="teacher-sig-upload" className="cursor-pointer block">
+                  {teacherSigImage ? (
+                    <div className="relative">
+                      <img src={teacherSigImage} alt="توقيع المعلم" className="w-full h-32 object-contain rounded-lg" />
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setTeacherSigImage('');
+                        }}
+                        className="absolute top-0 right-0 bg-red-500 text-white rounded-full p-1 hover:bg-red-600"
+                      >
+                        <X className="w-4 h-4" />
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="flex flex-col items-center justify-center py-8 text-gray-400">
+                      <Upload className="w-12 h-12 mb-2" />
+                      <span className="text-sm">اضغط لرفع التوقيع</span>
+                    </div>
+                  )}
+                </label>
+              </div>
+
+              {/* توقيع المُحال إليه */}
+              <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-4 hover:border-blue-500 transition-colors">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  توقيع المُحال إليه
+                </label>
+                <input
+                  type="file"
+                  accept="image/*,.heic,.heif"
+                  onChange={(e) => handleImageUpload(e, setRecipientSigImage)}
+                  className="hidden"
+                  id="recipient-sig-upload"
+                />
+                <label htmlFor="recipient-sig-upload" className="cursor-pointer block">
+                  {recipientSigImage ? (
+                    <div className="relative">
+                      <img src={recipientSigImage} alt="توقيع المُحال إليه" className="w-full h-32 object-contain rounded-lg" />
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setRecipientSigImage('');
+                        }}
+                        className="absolute top-0 right-0 bg-red-500 text-white rounded-full p-1 hover:bg-red-600"
+                      >
+                        <X className="w-4 h-4" />
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="flex flex-col items-center justify-center py-8 text-gray-400">
+                      <Upload className="w-12 h-12 mb-2" />
+                      <span className="text-sm">اضغط لرفع التوقيع</span>
+                    </div>
+                  )}
+                </label>
+              </div>
+
+              {/* توقيع المدير */}
+              <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-4 hover:border-blue-500 transition-colors">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  توقيع مدير المدرسة
+                </label>
+                <input
+                  type="file"
+                  accept="image/*,.heic,.heif"
+                  onChange={(e) => handleImageUpload(e, setPrincipalSigImage)}
+                  className="hidden"
+                  id="principal-sig-upload"
+                />
+                <label htmlFor="principal-sig-upload" className="cursor-pointer block">
+                  {principalSigImage ? (
+                    <div className="relative">
+                      <img src={principalSigImage} alt="توقيع المدير" className="w-full h-32 object-contain rounded-lg" />
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setPrincipalSigImage('');
+                        }}
+                        className="absolute top-0 right-0 bg-red-500 text-white rounded-full p-1 hover:bg-red-600"
+                      >
+                        <X className="w-4 h-4" />
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="flex flex-col items-center justify-center py-8 text-gray-400">
+                      <Upload className="w-12 h-12 mb-2" />
+                      <span className="text-sm">اضغط لرفع التوقيع</span>
+                    </div>
+                  )}
+                </label>
+              </div>
+
+              {/* الباركود */}
+              <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-4 hover:border-blue-500 transition-colors md:col-span-2">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  الباركود
+                </label>
+                <input
+                  type="file"
+                  accept="image/*,.heic,.heif"
+                  onChange={(e) => handleImageUpload(e, setBarcodeImage)}
+                  className="hidden"
+                  id="barcode-upload"
+                />
+                <label htmlFor="barcode-upload" className="cursor-pointer block">
+                  {barcodeImage ? (
+                    <div className="relative">
+                      <img src={barcodeImage} alt="الباركود" className="w-full h-32 object-contain rounded-lg" />
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setBarcodeImage('');
+                        }}
+                        className="absolute top-0 right-0 bg-red-500 text-white rounded-full p-1 hover:bg-red-600"
+                      >
+                        <X className="w-4 h-4" />
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="flex flex-col items-center justify-center py-8 text-gray-400">
+                      <Upload className="w-12 h-12 mb-2" />
+                      <span className="text-sm">اضغط لرفع الباركود</span>
+                    </div>
+                  )}
+                </label>
+              </div>
             </div>
           </div>
 
