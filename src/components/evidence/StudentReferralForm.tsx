@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, ChangeEvent } from 'react';
+import React, { useState, useEffect, ChangeEvent } from 'react';
 import { School, FileText, User, Users, Calendar, MessageSquare, Upload, X, Eye, Printer } from 'lucide-react';
 
 interface FormData {
@@ -25,11 +25,11 @@ interface FormData {
 
 const StudentReferralForm: React.FC = () => {
   const [formData, setFormData] = useState<FormData>({
-    schoolName: 'مدرسة الإبداع التعليمية',
+    schoolName: 'مدرسة ابن سيناء المتوسطة\nوبرنامجي العوق الفكري والتوحد',
     schoolLogo: '',
     studentName: '',
-    studentGrade: '',
-    studentClass: '',
+    studentGrade: 'الثالث المتوسط',
+    studentClass: 'أ',
     referralDate: new Date().toISOString().split('T')[0],
     referralReason: '',
     referralDetails: '',
@@ -39,8 +39,8 @@ const StudentReferralForm: React.FC = () => {
     teacherSignature: '',
     recipientSignature: '',
     principalSignature: '',
-    principalName: 'أحمد علي كريري',
-    academicYear: '1446-1447',
+    principalName: 'احمد علي كريري',
+    academicYear: '1447',
     barcode: '',
   });
 
@@ -49,6 +49,21 @@ const StudentReferralForm: React.FC = () => {
   const [recipientSigImage, setRecipientSigImage] = useState<string>('');
   const [principalSigImage, setPrincipalSigImage] = useState<string>('');
   const [barcodeImage, setBarcodeImage] = useState<string>('');
+
+  // تحميل الشعار والتوقيعات من localStorage
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const savedLogo = localStorage.getItem('school-logo');
+      const savedTeacherSig = localStorage.getItem('teacher-signature');
+      const savedPrincipalSig = localStorage.getItem('principal-signature');
+      const savedBarcode = localStorage.getItem('school-barcode');
+      
+      if (savedLogo) setLogoImage(savedLogo);
+      if (savedTeacherSig) setTeacherSigImage(savedTeacherSig);
+      if (savedPrincipalSig) setPrincipalSigImage(savedPrincipalSig);
+      if (savedBarcode) setBarcodeImage(savedBarcode);
+    }
+  }, []);
 
   // تحويل HEIC إلى JPEG
   const convertHEICtoJPEG = async (file: File): Promise<string> => {
@@ -495,45 +510,17 @@ const StudentReferralForm: React.FC = () => {
               <School className="w-5 h-5" />
               معلومات المدرسة
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   اسم المدرسة <span className="text-red-500">*</span>
                 </label>
-                <input
-                  type="text"
+                <textarea
                   value={formData.schoolName}
                   onChange={(e) => setFormData({ ...formData, schoolName: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+                  rows={2}
+                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white resize-none"
                 />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  شعار المدرسة
-                </label>
-                <div className="flex gap-2">
-                  <label className="flex-1 flex items-center justify-center px-4 py-2 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg cursor-pointer hover:border-blue-500 transition-colors">
-                    <Upload className="w-5 h-5 ml-2" />
-                    <span>رفع الشعار</span>
-                    <input
-                      type="file"
-                      accept="image/*,.heic,.heif"
-                      onChange={(e) => handleImageUpload(e, setLogoImage)}
-                      className="hidden"
-                    />
-                  </label>
-                  {logoImage && (
-                    <button
-                      onClick={() => setLogoImage('')}
-                      className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
-                    >
-                      <X className="w-5 h-5" />
-                    </button>
-                  )}
-                </div>
-                {logoImage && (
-                  <img src={logoImage} alt="Logo" className="mt-2 h-20 object-contain" />
-                )}
               </div>
             </div>
           </div>
@@ -573,13 +560,16 @@ const StudentReferralForm: React.FC = () => {
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   الفصل <span className="text-red-500">*</span>
                 </label>
-                <input
-                  type="text"
+                <select
                   value={formData.studentClass}
                   onChange={(e) => setFormData({ ...formData, studentClass: e.target.value })}
                   className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
-                  placeholder="مثال: 1/1"
-                />
+                >
+                  <option value="أ">أ</option>
+                  <option value="ب">ب</option>
+                  <option value="ج">ج</option>
+                  <option value="د">د</option>
+                </select>
               </div>
             </div>
           </div>
@@ -688,130 +678,8 @@ const StudentReferralForm: React.FC = () => {
                   value={formData.academicYear}
                   onChange={(e) => setFormData({ ...formData, academicYear: e.target.value })}
                   className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
-                  placeholder="1446-1447"
+                  placeholder="1447"
                 />
-              </div>
-            </div>
-          </div>
-
-          {/* التوقيعات */}
-          <div className="mb-6">
-            <h2 className="text-xl font-bold text-gray-800 dark:text-white mb-4">التوقيعات والباركود</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  توقيع المعلم
-                </label>
-                <div className="flex gap-2">
-                  <label className="flex-1 flex items-center justify-center px-4 py-2 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg cursor-pointer hover:border-blue-500 transition-colors">
-                    <Upload className="w-5 h-5 ml-2" />
-                    <span>رفع التوقيع</span>
-                    <input
-                      type="file"
-                      accept="image/*,.heic,.heif"
-                      onChange={(e) => handleImageUpload(e, setTeacherSigImage)}
-                      className="hidden"
-                    />
-                  </label>
-                  {teacherSigImage && (
-                    <button
-                      onClick={() => setTeacherSigImage('')}
-                      className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
-                    >
-                      <X className="w-5 h-5" />
-                    </button>
-                  )}
-                </div>
-                {teacherSigImage && (
-                  <img src={teacherSigImage} alt="توقيع المعلم" className="mt-2 h-16 object-contain" />
-                )}
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  توقيع المستلم ({formData.referredToPosition})
-                </label>
-                <div className="flex gap-2">
-                  <label className="flex-1 flex items-center justify-center px-4 py-2 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg cursor-pointer hover:border-blue-500 transition-colors">
-                    <Upload className="w-5 h-5 ml-2" />
-                    <span>رفع التوقيع</span>
-                    <input
-                      type="file"
-                      accept="image/*,.heic,.heif"
-                      onChange={(e) => handleImageUpload(e, setRecipientSigImage)}
-                      className="hidden"
-                    />
-                  </label>
-                  {recipientSigImage && (
-                    <button
-                      onClick={() => setRecipientSigImage('')}
-                      className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
-                    >
-                      <X className="w-5 h-5" />
-                    </button>
-                  )}
-                </div>
-                {recipientSigImage && (
-                  <img src={recipientSigImage} alt="توقيع المستلم" className="mt-2 h-16 object-contain" />
-                )}
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  توقيع قائد المدرسة
-                </label>
-                <div className="flex gap-2">
-                  <label className="flex-1 flex items-center justify-center px-4 py-2 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg cursor-pointer hover:border-blue-500 transition-colors">
-                    <Upload className="w-5 h-5 ml-2" />
-                    <span>رفع التوقيع</span>
-                    <input
-                      type="file"
-                      accept="image/*,.heic,.heif"
-                      onChange={(e) => handleImageUpload(e, setPrincipalSigImage)}
-                      className="hidden"
-                    />
-                  </label>
-                  {principalSigImage && (
-                    <button
-                      onClick={() => setPrincipalSigImage('')}
-                      className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
-                    >
-                      <X className="w-5 h-5" />
-                    </button>
-                  )}
-                </div>
-                {principalSigImage && (
-                  <img src={principalSigImage} alt="توقيع القائد" className="mt-2 h-16 object-contain" />
-                )}
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  الباركود
-                </label>
-                <div className="flex gap-2">
-                  <label className="flex-1 flex items-center justify-center px-4 py-2 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg cursor-pointer hover:border-blue-500 transition-colors">
-                    <Upload className="w-5 h-5 ml-2" />
-                    <span>رفع الباركود</span>
-                    <input
-                      type="file"
-                      accept="image/*,.heic,.heif"
-                      onChange={(e) => handleImageUpload(e, setBarcodeImage)}
-                      className="hidden"
-                    />
-                  </label>
-                  {barcodeImage && (
-                    <button
-                      onClick={() => setBarcodeImage('')}
-                      className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
-                    >
-                      <X className="w-5 h-5" />
-                    </button>
-                  )}
-                </div>
-                {barcodeImage && (
-                  <img src={barcodeImage} alt="الباركود" className="mt-2 h-20 object-contain" />
-                )}
               </div>
             </div>
           </div>
