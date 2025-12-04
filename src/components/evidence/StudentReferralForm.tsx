@@ -269,11 +269,11 @@ const StudentReferralForm: React.FC = () => {
           <title>إحالة طالب - ${formData.studentName}</title>
           <style>
               * {
+                  print-color-adjust: exact !important;
+                  -webkit-print-color-adjust: exact !important;
                   margin: 0;
                   padding: 0;
                   box-sizing: border-box;
-                  print-color-adjust: exact !important;
-                  -webkit-print-color-adjust: exact !important;
               }
               body {
                   font-family: Arial, sans-serif;
@@ -283,127 +283,218 @@ const StudentReferralForm: React.FC = () => {
                   color: #333;
                   font-size: 14px;
                   background: white !important;
+                  -webkit-font-smoothing: antialiased;
+                  -moz-osx-font-smoothing: grayscale;
               }
               .header {
                   background: #15445A !important;
                   color: white !important;
-                  padding: 0.5rem 1rem;
+                  padding: 0.4rem 0.8rem;
                   text-align: center;
                   border-radius: 8px;
-                  margin-bottom: 1rem;
+                  margin-bottom: 0.8rem;
                   display: flex;
                   align-items: center;
                   justify-content: space-between;
+                  gap: 1rem;
               }
               .logo-container {
-                  width: 120px;
-                  height: 120px;
+                  width: 150px;
+                  height: 150px;
                   display: flex;
                   align-items: center;
                   justify-content: center;
               }
               .logo-container img {
-                  max-width: 100%;
-                  max-height: 100%;
+                  width: 120px;
+                  height: 120px;
                   object-fit: contain;
               }
-              .header-content {
+              .header-text {
                   flex: 1;
                   text-align: center;
-                  padding: 0 1rem;
               }
-              .header h1 {
-                  font-size: 1.9rem;
+              .header-text h3 {
+                  margin: 0 0 0.2rem 0;
+                  font-size: 1.25rem;
+                  letter-spacing: 0.5px;
+                  word-spacing: 2px;
+                  font-weight: 700;
+                  text-rendering: optimizeLegibility;
+              }
+              .header-text h4 {
+                  margin: 0 0 0.15rem 0;
+                  font-size: 1.1rem;
+                  letter-spacing: 0.3px;
+              }
+              .school-name-header {
+                  margin-top: 0.3rem;
+                  font-size: 1.15rem;
                   font-weight: bold;
-                  margin-bottom: 0.4rem;
+                  white-space: normal;
+                  line-height: 1.4;
               }
-              .header h2 {
-                  font-size: 1.4rem;
-                  font-weight: 600;
-                  margin-bottom: 0.25rem;
+              .school-name-header {
+                  margin-top: 0.3rem;
+                  font-size: 1.15rem;
+                  font-weight: bold;
+                  white-space: normal;
+                  line-height: 1.4;
               }
-              .document-title {
-                  background: #f3f4f6;
-                  border: 2px solid #15445A;
+              
+              /* في الطباعة: منع الالتفاف مع الحفاظ على حجم خط مناسب */
+              @media print {
+                .school-name-header {
+                  white-space: nowrap !important;
+                  font-size: 1.1rem !important;
+                  overflow: hidden;
+                }
+                .header-text h3 {
+                  font-size: 1.2rem !important;
+                }
+                .header-text h4 {
+                  font-size: 1.05rem !important;
+                }
+              }
+              .info-section {
+                  background: white !important;
+                  border: 2px solid #3D7EB9 !important;
                   border-radius: 8px;
-                  padding: 0.8rem;
-                  text-align: center;
-                  margin: 1rem 0;
-              }
-              .document-title h2 {
-                  color: #15445A;
-                  font-size: 1.5rem;
-                  font-weight: bold;
-              }
-              .info-grid {
-                  display: grid;
-                  grid-template-columns: repeat(3, 1fr);
-                  gap: 0.8rem;
-                  margin-bottom: 1rem;
-              }
-              .info-item {
-                  background: #f9fafb;
-                  border: 1px solid #e5e7eb;
-                  border-radius: 6px;
-                  padding: 0.6rem;
-              }
-              .info-label {
-                  color: #15445A;
-                  font-weight: bold;
-                  font-size: 0.9rem;
-                  margin-bottom: 0.2rem;
-              }
-              .info-value {
-                  color: #333;
-                  font-size: 1rem;
+                  padding: 0.5rem;
+                  margin-bottom: 0.6rem;
               }
               .section-title {
                   background: #15445A !important;
                   color: white !important;
-                  padding: 0.5rem;
-                  border-radius: 6px;
+                  padding: 0.3rem;
+                  border-radius: 4px;
+                  text-align: center;
                   font-weight: bold;
-                  margin: 1rem 0 0.5rem 0;
+                  margin-bottom: 0.5rem;
                   font-size: 1.1rem;
               }
-              .content-box {
-                  background: #f9fafb;
-                  border: 1px solid #e5e7eb;
-                  border-radius: 6px;
-                  padding: 1rem;
-                  min-height: 100px;
-                  margin-bottom: 1rem;
+              .info-grid {
+                  display: grid;
+                  grid-template-columns: repeat(3, 1fr);
+                  gap: 0.4rem;
               }
-              .referral-to-box {
-                  background: #fef3c7;
-                  border: 2px solid #f59e0b;
-                  border-radius: 8px;
-                  padding: 1rem;
-                  margin: 1rem 0;
-                  text-align: center;
+              .info-item {
+                  display: flex;
+                  align-items: center;
+                  border: 1px solid #3D7EB9 !important;
+                  padding: 0.25rem;
+                  border-radius: 4px;
+                  background: white !important;
               }
-              .referral-to-box .position {
-                  color: #92400e;
+              .info-label {
+                  color: #3D7EB9 !important;
+                  font-weight: bold;
                   font-size: 1rem;
-                  font-weight: 600;
-                  margin-bottom: 0.3rem;
+                  min-width: 100px;
+                  border-right: 2px solid #3D7EB9 !important;
+                  padding-right: 0.3rem;
+                  margin-right: 0.3rem;
               }
-              .referral-to-box .name {
-                  color: #15445A;
-                  font-size: 1.4rem;
+              .info-value {
+                  flex: 1;
+                  font-size: 1rem;
                   font-weight: bold;
               }
-              .signature-section {
-                  margin-top: 1.5rem;
-                  display: grid;
-                  grid-template-columns: 1fr auto 1fr auto 1fr;
+              
+              /* في الطباعة */
+              @media print {
+                .info-label {
+                  font-size: 0.9rem !important;
+                }
+                .info-value {
+                  font-size: 0.9rem !important;
+                }
+                .section-title {
+                  font-size: 1rem !important;
+                }
+                .signature-box-title {
+                  font-size: 0.95rem !important;
+                }
+                .signature-name {
+                  font-size: 1rem !important;
+                }
+                .footer {
+                  font-size: 1rem !important;
+                }
+              }
+              }
+              .content-box {
+                  background: white !important;
+                  border: 2px solid #3D7EB9 !important;
+                  border-radius: 8px;
+                  padding: 0.5rem;
+                  margin-bottom: 0.6rem;
+                  font-size: 1rem;
+                  font-weight: bold;
+              }
+              .referral-to-section {
+                  background: white !important;
+                  border: 2px solid #3D7EB9 !important;
+                  border-radius: 8px;
+                  padding: 0.5rem;
+                  margin-bottom: 0.6rem;
+              }
+              .referral-to-content {
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  padding: 0.5rem;
+                  background: rgba(61, 126, 185, 0.1);
+                  border-radius: 4px;
                   gap: 1rem;
+              }
+              .referral-to-content .label {
+                  color: #3D7EB9 !important;
+                  font-weight: bold;
+                  font-size: 1rem;
+              }
+              .referral-to-content .value {
+                  color: #15445A;
+                  font-weight: bold;
+                  font-size: 1.1rem;
+              }
+              .evidence-section {
+                  margin-top: 0.6rem;
+                  padding: 0.5rem;
+                  background: white !important;
+                  border: 2px solid #3D7EB9 !important;
+                  border-radius: 8px;
+              }
+              .evidence-grid {
+                  display: grid;
+                  grid-template-columns: 1fr 1fr;
+                  gap: 0.5rem;
+                  margin-top: 0.4rem;
+              }
+              .evidence-item {
+                  page-break-inside: avoid;
+              }
+              .evidence-item img {
+                  width: 100% !important;
+                  height: 160px !important;
+                  object-fit: cover;
+                  border-radius: 6px;
+                  border: 2px solid #3D7EB9 !important;
+                  display: block !important;
+                  max-width: 100% !important;
+                  image-rendering: -webkit-optimize-contrast;
+              }
+              .signature-section {
+                  margin-top: 0.3rem;
+                  display: grid;
+                  grid-template-columns: 1fr auto 1fr;
+                  gap: 1.5rem;
                   align-items: end;
               }
               .signature-box {
-                  padding: 0.5rem;
+                  padding: 0.3rem;
                   text-align: center;
-                  min-height: 80px;
+                  min-height: 60px;
                   display: flex;
                   flex-direction: column;
                   justify-content: flex-end;
@@ -423,7 +514,7 @@ const StudentReferralForm: React.FC = () => {
               }
               .signature-box img {
                   max-width: 150px;
-                  height: 50px;
+                  height: 40px;
                   object-fit: contain;
                   margin: 0.2rem auto;
               }
@@ -434,8 +525,8 @@ const StudentReferralForm: React.FC = () => {
                   padding: 0.5rem;
               }
               .barcode-center img {
-                  width: 100px;
-                  height: 100px;
+                  width: 120px;
+                  height: 120px;
                   object-fit: contain;
               }
               .footer {
@@ -444,8 +535,8 @@ const StudentReferralForm: React.FC = () => {
                   padding: 0.6rem;
                   text-align: center;
                   border-radius: 8px;
-                  margin-top: 1rem;
-                  font-size: 1rem;
+                  margin-top: 0.2rem;
+                  font-size: 1.05rem;
                   font-weight: bold;
               }
               @media print {
@@ -456,10 +547,15 @@ const StudentReferralForm: React.FC = () => {
                   body {
                       margin: 0;
                       font-size: 13px;
+                      background: white !important;
                   }
                   @page {
-                      margin: 0.5cm;
+                      margin: 0.4cm;
                       size: A4;
+                  }
+                  /* إخفاء رابط الصفحة في الطباعة */
+                  header, footer {
+                      display: none !important;
                   }
               }
           </style>
@@ -467,71 +563,73 @@ const StudentReferralForm: React.FC = () => {
       <body>
           <div class="header">
               <div class="logo-container">
-                  ${logoImage ? `<img src="${logoImage}" alt="شعار المدرسة">` : '<div style="width:120px;height:120px;"></div>'}
-              </div>
-              <div class="header-content">
-                  <h1>المملكة العربية السعودية</h1>
-                  <h2>وزارة التعليم</h2>
-                  <h2>${formData.schoolName.split('\n').join('<br>')}</h2>
-              </div>
-              <div class="logo-container">
                   ${logoImage ? `<img src="${logoImage}" alt="شعار الوزارة">` : '<div style="width:120px;height:120px;"></div>'}
               </div>
-          </div>
-
-          <div class="document-title">
-              <h2>🎯 إحالة طالب 🎯</h2>
-          </div>
-
-          <div class="info-grid">
-              <div class="info-item">
-                  <div class="info-label">اسم الطالب:</div>
-                  <div class="info-value">${formData.studentName || 'غير محدد'}</div>
+              <div class="header-text">
+                  <h3>المملكة العربية السعودية</h3>
+                  <h3>وزارة التعليم</h3>
+                  <h4>الإدارة العامة للتعليم بمنطقة جازان</h4>
+                  <div class="school-name-header">${formData.schoolName.split('\n').join(' ')}</div>
               </div>
-              <div class="info-item">
-                  <div class="info-label">الصف:</div>
-                  <div class="info-value">${formData.studentGrade}</div>
-              </div>
-              <div class="info-item">
-                  <div class="info-label">الفصل:</div>
-                  <div class="info-value">${formData.studentClass}</div>
+              <div class="logo-container">
+                  <div style="width:120px;height:120px;"></div>
               </div>
           </div>
 
-          <div class="info-grid" style="grid-template-columns: 1fr 1fr;">
-              <div class="info-item">
-                  <div class="info-label">تاريخ الإحالة:</div>
-                  <div class="info-value">${toArabicNumbers(new Date(formData.referralDate).toLocaleDateString('ar-SA'))}</div>
-              </div>
-              <div class="info-item">
-                  <div class="info-label">المعلم المُحيل:</div>
-                  <div class="info-value">${formData.teacherName}</div>
+          <div class="info-section">
+              <div class="section-title">تقرير: إحالة طالب</div>
+              <div class="info-grid">
+                  <div class="info-item">
+                      <div class="info-label">اسم الطالب</div>
+                      <div class="info-value">${formData.studentName || 'غير محدد'}</div>
+                  </div>
+                  <div class="info-item">
+                      <div class="info-label">الصف</div>
+                      <div class="info-value">${formData.studentGrade}</div>
+                  </div>
+                  <div class="info-item">
+                      <div class="info-label">الفصل</div>
+                      <div class="info-value">${formData.studentClass}</div>
+                  </div>
+                  <div class="info-item">
+                      <div class="info-label">تاريخ الإحالة</div>
+                      <div class="info-value">${toArabicNumbers(new Date(formData.referralDate).toLocaleDateString('ar-SA'))}</div>
+                  </div>
+                  <div class="info-item" style="grid-column: 2 / -1;">
+                      <div class="info-label">المعلم المُحيل</div>
+                      <div class="info-value">${formData.teacherName}</div>
+                  </div>
               </div>
           </div>
 
-          <div class="referral-to-box">
-              <div class="position">المُحال إليه: ${formData.referredToPosition || 'غير محدد'}</div>
-              <div class="name">${formData.referredTo || 'غير محدد'}</div>
+          <div class="referral-to-section">
+              <div class="section-title">المُحال إليه</div>
+              <div class="referral-to-content">
+                  <span class="label">${formData.referredToPosition || 'غير محدد'}:</span>
+                  <span class="value">${formData.referredTo || 'غير محدد'}</span>
+              </div>
           </div>
 
-          <div class="section-title">سبب الإحالة</div>
           <div class="content-box">
-              ${formData.referralReason || 'لم يتم تحديد سبب الإحالة'}
+              <div class="section-title">سبب الإحالة</div>
+              <div style="padding: 0.5rem; font-size: 1rem;">${formData.referralReason || 'لم يتم تحديد سبب الإحالة'}</div>
           </div>
 
-          <div class="section-title">تفاصيل الإحالة</div>
           <div class="content-box">
-              ${formData.referralDetails || 'لا توجد تفاصيل إضافية'}
+              <div class="section-title">تفاصيل الإحالة</div>
+              <div style="padding: 0.5rem; font-size: 1rem;">${formData.referralDetails || 'لا توجد تفاصيل إضافية'}</div>
           </div>
 
           ${evidenceImage1 || evidenceImage2 || evidenceImage3 || evidenceImage4 || evidenceImage5 ? `
-          <div class="section-title">صور الشواهد</div>
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1rem;">
-              ${evidenceImage1 ? `<div style="border: 2px solid #e5e7eb; border-radius: 8px; padding: 0.5rem; text-align: center;"><img src="${evidenceImage1}" style="max-width: 100%; height: 200px; object-fit: contain;"></div>` : ''}
-              ${evidenceImage2 ? `<div style="border: 2px solid #e5e7eb; border-radius: 8px; padding: 0.5rem; text-align: center;"><img src="${evidenceImage2}" style="max-width: 100%; height: 200px; object-fit: contain;"></div>` : ''}
-              ${evidenceImage3 ? `<div style="border: 2px solid #e5e7eb; border-radius: 8px; padding: 0.5rem; text-align: center;"><img src="${evidenceImage3}" style="max-width: 100%; height: 200px; object-fit: contain;"></div>` : ''}
-              ${evidenceImage4 ? `<div style="border: 2px solid #e5e7eb; border-radius: 8px; padding: 0.5rem; text-align: center;"><img src="${evidenceImage4}" style="max-width: 100%; height: 200px; object-fit: contain;"></div>` : ''}
-              ${evidenceImage5 ? `<div style="border: 2px solid #e5e7eb; border-radius: 8px; padding: 0.5rem; text-align: center;"><img src="${evidenceImage5}" style="max-width: 100%; height: 200px; object-fit: contain;"></div>` : ''}
+          <div class="evidence-section">
+              <div class="section-title">الشواهد</div>
+              <div class="evidence-grid">
+                  ${evidenceImage1 ? `<div class="evidence-item"><img src="${evidenceImage1}" alt="الشاهد 1" loading="eager" decoding="sync"></div>` : ''}
+                  ${evidenceImage2 ? `<div class="evidence-item"><img src="${evidenceImage2}" alt="الشاهد 2" loading="eager" decoding="sync"></div>` : ''}
+                  ${evidenceImage3 ? `<div class="evidence-item"><img src="${evidenceImage3}" alt="الشاهد 3" loading="eager" decoding="sync"></div>` : ''}
+                  ${evidenceImage4 ? `<div class="evidence-item"><img src="${evidenceImage4}" alt="الشاهد 4" loading="eager" decoding="sync"></div>` : ''}
+                  ${evidenceImage5 ? `<div class="evidence-item"><img src="${evidenceImage5}" alt="الشاهد 5" loading="eager" decoding="sync"></div>` : ''}
+              </div>
           </div>` : ''}
 
           <div class="signature-section">
@@ -543,15 +641,6 @@ const StudentReferralForm: React.FC = () => {
               
               <div class="barcode-center">
                   ${barcodeImage ? `<img src="${barcodeImage}" alt="الباركود">` : ''}
-              </div>
-
-              <div class="signature-box">
-                  <div class="signature-box-title">${formData.referredToPosition || 'المستلم'}</div>
-                  <div class="signature-name">${formData.referredTo || 'غير محدد'}</div>
-                  ${recipientSigImage ? `<img src="${recipientSigImage}" alt="توقيع المستلم">` : '<div style="height:40px;"></div>'}
-              </div>
-
-              <div class="barcode-center">
               </div>
 
               <div class="signature-box">
