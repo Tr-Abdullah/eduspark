@@ -23,7 +23,113 @@ interface FormData {
   barcode: string;
 }
 
+// قوائم الطلاب حسب الفصول
+const studentsData: { [key: string]: string[] } = {
+  'أ': [
+    'أحمد عبدالله قصير',
+    'أحمد هيثم زيلعي',
+    'أسامه يحي آل مييش',
+    'ايهم عبدالله باعشن',
+    'بندر سامي عبده',
+    'تركي يحي ضعافي',
+    'ثامر احمد مغفوري',
+    'حافظ امجد علاقي',
+    'حسن بندر الجهني',
+    'رامي ايمن الجهني',
+    'زياد حسن عباس',
+    'زيد عبدالله عوض',
+    'سامي جمعان الغامدي',
+    'شادي سامي شاذلي',
+    'عبدالرحمن هادي الزهراوي',
+    'عبدالعزيز سعود غيش',
+    'فيصل احمد سود',
+    'مازن ابراهيم قب',
+    'محمد صبري بريك',
+    'محمد عبدالكريم احمد',
+    'مناف صبري عثمان',
+    'وسام عثمان عبده',
+  ],
+  'ب': [
+    'أبكر حسن مصري',
+    'أحمد سامي بحيص',
+    'أسامه علي صنجاء',
+    'ابراهيم يحي دهل',
+    'احمد محمد سليمان',
+    'احمد مجدي بكري',
+    'انيس يحي شامي',
+    'بندر عبده مصري',
+    'راكان محمد السبيعي',
+    'صالح حسين مكين',
+    'ظافر علي آل سالم',
+    'عبدالرحيم حسن الطقيقى',
+    'عبدالعزيز رمزي ابوراسين',
+    'عبدالله علي علي',
+    'مراد ماجد شراحيلي',
+    'مصطفى محمد حسين',
+    'مهند ابراهيم هاشم',
+    'مياد عمر حوباني',
+    'محمد عابد عواجي',
+    'هتان محمد عمر',
+    'يامن علي مجربي',
+    'يوسف علي آل سالم',
+    'يزن احمد الغرة',
+    'زياد ماجد شراحيلي',
+  ],
+  'ج': [
+    'ابراهيم شاكر حوباني',
+    'أحمد محمد العمري',
+    'احمد مصطفى القربي',
+    'اياد رمزي ايوب',
+    'البدر توفيق خواجي',
+    'الزاكي محمد شعيب',
+    'بسام علي مقري',
+    'خالد عبدالعزيز القطيبي',
+    'راكان حسن جري',
+    'سلطان يحي عبيري',
+    'عبدالاله ماجد زيلع',
+    'عبدالرحمن احمد ابوطالب',
+    'عبدالرحمن احمد احمد',
+    'عبدالرحمن علوان عقيل',
+    'عبدالعزيز ابراهيم بحيص',
+    'عبدالكريم محمد حمادي',
+    'فارس طلال يماني',
+    'فؤاد محمد جغادي',
+    'مازن محرم الشعراوي',
+    'محمد احمد عواجي',
+    'محمد خليل قحطاني',
+    'مشعل أحمد بامسدوس',
+    'نواف بندر زيلعي',
+    'نواف محمد حكمي',
+  ],
+  'د': [
+    'برهان نبيل الصديق',
+    'حسام بلال القاضي',
+    'رياض محمد دوس',
+    'سعود عمرو كوكو',
+    'عبدالعزيز محمد ونس',
+    'عمر وسيم بيطار',
+    'فهد حافظ غالب',
+    'فوزي اديب الراجحي',
+    'مالك بلال قاسم',
+    'ماهر محمد محمود',
+    'مدني محسن خردلي',
+    'مروان محمد بريك',
+    'مصطفى محمد الذيب',
+    'معاذ سالم غالب',
+    'معاذ محمد محمد',
+    'معتصم علي شراحيلي',
+    'مهاب حمد احمد',
+    'مهند علي نابوش',
+    'مهند عمر كلفوت',
+    'محمد ابكر زعقان',
+    'ناصر علي الاخرش',
+    'وائل عبدالحكيم علي',
+    'يزن سعيد سعيده',
+  ],
+};
+
 const StudentReferralForm: React.FC = () => {
+  const [availableStudents, setAvailableStudents] = useState<string[]>([]);
   const [formData, setFormData] = useState<FormData>({
     schoolName: 'مدرسة ابن سيناء المتوسطة\nوبرنامجي العوق الفكري والتوحد',
     schoolLogo: '',
@@ -64,6 +170,14 @@ const StudentReferralForm: React.FC = () => {
       if (savedBarcode) setBarcodeImage(savedBarcode);
     }
   }, []);
+
+  // تحديث قائمة الطلاب عند تغيير الفصل
+  useEffect(() => {
+    const students = studentsData[formData.studentClass] || [];
+    setAvailableStudents(students);
+    // إعادة تعيين اسم الطالب عند تغيير الفصل
+    setFormData(prev => ({ ...prev, studentName: '' }));
+  }, [formData.studentClass]);
 
   // تحويل HEIC إلى JPEG
   const convertHEICtoJPEG = async (file: File): Promise<string> => {
@@ -177,8 +291,8 @@ const StudentReferralForm: React.FC = () => {
                   justify-content: space-between;
               }
               .logo-container {
-                  width: 100px;
-                  height: 100px;
+                  width: 120px;
+                  height: 120px;
                   display: flex;
                   align-items: center;
                   justify-content: center;
@@ -194,14 +308,14 @@ const StudentReferralForm: React.FC = () => {
                   padding: 0 1rem;
               }
               .header h1 {
-                  font-size: 1.8rem;
+                  font-size: 1.9rem;
                   font-weight: bold;
-                  margin-bottom: 0.3rem;
+                  margin-bottom: 0.4rem;
               }
               .header h2 {
-                  font-size: 1.3rem;
+                  font-size: 1.4rem;
                   font-weight: 600;
-                  margin-bottom: 0.2rem;
+                  margin-bottom: 0.25rem;
               }
               .document-title {
                   background: #f3f4f6;
@@ -290,14 +404,14 @@ const StudentReferralForm: React.FC = () => {
                   justify-content: flex-end;
               }
               .signature-box-title {
-                  color: #15445A;
+                  color: #333 !important;
                   padding: 0.2rem;
                   font-weight: bold;
-                  margin-bottom: 0.2rem;
-                  font-size: 0.95rem;
+                  margin-bottom: 0.15rem;
+                  font-size: 1rem;
               }
               .signature-name {
-                  font-size: 1.05rem;
+                  font-size: 1.1rem;
                   font-weight: bold;
                   color: #333;
                   margin: 0.3rem 0;
@@ -348,26 +462,26 @@ const StudentReferralForm: React.FC = () => {
       <body>
           <div class="header">
               <div class="logo-container">
-                  ${logoImage ? `<img src="${logoImage}" alt="شعار المدرسة">` : '<div style="width:100px;height:100px;"></div>'}
+                  ${logoImage ? `<img src="${logoImage}" alt="شعار المدرسة">` : '<div style="width:120px;height:120px;"></div>'}
               </div>
               <div class="header-content">
                   <h1>المملكة العربية السعودية</h1>
                   <h2>وزارة التعليم</h2>
-                  <h2>${formData.schoolName}</h2>
+                  <h2>${formData.schoolName.split('\n').join('<br>')}</h2>
               </div>
               <div class="logo-container">
-                  ${logoImage ? `<img src="${logoImage}" alt="شعار الوزارة">` : '<div style="width:100px;height:100px;"></div>'}
+                  ${logoImage ? `<img src="${logoImage}" alt="شعار الوزارة">` : '<div style="width:120px;height:120px;"></div>'}
               </div>
           </div>
 
           <div class="document-title">
-              <h2>إحالة طالب</h2>
+              <h2>🎯 إحالة طالب 🎯</h2>
           </div>
 
           <div class="info-grid">
               <div class="info-item">
                   <div class="info-label">اسم الطالب:</div>
-                  <div class="info-value">${formData.studentName}</div>
+                  <div class="info-value">${formData.studentName || 'غير محدد'}</div>
               </div>
               <div class="info-item">
                   <div class="info-label">الصف:</div>
@@ -391,25 +505,25 @@ const StudentReferralForm: React.FC = () => {
           </div>
 
           <div class="referral-to-box">
-              <div class="position">المُحال إليه: ${formData.referredToPosition}</div>
-              <div class="name">${formData.referredTo}</div>
+              <div class="position">المُحال إليه: ${formData.referredToPosition || 'غير محدد'}</div>
+              <div class="name">${formData.referredTo || 'غير محدد'}</div>
           </div>
 
           <div class="section-title">سبب الإحالة</div>
           <div class="content-box">
-              ${formData.referralReason || 'غير محدد'}
+              ${formData.referralReason || 'لم يتم تحديد سبب الإحالة'}
           </div>
 
           <div class="section-title">تفاصيل الإحالة</div>
           <div class="content-box">
-              ${formData.referralDetails || 'غير محدد'}
+              ${formData.referralDetails || 'لا توجد تفاصيل إضافية'}
           </div>
 
           <div class="signature-section">
               <div class="signature-box">
-                  <div class="signature-box-title">المعلم المُحيل</div>
+                  <div class="signature-box-title">المعلم</div>
                   <div class="signature-name">${formData.teacherName}</div>
-                  ${teacherSigImage ? `<img src="${teacherSigImage}" alt="توقيع المعلم">` : '<div style="height:50px;"></div>'}
+                  ${teacherSigImage ? `<img src="${teacherSigImage}" alt="توقيع المعلم">` : '<div style="height:40px;"></div>'}
               </div>
               
               <div class="barcode-center">
@@ -417,18 +531,18 @@ const StudentReferralForm: React.FC = () => {
               </div>
 
               <div class="signature-box">
-                  <div class="signature-box-title">${formData.referredToPosition}</div>
-                  <div class="signature-name">${formData.referredTo}</div>
-                  ${recipientSigImage ? `<img src="${recipientSigImage}" alt="توقيع المستلم">` : '<div style="height:50px;"></div>'}
+                  <div class="signature-box-title">${formData.referredToPosition || 'المستلم'}</div>
+                  <div class="signature-name">${formData.referredTo || 'غير محدد'}</div>
+                  ${recipientSigImage ? `<img src="${recipientSigImage}" alt="توقيع المستلم">` : '<div style="height:40px;"></div>'}
               </div>
 
               <div class="barcode-center">
               </div>
 
               <div class="signature-box">
-                  <div class="signature-box-title">قائد المدرسة</div>
+                  <div class="signature-box-title">مدير المدرسة</div>
                   <div class="signature-name">${formData.principalName}</div>
-                  ${principalSigImage ? `<img src="${principalSigImage}" alt="توقيع القائد">` : '<div style="height:50px;"></div>'}
+                  ${principalSigImage ? `<img src="${principalSigImage}" alt="توقيع القائد">` : '<div style="height:40px;"></div>'}
               </div>
           </div>
 
@@ -534,18 +648,6 @@ const StudentReferralForm: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  اسم الطالب <span className="text-red-500">*</span>
-                </label>
-                <input
-                  type="text"
-                  value={formData.studentName}
-                  onChange={(e) => setFormData({ ...formData, studentName: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
-                  placeholder="اسم الطالب"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   الصف <span className="text-red-500">*</span>
                 </label>
                 <input
@@ -553,7 +655,7 @@ const StudentReferralForm: React.FC = () => {
                   value={formData.studentGrade}
                   onChange={(e) => setFormData({ ...formData, studentGrade: e.target.value })}
                   className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
-                  placeholder="مثال: الأول المتوسط"
+                  placeholder="مثال: الثالث المتوسط"
                 />
               </div>
               <div>
@@ -569,6 +671,23 @@ const StudentReferralForm: React.FC = () => {
                   <option value="ب">ب</option>
                   <option value="ج">ج</option>
                   <option value="د">د</option>
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  اسم الطالب <span className="text-red-500">*</span>
+                </label>
+                <select
+                  value={formData.studentName}
+                  onChange={(e) => setFormData({ ...formData, studentName: e.target.value })}
+                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+                >
+                  <option value="">-- اختر الطالب --</option>
+                  {availableStudents.map((student) => (
+                    <option key={student} value={student}>
+                      {student}
+                    </option>
+                  ))}
                 </select>
               </div>
             </div>
